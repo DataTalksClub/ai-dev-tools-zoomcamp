@@ -1,5 +1,5 @@
 <p align="center">
-  <img width="100%" src="images/course-cover.png" alt="AI Dev Tools Zoomcamp Cover Image">
+  <img width="100%" src="/course-cover.png" alt="AI Dev Tools Zoomcamp Cover Image">
 </p>
 
 <h1 align="center">
