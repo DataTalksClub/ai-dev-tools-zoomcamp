@@ -11,7 +11,9 @@ Welcome to the AI Dev Tools Zoomcamp, a free course that helps you use AI tools 
 </p>
 
 <p align="center">
-<a href="https://airtable.com/appJRFiWKHBgmEt70/shrpw7rk55Ewr1jCG"><img src="https://user-images.githubusercontent.com/875246/185755203-17945fd1-6b64-46f2-8377-1011dcb1a444.png" height="50" /></a>
+  <a href="https://airtable.com/appJRFiWKHBgmEt70/shrpw7rk55Ewr1jCG" style="background-color: #4CAF50; color: white; padding: 12px 28px; text-decoration: none; display: inline-block; font-size: 20px; margin: 4px 2px; cursor: pointer; border-radius: 50px; font-weight: bold; box-shadow: 0 4px 8px rgba(0,0,0,0.1); transition: all 0.3s ease;">
+    Sign up for the 2025 cohort
+  </a>
 </p>
 
 <div align="center">
