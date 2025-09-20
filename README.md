@@ -44,13 +44,13 @@ You don't need any AI experience to start - just curiosity about using AI tools 
 - Use a coding assistant for an end-to-end project
 - Build Snake in React/TS
 - Define API with OpenAPI
-- Generate FastAPI server from OpenAPI spects
+- Generate FastAPI server from OpenAPI specs
 - Add CI/CD
 - Deploy the application
 
 ### Module 3 — Model-Context Protocol
 
-- Enhancing AI assistents with tools 
+- Enhancing AI assistants with tools 
 - Core servers: GitHub, Filesystem, DB/SQL, HTTP/API, CI
 - Practical workflows: repo triage, PR summarization, scripted edits, data queries
 - Local vs. remote servers
@@ -58,25 +58,25 @@ You don't need any AI experience to start - just curiosity about using AI tools 
 
 ### Module 4 — Build an AI Coding Agent (for Django)
 
-- Build your own coding agent that can scaffold and extend projects.
-- Use a Django template as the base project.  
-- Learn how agents act as project bootstrappers.  
-- Explore multiple agent orchestration frameworks.  
-- Outcome: a Django app created and modified by your AI agent.  
+- Build your own coding agent that can scaffold and extend projects
+- Use a Django template as the base project
+- Learn how agents act as project bootstrappers
+- Explore multiple agent orchestration frameworks
+- Outcome: a Django app created and modified by your AI agent
 
 ### Module 5 — AI for Testing, CI/CD & DevOps
 
-- AI-assisted PR reviews/summaries and change-risk hints.
-- Automated test generation, coverage gates, and LLM evals in CI.
-- Release notes, changelog drafting, and deployment runbooks.
-- Incident postmortems and on-call copilots.
+- AI-assisted PR reviews/summaries and change-risk hints
+- Automated test generation, coverage gates, and LLM evals in CI
+- Release notes, changelog drafting, and deployment runbooks
+- Incident postmortems and on-call copilots
 
 ### Module 6 — AI for Automation & Low-/No-Code (n8n, Make, Zapier)
 
-- When to automate vs. code; composable AI tasks.
-- Build an n8n workflow using LLM nodes and webhooks.
-- Connectors: email, Slack, GitHub/Jira/Notion, databases.
-- Ship lightweight assistants without maintaining servers.
+- When to automate vs. code; composable AI tasks
+- Build an n8n workflow using LLM nodes and webhooks
+- Connectors: email, Slack, GitHub/Jira/Notion, databases
+- Ship lightweight assistants without maintaining servers
 
 
 ## How to Join?
@@ -87,6 +87,7 @@ We're starting in 2025! [Sign up here](https://airtable.com/appJRFiWKHBgmEt70/sh
 - [Alexey Grigorev](https://linkedin.com/in/agrigorev)
 
 ## Coming Soon
+
 * Course Channel on DTC Slack
 * Telegram Channel with Announcements
 * Pre-launch Q&A Stream
