@@ -1,5 +1,5 @@
 <p align="center">
-  <img width="100%" src="/course-cover.png" alt="AI Dev Tools Zoomcamp Cover Image">
+  <img width="100%" src="images/course-cover.png" alt="AI Dev Tools Zoomcamp Cover Image">
 </p>
 
 <h1 align="center">
@@ -24,56 +24,60 @@ Welcome to the AI Dev Tools Zoomcamp, a free course that helps you use AI tools 
 
 ## Who Is This For?
 
-We plan to create this course for anyone who wants to use AI tools to help with coding. This includes you if you're:
-
-- Coding professionally or as a hobby
-- Building personal or team projects
-- At any stage of your coding journey
-- Using any programming language
-- Looking to make your coding easier and faster
+This course is for anyone who wants to use AI tools to help with coding.
 
 You don't need any AI experience to start - just curiosity about using AI tools to help with your coding!
 
 ## What We'll Cover
 
-Here's what we'll work on together:
 
-### Module 1 — AI Foundations & Tools
-- Landscape of AI dev tooling: chatbots, IDE copilots, bootstrappers, computer-use agents.
-- When to use prompt-to-project generators vs. traditional scaffolds.
-- IDE-native AI workflows (code gen, test gen, refactors, PR help).
-- Intro to MCP (Model Context Protocol) and why it matters for tool access.
-- Ethics, safety, and review patterns for AI-generated code.
+### Module 1 — Introduction to Vibe Coding / AI Tools Overview
 
-### Module 2 — End-to-End Game (Snake) with OpenAPI-First + FastAPI
-- Frontend-first: build Snake in React/TS (or vanilla JS) with clean state & input loops.
-- OpenAPI-first design for the backend contract.
-- Generate FastAPI server from spec; add handlers/tests.
-- Integrate FE/BE via typed SDKs/clients.
+* AI-assisted development with Snake game example (React + JS)
+* Chat applications: ChatGPT, Claude, DeepSeek, Microsoft Copilot
+* Coding assistants / IDEs: Claude Code, GitHub Copilot, Cursor, Pear
+* Project bootstrappers: Bolt, Lovable
+* Agents: Anthropic Computer Use, PR Agent, others
 
-### Module 3 — MCP Deep Dive & Agents (Developer-Centric Servers)
-- How MCP standardizes tool access for LLMs/agents.
-- Core servers developers actually use: GitHub, Filesystem, DB/SQL, HTTP/API, CI.
-- Practical workflows: repo triage, PR summarization, scripted edits, data queries.
-- Security/permissions, auditing, and local vs. remote servers.
+### Module 2 — End-to-End Project (Snake)
 
-### Module 4 — Implement Our Own Agent (Django + OnePrompt-Style Template)
-- Build an agent that can safely modify a Django app based on goals.
-- Architecture: planner, tools, memory, constraints/guards.
-- Coupling the agent to the codebase (file IO, tests, migrations, templates).
-- Developer UX: diffs, approvals, rollbacks, evals.
+- Use a coding assistant for an end-to-end project
+- Build Snake in React/TS
+- Define API with OpenAPI
+- Generate FastAPI server from OpenAPI spects
+- Add CI/CD
+- Deploy the application
 
-### Module 5 — AI for CI/CD & DevOps
+### Module 3 — Model-Context Protocol
+
+- Enhancing AI assistents with tools 
+- Core servers: GitHub, Filesystem, DB/SQL, HTTP/API, CI
+- Practical workflows: repo triage, PR summarization, scripted edits, data queries
+- Local vs. remote servers
+- Security/permissions
+
+### Module 4 — Build an AI Coding Agent (for Django)
+
+- Build your own coding agent that can scaffold and extend projects.
+- Use a Django template as the base project.  
+- Learn how agents act as project bootstrappers.  
+- Explore multiple agent orchestration frameworks.  
+- Outcome: a Django app created and modified by your AI agent.  
+
+### Module 5 — AI for Testing, CI/CD & DevOps
+
 - AI-assisted PR reviews/summaries and change-risk hints.
 - Automated test generation, coverage gates, and LLM evals in CI.
 - Release notes, changelog drafting, and deployment runbooks.
 - Incident postmortems and on-call copilots.
 
 ### Module 6 — AI for Automation & Low-/No-Code (n8n, Make, Zapier)
+
 - When to automate vs. code; composable AI tasks.
 - Build an n8n workflow using LLM nodes and webhooks.
 - Connectors: email, Slack, GitHub/Jira/Notion, databases.
 - Ship lightweight assistants without maintaining servers.
+
 
 ## How to Join?
 
