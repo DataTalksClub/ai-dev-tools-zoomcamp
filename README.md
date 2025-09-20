@@ -31,7 +31,7 @@ You don't need any AI experience to start - just curiosity about using AI tools 
 ## What We'll Cover
 
 
-### Module 1 — Introduction to Vibe Coding / AI Tools Overview
+### Module 1 — [Introduction to Vibe Coding / AI Tools Overview](01-overview/)
 
 * AI-assisted development with Snake game example (React + JS)
 * Chat applications: ChatGPT, Claude, DeepSeek, Microsoft Copilot
@@ -39,7 +39,7 @@ You don't need any AI experience to start - just curiosity about using AI tools 
 * Project bootstrappers: Bolt, Lovable
 * Agents: Anthropic Computer Use, PR Agent, others
 
-### Module 2 — End-to-End Project (Snake)
+### Module 2 — [End-to-End Project (Snake)](02-end-to-end/)
 
 - Use a coding assistant for an end-to-end project
 - Build Snake in React/TS
@@ -48,7 +48,7 @@ You don't need any AI experience to start - just curiosity about using AI tools 
 - Add CI/CD
 - Deploy the application
 
-### Module 3 — Model-Context Protocol
+### Module 3 — [Model-Context Protocol](03-mcp-agents/)
 
 - Enhancing AI assistants with tools 
 - Core servers: GitHub, Filesystem, DB/SQL, HTTP/API, CI
@@ -56,7 +56,7 @@ You don't need any AI experience to start - just curiosity about using AI tools 
 - Local vs. remote servers
 - Security/permissions
 
-### Module 4 — Build an AI Coding Agent (for Django)
+### Module 4 — [Build an AI Coding Agent (for Django)](04-build-coding-agent/)
 
 - Build your own coding agent that can scaffold and extend projects
 - Use a Django template as the base project
@@ -64,14 +64,14 @@ You don't need any AI experience to start - just curiosity about using AI tools 
 - Explore multiple agent orchestration frameworks
 - Outcome: a Django app created and modified by your AI agent
 
-### Module 5 — AI for Testing, CI/CD & DevOps
+### Module 5 — [AI for Testing, CI/CD & DevOps](05-cicd-devops/)
 
 - AI-assisted PR reviews/summaries and change-risk hints
 - Automated test generation, coverage gates, and LLM evals in CI
 - Release notes, changelog drafting, and deployment runbooks
 - Incident postmortems and on-call copilots
 
-### Module 6 — AI for Automation & Low-/No-Code (n8n, Make, Zapier)
+### Module 6 — [Automation with Low-Code and No-Code AI (n8n)](06-automation-lowcode/)
 
 - When to automate vs. code; composable AI tasks
 - Build an n8n workflow using LLM nodes and webhooks
