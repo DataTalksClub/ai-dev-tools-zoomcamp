@@ -38,40 +38,42 @@ You don't need any AI experience to start - just curiosity about using AI tools 
 
 Here's what we'll work on together:
 
-### 1. Getting Started with AI Dev Tools
-- Learning about different AI coding assistants and when to use them
-- Setting up your development environment
-- Writing effective prompts for coding
-- Hands-on practice with ChatGPT, Claude, and GitHub Copilot
+### Module 1 — AI Foundations & Tools
+- Landscape of AI dev tooling: chatbots, IDE copilots, bootstrappers, computer-use agents.
+- When to use prompt-to-project generators vs. traditional scaffolds.
+- IDE-native AI workflows (code gen, test gen, refactors, PR help).
+- Intro to MCP (Model Context Protocol) and why it matters for tool access.
+- Ethics, safety, and review patterns for AI-generated code.
 
-### 2. Building a Game Frontend with React
-- Setting up a React app from scratch
-- Building the game logic with AI help
-- Creating a responsive interface
-- Managing state and user interactions
-- Testing and fixing bugs using AI tools
+### Module 2 — End-to-End Game (Snake) with OpenAPI-First + FastAPI
+- Frontend-first: build Snake in React/TS (or vanilla JS) with clean state & input loops.
+- OpenAPI-first design for the backend contract.
+- Generate FastAPI server from spec; add handlers/tests.
+- Integrate FE/BE via typed SDKs/clients.
 
-### 3. Creating the Backend in Python
-- Designing and building the API
-- Setting up game mechanics and scoring
-- Working with databases
-- Keeping things secure
-- Handling errors and logs
+### Module 3 — MCP Deep Dive & Agents (Developer-Centric Servers)
+- How MCP standardizes tool access for LLMs/agents.
+- Core servers developers actually use: GitHub, Filesystem, DB/SQL, HTTP/API, CI.
+- Practical workflows: repo triage, PR summarization, scripted edits, data queries.
+- Security/permissions, auditing, and local vs. remote servers.
 
-### 4. Putting It All Together
-- Connecting the frontend and backend
-- Setting up automatic deployments
-- Deploying to the cloud
-- Making it fast
-- Keeping an eye on performance
+### Module 4 — Implement Our Own Agent (Django + OnePrompt-Style Template)
+- Build an agent that can safely modify a Django app based on goals.
+- Architecture: planner, tools, memory, constraints/guards.
+- Coupling the agent to the codebase (file IO, tests, migrations, templates).
+- Developer UX: diffs, approvals, rollbacks, evals.
 
-You'll get to work with tools like:
-- ChatGPT
-- Claude
-- GitHub Copilot
-- Cursor IDE
-- Lovable
-- And other cool AI dev tools we'll explore together
+### Module 5 — AI for CI/CD & DevOps
+- AI-assisted PR reviews/summaries and change-risk hints.
+- Automated test generation, coverage gates, and LLM evals in CI.
+- Release notes, changelog drafting, and deployment runbooks.
+- Incident postmortems and on-call copilots.
+
+### Module 6 — AI for Automation & Low-/No-Code (n8n, Make, Zapier)
+- When to automate vs. code; composable AI tasks.
+- Build an n8n workflow using LLM nodes and webhooks.
+- Connectors: email, Slack, GitHub/Jira/Notion, databases.
+- Ship lightweight assistants without maintaining servers.
 
 ## How to Join?
 
