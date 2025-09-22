@@ -22,6 +22,10 @@ Welcome to the AI Dev Tools Zoomcamp, a free course that helps you use AI tools 
 
 </div>
 
+## How to Join?
+
+We're starting the first cohort of this course on November 18, 2025! [Sign up here](https://airtable.com/appJRFiWKHBgmEt70/shrpw7rk55Ewr1jCG) to join us.
+
 ## Who Is This For?
 
 This course is for anyone who wants to use AI tools to help with coding.
@@ -77,11 +81,6 @@ You don't need any AI experience to start - just curiosity about using AI tools 
 - Build an n8n workflow using LLM nodes and webhooks
 - Connectors: email, Slack, GitHub/Jira/Notion, databases
 - Ship lightweight assistants without maintaining servers
-
-
-## How to Join?
-
-We're starting in 2025! [Sign up here](https://airtable.com/appJRFiWKHBgmEt70/shrpw7rk55Ewr1jCG) to join us.
 
 ## Your Instructor
 - [Alexey Grigorev](https://linkedin.com/in/agrigorev)
