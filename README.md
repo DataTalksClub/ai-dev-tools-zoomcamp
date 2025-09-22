@@ -24,7 +24,9 @@ Welcome to the AI Dev Tools Zoomcamp, a free course that helps you use AI tools 
 
 ## How to Join?
 
-We're starting the first cohort of this course on November 18, 2025! [Sign up here](https://airtable.com/appJRFiWKHBgmEt70/shrpw7rk55Ewr1jCG) to join us.
+We're starting the first cohort of this course on November 18, 2025!
+
+[Sign up here](https://airtable.com/appJRFiWKHBgmEt70/shrpw7rk55Ewr1jCG) to join us.
 
 ## Who Is This For?
 
