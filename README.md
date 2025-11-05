@@ -54,7 +54,7 @@ You don't need any AI experience to start - just curiosity about using AI tools 
 - Add CI/CD
 - Deploy the application
 
-### Module 3 — [Model-Context Protocol](03-mcp-agents/)
+### Module 3 — [Model-Context Protocol](03-mcp/)
 
 - Enhancing AI assistants with tools 
 - Core servers: GitHub, Filesystem, DB/SQL, HTTP/API, CI
