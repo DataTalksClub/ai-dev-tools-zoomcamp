@@ -28,6 +28,7 @@ Links:
 * [Telegram Channel with Announcements](https://t.me/aidevtoolszoomcamp)
 * [FAQ](https://docs.google.com/document/d/1uBSxORcxOewXMzMDHwADpVSiS0kBRXhTQ3qWd86CjlI/edit)
 * [Course Playlist](https://www.youtube.com/watch?v=sUwrCnP2iGU&list=PL3MmuxUbc_hLuyafXPyhTdbF4s_uNhc43)
+* [Course Launch Stream](https://www.youtube.com/watch?v=58pn873XO04&list=PL3MmuxUbc_hLuyafXPyhTdbF4s_uNhc43)
 
 ## How to Join?
 

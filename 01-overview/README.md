@@ -1,6 +1,6 @@
 # Module 1 — Introduction to Vibe Coding  
 
-[▶️ Watch the Workshop Video](https://www.youtube.com/watch?v=NSMXQk4Axig)
+[▶️ Watch the Workshop Video](https://www.youtube.com/watch?v=NSMXQk4Axig&list=PL3MmuxUbc_hLuyafXPyhTdbF4s_uNhc43)
 
 
 ## Overview 
@@ -16,11 +16,6 @@ This module introduces participants to modern AI development tooling, showing ho
 ## Snake Game and Chat Applications
 
 Developing the snake game with ChatGPT and Claude
-
-<a href="https://www.youtube.com/watch?v=YpOuCXa3060&list=PL3MmuxUbc_hLmd1SsgusimVMr-bIXzoIE">
-  <img src="https://markdown-videos-api.jorgenkh.no/youtube/YpOuCXa3060"/>
-</a>
-
 
 Chat apps allow quick Q&A and prototyping but often require switching between the chat and IDE.  
 
