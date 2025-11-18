@@ -84,8 +84,11 @@ You don't need any AI experience to start - just curiosity about using AI tools 
 - Connectors: email, Slack, GitHub/Jira/Notion, databases
 - Ship lightweight assistants without maintaining servers
 
-## Your Instructor
+## Your Instructors
+
 - [Alexey Grigorev](https://linkedin.com/in/agrigorev)
+- [Bhavani Ravi](https://www.linkedin.com/in/bhavanicodes)
+
 
 ## Coming Soon
 
