@@ -2,6 +2,7 @@
 
 [▶️ Watch the Workshop Video](https://www.youtube.com/watch?v=NSMXQk4Axig)
 
+
 ## Overview 
 
 This module introduces participants to modern AI development tooling, showing how different categories of tools can enhance the developer experience. 
