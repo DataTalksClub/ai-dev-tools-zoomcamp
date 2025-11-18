@@ -17,10 +17,17 @@ Welcome to the AI Dev Tools Zoomcamp, a free course that helps you use AI tools 
 <div align="center">
 
 [![Join Slack](https://img.shields.io/badge/Join-Slack-4A154B?style=for-the-badge&logo=slack)](https://datatalks.club/slack.html)
-[![Course Status](https://img.shields.io/badge/Status-Coming_2025-yellow?style=for-the-badge)](https://airtable.com/appJRFiWKHBgmEt70/shrpw7rk55Ewr1jCG)
 [![Twitter](https://img.shields.io/badge/Share-Twitter-1DA1F2?style=for-the-badge&logo=twitter)](https://twitter.com/intent/tweet?text=Check%20out%20AI%20Dev%20Tools%20Zoomcamp!%20A%20free%20course%20on%20using%20AI%20tools%20for%20coding.%20Starting%202025!%20Learn%20more%3A%20https%3A%2F%2Fgithub.com%2FDataTalksClub%2Fai-dev-tools-zoomcamp)
 
 </div>
+
+
+Links:
+
+* [`#course-ai-dev-tools-zoomcamp` on Slack](https://app.slack.com/client/T01ATQK62F8/C09HWT76L95)
+* [Telegram Channel with Announcements](https://t.me/aidevtoolszoomcamp)
+* [FAQ](https://docs.google.com/document/d/1uBSxORcxOewXMzMDHwADpVSiS0kBRXhTQ3qWd86CjlI/edit)
+* [Course Playlist](https://www.youtube.com/watch?v=sUwrCnP2iGU&list=PL3MmuxUbc_hLuyafXPyhTdbF4s_uNhc43)
 
 ## How to Join?
 
@@ -89,16 +96,6 @@ You don't need any AI experience to start - just curiosity about using AI tools 
 - [Alexey Grigorev](https://linkedin.com/in/agrigorev)
 - [Bhavani Ravi](https://www.linkedin.com/in/bhavanicodes)
 
-
-## Coming Soon
-
-* Course Channel on DTC Slack
-* Telegram Channel with Announcements
-* Pre-launch Q&A Stream
-* Launch Stream with Course Overview
-* Course Google Calendar
-* FAQ
-* Course Playlist
 
 ## About DataTalks.Club
 
