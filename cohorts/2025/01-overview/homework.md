@@ -114,10 +114,66 @@ Use the link to this folder in the homework submission form.
 
 ## Tip
 
-You can copy-paste the homework description into the AI system of your choice. But make sure you understand (and follow) all the steps in the response. 
+You can copy-paste the homework description into the AI system of your choice. But make sure you understand (and follow) all the steps in the response.
+
 
 ## Submission
 
 Submit your homework here: https://courses.datatalks.club/ai-dev-tools-2025/homework/hw1
 
+
+## Learning in Public
+
+We encourage everyone to share what they learned. This is called "learning in public". 
+
+Learning in public is one of the most effective ways to accelerate your growth. Here's why:
+
+1. Accountability: Sharing your progress creates commitment and motivation to continue
+2. Feedback: The community can provide valuable suggestions and corrections
+3. Networking: You'll connect with like-minded people and potential collaborators
+4. Documentation: Your posts become a learning journal you can reference later
+5. Opportunities: Employers and clients often discover talent through public learning
+
+Don't worry about being perfect. Everyone starts somewhere, and people love following genuine learning journeys!
+
+### Example post for LinkedIn:
+
+--- 
+🚀 Week 1 of AI Dev Tools Zoomcamp by @DataTalksClub complete!
+
+Just built a Django TODO application using AI assistants - without knowing Django beforehand!
+
+Today I learned how to:
+
+- ✅ Set up Django projects and apps
+- ✅ Create database models and migrations
+- ✅ Implement views and templates
+- ✅ Write comprehensive tests with AI help
+
+Here's my repo: <LINK>
+
+Following along with this amazing course - who else is exploring AI development tools? 
+
+You can sign up here: https://github.com/DataTalksClub/ai-dev-tools-zoomcamp/
+
+---
+
+### Example post for Twitter/X:
+
+---
+
+🤖 Built a Django app with AI in @Al_Grigor's AI Dev Tools Zoomcamp!
+
+- ✨ TODO app from scratch
+- 📝 Models & migrations
+- 🎨 Views and templates
+- ✅ Tests
+
+My repo: <LINK>
+
+Zero Django knowledge → working app in one session!
+
+Join me: https://github.com/DataTalksClub/ai-dev-tools-zoomcamp/
+
+---
 
