@@ -64,3 +64,11 @@ They form the backbone of many assistants and scaffolders.
 	```  
 - [PR Agent](https://github.com/qodo-ai/pr-agent) — Automates pull request reviews and suggestions.
 
+
+
+## Community notes
+
+Did you take notes? You can share them here
+
+* Add a link to your notes above this line
+
