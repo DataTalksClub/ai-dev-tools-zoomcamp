@@ -26,14 +26,12 @@ You can choose any other tool (Bootraper like Bolt, or AI Assistant like Cursor,
 
 For Lovable, I used this prompt:
 
-```
-create the snake game with two models: pass-through and walls. prepare to make it multiplayers - we will have this functionality: leaderboard and watching (me following other players that currently play). add mockups for that and also for log in.
-everything should be interactive - I can log in, sign up, see my username when I'm logged in, see leaderboard, see
-other people play (in this case just implement some playing logic yourself as if somebody is playing) 
-make sure that all the logic is covered with tests 
-
-don't implement backend, so everything is mocked. But centralize all the calls to the backend in one place
-```
+> create the snake game with two models: pass-through and walls. prepare to make it multiplayers - we will have this functionality: leaderboard and watching (me following other players that currently play). add mockups for that and also for log in.
+> everything should be interactive - I can log in, sign up, see my username when I'm logged in, see leaderboard, see
+> other people play (in this case just implement some playing logic yourself as if somebody is playing) 
+> make sure that all the logic is covered with tests 
+> 
+> don't implement backend, so everything is mocked. But centralize all the calls to the backend in one place
 
 Create the frontend and put it to Github.
 
@@ -147,9 +145,7 @@ OpenAPI specifications provide a standardized way to define REST APIs, enabling 
 
 Let's create it:
 
-```
-analyse the content of the client and create an OpenAPI specs based on what it needs. later we want to implement backend based on these specs
-```
+> analyse the content of the client and create an OpenAPI specs based on what it needs. later we want to implement backend based on these specs
 
 Now we're ready to create the backend project:
 
@@ -182,13 +178,11 @@ Useful Commands
 
 Now let's create the backend. The prompt:
 
-```
-based on the OpenAPI specs, create fastapi backend 
-for now use a mock database, which we will later replace with a real one
-create tests to make sure the implementation works
-
-follow the guidelines in AGENTS.md
-```
+> based on the OpenAPI specs, create fastapi backend 
+> for now use a mock database, which we will later replace with a real one
+> create tests to make sure the implementation works
+> 
+> follow the guidelines in AGENTS.md
 
 Additionally, you can ask AI to implement a `verify_api.py` script that tests the running server to ensure all endpoints work correctly.
 
@@ -200,24 +194,18 @@ Additionally, you can ask AI to implement a `verify_api.py` script that tests th
 
 We now have backend. Lets connect it to frontend. Prompt:
 
-```
-Make frontend use backend. use OpenAPI specs for guidance
-follow the guidelines in AGENTS.md
-```
+> Make frontend use backend. use OpenAPI specs for guidance
+> follow the guidelines in AGENTS.md
 
 We also need a way to run them both at the same tile. Prompt: 
 
-```
-How can I run both frontend and backend at the same time? 
-Let's use concurrently instead of our own script
-```
+> How can I run both frontend and backend at the same time? 
+> Let's use concurrently instead of our own script
 
 If you have an error, just tell AI to fix it. For example, during preparation, when I tried to create an account in the app, it would show an error message saying "Not Found". Here's how I fixed it:
 
-```
-I tried creating an account and it says Not Found
-write a test on backend to reproduce it, fix it, and make sure the frontend works fine too
-```
+> I tried creating an account and it says Not Found
+> write a test on backend to reproduce it, fix it, and make sure the frontend works fine too
 
 ## Database Support
 
@@ -225,17 +213,13 @@ write a test on backend to reproduce it, fix it, and make sure the frontend work
 * [🎥 Video (Integration tests)](https://www.youtube.com/watch?v=kfEjwDD5Vv8&list=PL3MmuxUbc_hLuyafXPyhTdbF4s_uNhc43)
 
 Our backend uses a mock database. Let's use a real one now. Prompt:
-```
-now for backend let's use postgres and sqlite database (via sqlalchemy) 
-follow the guidelines in AGENTS.md
-```
+> now for backend let's use postgres and sqlite database (via sqlalchemy) 
+> follow the guidelines in AGENTS.md
 
 And don't forget about tests for the database layer:
 
-```
-let's also add some integration tests (using sqlite) to make sure things work 
-put the integration test in a separate folder tests_integration
-```
+> let's also add some integration tests (using sqlite) to make sure things work 
+> put the integration test in a separate folder tests_integration
 
 
 ## Containerization with Docker
@@ -246,11 +230,9 @@ put the integration test in a separate folder tests_integration
 It works with SQLite, but how about Postgres? Let's containerize everything 
 and also add Postgres support: 
 
-```
-right now we have frontend, backend, and database (sqlite)
-
-let's put everything into docker compose and use postgres there. we can serve frontend with nginx or whatever you recommend
-```
+> right now we have frontend, backend, and database (sqlite)
+> 
+> let's put everything into docker compose and use postgres there. we can serve frontend with nginx or whatever you recommend
 
 Run it:
 
@@ -273,22 +255,16 @@ docker-compose down
 For deployment we need a single container with both frontend and backend. 
 Let's ask AI to put them together:
 
-```
-For deployment we need to put together backend
-and frontend in one container. let's do that
-```
+> For deployment we need to put together backend
+> and frontend in one container. let's do that
 
 And then ask:
 
-```
-I want to deploy it to the cloud now. what are the options
-```
+> I want to deploy it to the cloud now. what are the options
 
 My answer:
 
-```
-let's go with render
-```
+> let's go with render
 
 ## CI/CD
 
@@ -296,18 +272,14 @@ let's go with render
 
 Prompt:
 
-```
-I want to create a CI/CD pipeline with github actions with two parts
-
-- first we run tests (frontend + backend)
-- if tests pass, I want to deploy the update to render
-```
+> I want to create a CI/CD pipeline with github actions with two parts
+> 
+> - first we run tests (frontend + backend)
+> - if tests pass, I want to deploy the update to render
 
 We also want to add integration tests:
 
-```
-let's also run integration tests for backend separately before running deployment
-```
+> let's also run integration tests for backend separately before running deployment
 
 If you 
 
@@ -329,3 +301,4 @@ Also if you deployed your application to the cloud, don't forget to delete your 
 Did you take notes? You can share them here
 
 * Add a link to your notes above this line
+
