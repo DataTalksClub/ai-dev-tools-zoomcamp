@@ -2,7 +2,7 @@
 
 ## Overview
 
-[🎥 Video](https://www.youtube.com/watch?v=vMNJru1y2Uc&list=PL3MmuxUbc_hLuyafXPyhTdbF4s_uNhc43) (will be moved to YouTube soon)
+[🎥 Video](https://www.youtube.com/watch?v=vMNJru1y2Uc&list=PL3MmuxUbc_hLuyafXPyhTdbF4s_uNhc43)
 
 In this module, we will create an end-to-end application using AI:
 
