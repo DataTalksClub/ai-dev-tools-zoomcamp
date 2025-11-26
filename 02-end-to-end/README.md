@@ -2,7 +2,7 @@
 
 ## Overview
 
-[🎥 Video](https://www.loom.com/share/c7499b86798d4e8993db372d07d1ff0c) (will be moved to YouTube soon)
+[🎥 Video](https://www.youtube.com/watch?v=vMNJru1y2Uc&list=PL3MmuxUbc_hLuyafXPyhTdbF4s_uNhc43) (will be moved to YouTube soon)
 
 In this module, we will create an end-to-end application using AI:
 
@@ -249,8 +249,7 @@ docker-compose down
 
 ## Deloyment
 
-[🎥 Video](https://www.loom.com/share/99209223fbd344d4b09bce34af9c4be2) (Will be moved to YT soon)
-
+[🎥 Video](https://www.youtube.com/watch?v=Y7OnXqYs30k&list=PL3MmuxUbc_hLuyafXPyhTdbF4s_uNhc43)
 
 For deployment we need a single container with both frontend and backend. 
 Let's ask AI to put them together:
@@ -268,7 +267,8 @@ My answer:
 
 ## CI/CD
 
-[🎥 Video](https://www.loom.com/share/9e8d089af99846019802a418b7dc0595) (will be moved to YT soon)
+[🎥 Video](https://www.youtube.com/watch?v=lcmP9YCUmYw&list=PL3MmuxUbc_hLuyafXPyhTdbF4s_uNhc43)
+
 
 Prompt:
 

@@ -1,5 +1,12 @@
 # Module 3 — MCP Deep Dive & Agents (Developer-Centric Servers)
 
+Videos:
+
+* [▶️ Watch the Workshop Video](https://www.youtube.com/watch?v=0IhZdcjddo4&list=PL3MmuxUbc_hLuyafXPyhTdbF4s_uNhc43)
+* [Working Demo](https://www.youtube.com/watch?v=HYHv_S141CU&list=PL3MmuxUbc_hLuyafXPyhTdbF4s_uNhc43)
+
+> Note: during the live stream we had some problems with the demo. Check the "Demo" for the working version.
+
 ## Overview
 
 - How MCP standardizes tool access for LLMs/agents.
