@@ -6,7 +6,7 @@
 
 In this module, we will create an end-to-end application using AI:
 
-- create frontent with Lovable and React
+- create frontend with Lovable and React
 - extract OpenAPI specs from the frontend 
 - implement backend with FastAPI based on the specs
 - add database support to the backend
