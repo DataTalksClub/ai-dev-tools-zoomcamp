@@ -296,6 +296,11 @@ gh cs stop -c <CODESPACE_NAME>
 Also if you deployed your application to the cloud, don't forget to delete your instances when you no longer need them.
 
 
+## Homework
+
+- [2025 Homework](../cohorts/2025/02-end-to-end/homework.md)
+
+
 ## Community notes
 
 Did you take notes? You can share them here

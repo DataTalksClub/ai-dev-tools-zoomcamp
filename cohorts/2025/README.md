@@ -6,3 +6,8 @@
 * [FAQ]()
 * [Leaderboard](https://courses.datatalks.club/ai-dev-tools-2025/leaderboard)
 
+
+Homework:
+
+* [Module 1: Overview](01-overview/homework.md)
+* [Module 2: End-To-End Application](02-end-to-end/homework.md)

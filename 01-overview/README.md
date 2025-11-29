@@ -65,6 +65,10 @@ They form the backbone of many assistants and scaffolders.
 - [PR Agent](https://github.com/qodo-ai/pr-agent) — Automates pull request reviews and suggestions.
 
 
+## Homework
+
+- [2025 Homework](../cohorts/2025/01-overview/homework.md)
+
 
 ## Community notes
 
