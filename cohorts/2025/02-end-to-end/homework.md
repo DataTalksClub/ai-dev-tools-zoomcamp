@@ -126,9 +126,9 @@ Consider recording a short demo video of your application in action! This makes 
 
 You can use:
 - Screen recording tools like OBS Studio, QuickTime, or Windows Game Bar
-- Loom for quick browser-based recording
-- Your phone to record your screen
-
+- Loom for quick and shareable recording
+- Snapping Tool on Windowns
+  
 Keep it short (30-90 seconds) and show:
 - Creating a coding session link
 - Multiple users editing code simultaneously
