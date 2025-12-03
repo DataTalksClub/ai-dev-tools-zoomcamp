@@ -74,5 +74,6 @@ They form the backbone of many assistants and scaffolders.
 
 Did you take notes? You can share them here
 
+* [Notes Jesus Oviedo](https://github.com/jesusoviedo/ai-dev-tools-zoomcamp/tree/main/week1#module-1--introduction-to-vibe-coding)
 * Add a link to your notes above this line
 
