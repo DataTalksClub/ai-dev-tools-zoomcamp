@@ -88,16 +88,16 @@ You don't need any AI experience to start - just curiosity about using AI tools 
 
 ### Module 6 — [Automation with Low-Code and No-Code AI (n8n)](06-automation-lowcode/)
 
-- When to automate vs. code; composable AI tasks
-- Build an n8n workflow using LLM nodes and webhooks
-- Connectors: email, Slack, GitHub/Jira/Notion, databases
-- Ship lightweight assistants without maintaining servers
+- Install N8N
+- Create posts for LinkedIn
+- Tailor your CV for a specific position
+
 
 ## Your Instructors
 
 - [Alexey Grigorev](https://linkedin.com/in/agrigorev)
 - [Bhavani Ravi](https://www.linkedin.com/in/bhavanicodes)
-
+- [Moein Foroughi](https://www.linkedin.com/in/moein-foroughi-ce/)
 
 ## About DataTalks.Club
 

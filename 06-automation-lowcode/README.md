@@ -1,4 +1,4 @@
-# Module 6 — AI for Automation & Low-/No-Code (n8n, Make, Zapier)
+# Module 6 — AI for Automation & Low-/No-Code
 
 Videos:
 
