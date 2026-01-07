@@ -23,7 +23,7 @@ This is what you need to do for each project:
     * Specs first 
     * Backend first
     * But all three have to be done
-* Make sure the application is thouroughly tested, containerized and deployed
+* Make sure the application is thoroughly tested, containerized and deployed
 * Make sure you review your peers - or you won't get a certificate of graduation 
 
 
