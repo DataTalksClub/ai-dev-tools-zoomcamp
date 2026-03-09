@@ -115,6 +115,7 @@ You don't need any AI experience to start - just curiosity about using AI tools 
 > — [Yann Pham-Van](https://www.linkedin.com/in/chasseur2valeurs/), Freelance Data Scientist
 
 > The course taught me how to use coding agents effectively, debug issues, and gave me exposure to MCPs, tools, and prompts. It helped me conceptualize any idea into a working prototype. And finally, it helped me land a job after a long career break!
+> 
 > — [Revathy Ramalingam](https://www.linkedin.com/in/revathy-ramalingam/), Senior Software Engineer at Yalabs Solutions
 
 > During the course I built a Finnish learning website which helps English users learn and practice their reading, writing, listening and speaking skills for the Finnish language.
