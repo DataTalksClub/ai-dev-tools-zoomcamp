@@ -99,6 +99,48 @@ You don't need any AI experience to start - just curiosity about using AI tools 
 - [Bhavani Ravi](https://www.linkedin.com/in/bhavanicodes)
 - [Moein Foroughi](https://www.linkedin.com/in/moein-foroughi-ce/)
 
+## Testimonials
+
+> This course fundamentally changed how I approach AI development. I moved from “building models” to designing AI-assisted systems that are faster to ship and easier to iterate on.
+>
+> During the course, I built:
+>
+> - A portfolio optimization tool powered by AI-assisted development
+> - A full-stack application using ChatGPT, Lovable, and Antigravity
+> - A structured GitHub project with clean documentation and reproducible workflow
+>
+> What changed for me:
+> I now think in terms of system design rather than isolated scripts. I learned how to structure AI tool usage, validate outputs, and integrate generated code into disciplined engineering workflows. The biggest shift was moving from experimentation to controlled, production-oriented iteration. I can now prototype and deploy AI-enabled tools significantly faster without sacrificing rigor.
+>
+> — [Yann Pham-Van](https://www.linkedin.com/in/chasseur2valeurs/), Freelance Data Scientist
+
+> The course taught me how to use coding agents effectively, debug issues, and gave me exposure to MCPs, tools, and prompts. It helped me conceptualize any idea into a working prototype. And finally, it helped me land a job after a long career break!
+> — [Revathy Ramalingam](https://www.linkedin.com/in/revathy-ramalingam/), Senior Software Engineer at Yalabs Solutions
+
+> During the course I built a Finnish learning website which helps English users learn and practice their reading, writing, listening and speaking skills for the Finnish language.
+>
+> Tech Stack:
+> - IDE: Antigravity IDE with Gemini 3 Pro High & Claude Opus 4.5 Thinking (switching LLMs depending on available capacity relative to rate limits)
+> - MCP server: Context7 documentation MCP server (for Antigravity IDE's LLM to retrieve the relevant documentation if it is unsure of a library's syntax)
+> - Language: TypeScript (frontend), Python (backend)
+> - Framework: Next.js (frontend), FastAPI (backend)
+> - Database: SQLite
+> - Styling: Tailwind CSS
+> - Package Manager: npm
+> - Final Deployment: Render (serving the full frontend AND backend as a "Single Docker Container" Microservice)
+> - Transcription: Client-side Google Web Speech API
+> - LLM: gemma-3-27b (grades Finnish speech transcribed to text format)
+> - CI/CD with GitHub Actions to run backend unit tests using Pytest, frontend unit tests using Jest, and full-stack end-to-end tests using Playwright
+> 
+> What Changed For Me
+> 1. Learning a systematic way to think about the requirements and design an application, before developing and testing various components of the application iteratively
+> 2. Learning to package frontend and backend components into a single container for easier deployment
+> 3. Practising how to debug frontend and backend tests, which tend to break things when I started to integrate the frontend, backend and database together, and when moving from deploying the container locally to deploying on the cloud
+>
+> — Kaiquan Mah, Data Scientist at Total eBiz Solutions
+
+
+
 ## About DataTalks.Club
 
 DataTalks.Club is a community of data enthusiasts learning and growing together. We're all about sharing knowledge, helping each other out, and making data science more accessible.
