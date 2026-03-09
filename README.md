@@ -138,7 +138,7 @@ You don't need any AI experience to start - just curiosity about using AI tools 
 > 2. Learning to package frontend and backend components into a single container for easier deployment
 > 3. Practising how to debug frontend and backend tests, which tend to break things when I started to integrate the frontend, backend and database together, and when moving from deploying the container locally to deploying on the cloud
 >
-> — Kaiquan Mah, Data Scientist at Total eBiz Solutions
+> — [Kaiquan Mah](https://www.linkedin.com/in/kaiquan-mah), Data Scientist at Total eBiz Solutions
 
 
 
