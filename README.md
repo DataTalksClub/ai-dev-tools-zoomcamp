@@ -33,7 +33,7 @@ A free course that helps you use AI tools to write better code, faster.
 |----------|------|
 | Course materials | [GitHub repository](https://github.com/DataTalksClub/ai-dev-tools-zoomcamp) |
 | Video lectures | [YouTube playlist](https://www.youtube.com/playlist?list=PL3MmuxUbc_hLuyafXPyhTdbF4s_uNhc43) |
-| Documentation | [Zoomcamp Logistics](https://datatalks.club/docs/courses/zoomcamp-logistics/) |
+| Documentation | [Zoomcamp Logistics](https://datatalks.club/docs/courses/zoomcamp-logistics/) · [AI Dev Tools Zoomcamp](https://datatalks.club/docs/courses/ai-dev-tools-zoomcamp/) |
 | Course platform (deadlines, homework) | [courses.datatalks.club](https://courses.datatalks.club/) |
 | Slack channel | [#course-ai-dev-tools-zoomcamp](https://app.slack.com/client/T01ATQK62F8/C09HWT76L95) |
 | Announcements | [Telegram](https://t.me/aidevtoolszoomcamp) |
