@@ -11,7 +11,7 @@ A free course that helps you use AI tools to write better code, faster.
 </p>
 
 <p align="center">
-<a href="https://airtable.com/appJRFiWKHBgmEt70/shrpw7rk55Ewr1jCG"><img src="https://user-images.githubusercontent.com/875246/185755203-17945fd1-6b64-46f2-8377-1011dcb1a444.png" height="50" /></a>
+<a href="https://courses.datatalks.club/register/ai-dev-tools/"><img src="https://user-images.githubusercontent.com/875246/185755203-17945fd1-6b64-46f2-8377-1011dcb1a444.png" height="50" /></a>
 </p>
 
 <p align="center">
@@ -31,10 +31,11 @@ A free course that helps you use AI tools to write better code, faster.
 
 | Resource | Link |
 |----------|------|
+| Registration | [Sign up for the 2026 cohort](https://courses.datatalks.club/register/ai-dev-tools/) |
 | Course materials | [GitHub repository](https://github.com/DataTalksClub/ai-dev-tools-zoomcamp) |
 | Video lectures | [YouTube playlist](https://www.youtube.com/playlist?list=PL3MmuxUbc_hLuyafXPyhTdbF4s_uNhc43) |
 | Documentation | [Zoomcamp Logistics](https://datatalks.club/docs/courses/zoomcamp-logistics/) · [AI Dev Tools Zoomcamp](https://datatalks.club/docs/courses/ai-dev-tools-zoomcamp/) |
-| Course platform (deadlines, homework) | [courses.datatalks.club](https://courses.datatalks.club/) |
+| Course platform | [AI Dev Tools Zoomcamp 2026](https://courses.datatalks.club/ai-dev-tools-2026/) |
 | Slack channel | [#course-ai-dev-tools-zoomcamp](https://app.slack.com/client/T01ATQK62F8/C09HWT76L95) |
 | Announcements | [Telegram](https://t.me/aidevtoolszoomcamp) |
 | FAQ | [FAQ document](https://datatalks.club/faq/ai-dev-tools-zoomcamp.html) |
@@ -58,14 +59,14 @@ There are two ways to follow the course: live and self-paced.
 
 | | Live Cohort | Self-Paced |
 |-|-|-|
-| Start | 2026 (date TBA) | Anytime |
+| Start | August 31, 2026 | Anytime |
 | Lectures | Pre-recorded | Pre-recorded |
 | Homework | Graded | Available but not scored |
 | Leaderboard | ✅ Yes | ❌ No |
 | Peer Review | ✅ Yes | ❌ No |
 | Certificate | ✅ Yes | ❌ No |
 | Cost | Free | Free |
-| Register | [Sign up here](https://airtable.com/appJRFiWKHBgmEt70/shrpw7rk55Ewr1jCG) | Just start learning! |
+| Register | [Sign up here](https://courses.datatalks.club/register/ai-dev-tools/) | Just start learning! |
 
 > [!IMPORTANT]
 > "Live cohort" does not mean live classes. All lectures are pre-recorded. "Live" means working alongside others with deadlines, scored homework, a leaderboard, peer review, and a certificate at the end.
