@@ -1,170 +1,338 @@
-# Module 3 — MCP Deep Dive & Agents (Developer-Centric Servers)
+# Module 3 — Coding Agent Capabilities: MCP, Skills, Plugins, and Custom Agents
 
-Videos:
-
-* [▶️ Watch the Workshop Video](https://www.youtube.com/watch?v=0IhZdcjddo4&list=PL3MmuxUbc_hLuyafXPyhTdbF4s_uNhc43)
-* [Working Demo](https://www.youtube.com/watch?v=HYHv_S141CU&list=PL3MmuxUbc_hLuyafXPyhTdbF4s_uNhc43)
-* See how to configure your mcp client here: [clients.md](clients.md)
-
-> Note: during the live stream we had some problems with the demo. Check the "Demo" for the working version.
+> [!NOTE]
+> This 2026 module page is currently a draft. You can use it to see what we are preparing, but the final videos, exercises, homework, and requirements may change before the cohort starts.
 
 ## Overview
 
-### All about MCP
+This module is about how modern coding agents are extended, customized, constrained, shared, and audited.
 
-- What is MCP and how it connects AI tools, servers, and clients
-- How to use MCP primitives like tools, resources, and prompts
-- Comparing MCP communication modes: stdio vs HTTPS
+It is not a module about one specific coding tool. The examples can use a concrete environment, but the concepts should transfer across modern agentic coding systems such as Claude Code, Codex, OpenCode, Cursor, GitHub Copilot, Aider, Windsurf, and future tools.
 
-## Using MCP servers for developer workflows
+The durable mental model:
 
-- Using Context 7 for live documentation and debugging (Airflow, Astro)
-- Configuring VSCode with MCP servers
-- Automating workflows code fixing with latest docs
-- Generating and writing blog posts to hashnode on the fly
-
-
-## Demo Flow
-
-
-### Part 1: Intro to MCP
-
-#### 1. Clone the demo code repo
-
-[Clone this repo - https://github.com/thelearningdev/mcp-ai-dev-workflow](https://github.com/thelearningdev/mcp-ai-dev-workflow)
-
-#### 2. Setting up Python Environment
-
-Ensure you have python 3.12+ installed
-
-```
-cd code
-uv sync
-uv venv
-source .venv/bin/activate
+```text
+instructions
+context
+tools
+permissions
+reusable workflows
+specialized agents
+packaging and sharing
+custom agent loops
+audit trail
 ```
 
-#### 3. Play with your server
+Different products use different names for these capabilities. For example, one tool may call a reusable workflow a skill, another may call it a command, prompt, rule, recipe, or extension. The course should teach the capability first and the product-specific syntax second.
 
-With your virtual env activated run...
+## Lessons
 
-```
-cd 0-mcp-demo/stdio/
-python stdio_server.py
-```
-The terminal will say `starting server` 
+### Lesson 3.1 — How Coding Agents Work
 
-Now paste your JSON-RPC requests line by line
+Goal: understand the agent loop.
 
-1. Initialize the client
+Concepts:
 
-```
-{"jsonrpc":"2.0","id":1,"method":"initialize","params":{"protocolVersion":"2024-11-05","capabilities":{},"clientInfo":{"name":"test-client","version":"1.0.0"}}}
-```
-
-2. initialize the notification
-
-```
-{"jsonrpc":"2.0","method":"notifications/initialized"}
-```
-
-> Note: You won't receive a JSON response here
-
-3. list the tools
-
-```
-{"jsonrpc":"2.0","id":2,"method":"tools/list"}
+```text
+user goal
+context gathering
+planning
+tool calls
+file edits
+command execution
+test execution
+result inspection
+iteration
+diff/PR output
 ```
 
-4. call the tool get weather
+Lab: use the Module 2 app and ask an agent to:
 
-```
-{"jsonrpc":"2.0","id":3,"method":"tools/call","params":{"name":"get_weather","arguments":{"city":"London"}}}
-```
+- understand the repo
+- summarize the architecture
+- find test commands
+- identify app entry points
+- propose one small feature
+- make a plan
+- implement it
+- run tests
+- show the diff
 
-Congratulations 🎉 you have successfully called your first MCP tool in stdio mode.
+Deliverables:
 
-#### 4. Let's visualize these features in MCP inspector
-
-**1. Install `mcp-inspector`**
-
-```
-npx @modelcontextprotocol/inspector
-```
-
-If you do not have node installed, use brew installation
-
-```
-brew install mcp-inspector
-mcp-inspector
+```text
+docs/agent-workflow-notes.md
+AGENTS.md or equivalent project instructions
 ```
 
-On the MCP inspector that opens on your browser `http://localhost:6274/?MCP_PROXY_AUTH_TOKEN=<some-token-here>`  
+### Lesson 3.2 — Project Instructions and Context Engineering
 
+Goal: create project-level context that agents can reuse.
 
-**2. Note down two things**
+Useful files:
 
-- Your python environment  
-    - On your terminal Type `which python`you will get an answer like this `<YOUR_BASE_PATH>/mcp-for-ai-dev-course/code/.venv/bin/python` 
-- Path to the `stdio_server.py`
-    - On vscode, Right click on the `stdio_server.py` file and copy path `<YOUR_BASE_PATH>/mcp-for-ai-dev-course/code/0-mcp-demo/stdio/stdio_client.py` 
-
-> Replace `YOUR_BASE_PATH` with right path according to your laptop
-
-**3. Add these to MCP inspector**
-
-1. Under command - add python path
-2. Under Arguments - add stdio_server.py file path
-
-> Note: You can also run
-
-```
-npx @modelcontextprotocol/inspector <command> <server_file_path>
-```
----
-
-```
-npx @modelcontextprotocol/inspector \
-  <YOUR_BASE_PATH>/mcp-for-ai-dev-course/code/.venv/bin/python \
-  <YOUR_BASE_PATH>/mcp-for-ai-dev-course/code/0-mcp-demo/stdio/stdio_server.py
+```text
+AGENTS.md
+CLAUDE.md
+.github/copilot-instructions.md
+.cursor/rules
+docs/architecture.md
+docs/testing.md
+docs/agent-rules.md
+docs/security-notes.md
 ```
 
-You can also run the server in http mode and link it to the inspector
+The exact file names depend on the tool. The content should be portable:
 
----
+- project overview
+- stack and architecture
+- commands for setup, tests, linting, and deployment
+- coding conventions
+- API contract rules
+- review checklist
+- security and permission boundaries
 
-### Part 2: MCP on AI Dev workflow
+### Lesson 3.3 — MCP as One Integration Capability
 
-> You need Vscode + github copilot (free version should do) for this demo
+Goal: teach MCP as a tool/context protocol, not as the whole module.
 
-1. Create an account in [context7](https://context7.com/) and copy your API Key, keep it aside
+Concepts:
 
-> We are not affiliated with context7, just a tool that works well
+```text
+MCP host/client/server
+tools
+resources
+prompts
+stdio transport
+HTTP transport
+remote vs local servers
+project vs user config
+approval and permissions
+```
 
-![alt text](../images/mcp/context7-apikey.png)
+App-specific MCP server idea:
 
-2. Under libraries tab in context7, pick the libraries of your choice
+```text
+tools:
+  get_leaderboard
+  get_recent_games
+  create_bug_report
+  run_backend_tests
+  run_frontend_tests
 
-![alt text](../images/mcp/context7-libraries.png)
+resources:
+  openapi.yaml
+  product-spec.md
+  latest-test-results.json
 
-3. In the MCP inspector add the mcp url and explore the tools in HTTP mode.
+prompts:
+  review-api-change
+  generate-release-summary
+```
 
-![alt text](../images/mcp/mcp-inspector-with-context7.png)
+Deliverables:
 
-4. In VScode install mcp servers using the extensions or using `mcp.json` file
+```text
+mcp-server/
+  server.py
+  README.md
+docs/mcp-tools.md
+```
 
-### Write Code
+Teaching point: MCP should expose useful capabilities with safe boundaries. It should not mean giving the agent access to everything.
 
-1. Pick a library of your choice (something that you know really well). I've picked Airflow in the demo
-2. You can use [Airflow Quickstart](https://airflow.apache.org/docs/apache-airflow/3.0.6/start.html) to quickly replicate the environment in the demo
-3. Disable context7 and ask it to write code
-4. Enable context7 and ask it to `use the latest docs` to fix the code written. 
-5. Try different MCP servers like github to raise a PR, hashnode to publish a blog post, notion to capture notes
-6. You can find some cool [MCP servers in this directory](https://github.com/mcp?utm_source=vscode-website&utm_campaign=mcp-registry-server-launch-2025)
+### Lesson 3.4 — Reusable Workflows: Skills, Commands, Rules, and Recipes
 
-## Relevant Links
+Goal: teach when repeated instructions should become a reusable capability.
 
-- [Model Context Protocol — Site](https://modelcontextprotocol.io/)
-- [Anthropic MCP Announcement](https://www.anthropic.com/news/model-context-protocol)
-- [TheLearningDev - Demo Repo](https://github.com/thelearningdev/mcp-ai-dev-workflow)
-- [Using MCP servers in VScode](https://code.visualstudio.com/docs/copilot/customization/mcp-servers)
+Create one when you repeatedly paste the same:
+
+- checklist
+- review procedure
+- debugging procedure
+- deployment procedure
+- project-specific convention
+- multi-step workflow
+
+Good course examples:
+
+```text
+review-api-change
+debug-ci-failure
+add-backend-endpoint
+add-frontend-component
+prepare-pr
+check-generated-code
+deploy-staging
+```
+
+Depending on the tool, this may be implemented as a skill, slash command, prompt, rule, recipe, script, or plugin extension.
+
+Deliverables:
+
+```text
+agent-capabilities/review-api-change/
+agent-capabilities/debug-ci-failure/
+docs/reusable-workflows.md
+```
+
+### Lesson 3.5 — Hooks and Guardrails
+
+Goal: show that agent workflows can be controlled and automated.
+
+Hook and guardrail use cases:
+
+- auto-format after edits
+- run a linter after relevant file changes
+- block dangerous shell commands
+- block editing CI/CD files without confirmation
+- log every shell command
+- notify when a long task finishes
+- run tests before commit
+
+Deliverables:
+
+```text
+agent-hooks/
+docs/hooks-and-guardrails.md
+```
+
+Teaching point: hooks turn "please be careful" into repeatable guardrails.
+
+### Lesson 3.6 — Specialized Subagents
+
+Goal: teach specialized agents with scoped context and permissions.
+
+Subagents are useful when a side task would pollute the main context with logs, search results, or file contents.
+
+Course subagents:
+
+```text
+api-contract-reviewer
+debugger
+browser-tester
+security-reviewer
+database-query-validator
+release-note-writer
+```
+
+Deliverables:
+
+```text
+agent-capabilities/subagents/
+docs/subagents.md
+```
+
+Teaching point: subagents are a permission and context management tool, not just a multi-agent feature.
+
+### Lesson 3.7 — Plugins and Extension Packaging
+
+Goal: teach when standalone project configuration should become a shareable package.
+
+Use project-local configuration for:
+
+- one project
+- personal workflows
+- experiments
+- short local commands
+
+Use plugins or extension packages for:
+
+- team sharing
+- versioned releases
+- cross-project reuse
+- community distribution
+- namespaced commands and reusable capabilities
+
+Deliverables:
+
+```text
+plugins/ai-devtools-agent-pack/
+docs/plugin-usage.md
+```
+
+### Lesson 3.8 — Creating Custom Agents
+
+Goal: teach when to build a custom agent instead of using an interactive coding agent.
+
+Use a custom agent when you need:
+
+- CI/CD integration
+- a custom internal app
+- scheduled automation
+- team-specific workflow
+- controlled tool access
+- structured output
+- a repeatable pipeline
+
+Deliverables:
+
+```text
+custom-agent/
+  agent.py
+  README.md
+docs/custom-agent-design.md
+```
+
+## Module Deliverable: Agent Extension Pack
+
+Students extend their Module 2 app with an agent extension pack.
+
+Minimum requirements:
+
+```text
+1 project instructions file
+1 reusable workflow/skill/command
+1 specialized subagent
+1 MCP tool/server
+1 hook or guardrail
+1 small plugin/extension package OR custom agent
+1 permission/security note
+```
+
+Suggested repo structure:
+
+```text
+AGENTS.md
+CLAUDE.md or equivalent tool-specific instructions
+
+agent-capabilities/
+  review-api-change/
+  debug-ci-failure/
+  subagents/
+
+agent-hooks/
+
+mcp-server/
+  server.py
+  README.md
+
+plugins/
+  ai-devtools-agent-pack/
+
+custom-agent/
+  agent.py
+  README.md
+
+docs/
+  agent-extension-pack.md
+  permissions.md
+  demo.md
+```
+
+Demo script:
+
+1. The agent reads the project instructions.
+2. A reusable workflow is invoked.
+3. A specialized subagent reviews an API change.
+4. The agent calls an MCP tool.
+5. A hook or guardrail prevents, formats, checks, or logs an action.
+6. The student reviews the final diff.
+
+## Previous Cohort Materials
+
+The previous MCP-focused version of this module is archived here:
+
+- [2026 archived Module 3](../cohorts/2026/03-mcp/)
+- [MCP client configuration notes](clients.md)
+- [2025 homework](../cohorts/2025/03-mcp/homework.md)

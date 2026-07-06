@@ -1,8 +1,5 @@
 # Module 6 — AI for Automation & Low-/No-Code
 
-> [!NOTE]
-> This page is from the earlier six-module draft and is not part of the current 2026 four-module outline. The archived copy is available at [cohorts/2026/06-automation-lowcode](../cohorts/2026/06-automation-lowcode/).
-
 Videos:
 
 - [n8n workshop](https://www.youtube.com/watch?v=KR9ApZXsV8g&list=PL3MmuxUbc_hLuyafXPyhTdbF4s_uNhc43)

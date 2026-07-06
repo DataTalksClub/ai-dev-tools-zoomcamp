@@ -1,8 +1,5 @@
 # Module 4 — Create a Coding Agent  
 
-> [!NOTE]
-> This page is from the earlier six-module draft and is not part of the current 2026 four-module outline. The archived copy is available at [cohorts/2026/04-build-coding-agent](../cohorts/2026/04-build-coding-agent/). Coding-agent material is being folded into [Module 3](../03-mcp/) in a tool-agnostic way.
-
 [▶️ Workshop Video](https://www.youtube.com/watch?v=Sue_mn0JCsY)  
 [📹 Demo TODO App with Z-ai](https://www.loom.com/share/b4c47e3491504375b9244ea69fe095df)  
 

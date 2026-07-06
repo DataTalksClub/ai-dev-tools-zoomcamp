@@ -3,11 +3,11 @@
 </p>
 
 <h1 align="center">
-    AI Dev Tools Zoomcamp: Write Better Code Faster
+    AI Dev Tools Zoomcamp: AI-Native Software Engineering
 </h1>
 
 <p align="center">
-A free course that helps you use AI tools to write better code, faster.
+A free course on building, extending, auditing, and operating software with AI developer tools.
 </p>
 
 <p align="center">
@@ -27,6 +27,9 @@ A free course that helps you use AI tools to write better code, faster.
 <a href="https://datatalks.club/slack.html"><img src="https://img.shields.io/badge/Slack-Join%20Community-4A154B?style=for-the-badge&logo=slack" /></a>
 </p>
 
+> [!NOTE]
+> The 2026 materials are currently a draft. You can use this repository to see what we are preparing for the next cohort, but the final content, videos, homework, deadlines, and project requirements may change before the cohort starts.
+
 ## Quick Links
 
 | Resource | Link |
@@ -42,7 +45,11 @@ A free course that helps you use AI tools to write better code, faster.
 
 ## About the Course
 
-The AI Dev Tools Zoomcamp is a free, hands-on course that teaches you how to use AI tools to write better code, faster. You'll work with coding assistants, agents, the Model-Context Protocol, AI for testing and CI/CD, and low-code automation, building real projects along the way.
+The AI Dev Tools Zoomcamp is a free, hands-on course that teaches a practical AI-native developer workflow:
+
+> Choose the right AI tool, give it the right context, extend it with the right capabilities, and ship safely with review, audit, security, and DevOps controls.
+
+You'll compare modern AI developer tools, build and deploy a full-stack app, customize coding agents with MCP and reusable capabilities, and use open-source AI tools for security, audit, and operations.
 
 ## Who Should Join
 
@@ -79,55 +86,40 @@ Self-paced steps:
 
 ## Syllabus
 
-### [Module 1: Introduction to Vibe Coding / AI Tools Overview](01-overview/)
+### [Module 1: AI-Native Developer Workflow](01-overview/)
 
-- AI-assisted development with a Snake game example (React + JS)
-- Chat applications: ChatGPT, Claude, DeepSeek, Microsoft Copilot
-- Coding assistants / IDEs: Claude Code, GitHub Copilot, Cursor, Pear
-- Project bootstrappers: Bolt, Lovable
-- Agents: Anthropic Computer Use, PR Agent, and others
+- Compare chat assistants, terminal coding agents, agentic IDEs, cloud agents, and project bootstrappers
+- Learn when to use ChatGPT/Claude/Gemini-style chat, Claude Code/Codex/Gemini CLI-style terminal agents, Cursor/Windsurf/Zed/Antigravity-style IDEs, and Lovable/Bolt/Replit-style bootstrappers
+- Practice context engineering with `AGENTS.md`, `CLAUDE.md`, repository instructions, product specs, architecture notes, testing guidelines, and security checklists
+- Complete one small feature using a disciplined AI development loop: spec, context, plan, edit, run, test, inspect diff, review, commit
 
-### [Module 2: End-to-End Project (Snake)](02-end-to-end/)
+### [Module 2: Build and Ship an AI-Assisted Full-Stack App](02-end-to-end/)
 
-- Use a coding assistant for an end-to-end project
-- Build Snake in React/TS
-- Define the API with OpenAPI
-- Generate a FastAPI server from the OpenAPI specs
-- Add CI/CD
-- Deploy the application
+- Write a product spec and acceptance criteria
+- Build a frontend prototype with AI assistance
+- Define the API contract with OpenAPI
+- Implement a FastAPI or Django backend
+- Add database support, tests, Docker, deployment, and CI/CD
+- Outcome: a deployed full-stack app with tests, Docker setup, OpenAPI contract, and a reproducible development workflow
 
-### [Module 3: Model-Context Protocol](03-mcp/)
+### [Module 3: Coding Agent Capabilities: MCP, Skills, Plugins, and Custom Agents](03-mcp/)
 
-- Enhancing AI assistants with tools
-- Core servers: GitHub, Filesystem, DB/SQL, HTTP/API, CI
-- Practical workflows: repo triage, PR summarization, scripted edits, data queries
-- Local vs. remote servers
-- Security and permissions
+- Learn how modern coding agents are extended and customized
+- Treat Claude Code, Codex, OpenCode, Cursor, GitHub Copilot, Aider, and similar tools as examples of the same broader agent workflow
+- Cover project instructions, MCP, reusable workflows/skills, hooks, specialized subagents, plugins/extensions, and custom agents
+- Outcome: an agent extension pack for your app, including project instructions, a reusable workflow/skill/command, a specialized subagent, a hook, an MCP tool/server, and either a small plugin/extension package or custom agent
 
-### [Module 4: Build an AI Coding Agent (Django)](04-build-coding-agent/)
+### [Module 4: Open-Source AI Tools for Security, Audit, and DevOps](04-ai-security-audit-devops/)
 
-- Build your own coding agent that can scaffold and extend projects
-- Use a Django template as the base project
-- Learn how agents act as project bootstrappers
-- Explore multiple agent orchestration frameworks
-- Outcome: a Django app created and modified by your AI agent
-
-### [Module 5: AI for Testing, CI/CD & DevOps](05-cicd-devops/)
-
-- AI-assisted PR reviews/summaries and change-risk hints
-- Automated test generation, coverage gates, and LLM evals in CI
-- Release notes, changelog drafting, and deployment runbooks
-- Incident postmortems and on-call copilots
-
-### [Module 6: Automation with Low-Code and No-Code AI (n8n)](06-automation-lowcode/)
-
-- Install n8n
-- Create posts for LinkedIn
-- Tailor your CV for a specific position
+- Use open-source AI tools around the production workflow
+- Focus on AI PR audit, AI-accessible security scanning, agent/MCP/skill security scanning, Kubernetes diagnostics, incident investigation, and AI tool governance
+- Required stack: PR-Agent, Semgrep MCP, Snyk Agent Scan, K8sGPT, LiteLLM, and Ollama
+- Optional demos: HolmesGPT and Stakpak
+- Outcome: a security/audit/DevOps hardening package for the final project
 
 ## Final Project
 
-The [final project](project/) applies everything from the course in an end-to-end build of your own, followed by peer review.
+The [final project](project/) applies the course workflow to an end-to-end app of your own: build it with AI assistance, extend the coding agent around it, then audit and harden the result with security and DevOps tooling. Projects are evaluated through peer review.
 
 ## Certificate
 
