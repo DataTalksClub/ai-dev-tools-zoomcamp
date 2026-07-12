@@ -184,8 +184,8 @@ one small reviewed AI-assisted feature
 
 The previous version of this module is archived here:
 
-- [2026 archived Module 1](../cohorts/2026/01-overview/)
-- [2025 homework](../cohorts/2025/01-overview/homework.md)
+- [2025 archived Module 1](../cohorts/2025/01-overview/)
+- [2026 homework](../cohorts/2026/01-overview/homework.md)
 
 ## Community Notes
 

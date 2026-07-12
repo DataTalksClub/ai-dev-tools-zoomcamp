@@ -163,8 +163,8 @@ The app should be deployed, tested, and reproducible from the README.
 
 The previous version of this module is archived here:
 
-- [2026 archived Module 2](../cohorts/2026/02-end-to-end/)
-- [2025 homework](../cohorts/2025/02-end-to-end/homework.md)
+- [2025 archived Module 2](../cohorts/2025/02-end-to-end/)
+- [2026 homework](../cohorts/2026/02-end-to-end/homework.md)
 
 ## Community Notes
 

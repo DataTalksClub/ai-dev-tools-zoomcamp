@@ -298,7 +298,7 @@ Also if you deployed your application to the cloud, don't forget to delete your 
 
 ## Homework
 
-- [2025 Homework](../../2025/02-end-to-end/homework.md)
+- [2026 Homework](../../2026/02-end-to-end/homework.md)
 
 
 ## Community notes

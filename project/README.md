@@ -139,4 +139,4 @@ docs/permissions.md
 
 The previous project requirements are archived here:
 
-- [2026 archived project page](../cohorts/2026/project/)
+- [2025 archived project page](../cohorts/2025/project/)

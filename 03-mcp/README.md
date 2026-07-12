@@ -333,6 +333,6 @@ Demo script:
 
 The previous MCP-focused version of this module is archived here:
 
-- [2026 archived Module 3](../cohorts/2026/03-mcp/)
+- [2025 archived Module 3](../cohorts/2025/03-mcp/)
 - [MCP client configuration notes](clients.md)
-- [2025 homework](../cohorts/2025/03-mcp/homework.md)
+- [2026 homework](../cohorts/2026/03-mcp/homework.md)

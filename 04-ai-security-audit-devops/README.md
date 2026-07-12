@@ -254,4 +254,4 @@ The final report should answer:
 
 The previous version of this module is archived here:
 
-- [2026 archived CI/CD and DevOps module](../cohorts/2026/05-cicd-devops/)
+- [2025 archived CI/CD and DevOps module](../cohorts/2025/05-cicd-devops/)

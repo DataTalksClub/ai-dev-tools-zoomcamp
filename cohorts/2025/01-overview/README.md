@@ -67,7 +67,7 @@ They form the backbone of many assistants and scaffolders.
 
 ## Homework
 
-- [2025 Homework](../../2025/01-overview/homework.md)
+- [2026 Homework](../../2026/01-overview/homework.md)
 
 
 ## Community notes
