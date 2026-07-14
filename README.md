@@ -3,127 +3,226 @@
 </p>
 
 <h1 align="center">
-    AI Dev Tools Zoomcamp: AI-Native Software Engineering
+  AI Dev Tools Zoomcamp: AI-Native Software Engineering
 </h1>
 
 <p align="center">
-A free course on building, extending, auditing, and operating software with AI developer tools.
+  A free, hands-on course on using AI developer tools to build, test, deploy, extend, and audit software without losing engineering discipline.
 </p>
 
 <p align="center">
-<a href="https://courses.datatalks.club/register/ai-dev-tools/"><img src="https://user-images.githubusercontent.com/875246/185755203-17945fd1-6b64-46f2-8377-1011dcb1a444.png" height="50" /></a>
+  <a href="https://courses.datatalks.club/register/ai-dev-tools/"><img src="https://user-images.githubusercontent.com/875246/185755203-17945fd1-6b64-46f2-8377-1011dcb1a444.png" height="50" alt="Register"></a>
 </p>
 
 <p align="center">
-<a href="https://datatalks.club/slack.html">Join Slack</a> •
-<a href="https://app.slack.com/client/T01ATQK62F8/C09HWT76L95">#course-ai-dev-tools-zoomcamp Channel</a> •
-<a href="https://t.me/aidevtoolszoomcamp">Telegram Announcements</a> •
-<a href="https://www.youtube.com/playlist?list=PL3MmuxUbc_hLuyafXPyhTdbF4s_uNhc43">Course Playlist</a> •
-<a href="https://datatalks.club/faq/ai-dev-tools-zoomcamp.html">FAQ</a>
+  <a href="https://courses.datatalks.club/register/ai-dev-tools/">Register</a> |
+  <a href="https://courses.datatalks.club/ai-dev-tools-2026/">Course Platform</a> |
+  <a href="https://datatalks.club/slack.html">Join Slack</a> |
+  <a href="https://app.slack.com/client/T01ATQK62F8/C09HWT76L95">Course Slack Channel</a> |
+  <a href="https://t.me/aidevtoolszoomcamp">Telegram</a> |
+  <a href="https://www.youtube.com/playlist?list=PL3MmuxUbc_hLuyafXPyhTdbF4s_uNhc43">YouTube Playlist</a> |
+  <a href="https://datatalks.club/faq/ai-dev-tools-zoomcamp.html">FAQ</a>
 </p>
 
 <p align="center">
-<a href="https://github.com/DataTalksClub/ai-dev-tools-zoomcamp/pulls"><img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=for-the-badge" /></a>
-<a href="https://datatalks.club/slack.html"><img src="https://img.shields.io/badge/Slack-Join%20Community-4A154B?style=for-the-badge&logo=slack" /></a>
+  <a href="https://github.com/DataTalksClub/ai-dev-tools-zoomcamp/pulls"><img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=for-the-badge" alt="PRs welcome"></a>
+  <a href="https://datatalks.club/slack.html"><img src="https://img.shields.io/badge/Slack-Join%20Community-4A154B?style=for-the-badge&logo=slack" alt="Join Slack"></a>
 </p>
-
-> [!NOTE]
-> The 2026 materials are currently a draft. You can use this repository to see what we are preparing for the next cohort, but the final content, videos, homework, deadlines, and project requirements may change before the cohort starts.
 
 ## Quick Links
 
 | Resource | Link |
-|----------|------|
-| Registration | [Sign up for the 2026 cohort](https://courses.datatalks.club/register/ai-dev-tools/) |
-| Course materials | [GitHub repository](https://github.com/DataTalksClub/ai-dev-tools-zoomcamp) |
-| Video lectures | [YouTube playlist](https://www.youtube.com/playlist?list=PL3MmuxUbc_hLuyafXPyhTdbF4s_uNhc43) |
-| Documentation | [Zoomcamp Logistics](https://datatalks.club/docs/courses/zoomcamp-logistics/) · [AI Dev Tools Zoomcamp](https://datatalks.club/docs/courses/ai-dev-tools-zoomcamp/) |
-| Course platform | [AI Dev Tools Zoomcamp 2026](https://courses.datatalks.club/ai-dev-tools-2026/) |
-| Slack channel | [#course-ai-dev-tools-zoomcamp](https://app.slack.com/client/T01ATQK62F8/C09HWT76L95) |
-| Announcements | [Telegram](https://t.me/aidevtoolszoomcamp) |
-| FAQ | [FAQ document](https://datatalks.club/faq/ai-dev-tools-zoomcamp.html) |
+| --- | --- |
+| Register | [Sign up for the free 2026 cohort](https://courses.datatalks.club/register/ai-dev-tools/) |
+| Start date | August 31, 2026 |
+| Learn | [Course platform](https://courses.datatalks.club/ai-dev-tools-2026/) &middot; [Materials](https://github.com/DataTalksClub/ai-dev-tools-zoomcamp) &middot; [Videos](https://www.youtube.com/playlist?list=PL3MmuxUbc_hLuyafXPyhTdbF4s_uNhc43) |
+| Before the course | [Pre-course live events](#pre-course-live-events) |
+| Community | [Slack](https://datatalks.club/slack.html) &middot; [Course channel](https://app.slack.com/client/T01ATQK62F8/C09HWT76L95) &middot; [Telegram](https://t.me/aidevtoolszoomcamp) |
+| Help | [Docs](https://datatalks.club/docs/courses/ai-dev-tools-zoomcamp/) &middot; [Logistics](https://datatalks.club/docs/courses/zoomcamp-logistics/) &middot; [FAQ](https://datatalks.club/faq/ai-dev-tools-zoomcamp.html) |
+
+> [!NOTE]
+> The 2026 materials are currently being finalized. The repository shows the direction for the next cohort, but some videos, homework, deadlines, project requirements, and module details may change before the cohort starts on August 31, 2026.
+
+## Pre-Course Live Events
+
+Before the 2026 cohort starts, we are running a free live event series to help you understand the updated course content and prepare for the first week.
+
+The sessions are optional, but useful if you want to see the workflows in action before starting the course.
+
+| Event | What it covers | Link |
+| --- | --- | --- |
+| Workshop 1: AI-Native Developer Workflow | How to use AI coding tools for planning, implementation, review, testing, and debugging without losing control of the code. | [RSVP](https://luma.com/lmkti8zj) |
+| Workshop 2: Build and Ship an AI-Assisted Full-Stack App | How to move from product spec to frontend, backend, OpenAPI contract, tests, Docker, deployment, and CI/CD. | [RSVP](https://luma.com/50kvfku2) |
+| Workshop 3: Coding Agent Capabilities | How MCP, skills, plugins, hooks, subagents, and custom agents fit into practical coding-agent workflows. | [RSVP](https://luma.com/ap4l3qlj) |
+| Workshop 4: Open-Source AI Tools for Security, Audit, and DevOps | How to use AI-assisted review, security scanning, audit, diagnostics, and DevOps tools around a project. | [RSVP](https://luma.com/ycsfxigi) |
+| Pre-Course Live Q&A | Bring questions about prerequisites, tools, homework, deadlines, projects, peer review, and certificates. | [RSVP](https://luma.com/a8qa5s2s) |
+| Course Launch | Start the cohort with the course overview, first-week workflow, community links, and live questions. | [RSVP](https://luma.com/tsiusx8s) |
+
 
 ## About the Course
 
-The AI Dev Tools Zoomcamp is a free, hands-on course that teaches a practical AI-native developer workflow:
+AI Dev Tools Zoomcamp is a free, practical course for developers and technical data professionals who want to learn disciplined AI-assisted software development.
 
-> Choose the right AI tool, give it the right context, extend it with the right capabilities, and ship safely with review, audit, security, and DevOps controls.
+The course is built around one core workflow:
 
-You'll compare modern AI developer tools, build and deploy a full-stack app, customize coding agents with MCP and reusable capabilities, and use open-source AI tools for security, audit, and operations.
+> Give AI tools the right context, use them for the right job, review what they produce, test the result, and ship software with guardrails.
+
+You will compare modern AI developer tools, build and deploy a full-stack application, extend coding agents with MCP and reusable capabilities, and use open-source AI tools for security, audit, and DevOps workflows.
+
+This is not a prompt-engineering-only course, and it is not a course about training models or building RAG systems. The focus is day-to-day software development with AI coding assistants, agents, tests, CI/CD, deployment, documentation, and review.
 
 ## Who Should Join
 
-This course is for anyone who wants to use AI tools to help with coding. You don't need any AI experience to start, just curiosity about using AI tools in your work.
+This course is for you if you:
+
+- Already write basic code in Python, JavaScript, TypeScript, or a similar language.
+- Want to use AI coding tools professionally, not only for isolated snippets.
+- Want a repeatable workflow for planning, prompting, reviewing, testing, debugging, and shipping code.
+- Care about maintainability, tests, deployment, documentation, and code review.
+- Want to build a project that demonstrates practical AI-assisted development skills.
+- Benefit from cohort deadlines, community support, peer review, and certificate eligibility.
+
+The course is especially relevant for software engineers, ML engineers, MLOps engineers, AI engineers, data scientists, data engineers, analysts who write code, and technical students who want practical project experience.
+
+This course is probably not the right fit if you have never programmed before, want a non-technical AI introduction, or mainly want model training, fine-tuning, LangChain, vector databases, or RAG.
 
 ## Prerequisites
 
-- A basic ability to program (Python, JavaScript, or similar)
-- No prior experience with AI tools is required
+You do not need prior AI tools experience.
+
+You should have:
+
+- Basic programming ability in Python, JavaScript, TypeScript, or a similar language.
+- Comfort using the command line.
+- Git and GitHub basics.
+- Willingness to read, review, debug, and maintain AI-generated code.
+
+Helpful, but not required:
+
+- Experience with a code editor such as VS Code, Cursor, or a similar IDE.
+- Basic web development familiarity.
+- Basic Docker familiarity.
+
+Not required:
+
+- Prior coding assistant or coding agent experience.
+- Django experience.
+- A powerful machine or GPU.
 
 ## How to Take the Course
 
-There are two ways to follow the course: live and self-paced.
+You can follow the course as part of the live cohort or use the materials self-paced.
 
 | | Live Cohort | Self-Paced |
-|-|-|-|
+| --- | --- | --- |
 | Start | August 31, 2026 | Anytime |
-| Lectures | Pre-recorded | Pre-recorded |
-| Homework | Graded | Available but not scored |
-| Leaderboard | ✅ Yes | ❌ No |
-| Peer Review | ✅ Yes | ❌ No |
-| Certificate | ✅ Yes | ❌ No |
 | Cost | Free | Free |
-| Register | [Sign up here](https://courses.datatalks.club/register/ai-dev-tools/) | Just start learning! |
+| Lectures | Pre-recorded | Pre-recorded |
+| Homework | Graded | Available, but not scored |
+| Leaderboard | Yes | No |
+| Peer review | Yes | No |
+| Certificate eligibility | Yes | No |
+| Registration | [Sign up here](https://courses.datatalks.club/register/ai-dev-tools/) | Start from the repository |
 
 > [!IMPORTANT]
-> "Live cohort" does not mean live classes. All lectures are pre-recorded. "Live" means working alongside others with deadlines, scored homework, a leaderboard, peer review, and a certificate at the end.
+> "Live cohort" does not mean mandatory live classes. Lectures are pre-recorded. Live cohort means shared deadlines, scored homework, leaderboard participation, peer review, community momentum, and certificate eligibility.
 
 Self-paced steps:
 
-1. Follow the materials on [GitHub](https://github.com/DataTalksClub/ai-dev-tools-zoomcamp)
-2. Ask questions and share progress in [Slack](https://datatalks.club/slack.html)
-3. Do the homework (self-checked) and build a project for your portfolio
+1. Follow the materials in this repository.
+2. Watch the videos in the [course playlist](https://www.youtube.com/playlist?list=PL3MmuxUbc_hLuyafXPyhTdbF4s_uNhc43).
+3. Ask questions and share progress in [DataTalks.Club Slack](https://datatalks.club/slack.html).
+4. Do the homework for practice and build a portfolio project.
 
 ## Syllabus
 
 ### [Module 1: AI-Native Developer Workflow](01-overview/)
 
-- Compare chat assistants, terminal coding agents, agentic IDEs, cloud agents, and project bootstrappers
-- Learn when to use ChatGPT/Claude/Gemini-style chat, Claude Code/Codex/Gemini CLI-style terminal agents, Cursor/Windsurf/Zed/Antigravity-style IDEs, and Lovable/Bolt/Replit-style bootstrappers
-- Practice context engineering with `AGENTS.md`, `CLAUDE.md`, repository instructions, product specs, architecture notes, testing guidelines, and security checklists
-- Complete one small feature using a disciplined AI development loop: spec, context, plan, edit, run, test, inspect diff, review, commit
+Learn how to use AI developer tools without handing over control of the codebase.
+
+You will:
+
+- Compare chat assistants, terminal coding agents, agentic IDEs, cloud agents, and project bootstrappers.
+- Learn when to use tools such as ChatGPT, Claude, Gemini, Claude Code, Codex, Gemini CLI, Cursor, GitHub Copilot, Antigravity, Lovable, Bolt, and similar systems.
+- Practice context engineering with `AGENTS.md`, repository instructions, product specs, architecture notes, testing guidelines, and security checklists.
+- Complete a small feature using a disciplined loop: spec, context, plan, edit, run, test, inspect diff, review, commit.
+
+Outcome: a repeatable AI-assisted development workflow you can use in your own repositories.
 
 ### [Module 2: Build and Ship an AI-Assisted Full-Stack App](02-end-to-end/)
 
-- Write a product spec and acceptance criteria
-- Build a frontend prototype with AI assistance
-- Define the API contract with OpenAPI
-- Implement a FastAPI or Django backend
-- Add database support, tests, Docker, deployment, and CI/CD
-- Outcome: a deployed full-stack app with tests, Docker setup, OpenAPI contract, and a reproducible development workflow
+Use AI tools to build an end-to-end application while keeping the engineering workflow explicit.
+
+You will:
+
+- Write a product spec and acceptance criteria.
+- Build a frontend prototype with AI assistance.
+- Define the API contract with OpenAPI.
+- Implement a FastAPI or Django backend.
+- Add database support.
+- Add unit and integration tests.
+- Containerize the app with Docker.
+- Deploy the app.
+- Add CI/CD where possible.
+
+Outcome: a deployed full-stack application with tests, Docker setup, OpenAPI contract, and reproducible development instructions.
 
 ### [Module 3: Coding Agent Capabilities: MCP, Skills, Plugins, and Custom Agents](03-mcp/)
 
-- Learn how modern coding agents are extended and customized
-- Treat Claude Code, Codex, OpenCode, Cursor, GitHub Copilot, Aider, and similar tools as examples of the same broader agent workflow
-- Cover project instructions, MCP, reusable workflows/skills, hooks, specialized subagents, plugins/extensions, and custom agents
-- Outcome: an agent extension pack for your app, including project instructions, a reusable workflow/skill/command, a specialized subagent, a hook, an MCP tool/server, and either a small plugin/extension package or custom agent
+Learn how modern coding agents are extended, customized, and connected to external tools.
+
+You will:
+
+- Understand MCP clients, servers, tools, resources, prompts, and communication modes.
+- Configure MCP-enabled workflows in coding tools.
+- Use reusable instructions, workflows, commands, skills, hooks, and specialized subagents.
+- Explore plugin and extension patterns.
+- Build a small agent extension pack around your app.
+- Discuss local vs. remote tools, permissions, and security risks.
+
+Outcome: project-specific agent capabilities that make AI tools more useful and safer inside your development workflow.
 
 ### [Module 4: Open-Source AI Tools for Security, Audit, and DevOps](04-ai-security-audit-devops/)
 
-- Use open-source AI tools around the production workflow
-- Focus on AI PR audit, AI-accessible security scanning, agent/MCP/skill security scanning, Kubernetes diagnostics, incident investigation, and AI tool governance
-- Required stack: PR-Agent, Semgrep MCP, Snyk Agent Scan, K8sGPT, LiteLLM, and Ollama
-- Optional demos: HolmesGPT and Stakpak
-- Outcome: a security/audit/DevOps hardening package for the final project
+Use open-source AI tools around the production workflow, not only during coding.
+
+You will:
+
+- Use AI-assisted pull request review and audit tools.
+- Connect AI workflows to security scanning and policy checks.
+- Explore agent, MCP, and skill security scanning.
+- Use AI-assisted diagnostics for infrastructure and incidents.
+- Discuss AI tool governance, secrets, data exposure, and auditability.
+
+Example tools include PR-Agent, Semgrep MCP, Snyk Agent Scan, K8sGPT, LiteLLM, Ollama, and related open-source tooling.
+
+Outcome: a security, audit, and DevOps hardening package for your final project.
 
 ## Final Project
 
-The [final project](project/) applies the course workflow to an end-to-end app of your own: build it with AI assistance, extend the coding agent around it, then audit and harden the result with security and DevOps tooling. Projects are evaluated through peer review.
+The [final project](project/) applies the course workflow to an end-to-end application of your own.
+
+You will:
+
+- Choose a problem and describe the expected system behavior.
+- Build a frontend.
+- Build a backend.
+- Define frontend/backend communication with an OpenAPI contract.
+- Add database or persistent storage.
+- Test the application.
+- Containerize the application.
+- Deploy it so others can try it.
+- Document how AI tools, prompts, workflows, agent instructions, MCP, or automation were used.
+
+For the live cohort certificate path, projects are evaluated through peer review. Learners must pass the final project and complete the required peer reviews.
 
 ## Certificate
 
-Certificates are awarded to learners who complete the final project and the required peer reviews during a live cohort. See [Certification](https://datatalks.club/docs/courses/zoomcamp-logistics/certification/) for how certification works and how to get your certificate.
+Certificates are available during the live cohort for learners who complete the final project and the required peer reviews.
+
+Homework helps you stay on track, but the certificate is based on the final project and peer review requirements. See [Certification](https://datatalks.club/docs/courses/zoomcamp-logistics/certification/) for the general certificate process.
+
+Self-paced learners can use all materials for free, but certificate eligibility requires participation in a live cohort.
 
 ## Instructors
 
@@ -131,64 +230,80 @@ Certificates are awarded to learners who complete the final project and the requ
 - [Bhavani Ravi](https://www.linkedin.com/in/bhavanicodes)
 - [Moein Foroughi](https://www.linkedin.com/in/moein-foroughi-ce/)
 
-## Testimonials
+## Learner Stories
 
 > This course fundamentally changed how I approach AI development. I moved from "building models" to designing AI-assisted systems that are faster to ship and easier to iterate on.
 >
-> During the course, I built:
+> During the course, I built a portfolio optimization tool, a full-stack application using ChatGPT, Lovable, and Antigravity, and a structured GitHub project with reproducible documentation.
 >
-> - A portfolio optimization tool powered by AI-assisted development
-> - A full-stack application using ChatGPT, Lovable, and Antigravity
-> - A structured GitHub project with clean documentation and reproducible workflow
+> - [Yann Pham-Van](https://www.linkedin.com/in/chasseur2valeurs/), Freelance Data Scientist
+
+> The course taught me how to use coding agents effectively, debug issues, and gave me exposure to MCPs, tools, and prompts. It helped me conceptualize any idea into a working prototype.
 >
-> What changed for me: I now think in terms of system design rather than isolated scripts. I learned how to structure AI tool usage, validate outputs, and integrate generated code into disciplined engineering workflows. The biggest shift was moving from experimentation to controlled, production-oriented iteration. I can now prototype and deploy AI-enabled tools significantly faster without sacrificing rigor.
+> - [Revathy Ramalingam](https://www.linkedin.com/in/revathy-ramalingam/), Senior Software Engineer at Yalabs Solutions
+
+> During the course I built a Finnish learning website which helps English users practice reading, writing, listening, and speaking skills for the Finnish language.
 >
-> — [Yann Pham-Van](https://www.linkedin.com/in/chasseur2valeurs/), Freelance Data Scientist
-
-> The course taught me how to use coding agents effectively, debug issues, and gave me exposure to MCPs, tools, and prompts. It helped me conceptualize any idea into a working prototype. And finally, it helped me land a job after a long career break!
+> I used Antigravity with Gemini and Claude, a Context7 documentation MCP server, TypeScript, Python, Next.js, FastAPI, SQLite, and CI/CD with GitHub Actions.
 >
-> — [Revathy Ramalingam](https://www.linkedin.com/in/revathy-ramalingam/), Senior Software Engineer at Yalabs Solutions
+> - [Kaiquan Mah](https://www.linkedin.com/in/kaiquan-mah), Data Scientist at Total eBiz Solutions
 
-> During the course I built a Finnish learning website which helps English users learn and practice reading, writing, listening and speaking skills for the Finnish language. I used the Antigravity IDE with Gemini 3 Pro and Claude Opus, a Context7 documentation MCP server, TypeScript and Python, Next.js and FastAPI, SQLite, and CI/CD with GitHub Actions.
->
-> What changed for me: learning a systematic way to think about requirements and design an application before building and testing components iteratively, packaging frontend and backend into a single container for easier deployment, and getting comfortable debugging frontend and backend tests during integration and deployment.
->
-> — [Kaiquan Mah](https://www.linkedin.com/in/kaiquan-mah), Data Scientist at Total eBiz Solutions
+## Community and Support
 
-## Community & Support
+### Slack
 
-### Getting Help on Slack
+Join [DataTalks.Club Slack](https://datatalks.club/slack.html) and use the [#course-ai-dev-tools-zoomcamp](https://app.slack.com/client/T01ATQK62F8/C09HWT76L95) channel for course questions, troubleshooting, and discussion.
 
-Join the [#course-ai-dev-tools-zoomcamp](https://app.slack.com/client/T01ATQK62F8/C09HWT76L95) channel on [DataTalks.Club Slack](https://datatalks.club/slack.html) for discussions, troubleshooting, and networking.
+Before posting questions, please check:
 
-To keep discussions organized:
+- [Question guidelines](https://datatalks.club/docs/courses/zoomcamp-logistics/asking-questions/)
+- [Community guidelines](https://datatalks.club/slack/guidelines.html)
 
-- Follow [our guidelines](https://datatalks.club/docs/courses/zoomcamp-logistics/asking-questions/) when posting questions.
-- Review the [community guidelines](https://datatalks.club/slack/guidelines.html).
+### Announcements
+
+Course announcements are posted in the [Telegram channel](https://t.me/aidevtoolszoomcamp). Telegram messages are also reposted to the course Slack channel.
 
 ### Learning in Public
 
-Share your progress as you go, using the hashtag #aidevtools and tagging Alexey Grigorev or DataTalksClub. It helps you learn better, builds your network, and earns you bonus points. See the [learning in public guide](https://datatalks.club/docs/courses/zoomcamp-logistics/learning-in-public/).
+Share your progress with the hashtag `#aidevtools` and tag Alexey Grigorev or DataTalksClub. Learning in public helps you stay accountable, meet other learners, and build visible proof of your work.
+
+See the [learning in public guide](https://datatalks.club/docs/courses/zoomcamp-logistics/learning-in-public/).
 
 ## Sponsors
 
-Interested in supporting our community? Reach out to [alexey@datatalks.club](mailto:alexey@datatalks.club).
+Interested in supporting DataTalks.Club and this course? Reach out to [alexey@datatalks.club](mailto:alexey@datatalks.club).
 
 ## FAQ
 
-A few common questions. For everything else, see the full [AI Dev Tools Zoomcamp FAQ](https://datatalks.club/faq/ai-dev-tools-zoomcamp.html).
+For the full list, see the [AI Dev Tools Zoomcamp FAQ](https://datatalks.club/faq/ai-dev-tools-zoomcamp.html).
 
-Q: Is this course really free?<br/>
-A: Yes. All videos, materials, and homework are free and open-source.
+### Is this course free?
 
-Q: Do I need prior experience?<br/>
-A: No AI experience is needed. A basic ability to program in Python, JavaScript, or a similar language is enough.
+Yes. The videos, materials, homework, and live cohort participation are free.
 
-Q: What does "live cohort" mean? Are there live classes?<br/>
-A: No mandatory live classes. All lectures are pre-recorded. "Live" means deadlines, scored homework, a leaderboard, peer review, and certificate eligibility.
+### Do I need AI experience?
 
-Q: Can I take it self-paced, and will I get a certificate?<br/>
-A: Yes, you can start anytime. Certificates require completing the final project and 3 peer reviews during a live cohort.
+No. Prior AI coding tool experience is not required. You should be able to write basic code and work with a project repository.
+
+### Do I need to be a software engineer?
+
+No. The course is also relevant for data scientists, ML engineers, MLOps engineers, data engineers, analysts who write code, and technical students. You do need basic programming ability.
+
+### Are there live classes?
+
+Lectures are pre-recorded. The live cohort adds deadlines, scored homework, a leaderboard, peer review, community support, and certificate eligibility.
+
+### Can I take the course self-paced?
+
+Yes. You can use the videos and repository materials anytime. Self-paced learners are not certificate-eligible unless they join a live cohort.
+
+### Do I need a powerful computer or GPU?
+
+No. A powerful machine or GPU is not required.
+
+### Is this course about RAG or model training?
+
+No. The course focuses on AI-assisted software development workflows: coding assistants, agents, MCP, testing, CI/CD, deployment, documentation, review, security, audit, and DevOps.
 
 ## About DataTalks.Club
 
@@ -197,20 +312,20 @@ A: Yes, you can start anytime. Certificates require completing the final project
 </p>
 
 <p align="center">
-<a href="https://datatalks.club/">DataTalks.Club</a> is a global online community of data enthusiasts. It's a place to discuss data, learn, share knowledge, ask and answer questions, and support each other.
+  <a href="https://datatalks.club/">DataTalks.Club</a> is a global online community of data enthusiasts. It is a place to discuss data, learn, share knowledge, ask and answer questions, and support each other.
 </p>
 
 <p align="center">
-<a href="https://datatalks.club/">Website</a> •
-<a href="https://datatalks.club/slack.html">Join Slack Community</a> •
-<a href="https://us19.campaign-archive.com/home/?u=0d7822ab98152f5afc118c176&id=97178021aa">Newsletter</a> •
-<a href="http://lu.ma/dtc-events">Upcoming Events</a> •
-<a href="https://www.youtube.com/@DataTalksClub/featured">YouTube</a> •
-<a href="https://github.com/DataTalksClub">GitHub</a> •
-<a href="https://www.linkedin.com/company/datatalks-club/">LinkedIn</a> •
-<a href="https://x.com/DataTalksClub">X</a>
+  <a href="https://datatalks.club/">Website</a> |
+  <a href="https://datatalks.club/slack.html">Join Slack Community</a> |
+  <a href="https://us19.campaign-archive.com/home/?u=0d7822ab98152f5afc118c176&id=97178021aa">Newsletter</a> |
+  <a href="http://lu.ma/dtc-events">Upcoming Events</a> |
+  <a href="https://www.youtube.com/@DataTalksClub/featured">YouTube</a> |
+  <a href="https://github.com/DataTalksClub">GitHub</a> |
+  <a href="https://www.linkedin.com/company/datatalks-club/">LinkedIn</a> |
+  <a href="https://x.com/DataTalksClub">X</a>
 </p>
 
-All the activity at DataTalks.Club mainly happens on [Slack](https://datatalks.club/slack.html). We post updates there and discuss different aspects of data, career questions, and more.
+Most DataTalks.Club activity happens in [Slack](https://datatalks.club/slack.html). We post updates there, discuss course questions, and help learners support each other.
 
-At DataTalks.Club, we organize online events, community activities, and free courses. You can learn more about what we do at [DataTalks.Club docs](https://datatalks.club/docs/general/).
+At DataTalks.Club, we organize online events, community activities, and free courses. Learn more in the [DataTalks.Club docs](https://datatalks.club/docs/general/).
