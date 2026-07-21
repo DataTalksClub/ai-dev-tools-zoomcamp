@@ -8,90 +8,71 @@ Context engineering is the practice of making your project
 understandable to an agent before the agent starts working.
 
 It is not "writing better prompts". A prompt is one message in one
-session. Context is everything that is true about the project every
-time anyone opens it with any tool.
-
-In practice it means four things: conventions are explicit instead of
-inferred from whichever file the agent read first, commands are
-discoverable, constraints are visible, and review criteria are
-repeatable.
-
-The point of all four is the same: you stop repeating yourself.
-
-## Anything you explain twice belongs in a file
-
-A session starts with no memory of the last one. The agent that
-refactored your test suite yesterday does not know today that you use
-`pytest` and not `unittest`, that the migrations live somewhere
-unusual, or that you asked it three times not to comment every line.
-
-So every session you pay the same tax: a few messages of setup, or a
-few corrections after it does the wrong thing. The rule I use:
-
-> If I have explained something to an agent more than twice, it goes
-> in a file.
-
-Writing it down costs five minutes once. Explaining it costs two
-minutes every session, forever, and some sessions you will forget and
-get the wrong thing instead.
+session. Context is everything that is relevant for the agent to know before they start their task.
 
 ## AGENTS.md
 
+Every session starts from a clean slate. The agent doesn't remember what happend in the past.
+
+The agent that refactored your test suite yesterday does not know today
+that you use `pytest` and not `unittest`. So it has to discover it over and over again.
+
+You can help it by spefying these things in `AGENTS.md`.
 `AGENTS.md` is a plain Markdown file at the root of the repo
 describing the project to any coding agent that opens it.
 
-Be precise about what it is. It is a convention that spread across
-tools, not a formal standard with a spec and a compliance test. Some
-agents look for it and read it automatically, some read a different
-filename, some need to be told about it. Support varies and it changes.
+You can put anything you want to this file, and it will be read by the 
+agents at the startup. 
 
-We use it anyway, for one reason: of all the options it is the most
-portable. It is a normal Markdown file with a name several tools
-already recognize, and any tool that does not recognize it can still
-be pointed at it. Tools change fast, and you do not want your project
-knowledge locked into the file format of whichever one you picked in
-lesson 2.
-
-## One source of truth
-
-Claude Code reads `CLAUDE.md`. So if that is your tool, do not
-maintain two files. Make `CLAUDE.md` one line long:
+Note: Claude Code reads `CLAUDE.md`, not `AGENTS.md`, like Codex and most other tools. I use multuple coding assistants, so for me my `CLAUDE.md` looks like that:
 
 ```markdown
 @AGENTS.md
 ```
 
-That imports `AGENTS.md`. One file holds the content, and a one-line
-pointer sends the tool to it.
-
-Other tools have their own instruction-file conventions, with their
-own filenames and locations. The move is the same in each case: keep
-the content in `AGENTS.md` and have the tool-specific file point at
-it. Then switching tools, or two people on a team using different
-tools, costs nothing.
-
 ## What belongs in it
 
-most of these thing belong in readme 
-analyze my projects in ~/git to see what I include there 
+You don't describe the project in AGENTS.md. The
+description belongs in the README, which the agent can read anyway.
 
-Seven things, each of them short:
+What you put there:
 
-1. What the project is - one or two sentences
-2. How to run it - the actual commands
-3. How to test it - including how to run a single test
-5. Conventions to follow - the things you would comment on in
-   review
-6. Constraints and things it must not do - the most valuable
-   section, and the one people forget
-7. Where the important code lives - a short map, not a file
-   listing
+- Commands, especially the non-obvious ones - how to run a single test,
+  not just the whole suite
+- Tooling rules - which package manager, which command form
+- Constraints and cautions - what does not exist, and what must never
+  be printed or committed
+- Pointers to the real documents - where the spec, the process and the
+  tasks live
+- Corrections you got tired of repeating - anything you have typed more
+  than once
 
-Here is a realistic one for the Snake game we have been using:
+`AGENTS.md` is not
+documentation for humans (but it could be useful for them too).
+It is the accumulated set of things the agent got wrong,
+plus the things it cannot guess, or finding them out is not trivail.
+
+Keep it short.
+
+Here is one for the meeting cost calculator:
 
 ```markdown
+Commands
 
+- `npm run dev` - dev server
+- `npm test` - the whole suite
+- `npm test -- cost` - one test file
+
+Rules
+
+- Cost and rate calculations go in `src/cost/`, not in components
+- Money is integer cents everywhere.
+- Do not add dependencies without asking
+- Commit regularly
 ```
+
+I try to avoid putting markup tehre like sections or bold formatting, tables, etc. They don't add any value and only result in higher token consumption.
+
 
 
 ## What does not belong in it
@@ -101,17 +82,13 @@ shape: the file grows until nobody, human or model, follows it.
 
 Keep these out:
 
-- Transient task state. "Currently working on the pause menu" is a
-  session note, not a project fact. Stale within a day.
+- Transient task state. "Currently working on the cost calculation" is a
+  session note, not a project fact.
 - Anything secret. Keys, tokens, internal URLs, customer names.
   This file is read by tools, copied into contexts and committed to
-  git. Treat it as public. 
-  let's also have a section about managing secrets. I'll talk about .env files and dirdotenv
-- Long prose. Three paragraphs on your testing philosophy will not
-  change what the agent does. One line saying "game logic goes in
-  `SnakeGame.jsx`, not `App.jsx`" will.
-- Rules nobody enforces. A rule that has been broken for six
-  months with no consequence is a wish. Delete it or enforce it.
+  git. Use `.env` for that.
+- Long prose. 
+- Rules nobody enforces. Delete it or enforce it programmatically.
 
 A lean file that gets followed beats a long one that gets skimmed.
 Every line you add makes the other lines slightly less likely to be
@@ -119,15 +96,75 @@ noticed. That cost is invisible until the file is already too big. If
 yours is drifting past a couple of screens, the signal is to cut, not
 to add a table of contents.
 
-## This is what lesson 3 was for
 
-In lesson 3 you pointed an agent at an unfamiliar codebase, asked it
-to explain the entry points, the layout, the conventions and the build
-commands, then checked the answer. That output is the raw material for
-this file. The map you built, the conventions you confirmed, the
-commands you verified actually work: that is `AGENTS.md`, minus the
-parts that turned out to be wrong. Reading a codebase and writing its
-context file are the same activity in two directions.
+## The process document
+
+`process.md` says how work moves through the project.
+
+It could live inside `AGENTS.md`, and on day one it may as well. It
+gets its own file for two reasons.
+
+It changes for different reasons than everything else. You can rewrite
+how you work without touching a line of the project, and restructure
+the project without changing how you work. Things that change
+separately are easier to keep in separate files.
+
+And it is the section that grows. Three lines today, but as soon as
+more than one agent is involved it turns into roles, handoffs, and
+rules about who is allowed to commit. Keeping it out of `AGENTS.md` is
+what stops `AGENTS.md` growing along with it.
+
+For now it can be three lines:
+
+```markdown
+- Tasks are GitHub issues, one at a time
+- Read the acceptance criteria before starting and before closing
+- Do not commit until the tests pass
+```
+
+Let's include it in our AGENTS.md:
+
+```md
+The working process in `_docs/process.md`. When implementing a task, read this file.
+```
+
+
+## Other documents
+
+In addition to `AGENTS.md`, you can keep a separate document for each
+thing you find yourself explaining over and over. The ones that come up
+most often:
+
+- `testing-guidelines.md` - what counts as a real test, and the ways
+  agents write fake ones
+- `design-system.md` - colours, typography, spacing, so the UI does not
+  drift every session
+- `setup.md` - how to get the project running from nothing
+- `api.md` - the endpoints, and what they return
+
+I keep them together in a `_docs/` folder and link them from `AGENTS.md`.
+
+The agent reads `AGENTS.md` at the start of every session, so it learns that these documents exist. 
+It does not read them yet, only when it's needed for the task.
+
+The section with document can look like:
+
+```markdown
+Documents
+
+- `_docs/plan.md` - what we are building
+- `_docs/process.md` - how work moves through the project
+- Before writing tests, read `_docs/testing-guidelines.md`
+- For anything touching the UI, read `_docs/design-system.md`
+```
+
+It then opens the document relevant for the task: 
+
+- A task about the UI pulls in the design system.
+- A task about tests pulls in the testing guidelines.
+
+it keeps `AGENTS.md` short while the project's written
+context keeps growing.
 
 ## Keep it alive
 
@@ -169,8 +206,9 @@ one with a good `AGENTS.md`.
 
 This is the artifact for this module. Before you move on:
 
-1. Write `AGENTS.md` for your own project, using the seven headings
-   above. Keep it under two screens.
+1. Write `AGENTS.md` for your own project: the commands, the rules,
+   and pointers to your spec and process docs. Keep it under two
+   screens.
 2. Add a `CLAUDE.md` containing `@AGENTS.md`, or the equivalent
    pointer for your tool.
 3. Start a fresh session, give the agent a small task, and watch what
@@ -179,4 +217,4 @@ This is the artifact for this module. Before you move on:
 Step 3 is the one people skip, and it is the only one that tells you
 whether the file works.
 
-[← Specs Before Code](04-specs.md) | [Steering a Session →](06-steering-a-session.md)
+[← Bootstrapping a Project](04-bootstrapping.md) | [Implementing a Task →](06-implementing-a-task.md)

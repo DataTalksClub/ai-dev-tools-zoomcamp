@@ -187,4 +187,4 @@ implementation.
 That last sentence is the fundamentals of this whole module, restated with
 more agents. The tooling changes fast. That doesn't.
 
-[← Loop Engineering](08-loop-engineering.md) | [Judgment and Wrap-up →](10-wrap-up.md)
+[← Loop Engineering](08-loop-engineering.md) | [Wrap-up →](10-wrap-up.md)

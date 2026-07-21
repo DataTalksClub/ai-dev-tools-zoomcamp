@@ -28,127 +28,85 @@ Nowadays, "vibe coding" means that you describe what you
 want, accept whatever the model produces, and never really read it.
 
 This year, we name it "AI-native developer workflow": we show how to use AI tools
-with context, constraints, verification, and human review.
+with context, constraints, and verification.
 
-## The three questions
+## The workflow
 
 The difference between the two is not how much AI you use. You can
 delegate almost everything - the typing, the tests, the refactor, the
-commit message. That is fine.
+commit message. That is fine, and this module does exactly that.
 
-The difference is whether you can answer three questions about any
-change that lands in your repo:
+The difference is that the work gets specified before it starts and
+checked when it ends. Here is the loop we build over the module:
 
-1. **What did I ask for?**
-2. **What actually changed?**
-3. **How do I know it works?**
+- Brainstorm - work out what you actually want
+- Specs - write it down, concretely
+- Decompose - turn the spec into a backlog of tasks
+- Implement - one task at a time
+- Verify - a separate session checks the work
+- Loop - `/goal` works through the backlog
 
-where does it come from? Why these questions? I don't remember having this in the my notes
-can we have a three letter mnemonic abbrebiation to remember it? 
-can you also expland on each of these questions - what they mean?
-in this module I want to build the snake game. can we show how it maps to the game? 
+The end state is a project where you can open a fresh session, type
+`/goal work through the backlog`, and watch the agent do its work.
 
-If you can answer all three, it does not matter that a model wrote the
-code. If you cannot, it does not matter that you wrote it yourself.
+It will:
 
-I don't understand it it's too abstract. 
-
-Almost everything in this module is one of those three questions in
-more detail. 
-same here. let's not have abstract claims.
-
-Specs and context are question one. what is it exactly? 
-Reading diffs and steering a session are question two.
-Tests and verification are question three.
-
-I don't want to focus on reading diffs - this slows us down. 
-we do want to undestand what's happening but on the more broad level
-I want them to become architects and product managers, so no need to understand 
-every single code line and every diff.
-
+- read `AGENTS.md` and learn how to run and test the project
+- take the next open task from the backlog
+- implement it against the acceptance criteria
+- run the tests, and fix the code if something breaks
+- hand the result to a QA agent for validation
+- commit, close the task, and pick up the next one
+- stop when the backlog is empty
 
 
 ## You become an agent manager
 
-There's a shift underneath this that's worth naming early.
+When writng code, typing is no longer the bottleneck.
+But deciding what should be built and confirming that it was built correctly is.
 
-When AI tools were autocomplete, your job was still typing. Now a
-single instruction can produce a plan, twelve file edits and a test
-run. The typing is no longer the bottleneck. Deciding what should be
-built and confirming that it was built correctly is.
-
-So your role moves toward something closer to a manager of a very fast,
-very literal junior developer who never gets tired and never says "I'm
-not sure". You brief it, you watch it work, you check the output, you
-send it back when it's wrong.
-
-That's not a metaphor about the future. It's how the rest of this
-module is organized.
+As a developer, your role moves toward a manager of a very fast junior developer who never gets tired. You tell it what to do, you watch it work, check the output, send it back when it's wrong.
 
 ## What we cover
 
-Ten lessons, in three groups.
-
-**The map** - lesson 2. Five categories of AI developer tools: chat
-assistants, terminal coding agents, agentic IDEs, cloud agents and
-project bootstrappers. What each is good at, where each hurts, and how
-to place a tool you've never seen before. You also pick the tool you'll
-use for the rest of the course.
-
-**The working practices** - lessons 3 to 7. This is the core of the
-module, and it follows the order of real work:
-
-| Lesson | Question it answers |
+| Lesson | |
 |---|---|
-| 3. Understanding an unfamiliar codebase | Where am I? |
-| 4. Specs before code | What am I asking for? |
-| 5. Context engineering | What does the agent know before it starts? |
-| 6. Steering a session | What do I do while it runs? |
-| 7. Tests and verification | How do I know it works? |
+| 2. [The tool map](02-tool-map.md) | What an agent is, the five categories, and picking yours for the cohort |
+| 3. [Specs before code](03-specs.md) | Talking a design through, then writing it down |
+| 4. [Bootstrapping a project](04-bootstrapping.md) | Spec into an empty folder, decomposed into a backlog |
+| 5. [Context engineering](05-context-engineering.md) | What the agent knows before it starts |
+| 6. [Implementing a task](06-implementing-a-task.md) | One task, start to finish |
+| 7. [Tests and verification](07-tests-and-verification.md) | Getting something other than the agent's word |
+| 8. [Loop engineering](08-loop-engineering.md) | `/goal`, and running the agent repeatedly |
+| 9. [Graph engineering](09-graph-engineering.md) | Two agents working the backlog between them |
+| 10. [Wrap-up](10-wrap-up.md) | What transfers when the tools change again |
 
-These transfer to every tool in every category, including the ones that
-don't exist yet.
 
-**The vocabulary** - lessons 8 and 9. [Loop
-engineering](08-loop-engineering.md) and [graph
-engineering](09-graph-engineering.md). These are terms you will meet on
-X and in blog posts, usually without a definition attached. They name
-real practices: running one agent repeatedly against a check, and
-splitting work across several agents with defined roles. You should be
-able to say what they mean and judge whether your repo is ready for
-either.
+We stay at the fundamentals level here and in the next modules we built upon that:
 
-Lesson 10 closes with judgment: when to reach for an agent, when to
-write it yourself, and what stays true when the tools change again.
+- in [Module 2](../../02-end-to-end/) we build an app end to end
+- in [Module 3](../../03-mcp/) we discuss more advanced topics like MCP, skills, hooks, subagents, and plugins
 
-I don't think it makes sense anymore to write the code yourself. let's revise that.
-
-We stay at the fundamentals level here. Agent capabilities proper -
-MCP, skills, hooks, subagents, plugins - are [Module
-3](../../03-mcp/). Building and shipping a real app end to end is
-[Module 2](../../02-end-to-end/).
 
 ## The running example
 
-Throughout the module we use a small Snake game. It's a good teaching
-app: you can see it working or not working in a second, it's small
-enough to read end to end, and it still has real parts - game logic,
-rendering, state, tests.
+Throughout the module we build a meeting cost calculator.
 
-[This repository has two versions of it, both generated during the
-previous cohort:
+The premise is that meetings in the company have got out of hand, and
+nobody notices because a meeting feels free. So we put a number on it:
+add the people in the room with their salaries, start the timer, and
+watch what the meeting costs while it runs. Put it on the screen in the
+room and let it argue on your behalf.
 
-- [snake-chatgpt/](../snake-chatgpt/) - built by pasting code out of a
-  chat window
-- [snake-claude-code/](../snake-claude-code/) - built by a terminal
-  agent working directly in the folder]
+It is a good teaching app. It is small enough to hold in your head, you
+can see whether it works in a second, and it has a real core worth
+specifying: turning salaries into a per-second rate, accruing cost over
+time, and pausing without losing the total.
 
-no, we no longer do. I will create it again a new version, only one
-
-
-In [Module 2](../../02-end-to-end/) this game grows into a full-stack
-app with a backend, a database and a deployment. The habits you build
-here are the habits you'll use for the rest of the course.
+You build it yourself over the module, starting from a spec in an empty
+folder in [lesson 4](04-bootstrapping.md). There is no version in this
+repo to copy - the point is the process that produces it, and you can
+only see that by running it.
 
 
 ## What you need to know
@@ -159,7 +117,7 @@ wrong. You need a computer where you can install things and use a
 terminal.
 
 No prior AI experience is required. If you've never used a coding agent
-before, this module is exactly where to start. And you do not need to
-know Django for the homework. That's rather the point of it.
+before, this module is exactly where to start. 
+
 
 [← Back to module](../) | [The Tool Map →](02-tool-map.md)

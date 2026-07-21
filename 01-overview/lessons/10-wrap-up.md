@@ -26,7 +26,7 @@ you: what you can check, and what you will have to answer for later.
 
 - **Well-specified**: you could write down what "done" looks like in
   three lines. If you can't, that is a specs problem, not an agent
-  problem. Go back to [lesson 4](04-specs.md).
+  problem. Go back to [lesson 4](03-specs.md).
 - **Verifiable**: something other than the agent's own opinion can tell
   you it worked. A test, a type checker, a build, the app running in
   front of you.
@@ -52,8 +52,8 @@ way to tell a good one from a confident one.
 
 Out of your depth is a reason to slow down, not to speed up. Use the
 agent to get to the point where you can judge: ask for explanations,
-ask for citations ([lesson 3](03-understanding-codebase.md)), take one
-small step and confirm it before the next.
+ask it to point at the files it is basing them on, take one small step
+and confirm it before the next.
 
 ### Simplify when two attempts have failed
 
@@ -70,7 +70,7 @@ information about the task. Instead of attempt number three:
 - Write the failing test first, then ask for the code that passes it
 - Do the confusing part by hand, delegate the rest
 - Start a fresh session, because the old one is now full of wrong turns
-  ([lesson 6](06-steering-a-session.md))
+  ([lesson 6](06-implementing-a-task.md))
 
 All of these are the same move: make the unit of work smaller and more
 concrete. That is nearly always the fix.
@@ -192,7 +192,7 @@ Finish it, and be able to explain what each part of the app does.
 
 [Module 2](../../02-end-to-end/) builds and ships a full-stack
 application end to end, with these habits applied to something bigger
-than a Snake game.
+than a single-screen app.
 
 [Module 3](../../03-mcp/) goes deep on agent capabilities - MCP,
 skills, hooks, subagents, plugins, custom agents. That is the

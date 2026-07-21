@@ -2,187 +2,239 @@
 
 Video: TBA
 
-## Why this lesson is short
+## Agents
 
-In the 2025 cohort, the tool tour was most of this module. We went
-through products one by one, with install commands and links.
+The role of an agent is to perform a task. To do that it uses tools:
 
-let's link the old content so people can read it if they want
-let's cut the fluff. I did it here - do it in other places. define fluff based on my cuts and remove it
+- edit files
+- execute bash commands
+- search the web
+- call an API
+- and others
 
-let's define what agent is. the task of the agent is to perform a task set by the user. the agent uses tools to do that. tools inclue - editing files, executing bash commands, performing web search. all the tools that we cover below are agents, but different ones.
+Everything in this lesson is an agent -
+they differ in where they run, what tools they get, and how much they
+are allowed to touch without asking you.
+
+In the 2025 cohort this lesson was most of the module. We went through
+products one by one, with install commands and links.
+
+This year we will only briefly go over them. If you want to get more information
+about them, check [2025 module 1](../../cohorts/2025/01-overview/).
 
 
-## The five categories
+## Main categories
+
+There are five main categories:
+
+- Chat assistants - you type, it answers, you copy the code out by hand
+- Coding agents - work directly in your repo, in the terminal or
+  in a desktop app
+- Agentic IDEs - agent in your editor, with diffs you accept or reject
+- Cloud agents - run in the cloud: you assign a task and review a pull request
+- Project bootstrappers - start from a template instead of an
+  empty folder, so you get a running app in minutes
 
 ### 1. Chat assistants
+
+The general-purpose assistants, used in a browser:
 
 - ChatGPT
 - Claude
 - Gemini
 
-You type, it answers, you copy code out by hand. This is still the best
-place for thinking out loud: explaining an unfamiliar library, talking
-through a design before committing to it, arguing about trade-offs,
-drafting a spec.
+You type, it answers, you copy code out by hand. 
+They have no access to your machine, so for coding they are not always convenient. Every time you need to make a change, you have to do a lot of copy-pasting. That is fine for a few files, but gets annoyning for bigger projects. 
 
-Where it hurts is repo awareness. Every time you need to change,
-you have to copy-paste back-and-forth. it's fine for a few files,
-but becomes difficult
-when you need to do more. coding agents fix this (we/ll talk about them later) but chat assistants are still quite useful and I use them regularly.
+Coding agents fix that, but chat assistants are still useful.
 
-How I use it:
+I use them every day for things related to coding:
 
-- dictation mode 
-- brainstorming
-- research
-- checking what's already there
-- "save to md file" at the end of the session
+- brainstorming - working a rough idea into a concrete one, usually by
+  dictating rather than typing
+- research - is there a library for this, what it does, and what the
+  alternatives are
+- checking what is already out there - whether the whole thing exists
+  already, before I start building it
+- saving the output - "save this to a md file" at the end, so we don't lose
+  the result 
 
-I also recommend to use it when you're learning about something new and you care about the implementation details and you want to learn. copy-pasting slows you down 
-and forces to undestand better what you're doing. 
+I also recommend chat when you are learning something new and you
+actually care how it works. Copy-pasting slows you down, and it forces you to read what you are pasting.
 
-let's say you're learnign about RAG. coding agents can one-shot the entire thing (create a working application from a single prompt), but you will have very little idea how it works and you will need to read every sinble file to undestand it.
-If you're in the chat application you can already discuss the code and you'll be forced to copy-paste it, so you'll learn more about the code this way.
+If you learn about RAG, a coding agent can create the whole applicaiton a single prompt (we call it "one-shot" as a verb).
+You end up with an application that is probably working fine, but you do
+not understand how it works.
 
+In a chat assistant you discuss the code as it appears and paste it in yourself,
+so you learn more on the way.
 
+We use a chat assistant in [lesson 3](03-specs.md) to produce the spec.
 
 ### 2. Coding agents
 
-Terminal coding agents
+In the terminal:
 
 - Claude Code
 - Codex
 - Gemini CLI
 - GitHub Copilot CLI
 - OpenCode
-- Pi (?)
+- Pi
 
-These run in your terminal, inside a real repo. They read files themselves, edit several at once,
-run your tests, and read the failures. The copy-pasting problem disappears. 
+You run them inside your code repository. They can read and edit files, run tests, perform web search. You no longer need to copy-paste.
 
-The cost is that something is now writing to your disk and running commands, so you need permission discipline: know what it can do without asking, and check
-before you say yes to the rest. 
+I created the initial classification more than a year ago. Since then most coding agents have also grown a desktop app:
 
-Or you need to run them in sandbox environments to make sure that the blast radius is minimal.
-
-I creted this classification one year ago. Now most of the coding agents also have a proper desktop environment
-
-- Claude Cowork
-- Codex/ChatGPT Work
+- Claude Cowork - Anthropic's desktop agent, works inside a folder you
+  point it at
+- ChatGPT Work - since July 2026 Codex and ChatGPT live in one desktop
+  app
+- ZCode - Z.ai's desktop agent
 - OpenCode Desktop
-- Z.AI coder (?)
-- Antigravity (used to be Agentic IDE - now mo)
+- Antigravity (V2)
 
-I use them every day. 
-I mostly use them in the terminal mode, and they are running on a remote machine. 
-If one of the agents wipes the machine, I can easily recreate it. 
+I use coding agents every day, mostly in terminal mode.
 
-More about it: substack AWS management.
+With coding agents, you have another problem. They can do anything on your computer, so you need to control what they can do and what they can access. 
 
-### 3. Agentic IDEs 
+Approving permissions is quite slow, so you can run them in the skip-permissions mode, but it's dangerous. In this case, you need to run them in an isolated enviroment where the blast radius is contained. 
 
-Cursor, Windsurf, GitHub Copilot, Zed, Antigravity.
+I run them on a remote machine. If an agent wipes that machine I can recreate it in minutes. I wrote up how that is set up in [The System I Built for AWS Access
+Without Keys](https://alexeyondata.substack.com/p/the-system-i-built-for-aws-access).
 
-Roughly the same capability as a terminal agent, wrapped in an editor.
+But I would suggest not to worry about these things right now. If you are setting an agent for the first time, here's a step-by-step
+guide: [How to Set Up Your Coding
+Agent](https://alexeyondata.substack.com/p/how-to-set-up-your-coding-agent-a).
 
-The work is more interactive: you can see the diffs in the file, and can accept
-or reject code changes.
+You first pick up an agent, and then focus on doing one real task in it. Then gradually you add the rest - context files, permissions, slash commands, skills,
+subagents, and a remote setup - one piece at a time.
 
-This is the most comfortable category for getting started with coding agents,
-and being close to the code. 
+### 3. Agentic IDEs
 
-I stopped using them because it slows me down. I noticed that often I just fast-forward accept the changes and at the end rarely review the diffs. 
-I consider my coding work now more like a PM/Architect, so I focus on more high-level details instead of low-level implementation details. 
+Roughly the same capability as a terminal agent, wrapped in an editor:
 
-For important code, I later do separate refactoring sessions when the code already works. 
+- Cursor
+- Windsurf
+- GitHub Copilot
+- Zed
+- Antigravity (V1)
 
-So I stopped using these agentic IDEs altogether.
+The work is more interactive: you see diffs in the file and accept or
+reject changes.
 
+This is the most comfortable category for getting started, and for
+staying close to the code.
 
-### 4. Cloud and GitHub-native agents
+I stopped using them because they slow me down. I noticed I was
+fast-forward accepting changes anyway and rarely reviewing the diffs at
+the end.
 
-for agents (both desktop and ides) you need environment to run them. 
-sometimes it's inconvenient. lucikly many llm providers have cloud env 
-where you can run your agents
+I treat my coding work now as PM and architect work, so I stay
+on the high-level details rather than the implementation ones. For code
+that matters I do a separate refactoring session once it already works.
+
+### 4. Cloud agents
+
+Agents need an environment to run in, and sometimes providing one is
+inconvenient.
+
+Most providers now host that environment for you:
 
 - GitHub Copilot - create an issue and assign it to Copilot
-- Claude Cloud ?
-- Same for codex  (what's the name?)
+- Claude Code on the web - connect a repo, submit a task, review the PR
+- Codex cloud - the same shape, or tag `@codex` on a GitHub issue
 
-benefits - you limit the blast radius (they can't cause much harm in the restricted cloud env) but also they don't necessarily have the tooling you need, and often you have less flexibilily
+We talked about it when discussing the disadvantages of coding agents. Here the  blast radius is limited to a restricted cloud environment. But it will not necesarily have the tooling you
+need, and you have less flexibility in general.
 
-I used to use github copilot quite often (include my article about shiping from a tram stop) but eventually I created a flow where I use a remote machine with usual coding agents (see article about coding from phone)
+I used GitHub Copilot this way a lot - that is the setup behind
+[Shipping Features from my
+Smartphone](https://alexeyondata.substack.com/p/shipping-features-from-a-tram-stop).
 
+Eventually I moved to a remote machine running normal coding agents,
+described in [The System I Built to Ship Code From a
+Phone](https://alexeyondata.substack.com/p/the-system-i-built-to-ship-code-from).
 
 ### 5. Project bootstrappers
+
+Coding agents start from an empty folder. But you can start from a template. 
+
+That's exactly what project bootstrappers do. 
+
+Some of them are:
 
 - Lovable
 - Bolt.new
 - Replit
-- Vercel V0
-- Claude Desing (?)
+- Vercel v0
+- Claude Design
 
-Coding agents start from scratch. Most applications can be started from a template.
-When you have this template, doing one-shot apps becomes a lot easier, plus the apps created from these templates use the same tech stack, so you can always know how to run them locally.
+One-shotting an app is much easier with a template. The coding agent is only building on top of it, so every app shares a tech stack you already
+know how to run.
 
-that's the idea behind what I call "project bootstrappers". 
+It is the fastest way to a first draft. These tools
+also have their own design systems, so what comes out usually looks
+better than a web app one-shotted by a plain coding agent.
 
-You describe what you want in a browser session and get a running app within minutes.
-Typically this is the fastest way to create a first draft. 
-Also these apps often have their own design systems, so the designs that these apps create are usually nicer than what you'd create when you single-shot an web application
-using a usual coding agent. 
+However, they tend to get expensive with regular use. I
+use them for a first version, export it, and continue with a coding
+agent.
 
-THe main downside is the cost-  they tend to get quite expensive with time. 
-I usually use these tools to create a first version, then export it and continue working with it using a coding agent. 
+That is the flow in [How I Rebuilt My Website in 10 Minutes With
+AI](https://alexeyondata.substack.com/p/how-i-rebuilt-my-website-in-10-minutes),
+and we follow the same approach in [Module 2](../../02-end-to-end/).
 
-I described the flow in my article how I redesigned my website. We will also follow the same appreoach in module 2.
+## The harness
 
-## Harness
+We already talked about agents. Harness is a piece of software that 
+turns plain LLM calls into agents and adds many other capabilities on top:
 
-explain what harness is, what's the difference between plain llm calls
-link the workshop from ai shipping labs about implementing our own agent
+- expose tools to the model
+- execute the calls it asks
+- feed the results back and run it until the task is done
+- enforce permissions - what runs freely, what needs your approval
+- manage context: what gets loaded, what gets compacted, what is
+  dropped
 
-harness can do:
+The model makes the decisions, and the harness enables them.
 
-- tool calls
-- permissions
-- etc 
+The fastest way to understand what harness and agents are is build 
+a coding agent yourself.
 
-so it's things around the agents that make them usaful 
+Last year we had a section about building your own agent. This year we will
+focus on dev tools, but if you're interested, I have an updated verion of that material here: [Build a Coding Agent with Tools, Skills and
+PydanticAI](https://aishippinglabs.com/workshops/coding-agent-v2).
 
-## Selecting the right tool 
+In this workshop we start from a plain API call with no tools and end with a working agent
+loop - five tools and a skills system. 
 
-Which tool do you need? The answer is "it depends". Notice that some tools are in all categories - like Claude. Codex and Copilot also appear in most of them. 
+## Selecting the right tool
 
-In the end, most of them do more or less the same. I'd recommend selecting one of them:
+Which one do you need? It depends. 
+
+In the end most of them do more or less the same thing. Pick one of:
 
 - Codex
 - Claude
 - Antigravity
-- Cursor 
-- Github Copilot 
+- Cursor
+- GitHub Copilot
 
-I mostly use Codex and Claude. I was a big fan of Copilot until they changed their prices in June, and now it's too expensive to use it. Codex is probably the easiest to get started with as they have generous limits in the $20 plan. 
+I mostly use Codex and Claude. I was a big fan of Copilot until the
+June pricing change, which made it too expensive for how I work.
 
-I also recommend using a paid plan. You can use tools Antigravity for free, but their free plans are quite limited and I find these limitations annoying. You get into the flow, and immediately hit the limits. 
+Codex
+is probably the easiest to start with - the limits on the $20 plan are
+generous.
 
+Use a paid plan. You can run something like Antigravity for free, but
+the free tiers are limited enough to be annoying: you get into the flow
+and immediately hit a wall.
 
-## The fuller 2025 tour
+Then stay with it for the cohort. Every switch restarts the learning
+curve, and none of the practice compounds.
 
-If you want the longer version, the 2025 module is still in this repo:
+Next: deciding what you want before anything gets built.
 
-- [cohorts/2025/01-overview/](../../cohorts/2025/01-overview/)
-
-Read it for the categories and the shape of each one. Do not read it as
-a product list. The specific tools named there have moved on, some of
-the install commands no longer apply, and a couple of the products are
-not the same thing they were. That is the whole reason this lesson
-exists in its compressed form.
-
-
-
-Next: how to use whichever tool you picked to get oriented in a codebase
-you did not write.
-
-[← Introduction](01-intro.md) | [Understanding an Unfamiliar Codebase →](03-understanding-codebase.md)
+[← Introduction](01-intro.md) | [Specs Before Code →](03-specs.md)

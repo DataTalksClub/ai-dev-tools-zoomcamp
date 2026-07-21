@@ -116,7 +116,7 @@ the way out:
 3) tests after implementation are also fine but with a note
 
 Two ways around it. Write the acceptance criteria yourself, before
-implementation, as you did in [lesson 4](04-specs.md) - then the test
+implementation, as you did in [lesson 4](03-specs.md) - then the test
 is checking your intent, not the agent's. Or have a separate pass, in
 a fresh context, write tests against the spec rather than against the
 code.
@@ -159,7 +159,7 @@ specific things:
   is going to maintain.
 
 A smaller diff is easier to read, which is another argument for the
-small-steps habit from [lesson 6](06-steering-a-session.md). If you
+small-steps habit from [lesson 6](06-implementing-a-task.md). If you
 cannot review a change, you have not really delegated it, you have
 just stopped looking.
 
@@ -225,4 +225,4 @@ over, and it is the thing to improve if you want to hand over more.
 Next: what happens when you take that ceiling seriously and design
 the loop the agent runs in.
 
-[← Steering a Session](06-steering-a-session.md) | [Loop Engineering →](08-loop-engineering.md)
+[← Implementing a Task](06-implementing-a-task.md) | [Loop Engineering →](08-loop-engineering.md)

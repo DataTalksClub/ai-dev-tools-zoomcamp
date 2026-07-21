@@ -5,8 +5,6 @@
 > we are preparing, but the final videos, exercises, homework, and
 > requirements may change before the cohort starts.
 
-
-
 This module is about working with AI developer tools in a way you can
 defend later.
 
@@ -15,34 +13,36 @@ tool before it starts, how you steer it while it runs, and how you check
 what came back. We call this an AI-native developer workflow - using
 AI tools with context, constraints, verification, and human review.
 
-By the end of the module you should be able to [answer three questions
-about any change that lands in your repo: what you asked for, what
-actually changed, and how you know it works.] - let's be concrete here. 
-remove the questiosn 
+You build a meeting cost calculator over the module - the app that
+tells a room full of people what the meeting is costing while it runs -
+but the app is not the point.
+The workflow is: talk the design through with a chat assistant, write
+it into a spec file, have an agent decompose it into a backlog with
+acceptance criteria, then work through that backlog - first by hand,
+then with `/goal`, then with two agents splitting the work.
 
 ## Lessons
 
 1. [Introduction](lessons/01-intro.md) - What this module is for and how
    it's organized
-2. [The Tool Map](lessons/02-tool-map.md) - Five categories of AI
-   developer tools, how to place a new one, and picking yours for the
-   cohort
-3. [Understanding an Unfamiliar Codebase](lessons/03-understanding-codebase.md) -
-   Using an agent to get oriented, and verifying what it tells you
-4. [Specs Before Code](lessons/04-specs.md) - Deciding what you want
-   before anything is built
+2. [The Tool Map](lessons/02-tool-map.md) - What an agent is, the five
+   categories of AI developer tools, and picking yours for the cohort
+3. [Specs Before Code](lessons/03-specs.md) - Talking a design through,
+   then writing it down
+4. [Bootstrapping a Project](lessons/04-bootstrapping.md) - Turning a
+   spec into a repo and a backlog of tasks
 5. [Context Engineering](lessons/05-context-engineering.md) - Writing the
    `AGENTS.md` that every session starts from
-6. [Steering a Session](lessons/06-steering-a-session.md) - Plans, small
-   steps, course-correcting, and knowing when to stop
+6. [Implementing a Task](lessons/06-implementing-a-task.md) - One task
+   from the backlog, start to finish
 7. [Tests and Verification](lessons/07-tests-and-verification.md) - What
    you can check automatically, and why that sets your limit
-8. [Loop Engineering](lessons/08-loop-engineering.md) - Running the agent
-   repeatedly
+8. [Loop Engineering](lessons/08-loop-engineering.md) - `/goal`, and
+   running the agent repeatedly
 9. [Graph Engineering](lessons/09-graph-engineering.md) - Splitting work
    across several agents with defined roles
-10. [Judgment and Wrap-up](lessons/10-wrap-up.md) - When to ask, when to
-    inspect, when to simplify, and what transfers
+10. [Wrap-up](lessons/10-wrap-up.md) - What transfers when the tools
+    change again
 
 
 ## Homework

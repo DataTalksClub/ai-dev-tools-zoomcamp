@@ -42,14 +42,15 @@ change often, so find the one in your tool and learn its shortcut. The
 idea is the same everywhere: let it read and think, don't let it write
 yet.
 
-Why it pays off is arithmetic. You ask for a pause key in the Snake
-game, and reading the plan back takes about a minute:
+Why it pays off is arithmetic. You ask for the pause feature in the
+meeting cost calculator, and reading the plan back takes about a
+minute:
 
 ```text
-1. Add a `paused` flag to the game state       game.py
-2. Handle the space key in the input loop      input.py
-3. Skip the update tick while paused           game.py
-4. Add a test for pause and resume             tests/test_game.py
+1. Add a `paused` flag to the meeting state    meeting.js
+2. Stop accruing cost while paused             cost/accrue.js
+3. Show the running or paused state on screen  MeetingView.jsx
+4. Add a test for pause and resume             tests/cost.test.js
 ```
 
 You can see from that list whether it understood you. If it were about
