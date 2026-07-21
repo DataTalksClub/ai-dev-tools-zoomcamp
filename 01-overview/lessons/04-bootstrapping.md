@@ -32,7 +32,26 @@ Do not write any code yet.
 
 If you haven't decided what the tech stack for this project is, you should also do it.
 
-TODO how to modify the prompt
+Add a paragraph to the prompt asking for the decision rather than
+assuming it:
+
+```text
+The stack is not decided yet. Before the backlog, propose one, with a
+sentence on why. Keep it boring and widely used - I want to be able to
+run this in two years.
+
+Then make the first task setting up an empty project on that stack,
+with a test that runs and passes.
+```
+
+Two reasons to handle it here rather than let it happen by itself. The
+stack decides what half the tasks look like, so it has to be settled
+before the backlog is worth anything. And if you say nothing, the agent
+picks one anyway - it just does it silently, somewhere in the middle of
+task four.
+
+Write the answer into `_docs/plan.md` once you agree with it. The next
+session will not remember this conversation.
 
 
 Next, you should look at these tasks. Are they granular enough but not too granular? Do they make sense? You first need to review them. 

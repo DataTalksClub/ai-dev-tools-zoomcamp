@@ -101,5 +101,78 @@ A PASS is what closes the issue.
 
 Tests let you delegate the implementation to agents without reading every line.
 
+## Tests are the biggest source of AI slop
+
+I have to be honest about this, because it is the part people are
+disappointed by.
+
+When I started working with agents, most of the tests they wrote made
+no sense. They tested obvious things. They asserted that a constant
+equalled itself, that a framework did what the framework documentation
+says it does, that a getter returned the thing you just set. Hundreds
+of lines, all green, proving nothing.
+
+What changed my mind was watching them over time. Those same suites
+turned out to catch real bugs - not bugs I introduced, but bugs the
+*next agent* introduced. An agent refactoring a module three weeks
+later trips over a test that pinned behaviour nobody remembered
+mattered.
+
+So the useful version is narrower than "agents write good tests":
+coding agents are good at writing tests against code written by coding
+agents. The suite is a net under the next session, not a proof that
+this one was right.
+
+## Test smells
+
+Worth checking for, because agents produce all of these:
+
+- The system under test is mocked. Everything the code touches is
+  replaced by a stub, the test passes, and nothing real was exercised.
+  This is the most common one, and the most useless.
+- Assertions that cannot fail. Checking a page returned 200, or that a
+  list is a list. Break the code on purpose and see the test go red -
+  fifteen seconds, and it is the only way to know it is wired up.
+- Testing the framework, not your code. Your ORM saves records. That is
+  not your behaviour, and it is not your test.
+- Assertions against a whole blob of output. Comparing an entire HTML
+  body or JSON dump breaks on every unrelated change and tells you
+  nothing about which part mattered.
+- Hardcoded waits in browser tests. A `sleep(2)` is a test that fails
+  on a slow machine and passes on a fast one, regardless of the code.
+- Tests deleted or weakened to go green. When an agent is told "make
+  the tests pass", removing the failing test satisfies the instruction
+  it was given. So does loosening an assertion or adding a skip. Check
+  what disappeared, not only what was added.
+
+The deeper problem underneath several of these: if the same agent, in
+the same session, wrote both the implementation and the test, they can
+encode the same misunderstanding. The test passes because it asserts
+what the code does, rather than what the code should do.
+
+## Three ways out
+
+1. Write the acceptance test before the feature exists. The criteria in
+   the issue came from grooming, before anyone implemented anything, so
+   a test derived from them is checking your intent rather than the
+   implementation.
+2. Test-driven development. Same idea, tighter loop - failing test
+   first, then the code that passes it. Agents are good at this when
+   you ask for it explicitly.
+3. Tests written after the implementation are fine too, as long as you
+   know that is what they are. They protect against future change. They
+   do not tell you the current behaviour is correct.
+
+Most work is the third case. That is not a problem, as long as nobody
+mistakes a green suite for a verified feature.
+
+## CI
+
+Everything here runs on your machine, when you remember. Running the
+same checks automatically on every push is what stops "it works
+locally" from being the last word.
+
+That belongs to [Module 2](../../02-end-to-end/), along with
+deployment.
 
 [← Implementing a Task](07-implementing-a-task.md) | [Loop Engineering →](09-loop-engineering.md)
