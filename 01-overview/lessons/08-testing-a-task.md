@@ -101,28 +101,6 @@ A PASS is what closes the issue.
 
 Tests let you delegate the implementation to agents without reading every line.
 
-## Tests are the biggest source of AI slop
-
-I have to be honest about this, because it is the part people are
-disappointed by.
-
-When I started working with agents, most of the tests they wrote made
-no sense. They tested obvious things. They asserted that a constant
-equalled itself, that a framework did what the framework documentation
-says it does, that a getter returned the thing you just set. Hundreds
-of lines, all green, proving nothing.
-
-What changed my mind was watching them over time. Those same suites
-turned out to catch real bugs - not bugs I introduced, but bugs the
-*next agent* introduced. An agent refactoring a module three weeks
-later trips over a test that pinned behaviour nobody remembered
-mattered.
-
-So the useful version is narrower than "agents write good tests":
-coding agents are good at writing tests against code written by coding
-agents. The suite is a net under the next session, not a proof that
-this one was right.
-
 ## Test smells
 
 Worth checking for, because agents produce all of these:
