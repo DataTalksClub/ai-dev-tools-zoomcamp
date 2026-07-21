@@ -2,129 +2,125 @@
 
 Video: TBA
 
-## Definition
+You have three roles and a loop. The one thing still done by hand is
+moving work between them: you read the QA verdict, you decide it goes
+back to the engineer, you start that session.
 
-**Graph engineering** is the practice of structuring work across several
-specialized agents: defining what each agent is responsible for, what
-order the work moves in, and how agents hand results to each other.
+This lesson hands that over too.
 
-You can see the workflow as a grpah. Each agent is a node. Each
-handoff or dependency between them is an edge. The design work lives in
-the structure connecting the agents, not in any single agent's behaviour.
+## The definition
 
-Where loop engineering asks "how does one agent keep working on its own?",
-graph engineering asks "who does what, and in what order?"
+Graph engineering is structuring work across several specialized
+agents: what each one is responsible for, what order the work moves in,
+and how they hand results to each other.
 
-add 
+You can draw any such workflow as a graph. Each agent is a node, each
+handoff is an edge, and the design work is in the structure rather than
+in any single agent's behaviour.
 
-## Where the term came from
+Where loop engineering asks "how does one agent keep working on its
+own", graph engineering asks "who does what, and in what order".
 
-It started with a post on X in July 2026 - roughly "are we still talking
-loops, or did we shift to graphs yet?" - from the same person who
-popularized loop engineering a month earlier. It spread quickly.
+## An honest note on the term
 
-to me this definition makes very little sense and many people have been doing this for quite some time. but because of the traction it's getting on X I decided to include it in this module and explain it in simple words.
+The name is from a post on X in July 2026 - roughly "are we still
+talking loops, or did we shift to graphs yet?" - from the same person
+who popularized loop engineering a month earlier.
 
-The definition is still settling. In the same discussion, people who build
-agent-orchestration tools noted that the term was being used loosely, and
-others pointed out that specialized agents passing work between them
-describes multi-agent systems and state machines, which are decades old.
+To me the definition makes very little sense as a new idea. People have
+been building multi-agent systems and state machines for a long time,
+and specialized workers passing work between them is not new. In the
+same discussion, people who build agent-orchestration tools said the
+term was being used loosely, and they were right.
 
-Both observations are fair, and neither makes the technique less useful.
-It's a new name for an older idea, and the idea works.
+It is in this module because it is getting traction and you will meet
+it. The technique underneath is genuinely useful. The word is just a
+word.
 
-## The practice came before the name
+## You already built the graph
 
-In April 2026 - three months before anyone said "graph engineering" - I
-wrote up a system I'd been running across five real projects:
-
-- [I Built an AI Agent Team for Software Development](https://alexeyondata.substack.com/p/i-built-an-ai-agent-team-for-software)
-
-The setup was a small team of agents with fixed roles:
-
-- **Product Manager** turns a raw task into a specification with user
-  stories, acceptance criteria and test scenarios, and does the final
-  acceptance review at the end
-- **Software Engineer** implements the code and writes tests
-- **QA** runs the tests, checks the acceptance criteria, and reports pass
-  or fail with evidence
-- **On-Call Engineer** watches CI and fixes failures
-
-Work moves through them in a fixed order:
+Look at what lessons 6 to 8 produced:
 
 ```text
-PM grooming -> SWE implementation -> QA verification -> PM acceptance -> commit
-                     ^                                       |
-                     +--------------- rejected --------------+
+groom (PM)  ->  implement (engineer)  ->  test (QA)  ->  done
+                       ^                        |
+                       +--------- FAIL ---------+
 ```
 
-That diagram is a graph. Four nodes, five edges, including the one that
-sends rejected work back for another pass. Nobody called it graph
-engineering at the time because the phrase didn't exist yet.
+Three nodes and four edges, including the one that sends failed work
+back for another pass. That is a graph, and you drew it without needing
+the term.
 
-It worked. On one project, the AI Shipping Labs website, it processed 41
-of 46 tasks overnight. Tasks ran in small parallel batches, and the
-orchestrator pulled the next batch as the current one finished.
+The parts that make it work are not exotic:
 
-The point of showing you this isn't the specific roles. It's that the
-useful part was never the vocabulary - it was having explicit roles, an
-explicit process, and specifications written down before implementation
-started.
+- Each role has a file saying what it does and does not do
+- Each role has a definition of done
+- The handoff is the issue, not a conversation
+- One role's output is another role's input, and the FAIL edge exists
 
-## Why split the roles at all
+The last two matter most. Because the issue carries everything, no
+agent needs another agent's context - which is what makes it possible
+to run them as separate sessions at all.
 
-This is the part worth understanding, because it's the reason the
-structure helps rather than just adding overhead.
+## The orchestrator
 
-If one agent writes the code and then decides whether the code is
-correct, it is grading its own homework. It has just spent its whole
-context convincing itself that its approach was right, and it will bring
-that conviction to the review.
+The missing node is the one you have been playing. Something has to
+pick the next issue, dispatch each role in order, read the verdict, and
+route on it.
 
-Splitting the roles breaks that. QA is a different agent, with a different
-context window, whose entire job is to check claims against evidence. The
-PM acceptance step at the end catches a different class of problem again:
-a feature can pass every test and still not be what was asked for.
+That becomes your main session, and its job is narrow: it dispatches,
+it does not do the work. An orchestrator that gets impatient and
+implements a small task itself has collapsed the graph back into one
+agent grading its own homework.
 
-You'll recognize this from lesson 7. Verification only means something
-when it comes from somewhere the work didn't. Roles are one way to
-guarantee that.
+Write the order down in `_docs/process.md` - the file that was three
+lines in [lesson 5](05-context-engineering.md), and that I said would
+grow when a second agent appeared. This is that moment:
 
-## Loop or graph?
+```markdown
+## Lifecycle
 
-Lesson 8 was about loops: one agent, iterating against a check, until a
-stop condition. This lesson is about graphs: several agents, different
-jobs, passing work along.
+1. Orchestrator picks the next open issue from the backlog
+2. PM grooms it, following `team/pm.md`
+3. Engineer implements it, following `team/software-engineer.md`
+4. QA verifies it, following `team/qa-engineer.md`
+5. On FAIL, back to step 3 with the QA comment as input
+6. On PASS, commit and close the issue
+7. Repeat until the backlog is empty
 
-The rule of thumb:
+The orchestrator does not groom, implement or test. It dispatches.
+Do not skip step 2, even when the task looks obvious.
+```
 
-- **Loop** when the work is a queue of similar things. Fix these twelve
-  failing tests. Same job, many times.
-- **Graph** when the work contains genuinely different kinds of thinking.
-  Specify, build, verify, accept. Different jobs, handed between.
+Then the command from [lesson 1](01-intro.md):
 
-A loop with one worker is simpler, cheaper, and easier to debug. Reach for
-the graph when the work actually has distinct roles in it - not because it
-sounds more advanced.
+```text
+/goal work through the backlog
+```
 
-## How this is built in practice
+The agent reads `AGENTS.md`, finds `process.md`, follows the lifecycle,
+and dispatches the roles it finds in `team/`. Every piece of that
+sentence is something you built in an earlier lesson.
 
-There are three separate mechanisms, and they get confused constantly
-because all three are described as "running agents in parallel":
+## Subagents, worktrees and teams
 
-| Mechanism | What it isolates | What it's for |
+Three mechanisms get described as "running agents in parallel", and
+they are not the same thing:
+
+| Mechanism | What it isolates | What it is for |
 |---|---|---|
+| Subagents | Context windows | Delegating a focused task and getting a result back |
 | Git worktrees | Files on disk | Stopping parallel edits from colliding |
-| Subagents | Context windows | Delegating a focused task, getting a result back |
 | Agent teams | Whole sessions | Agents that need to talk to each other |
 
-For this module, knowing the distinction is enough. Worktrees give each
-agent its own checkout so they don't overwrite each other. Subagents keep
-a side task's noise out of your main context. Agent teams are full
-sessions that can message each other and share a task list.
+For our pipeline, subagents are the relevant one: each role runs with
+its own context and reports back. Worktrees matter as soon as two
+issues are in flight at once, because two agents editing the same
+checkout will overwrite each other. Agent teams are heavier and mostly
+unnecessary here, because the issue is already the communication
+channel.
 
-In both Claude Code and Codex, the way you start is the same: you ask.
-There is no special command to learn for the simple case.
+Starting is not complicated - you ask:
 
 ```text
 Review this branch with three subagents in parallel: one for security,
@@ -132,59 +128,61 @@ one for performance, one for test coverage. Wait for all three and
 summarize what they found.
 ```
 
-Both tools will split that into separate agents with their own context
-windows and collect the results. In Codex, subagents are on by default
-and you can switch between the running threads with `/agent` to watch
-them work. Claude Code also has a heavier option, agent teams, where the
-agents can message each other rather than only reporting back - that one
-is experimental and off by default.
+Try that once on real code. Seeing three reviews come back with
+genuinely different findings is the fastest way to understand why
+anyone bothers with roles. We build these properly in [Module
+3](../../03-mcp/).
 
-Try that prompt once. Seeing three reviews come back with genuinely
-different findings is the fastest way to understand why anyone bothers
-with this.
+## What goes wrong
 
-We build all three mechanisms properly in [Module 3](../../03-mcp/),
-which is where subagents, hooks and agent capabilities live. Here, the
-goal is that you know what the words mean and can tell which one someone
-is talking about.
+I ran this setup across five real projects before the term existed, and
+wrote it up in [I Built an AI Agent Team for Software
+Development](https://alexeyondata.substack.com/p/i-built-an-ai-agent-team-for-software).
+On the AI Shipping Labs website it processed 41 of 46 tasks overnight.
+These are the things that actually broke:
 
-## What actually goes wrong
+**The process gets skipped.** The orchestrator sometimes launched the
+engineer directly, without grooming - it ignored its own rules on the
+tasks that looked small. That is why `process.md` above says not to.
 
-The write-up is honest about failure modes, and you'll hit all of these if
-you try it:
+**The agent stops and asks.** It pauses mid-workflow waiting for a
+confirmation nobody is there to give, and the run is dead until you
+come back. This is the same permissions problem from [lesson
+7](07-implementing-a-task.md), and it is why unattended running needs
+skip-permissions plus a contained environment.
 
-- **The agent stops and asks.** Claude Code frequently paused mid-workflow
-  waiting for confirmation instead of continuing.
-- **You can't see inside.** There was no good visibility into what
-  subagents were doing, which made a stuck agent hard to distinguish from
-  a slow one.
-- **The process gets skipped.** The orchestrator sometimes launched the
-  engineer directly without the PM grooming step - it skipped its own
-  rules.
-- **Limits.** Usage limits ran out quickly. Several agents cost several
-  times as much as one.
+**You cannot see inside.** A stuck subagent and a slow subagent look
+identical from outside. With four running, this gets worse.
 
-And the most instructive one: on Rustkyll, skipping the requirements phase
-led the agents to tailor the implementation to specific sites instead of
-building something general. The process failed at exactly the step this
-module keeps returning to - writing down what you actually want before
-letting anything build it.
+**Cost.** Several agents cost several times as much as one. A pipeline
+that grooms, implements and verifies every task is three to four
+sessions per issue.
 
+And the one worth repeating: on Rustkyll I skipped the requirements
+step, and the agents built something tailored to the single example I
+gave them. The process failed at exactly the step this module keeps
+coming back to - writing down what you want before anything builds it.
+More agents did not save it. More agents made it faster.
 
-we already defined the roles 
-our main session becomes the orchestrator 
-run /goal work though the backlog and see how it does this 
+## Loop or graph
 
+- Loop when the work is a queue of similar things. Fix these twelve
+  failing tests. Same job, many times.
+- Graph when the work contains different kinds of thinking. Specify,
+  build, verify. Different jobs, handed between.
+
+A single-agent loop is simpler, cheaper and easier to debug. Reach for
+roles when the work genuinely has them in it, not because it sounds
+more advanced.
 
 ## What to take from this
 
-If someone asks you about graph engineering, you can now say: it's several
+If someone asks you about graph engineering, you can say: it is several
 agents with defined roles handing work to each other, the term is from
-July 2026, the practice is older, and the parts that make it work are
-explicit roles, an explicit process, and specs written before
+July 2026, the practice is much older, and what makes it work is
+explicit roles, an explicit process, and specifications written before
 implementation.
 
-That last sentence is the fundamentals of this whole module, restated with
-more agents. The tooling changes fast. That doesn't.
+That last sentence is this whole module, restated with more agents.
 
 [← Loop Engineering](09-loop-engineering.md) | [Wrap-up →](11-wrap-up.md)

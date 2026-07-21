@@ -2,211 +2,179 @@
 
 Video: TBA
 
-## Definition
+So far you have typed every prompt yourself. Three sessions per task -
+groom, implement, test - and you started each one.
 
-**Loop engineering** is the practice of designing [the control system] - whats the control sustem? harness?  
+That is the right way to learn the shape, and it stops being the right
+way at about the fifth task. The steps are the same every time, and the
+thing deciding what happens next is you, reading an issue and typing a
+sentence.
 
- that
-runs a coding agent repeatedly, instead of driving the agent prompt by
-prompt.
+Loop engineering is what you call it when something else does that.
 
-Designing that system means deciding five things: what work the agent
-picks up next, where it does that work, how the result is verified, what
-carries over between iterations, and what makes it stop.
+## The definition
 
-Instead of you typing a prompt,
-reading the answer, and typing the next prompt, you build the thing that
-does the prompting. The unit of engineering effort moves from the
-individual instruction to the system that issues instructions.
+Loop engineering is designing the system that runs a coding agent
+repeatedly, instead of driving the agent prompt by prompt.
 
-## Where the term came from
+The "system" is the harness from [lesson 2](02-tool-map.md) plus
+whatever you wrap around it: the thing that decides what the agent
+picks up next, checks the result, and decides whether to go again.
 
-It appeared in early June 2026. Addy Osmani wrote the post that gave it
-shape, crediting a couple of practitioners who'd been describing the shift
-on X - including people building coding agents at Anthropic. Within a few
-weeks it had its own explainer sites, and by the end of June Anthropic had
-published a first-party post about loops in Claude Code.
-
-let's include some screenshots from twitter and posts
-
-That last part is why this term is on firmer ground than graph
-engineering. It isn't only discussion - the vendors shipped features for
-it. Claude Code has `/goal`, `/loop` and `/schedule`, which are exactly
-this idea productized: run until a goal is met, repeat a prompt, or run on
-a schedule.
-
-The name is still about seven weeks old and people don't agree on its
-exact boundaries. But the practice underneath has tooling behind it.
-
-You can also build these things yourself with
-
-- stop hooks (for /goal)
-- running agents in tmux sessions and doing regular pings (/loop)
-- giving agents tools to stop the work and stop the loops (refer to my tmuxctl)
-
-
+The unit of engineering effort moves from the instruction to the thing
+that issues instructions.
 
 ## The ladder
-
-Loop engineering is usually presented as the next rung on a ladder, and
-the ladder is a genuinely useful way to hold it:
 
 ```text
 prompt engineering    what you say in one message
 context engineering   what the agent knows before it starts
 loop engineering      how often it runs, on what, and when it stops
-graph egnineering     what is it ? add a few words and say that we'll cover it in more details
+graph engineering     who does what, when there is more than one agent
 ```
 
-Each rung (what is it) widens the unit of work. And each one assumes the ones below it:
-a loop that runs a badly-briefed agent forty times just produces forty
-bad results faster. Everything from lesson 5 still applies inside every
-iteration of the loop.
+Each rung widens the unit of work: one message, then one session, then
+many sessions, then many agents. Graph engineering is [lesson
+10](10-graph-engineering.md).
 
-## What a loop is made of
+Each rung also assumes the ones below it. A loop around a badly-briefed
+agent produces bad results faster, and forty of them. Everything from
+[lesson 5](05-context-engineering.md) applies inside every iteration.
 
-Strip away the vocabulary and a loop has five parts. This is the useful
-part of the term - it gives you a checklist:
+## /goal in practice
 
-1. **Discovery** - how it decides what to work on next. Failing tests, an
-   issue queue, a CI signal, a schedule.
-2. **Isolation** - where the work happens, so a half-finished attempt
-   doesn't damage anything. Usually a separate branch or checkout.
-3. **Verification** - how the result gets checked, by something the agent
-   didn't write. Tests, a type checker, a linter, CI.
-4. **State** - what it remembers between iterations. A progress file,
-   commits, issue status.
-5. **Stop condition** - what ends it. Goal met, tests green, iteration
-   limit, budget cap, or a human gate.
-
-If you can name all five for a given setup, you understand it. If you
-can't name the stop condition, don't run it unattended.
-
-how do we set it? how does it work with /goal? it's too theoretical here
-let's make it more practical
-
-## The idea worth remembering
-
-One line does more work than the rest of the term put together:
-
-> The autonomy ceiling is set by verification reach.
-
-I don't undestand it
-
-You can safely delegate exactly as far as you can automatically check. Not
-as far as the model is capable, and not as far as you're feeling
-optimistic - as far as you can *check*.
-
-This connects directly to lesson 7. When you listed what your project can
-verify automatically - types, tests, lint, build, CI - you were measuring
-how much autonomy you can afford. A repo with a fast, trustworthy test
-suite can support a loop running unattended. A repo with no tests cannot,
-no matter how good the agent is, because nothing can tell it that it's
-wrong.
-
-That's also the honest answer to "should I let it run overnight?" It
-depends on what happens when it's wrong at 3am and nothing catches it.
-
-## The simplest real example
-
-The clearest case is a repo with failing tests:
+The simplest useful loop is one command:
 
 ```text
-1. Discovery      read the test output, pick one failure
-2. Isolation      work on a branch
-3. Verification   re-run the suite
-4. State          commit when a test goes green
-5. Stop           all green, or ten attempts, whichever comes first
+/goal all tests pass
 ```
 
-That's a loop. You can write it as a short shell script around an agent's
-non-interactive mode, or use the built-in commands. Either way, the
-structure is the same, and the structure is what the term is naming.
+The agent works, runs the suite, reads the failures, works again, and
+stops when the suite is green or it hits the turn limit. You are not in
+that cycle.
 
-The iteration limit matters more than it looks. Without it, a loop that
-can't solve something doesn't fail - it keeps going, and keeps spending.
-
-## The same idea in two tools
-
-It's worth seeing this in two tools, because they draw the line in
-different places and that tells you something about the concept.
-
-**Claude Code ships loops as commands.** It groups them into four kinds:
-turn-based (you prompt, it stops when it judges the work done),
-goal-based, time-based, and proactive ones triggered by events.
+Something more realistic for our project:
 
 ```text
-/goal    keep going until success criteria are met, or the turn limit is hit
-/loop    run a prompt on an interval, locally
+/goal refactor src/cost so no file is over 200 lines, tests stay green
 ```
 
-For example:
+Both of those work for the same reason: the stop condition is
+something a machine can evaluate. "All tests pass" is checkable. "No
+file over 200 lines" is checkable. "Make the code better" is not, and a
+loop with that as its goal either stops immediately or never.
 
-```text
-/loop 5m check my PR, address review comments, and fix failing CI
-```
+This is why [lesson 8](08-testing-a-task.md) insisted that QA outputs
+PASS or FAIL. A verdict is a stop condition. A paragraph of nuance is
+not.
 
-The guidance on `/goal` is worth repeating, because it is the whole
-lesson in one line: it works when you give it deterministic criteria,
-like a number of tests passing. "Make it good" is not a stop condition.
+## The five parts
 
-**Codex has no loop command.** There is no `/loop` and no `/schedule`.
-It has `/goal`, but that is a per-session objective and budget tracker
-rather than something that re-runs the agent.
+Any loop has five parts, and naming them is how you tell whether a
+setup is sound:
 
-also mention that you can use tools like tmuxctl for schedulign anyhing to any tmux session 
+| Part | What it means | What we already have |
+|---|---|---|
+| Discovery | how it picks the next piece of work | the backlog of issues |
+| Isolation | where the work happens | a branch |
+| Verification | how the result gets checked | the test suite, and the QA verdict |
+| State | what carries between iterations | commits, and the issue status |
+| Stop | what ends it | backlog empty, or a turn limit |
 
-So in Codex you build the loop yourself, around its non-interactive
-mode:
+The right-hand column is the point of this lesson. You did not build
+those five things in order to run loops - you built them because each
+one was useful on its own. But they are exactly what a loop needs, and
+a project that has them is a project you can automate.
+
+That is also the honest test for someone else's repo. If you cannot
+name the stop condition, do not run it unattended.
+
+## How far you can let it run
+
+You can let an agent run on its own exactly as far as something can
+automatically tell it that it is wrong.
+
+Not as far as the model is capable, and not as far as you are feeling
+optimistic. As far as your checks reach.
+
+A project with a fast test suite can support a loop running for an
+hour, because a wrong turn gets caught within one iteration. A project
+with no tests cannot, however good the agent is, because nothing in the
+loop can produce the word FAIL. It will keep going, confidently, in
+whatever direction it started.
+
+That is the real answer to "can I let it run overnight?" It is not
+about trust. It is about what happens at 3am when it is wrong and
+nothing notices.
+
+## Building the loop yourself
+
+`/goal` and `/loop` are Claude Code commands. Codex has no equivalent -
+it has `/goal` as a per-session objective and budget tracker, but
+nothing that re-runs the agent. So it is worth knowing how to build
+this, both because your tool may not have it and because building one
+is how the idea stops being abstract.
+
+Three ways, roughly in order of effort:
+
+- Stop hooks. A hook that fires when the agent finishes a turn can
+  check a condition and prompt it again. That is `/goal` by hand.
+- Scheduled pings into a tmux session. If the agent is running in tmux,
+  anything that can send keystrokes can re-prompt it on a timer. That
+  is `/loop` by hand, and it is how I drive agents from a phone -
+  described in [The System I Built to Ship Code From a
+  Phone](https://alexeyondata.substack.com/p/the-system-i-built-to-ship-code-from).
+- A shell loop around non-interactive mode:
 
 ```bash
-codex exec "run the tests, fix one failing test, then stop"
+for i in $(seq 1 10); do
+  codex exec "run the tests, fix one failing test, then stop" || break
+done
 ```
 
-`codex exec` returns a non-zero exit code when a turn fails, which is
-what a script branches on. Wrapped in a shell loop with a counter, that
-is the same five parts as before: discovery in the prompt, verification
-in the test run, state in your commits, and a stop condition in the loop
-bound.
+`codex exec` returns non-zero when a turn fails, which is what the
+script branches on. Discovery is in the prompt, verification is the
+test run, state is the commits, and the stop condition is the loop
+bound. Same five parts.
 
-Neither approach is more correct. One tool decided this was common enough
-to ship as a command; the other left it to you. The structure underneath
-is identical, which is the point - if you understand the five parts, you
-can build this on any tool, including one that has no word for it.
+Also give the agent a way to stop the loop itself. An agent that can
+say "I am done" or "I am stuck" ends the run cleanly instead of
+burning the remaining iterations.
 
 ## What goes wrong
 
-- **No stop condition.** The loop runs until you notice, or until your
-  usage limits do. (refer to my article about ralph loop)
-- **Weak verification.** The check passes but the work is wrong, so the
-  loop confidently marches through twelve tasks in the wrong direction.
-- **No state.** Each iteration starts over, redoing work or undoing the
-  last pass.
-- **Silent failure.** It looks like it's working and it's stuck. Being
-  unable to tell those apart is the most common complaint about running
-  agents unattended.
+**No stop condition.** The loop runs until you notice, or until your
+usage limits notice for you. This is the failure mode behind the
+"ralph loop" people write about - an agent left running against a goal
+it cannot reach. I wrote about running Claude forever, and what it
+costs, in [My Experiments with Claude
+Code](https://alexeyondata.substack.com/p/my-experiments-with-claude-code).
 
-Every one of these is a missing piece from the list of five.
+**Weak verification.** The tests pass and the work is wrong, so the
+loop marches confidently through six issues in the wrong direction. One
+bad iteration is a mistake. A loop turns it into a pattern.
 
-it's very abstract I want concrete things 
+**No state.** Each iteration starts fresh with no record of the last
+one, so it re-does work, or undoes it. The issue status and the commits
+are what prevent this, which is why the engineer role is told to commit
+as it goes.
 
-## Where we go deeper
+**Silent failure.** It looks like it is working and it is stuck.
+Telling those apart from the outside is the most common complaint about
+unattended agents, and it is worse when several are running at once.
 
-We are not building production loops in this module. 
-yes we aren't but I want to show /goal in practice
+## Where this goes
 
-simple loops: /goal "refactor this codebase" - here
-more complex loops /goal work though the backlog - next lesson 
-where we combine loops and multi-agent setup
+The loop in this lesson has one agent in it. It picks up work, does it,
+checks it, repeats.
 
+The loop you actually want has three, because you already split the
+work into three roles and each one is better at its job for not being
+the other two. That is the next lesson, and the command at the end of
+it is the one promised in [lesson 1](01-intro.md):
 
-The point here is
-that you know what the term means, can identify the five parts, and can
-judge whether a repo is ready for one.
-
-[Module 3](../../03-mcp/) is where we build agent capabilities properly -
-including the pieces that make unattended running safe.
-
-Next: the same idea, but with several agents instead of one.
+```text
+/goal work through the backlog
+```
 
 [← Testing a Task](08-testing-a-task.md) | [Graph Engineering →](10-graph-engineering.md)
