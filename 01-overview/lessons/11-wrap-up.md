@@ -70,7 +70,7 @@ information about the task. Instead of attempt number three:
 - Write the failing test first, then ask for the code that passes it
 - Do the confusing part by hand, delegate the rest
 - Start a fresh session, because the old one is now full of wrong turns
-  ([lesson 6](06-implementing-a-task.md))
+  ([lesson 6](07-implementing-a-task.md))
 
 All of these are the same move: make the unit of work smaller and more
 concrete. That is nearly always the fix.
@@ -139,7 +139,7 @@ one line. It is also the whole security model of your application.
 
 In these areas: ask for a plan before edits, keep changes small, read
 every line, and don't run unattended loops over them. That last point
-is [lesson 8](08-loop-engineering.md)'s rule from the other side - the
+is [lesson 8](09-loop-engineering.md)'s rule from the other side - the
 autonomy ceiling is set by verification reach, and here yours is
 short.
 
@@ -156,9 +156,9 @@ Wrapping up. The working practices, in the order real work happens:
 ```
 
 Then the vocabulary, for words you'll meet outside this course without
-a definition attached: [loop engineering](08-loop-engineering.md), one
+a definition attached: [loop engineering](09-loop-engineering.md), one
 agent iterating against a check until a stop condition, and [graph
-engineering](09-graph-engineering.md), several agents with defined
+engineering](10-graph-engineering.md), several agents with defined
 roles handing work between them.
 
 ## What you should have now
@@ -217,4 +217,4 @@ next year. Everything else is an interface over it.
 
 See you in Module 2.
 
-[← Graph Engineering](09-graph-engineering.md) | [Back to module →](../)
+[← Graph Engineering](10-graph-engineering.md) | [Back to module →](../)

@@ -75,11 +75,12 @@ As a developer, your role moves toward a manager of a very fast junior developer
 | 3. [Specs before code](03-specs.md) | Talking a design through, then writing it down |
 | 4. [Bootstrapping a project](04-bootstrapping.md) | Spec into an empty folder, decomposed into a backlog |
 | 5. [Context engineering](05-context-engineering.md) | What the agent knows before it starts |
-| 6. [Implementing a task](06-implementing-a-task.md) | One task, start to finish |
-| 7. [Tests and verification](07-tests-and-verification.md) | Getting something other than the agent's word |
-| 8. [Loop engineering](08-loop-engineering.md) | `/goal`, and running the agent repeatedly |
-| 9. [Graph engineering](09-graph-engineering.md) | Two agents working the backlog between them |
-| 10. [Wrap-up](10-wrap-up.md) | What transfers when the tools change again |
+| 6. [Grooming a task](06-grooming-a-task.md) | Raw task to acceptance criteria, as the PM |
+| 7. [Implementing a task](07-implementing-a-task.md) | Writing the code, as the engineer |
+| 8. [Testing a task](08-testing-a-task.md) | Checking the work, as the QA engineer |
+| 9. [Loop engineering](09-loop-engineering.md) | `/goal`, and running the agent repeatedly |
+| 10. [Graph engineering](10-graph-engineering.md) | The three roles as agents, working the backlog |
+| 11. [Wrap-up](11-wrap-up.md) | What transfers when the tools change again |
 
 
 We stay at the fundamentals level here and in the next modules we built upon that:

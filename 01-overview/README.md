@@ -33,15 +33,17 @@ then with `/goal`, then with two agents splitting the work.
    spec into a repo and a backlog of tasks
 5. [Context Engineering](lessons/05-context-engineering.md) - Writing the
    `AGENTS.md` that every session starts from
-6. [Implementing a Task](lessons/06-implementing-a-task.md) - One task
-   from the backlog, start to finish
-7. [Tests and Verification](lessons/07-tests-and-verification.md) - What
-   you can check automatically, and why that sets your limit
-8. [Loop Engineering](lessons/08-loop-engineering.md) - `/goal`, and
+6. [Grooming a Task](lessons/06-grooming-a-task.md) - Turning a raw
+   backlog item into one with acceptance criteria
+7. [Implementing a Task](lessons/07-implementing-a-task.md) - Writing
+   the code against those criteria
+8. [Testing a Task](lessons/08-testing-a-task.md) - Checking the work
+   from a session that did not write it
+9. [Loop Engineering](lessons/09-loop-engineering.md) - `/goal`, and
    running the agent repeatedly
-9. [Graph Engineering](lessons/09-graph-engineering.md) - Splitting work
-   across several agents with defined roles
-10. [Wrap-up](lessons/10-wrap-up.md) - What transfers when the tools
+10. [Graph Engineering](lessons/10-graph-engineering.md) - The three
+    roles as agents, working the backlog between them
+11. [Wrap-up](lessons/11-wrap-up.md) - What transfers when the tools
     change again
 
 

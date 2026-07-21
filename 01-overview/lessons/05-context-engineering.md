@@ -99,22 +99,10 @@ to add a table of contents.
 
 ## The process document
 
-`process.md` says how work moves through the project.
+`process.md` says how work moves through the project. It could live inside `AGENTS.md`, but I keep a separate file for that specifically. 
 
-It could live inside `AGENTS.md`, and on day one it may as well. It
-gets its own file for two reasons.
+For now we can only add three lines there, but it will certainly grow as our project gets bigger.
 
-It changes for different reasons than everything else. You can rewrite
-how you work without touching a line of the project, and restructure
-the project without changing how you work. Things that change
-separately are easier to keep in separate files.
-
-And it is the section that grows. Three lines today, but as soon as
-more than one agent is involved it turns into roles, handoffs, and
-rules about who is allowed to commit. Keeping it out of `AGENTS.md` is
-what stops `AGENTS.md` growing along with it.
-
-For now it can be three lines:
 
 ```markdown
 - Tasks are GitHub issues, one at a time
@@ -131,21 +119,21 @@ The working process in `_docs/process.md`. When implementing a task, read this f
 
 ## Other documents
 
-In addition to `AGENTS.md`, you can keep a separate document for each
-thing you find yourself explaining over and over. The ones that come up
-most often:
+In addition to `process.md`, you can keep a separate document for each
+thing you need to explain over and over again.
 
-- `testing-guidelines.md` - what counts as a real test, and the ways
-  agents write fake ones
+In my projects I often have these files:
+
+- `testing-guidelines.md` - how to write tests
 - `design-system.md` - colours, typography, spacing, so the UI does not
   drift every session
-- `setup.md` - how to get the project running from nothing
+- `setup.md` - how to get the project running
 - `api.md` - the endpoints, and what they return
 
 I keep them together in a `_docs/` folder and link them from `AGENTS.md`.
 
 The agent reads `AGENTS.md` at the start of every session, so it learns that these documents exist. 
-It does not read them yet, only when it's needed for the task.
+It does not read them immediately, only when it's actually needed for the task.
 
 The section with document can look like:
 
@@ -166,55 +154,5 @@ It then opens the document relevant for the task:
 it keeps `AGENTS.md` short while the project's written
 context keeps growing.
 
-## Keep it alive
 
-The file rots like any other documentation, and the signal that it
-needs attention is specific:
-
-> When the agent gets something wrong twice in the same way, the file
-> is missing a line.
-
-Not the first time - that might be luck. The second time is a pattern,
-and a pattern means the project has a rule that exists only in your
-head. When you catch yourself typing a correction you have typed
-before, add the line instead. Over a few weeks this converges: the
-corrections get rarer, and the ones left are genuinely one-offs.
-
-The reverse also happens. When a constraint stops being true, delete
-the line. Stale instructions are worse than none, because the agent
-will follow them.
-
-## The first layer of a bigger system
-
-Instruction files are the base. Several things build on top of them,
-and the words are worth knowing now even though we are not setting
-them up here:
-
-- Reusable commands and skills - packaging a repeated workflow so
-  you invoke it by name instead of describing it again
-- Permission modes - deciding in advance what the agent may do
-  without asking you
-- Hooks - running your own checks automatically at fixed points in
-  the agent's work
-
-All three are covered properly in [Module 3](../../03-mcp/), and all
-three are less useful than they sound if the base is missing. An agent
-with elaborate hooks and no idea how to run your tests is not ahead of
-one with a good `AGENTS.md`.
-
-## Your deliverable
-
-This is the artifact for this module. Before you move on:
-
-1. Write `AGENTS.md` for your own project: the commands, the rules,
-   and pointers to your spec and process docs. Keep it under two
-   screens.
-2. Add a `CLAUDE.md` containing `@AGENTS.md`, or the equivalent
-   pointer for your tool.
-3. Start a fresh session, give the agent a small task, and watch what
-   it still gets wrong. Those are your missing lines.
-
-Step 3 is the one people skip, and it is the only one that tells you
-whether the file works.
-
-[← Bootstrapping a Project](04-bootstrapping.md) | [Implementing a Task →](06-implementing-a-task.md)
+[← Bootstrapping a Project](04-bootstrapping.md) | [Grooming a Task →](06-grooming-a-task.md)
