@@ -1,5 +1,7 @@
 # Understanding an Unfamiliar Codebase
 
+let's move this to the end. 
+
 Video: TBA
 
 Most of the work you do as a developer happens in code somebody else
@@ -78,34 +80,9 @@ This is the question that turns understanding into work. Ask it before
 you ask for the change itself. The answer tells you whether the agent
 has the map right, and it costs nothing to correct at this stage.
 
-## The exercise: two Snake games
+## The exercise
 
-This repository has two versions of the same game:
-
-- [snake-chatgpt/](../snake-chatgpt/) - built by pasting code out of a
-  chat window
-- [snake-claude-code/](../snake-claude-code/) - built by a terminal
-  agent working in the folder
-
-Pick one and run the orientation questions above against it. Then run
-them against the other.
-
-Now the part that is genuinely worth doing:
-
-```text
-Compare the implementations in snake-chatgpt/ and
-snake-claude-code/. Same game, two codebases. Describe how they
-differ in structure: file layout, where state lives, how the game
-loop is organized, and what each one leaves out.
-```
-
-A person doing that by hand needs to hold both codebases in their head
-at once. It takes a while. An agent does it in one pass. This is the
-shape of task where these tools earn their place - broad reading,
-narrow conclusion.
-
-Then open the files it points at and see whether you agree. You will
-often disagree with part of it, and that part is the interesting one.
+Let's do it with somehting else? let's take some big project from the last year and ask about it. 
 
 ## Verification
 
@@ -154,6 +131,9 @@ believe a summary of them.
 
 ## The failure mode worth naming
 
+the title is confusing
+
+
 The specific way this goes wrong is worth a name, because you will see
 it repeatedly:
 
@@ -174,6 +154,8 @@ The tell is usually vagueness at the boundary. Crisp language about
 layers and responsibilities, no file paths. Ask for the paths.
 
 ## This is what goes in AGENTS.md
+
+let's not talk about it here
 
 Everything you just worked out - what the project does, how it is laid
 out, how to run it, how to test it, where the real logic lives - is

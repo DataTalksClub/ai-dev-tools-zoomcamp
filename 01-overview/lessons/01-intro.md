@@ -5,7 +5,7 @@ Video: TBA
 This module is about working with AI developer tools in a way you can
 defend later.
 
-Not "here are twenty tools and what their buttons do". Tools change
+Tools change
 every month. What lasts is the workflow: what you give a tool before it
 starts, how you steer it while it runs, and how you check what came
 back.
@@ -23,14 +23,11 @@ Places where you can find me:
 
 ## Not vibe coding
 
-You have probably seen the term "vibe coding": you describe what you
+In the previous edition, we called the first module "Introduction to Vibe Coding".
+Nowadays, "vibe coding" means that you describe what you
 want, accept whatever the model produces, and never really read it.
-It's a real cultural moment and it's genuinely fun. It also falls apart
-the moment the code has to be maintained, reviewed, or run in front of
-other people.
 
-What we teach here is the same speed with a different discipline. The
-name we use for it is **AI-native developer workflow**: use AI tools
+This year, we name it "AI-native developer workflow": we show how to use AI tools
 with context, constraints, verification, and human review.
 
 ## The three questions
@@ -46,13 +43,30 @@ change that lands in your repo:
 2. **What actually changed?**
 3. **How do I know it works?**
 
+where does it come from? Why these questions? I don't remember having this in the my notes
+can we have a three letter mnemonic abbrebiation to remember it? 
+can you also expland on each of these questions - what they mean?
+in this module I want to build the snake game. can we show how it maps to the game? 
+
 If you can answer all three, it does not matter that a model wrote the
 code. If you cannot, it does not matter that you wrote it yourself.
 
+I don't understand it it's too abstract. 
+
 Almost everything in this module is one of those three questions in
-more detail. Specs and context are question one. Reading diffs and
-steering a session are question two. Tests and verification are
-question three.
+more detail. 
+same here. let's not have abstract claims.
+
+Specs and context are question one. what is it exactly? 
+Reading diffs and steering a session are question two.
+Tests and verification are question three.
+
+I don't want to focus on reading diffs - this slows us down. 
+we do want to undestand what's happening but on the more broad level
+I want them to become architects and product managers, so no need to understand 
+every single code line and every diff.
+
+
 
 ## You become an agent manager
 
@@ -107,6 +121,8 @@ either.
 Lesson 10 closes with judgment: when to reach for an agent, when to
 write it yourself, and what stays true when the tools change again.
 
+I don't think it makes sense anymore to write the code yourself. let's revise that.
+
 We stay at the fundamentals level here. Agent capabilities proper -
 MCP, skills, hooks, subagents, plugins - are [Module
 3](../../03-mcp/). Building and shipping a real app end to end is
@@ -119,41 +135,21 @@ app: you can see it working or not working in a second, it's small
 enough to read end to end, and it still has real parts - game logic,
 rendering, state, tests.
 
-This repository has two versions of it, both generated during the
+[This repository has two versions of it, both generated during the
 previous cohort:
 
 - [snake-chatgpt/](../snake-chatgpt/) - built by pasting code out of a
   chat window
 - [snake-claude-code/](../snake-claude-code/) - built by a terminal
-  agent working directly in the folder
+  agent working directly in the folder]
 
-Same game, two very different workflows. Open both when you get to
-lesson 2 - the difference between them is the whole point of the tool
-map.
+no, we no longer do. I will create it again a new version, only one
+
 
 In [Module 2](../../02-end-to-end/) this game grows into a full-stack
 app with a backend, a database and a deployment. The habits you build
 here are the habits you'll use for the rest of the course.
 
-## What you produce
-
-One thing:
-
-```text
-AGENTS.md    project context that any agent reads
-CLAUDE.md    one line: @AGENTS.md
-```
-
-`AGENTS.md` is where you write down what your project is, how to run
-it, how to test it, and what an agent should not do. Most tools read it
-directly. Claude Code reads `CLAUDE.md`, so the one-line file imports
-the same content instead of duplicating it.
-
-That's the deliverable. No reports, no comparison documents. We build
-it up over lesson 5 and refine it as the module goes.
-
-The [homework](../../cohorts/2026/01-overview/homework.md) is separate:
-you build a Django TODO app with the AI tool of your choice.
 
 ## What you need to know
 

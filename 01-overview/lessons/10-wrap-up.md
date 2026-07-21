@@ -4,15 +4,12 @@ Video: TBA
 
 Everything in this module so far has been a technique you can follow.
 Read a codebase this way. Write the spec before the code. Put durable
-facts in `AGENTS.md`. Interrupt early. Verify with something the agent
-did not write.
-
-This lesson is the part that is not a procedure: the judgment that
-decides which technique to reach for, when to stop, and what you are
-still responsible for once the agent says it is done. Then we close
-the module out.
+facts in `AGENTS.md`. 
 
 ## The three-way decision
+
+I don't undsetand where it's coming from - in summary we only talk about things we mentioned previous 
+let's rewokr the whole spec-driven development thing
 
 You make one decision over and over during a working day, usually
 without noticing it. A piece of work arrives and you choose:

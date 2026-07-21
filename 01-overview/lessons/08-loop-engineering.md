@@ -4,7 +4,9 @@ Video: TBA
 
 ## Definition
 
-**Loop engineering** is the practice of designing the control system that
+**Loop engineering** is the practice of designing [the control system] - whats the control sustem? harness?  
+
+ that
 runs a coding agent repeatedly, instead of driving the agent prompt by
 prompt.
 
@@ -12,7 +14,7 @@ Designing that system means deciding five things: what work the agent
 picks up next, where it does that work, how the result is verified, what
 carries over between iterations, and what makes it stop.
 
-The shift this names is a real one. Instead of you typing a prompt,
+Instead of you typing a prompt,
 reading the answer, and typing the next prompt, you build the thing that
 does the prompting. The unit of engineering effort moves from the
 individual instruction to the system that issues instructions.
@@ -25,6 +27,8 @@ on X - including people building coding agents at Anthropic. Within a few
 weeks it had its own explainer sites, and by the end of June Anthropic had
 published a first-party post about loops in Claude Code.
 
+let's include some screenshots from twitter and posts
+
 That last part is why this term is on firmer ground than graph
 engineering. It isn't only discussion - the vendors shipped features for
 it. Claude Code has `/goal`, `/loop` and `/schedule`, which are exactly
@@ -33,6 +37,14 @@ a schedule.
 
 The name is still about seven weeks old and people don't agree on its
 exact boundaries. But the practice underneath has tooling behind it.
+
+You can also build these things yourself with
+
+- stop hooks (for /goal)
+- running agents in tmux sessions and doing regular pings (/loop)
+- giving agents tools to stop the work and stop the loops (refer to my tmuxctl)
+
+
 
 ## The ladder
 
@@ -43,9 +55,10 @@ the ladder is a genuinely useful way to hold it:
 prompt engineering    what you say in one message
 context engineering   what the agent knows before it starts
 loop engineering      how often it runs, on what, and when it stops
+graph egnineering     what is it ? add a few words and say that we'll cover it in more details
 ```
 
-Each rung widens the unit of work. And each one assumes the ones below it:
+Each rung (what is it) widens the unit of work. And each one assumes the ones below it:
 a loop that runs a badly-briefed agent forty times just produces forty
 bad results faster. Everything from lesson 5 still applies inside every
 iteration of the loop.
@@ -69,11 +82,16 @@ part of the term - it gives you a checklist:
 If you can name all five for a given setup, you understand it. If you
 can't name the stop condition, don't run it unattended.
 
+how do we set it? how does it work with /goal? it's too theoretical here
+let's make it more practical
+
 ## The idea worth remembering
 
 One line does more work than the rest of the term put together:
 
 > The autonomy ceiling is set by verification reach.
+
+I don't undestand it
 
 You can safely delegate exactly as far as you can automatically check. Not
 as far as the model is capable, and not as far as you're feeling
@@ -136,6 +154,8 @@ like a number of tests passing. "Make it good" is not a stop condition.
 It has `/goal`, but that is a per-session objective and budget tracker
 rather than something that re-runs the agent.
 
+also mention that you can use tools like tmuxctl for schedulign anyhing to any tmux session 
+
 So in Codex you build the loop yourself, around its non-interactive
 mode:
 
@@ -157,7 +177,7 @@ can build this on any tool, including one that has no word for it.
 ## What goes wrong
 
 - **No stop condition.** The loop runs until you notice, or until your
-  usage limits do.
+  usage limits do. (refer to my article about ralph loop)
 - **Weak verification.** The check passes but the work is wrong, so the
   loop confidently marches through twelve tasks in the wrong direction.
 - **No state.** Each iteration starts over, redoing work or undoing the
@@ -168,9 +188,19 @@ can build this on any tool, including one that has no word for it.
 
 Every one of these is a missing piece from the list of five.
 
+it's very abstract I want concrete things 
+
 ## Where we go deeper
 
-We are not building production loops in this module. The point here is
+We are not building production loops in this module. 
+yes we aren't but I want to show /goal in practice
+
+simple loops: /goal "refactor this codebase" - here
+more complex loops /goal work though the backlog - next lesson 
+where we combine loops and multi-agent setup
+
+
+The point here is
 that you know what the term means, can identify the five parts, and can
 judge whether a repo is ready for one.
 

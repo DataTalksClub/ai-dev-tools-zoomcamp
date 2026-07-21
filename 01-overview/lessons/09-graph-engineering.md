@@ -8,18 +8,22 @@ Video: TBA
 specialized agents: defining what each agent is responsible for, what
 order the work moves in, and how agents hand results to each other.
 
-The name comes from the shape that produces. Each agent is a node. Each
+You can see the workflow as a grpah. Each agent is a node. Each
 handoff or dependency between them is an edge. The design work lives in
 the structure connecting the agents, not in any single agent's behaviour.
 
 Where loop engineering asks "how does one agent keep working on its own?",
 graph engineering asks "who does what, and in what order?"
 
+add 
+
 ## Where the term came from
 
 It started with a post on X in July 2026 - roughly "are we still talking
 loops, or did we shift to graphs yet?" - from the same person who
 popularized loop engineering a month earlier. It spread quickly.
+
+to me this definition makes very little sense and many people have been doing this for quite some time. but because of the traction it's getting on X I decided to include it in this module and explain it in simple words.
 
 The definition is still settling. In the same discussion, people who build
 agent-orchestration tools noted that the term was being used loosely, and
@@ -165,6 +169,12 @@ led the agents to tailor the implementation to specific sites instead of
 building something general. The process failed at exactly the step this
 module keeps returning to - writing down what you actually want before
 letting anything build it.
+
+
+we already defined the roles 
+our main session becomes the orchestrator 
+run /goal work though the backlog and see how it does this 
+
 
 ## What to take from this
 

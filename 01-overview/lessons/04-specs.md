@@ -4,10 +4,44 @@ Video: TBA
 
 ## The claim
 
+let's avoid generic titles and be specific about what we cover
+
 The quality of what an agent builds is mostly decided before it writes
 a line of code.
 
-That is not a slogan. A vague ask does not produce a vague answer - it
+
+describe my process. take my sqlitesearch article - and describe the process from there
+
+it's 
+
+- talk to chat assistant first to be clear what you want to produce 
+- create a clear specification
+- produce a md file 
+- put it inside an empty folder 
+- ask the coding agent to read it and decompose it into tasks 
+- create tasks with acceptance criteria  (take them from my article about coding agents)
+- start executing it (loop with /goal)
+
+let's do that: first you describe this workflow, then we have a lesson progression like that (so multiple lessons)
+
+- specs for creating the specs 
+- bootstraping the project folder
+- context engineering - what it is 
+- implement one task 
+- test the task
+- loop engineering (/goal) 
+- graph engineering (define two agents and loop through the backlog)
+
+what we want to have in the end: 
+start a fresh session, launch 
+/goal work though the backlog
+and it will know what to do 
+
+
+let's rework the rest of the module with this plan in mind and rearrange files.
+
+
+A vague ask does not produce a vague answer - it
 produces a confident, detailed, plausible answer to a question you did
 not ask. The agent fills the gaps you left with its own assumptions,
 and it does not flag them. It just builds.
@@ -25,23 +59,21 @@ you wrote down before the session started.
 
 ## Spec-driven development
 
-Through 2026 this settled into a named practice: **spec-driven
-development**. Write the specification first, treat it as the source of
+Through 2026 this settled into a named practice: spec-driven
+development. Write the specification first, treat it as the source of
 truth, and derive the implementation from it rather than the other way
 round.
 
-Several tools ship workflows for it now, and they all disagree about
-filenames. The pattern underneath is the same everywhere, and it has
-two tiers.
 
-**Tier 1: the durable project document.** What the project is, who it
+
+Tier 1: the durable project document. What the project is, who it
 is for, what stack it uses, what constraints it operates under, what it
 deliberately does not do. This is written once, changes rarely, and
 applies to every piece of work in the repo. Some tools and courses call
 this a *constitution*. Others call it a product spec, steering docs, or
 project rules.
 
-**Tier 2: the per-feature spec.** What this one change should do, how
+Tier 2: the per-feature spec. What this one change should do, how
 you will know it worked, and what it must not touch. It is written
 before the change, used during the change, and retired after the change
 lands. It is disposable by design.
@@ -51,10 +83,8 @@ tier 1   project-level     rarely changes    applies to all work
 tier 2   feature-level     written per task  thrown away after
 ```
 
-Do not get attached to any tool's file layout. Move to another agent
-and the filenames change; the two tiers do not. You already have a
-start on tier 1 - the `AGENTS.md` you are building in this module is
-exactly that document. This lesson is mostly about tier 2.
+in our case, project-level would be instructions in process.md and agents.md, and feature-level will be stored in GitHub issues.
+
 
 ## Plan, implement, validate
 
@@ -65,9 +95,6 @@ plan       agree on what should happen, before any edits
 implement  the agent writes the code
 validate   check the result against what was agreed
 ```
-
-Most people do the first two. The third is where the discipline
-actually lives.
 
 Validation has to be a gate, not a summary. An agent will tell you it
 is done - the feature works, the tests pass, everything is wired up.
@@ -85,11 +112,11 @@ a description. We go deeper on the mechanics of checking in [lesson
 
 Four things. That is genuinely all.
 
-1. **Goal** - one or two sentences on what should be true afterwards.
-2. **Acceptance criteria** - checkable statements. Not "works well" but
+1. Goal - one or two sentences on what should be true afterwards.
+2. Acceptance criteria - checkable statements. Not "works well" but
    things where you can point at the screen and say yes or no.
-3. **Out of scope** - what this change must not do.
-4. **Constraints** - files it should stay inside, libraries it may not
+3. Out of scope - what this change must not do.
+4. Constraints - files it should stay inside, libraries it may not
    add, patterns it must follow.
 
 If it takes more than a few minutes to write, the task is too big.

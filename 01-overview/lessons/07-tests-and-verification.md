@@ -2,6 +2,17 @@
 
 Video: TBA
 
+let's rework this to make it more focused. 
+also add a note that tests are the biggest AI slop 
+at the beginning to me most tests that were written by agents didn't make sense 
+they were testing obbious things 
+but as I continued working more with agents I noticed that they indeed were helpful in catching bugs that agents later introduced. so the coding agents are good at writing tests against code written by agents
+
+however we still need to watch out for a few test smells: 
+
+- the system under test is mocked so nithing useful is tested
+- check other projects (.e.g ai shipping labs) to see what I have there
+
 Everything up to this point has been about getting an agent to do more
 of the work: briefing it well, giving it a spec, steering it when it
 drifts. This lesson is about the other half. How do you *know* the
@@ -29,6 +40,12 @@ So the rule:
 
 > Real verification comes from somewhere the work did not.
 
+I don't undestand this, it's hard to parse 
+but for me also we want to say that the best testers are the ones who 
+didn't write the code. this way we intruduce the implementer-tester pattern and 
+the tester is a separate session. we give the prompt for testing 
+first we just do it with prompts and then introuduce subagents 
+
 A test the agent has to pass. A type checker it cannot argue with. A
 running app that either draws the screen or does not. A fresh session
 with no memory of the last two hours. A human. Everything below is a
@@ -48,6 +65,8 @@ list, and it is genuinely useful information about a codebase.
 | Build / compile | Code that does not even hold together |
 | Running the app | Whether the thing works at all |
 | CI | All of the above, on someone else's machine |
+
+CI - next module 
 
 Go and inventory your own project. Write down the exact command for
 each one, and how long it takes. Something like:
@@ -89,6 +108,12 @@ the test, they can encode the same misunderstanding. The test passes
 because it asserts exactly what the code does, which is not the same
 as asserting what the code should do. This is the same problem as
 before, wearing a test suite as a disguise.
+
+the way out:
+
+1) create acceptance test before the feature is implemented 
+2) TDD 
+3) tests after implementation are also fine but with a note
 
 Two ways around it. Write the acceptance criteria yourself, before
 implementation, as you did in [lesson 4](04-specs.md) - then the test

@@ -7,104 +7,166 @@ Video: TBA
 In the 2025 cohort, the tool tour was most of this module. We went
 through products one by one, with install commands and links.
 
-For 2026 it is one lesson. That is deliberate, and I want to say why
-openly: brand names age in months, categories do not. Half the specific
-tools we demoed last year have changed name, changed pricing model,
-changed defaults, or been absorbed into something else. The five
-categories below have not moved at all.
+let's link the old content so people can read it if they want
+let's cut the fluff. I did it here - do it in other places. define fluff based on my cuts and remove it
 
-So this lesson gives you the categories, and then the thing that
-actually lasts: a way to place a tool you have never seen before,
-within about ten minutes of opening it.
+let's define what agent is. the task of the agent is to perform a task set by the user. the agent uses tools to do that. tools inclue - editing files, executing bash commands, performing web search. all the tools that we cover below are agents, but different ones.
+
 
 ## The five categories
 
 ### 1. Chat assistants
 
-ChatGPT, Claude, Gemini, and the rest of the web chat interfaces. You
-type, it answers, you copy code out by hand. This is still the best
+- ChatGPT
+- Claude
+- Gemini
+
+You type, it answers, you copy code out by hand. This is still the best
 place for thinking out loud: explaining an unfamiliar library, talking
 through a design before committing to it, arguing about trade-offs,
-drafting a spec. Where it hurts is repo awareness. The model only knows
-what you pasted, so it will confidently suggest a function signature
-that does not exist in your codebase. And every change costs you a
-copy-paste round trip, which is fine for one file and miserable for
-six.
+drafting a spec.
 
-### 2. Terminal coding agents
+Where it hurts is repo awareness. Every time you need to change,
+you have to copy-paste back-and-forth. it's fine for a few files,
+but becomes difficult
+when you need to do more. coding agents fix this (we/ll talk about them later) but chat assistants are still quite useful and I use them regularly.
 
-Claude Code, Codex CLI, Gemini CLI, Aider. These run in your terminal,
-inside a real repo. They read files themselves, edit several at once,
-run your tests, and read the failures. The copy-paste tax disappears,
-and that changes what you are willing to attempt. The cost is that
-something is now writing to your disk and running commands, so you need
-permission discipline: know what it can do without asking, and check
-before you say yes to the rest. They also over-edit. Ask for one bug fix
-and you can get a bug fix plus a reformatted file plus a helpfully
-renamed variable.
+How I use it:
 
-### 3. Agentic IDEs and desktop workbenches
+- dictation mode 
+- brainstorming
+- research
+- checking what's already there
+- "save to md file" at the end of the session
 
-Cursor, Windsurf, VS Code agent mode, Zed, Antigravity. Roughly the same
-capability as a terminal agent, wrapped in an editor. The win is
-interactive work: you see the diff highlighted in the file, you accept
-or reject hunks, you run the app in a pane next to the chat. For
-anything visual, or anything where you want to stay close to the code
-while it works, this is the most comfortable category. The cost is that
-comfort makes accepting changes very easy, and a fast accept button and
-a careful review are in tension.
+I also recommend to use it when you're learning about something new and you care about the implementation details and you want to learn. copy-pasting slows you down 
+and forces to undestand better what you're doing. 
+
+let's say you're learnign about RAG. coding agents can one-shot the entire thing (create a working application from a single prompt), but you will have very little idea how it works and you will need to read every sinble file to undestand it.
+If you're in the chat application you can already discuss the code and you'll be forced to copy-paste it, so you'll learn more about the code this way.
+
+
+
+### 2. Coding agents
+
+Terminal coding agents
+
+- Claude Code
+- Codex
+- Gemini CLI
+- GitHub Copilot CLI
+- OpenCode
+- Pi (?)
+
+These run in your terminal, inside a real repo. They read files themselves, edit several at once,
+run your tests, and read the failures. The copy-pasting problem disappears. 
+
+The cost is that something is now writing to your disk and running commands, so you need permission discipline: know what it can do without asking, and check
+before you say yes to the rest. 
+
+Or you need to run them in sandbox environments to make sure that the blast radius is minimal.
+
+I creted this classification one year ago. Now most of the coding agents also have a proper desktop environment
+
+- Claude Cowork
+- Codex/ChatGPT Work
+- OpenCode Desktop
+- Z.AI coder (?)
+- Antigravity (used to be Agentic IDE - now mo)
+
+I use them every day. 
+I mostly use them in the terminal mode, and they are running on a remote machine. 
+If one of the agents wipes the machine, I can easily recreate it. 
+
+More about it: substack AWS management.
+
+### 3. Agentic IDEs 
+
+Cursor, Windsurf, GitHub Copilot, Zed, Antigravity.
+
+Roughly the same capability as a terminal agent, wrapped in an editor.
+
+The work is more interactive: you can see the diffs in the file, and can accept
+or reject code changes.
+
+This is the most comfortable category for getting started with coding agents,
+and being close to the code. 
+
+I stopped using them because it slows me down. I noticed that often I just fast-forward accept the changes and at the end rarely review the diffs. 
+I consider my coding work now more like a PM/Architect, so I focus on more high-level details instead of low-level implementation details. 
+
+For important code, I later do separate refactoring sessions when the code already works. 
+
+So I stopped using these agentic IDEs altogether.
+
 
 ### 4. Cloud and GitHub-native agents
 
-Copilot coding agent, and the background or cloud sessions that several
-vendors now offer. The shape is different from everything above: you
-assign an issue and later a pull request appears. Nothing runs on your
-machine and you are not watching it work. That is genuinely useful for
-small, well-specified, boring tasks. The catch is that all the work
-moves to review. An agent that opens five PRs while you are at lunch has
-not saved you time until you have read all five, and a PR you did not
-watch being written is harder to review than one you did.
+for agents (both desktop and ides) you need environment to run them. 
+sometimes it's inconvenient. lucikly many llm providers have cloud env 
+where you can run your agents
+
+- GitHub Copilot - create an issue and assign it to Copilot
+- Claude Cloud ?
+- Same for codex  (what's the name?)
+
+benefits - you limit the blast radius (they can't cause much harm in the restricted cloud env) but also they don't necessarily have the tooling you need, and often you have less flexibilily
+
+I used to use github copilot quite often (include my article about shiping from a tram stop) but eventually I created a flow where I use a remote machine with usual coding agents (see article about coding from phone)
+
 
 ### 5. Project bootstrappers
 
-Lovable, Bolt, Replit Agent. You describe an app and get a running app,
-usually with a UI, usually in a browser. For a first draft or a
-prototype to show someone, nothing else is close on speed. The problem
-comes at the handover. The generated project has its own structure,
-choices you did not make, and dependencies you did not pick, and at some
-point you have to pull it into a normal repo with normal tests and
-normal review. Plan for that step, because it is where the time you
-saved goes back.
+- Lovable
+- Bolt.new
+- Replit
+- Vercel V0
+- Claude Desing (?)
 
-## Placing a tool you have never seen
+Coding agents start from scratch. Most applications can be started from a template.
+When you have this template, doing one-shot apps becomes a lot easier, plus the apps created from these templates use the same tech stack, so you can always know how to run them locally.
 
-This is the durable part. Someone launches something next month, or your
-employer hands you a tool you did not choose. You do not need a review
-of it, you need to place it. Ask these seven questions:
+that's the idea behind what I call "project bootstrappers". 
 
-1. **Does it see my repo?** All of it, the files I open, or only what I
-   paste?
-2. **Can it edit files?** Or does it only produce text I move myself?
-3. **Can it run commands?** Tests, builds, installs, git. This is the
-   line between a suggester and an agent.
-4. **Can it show me a diff?** Before or after applying. If you cannot
-   see what changed, you cannot review it.
-5. **Can I control what it is allowed to do?** Approval prompts, allowed
-   and denied commands, sandboxing.
-6. **Can I tell what context it used?** Which files it read, what it
-   remembered, what it silently truncated.
-7. **Can I control cost?** Subscription or per-token, and can you see
-   spend before the invoice.
+You describe what you want in a browser session and get a running app within minutes.
+Typically this is the fastest way to create a first draft. 
+Also these apps often have their own design systems, so the designs that these apps create are usually nicer than what you'd create when you single-shot an web application
+using a usual coding agent. 
 
-The answers put any tool on the map immediately. No file access, no
-commands, no diff means it is a chat assistant regardless of the
-marketing. Full repo access, commands, diffs and permissions means it is
-an agent, whether it lives in a terminal, an editor, or a browser tab.
+THe main downside is the cost-  they tend to get quite expensive with time. 
+I usually use these tools to create a first version, then export it and continue working with it using a coding agent. 
 
-Questions 4, 5 and 6 are the ones people skip, and they are the ones
-that decide whether you can work with the tool safely. A tool that edits
-your repo but cannot show you a clean diff is not a tool you can use on
-anything that matters.
+I described the flow in my article how I redesigned my website. We will also follow the same appreoach in module 2.
+
+## Harness
+
+explain what harness is, what's the difference between plain llm calls
+link the workshop from ai shipping labs about implementing our own agent
+
+harness can do:
+
+- tool calls
+- permissions
+- etc 
+
+so it's things around the agents that make them usaful 
+
+## Selecting the right tool 
+
+Which tool do you need? The answer is "it depends". Notice that some tools are in all categories - like Claude. Codex and Copilot also appear in most of them. 
+
+In the end, most of them do more or less the same. I'd recommend selecting one of them:
+
+- Codex
+- Claude
+- Antigravity
+- Cursor 
+- Github Copilot 
+
+I mostly use Codex and Claude. I was a big fan of Copilot until they changed their prices in June, and now it's too expensive to use it. Codex is probably the easiest to get started with as they have generous limits in the $20 plan. 
+
+I also recommend using a paid plan. You can use tools Antigravity for free, but their free plans are quite limited and I find these limitations annoying. You get into the flow, and immediately hit the limits. 
+
 
 ## The fuller 2025 tour
 
@@ -118,63 +180,7 @@ the install commands no longer apply, and a couple of the products are
 not the same thing they were. That is the whole reason this lesson
 exists in its compressed form.
 
-The two Snake versions in this repo came out of that cohort and are a
-better use of your time than the link list. One was built by pasting
-code out of a chat window, the other by a terminal agent working in the
-folder:
 
-- [snake-chatgpt/](../snake-chatgpt/)
-- [snake-claude-code/](../snake-claude-code/)
-
-Same game, two workflows. Comparing the two repos tells you more about
-categories 1 and 2 than any feature table.
-
-## Pick one tool, and stay with it
-
-Now the practical part. Choose one primary tool for the cohort and
-commit to it.
-
-I want to be blunt about this, because tool-hopping is the single most
-common way students lose time in this course. Every switch restarts the
-learning curve. You go back to not knowing how to give it context, not
-knowing what its defaults are, not knowing how to interrupt it well, not
-knowing what it does when it is wrong. None of the practice compounds,
-and at the end of eight weeks you have four weeks of beginner experience
-four times over.
-
-The skills this module teaches are about specs, context, steering,
-verification and review. They transfer between tools. But you only get
-them by building fluency in one tool first, and fluency takes weeks of
-daily use, not an afternoon.
-
-So:
-
-- Pick one. A terminal agent or an agentic IDE is the best fit for this
-  course, because most of the exercises involve a real repo.
-- Use it for everything, including the parts where another tool would
-  have been slightly better.
-- Keep a chat assistant open on the side. That is not tool-hopping, that
-  is a different job.
-- Try the others after the cohort, when you have a baseline to compare
-  them against.
-
-If your workplace already mandates a tool, use that one. Fluency in the
-tool you actually have beats admiration for one you do not.
-
-## Reading benchmarks and vendor claims
-
-You will see coding benchmarks quoted on every product page. Treat them
-as literacy, not as a skill to practice. Know that these scores are
-measured on curated task sets that look nothing like your repo, that
-vendors choose which comparisons to publish, that the scoring setup
-often includes retries and scaffolding that are not part of what you get
-in the product, and that the differences being celebrated are frequently
-smaller than the run-to-run noise. A model that scores a few points
-higher on a public benchmark can easily be the worse tool for your
-codebase. The only benchmark that decides your choice is the one you run
-yourself: take a task from your own project, give it to the tool, and
-see what comes back. That is worth more than any leaderboard, and it is
-what the rest of this module trains you to do.
 
 Next: how to use whichever tool you picked to get oriented in a codebase
 you did not write.

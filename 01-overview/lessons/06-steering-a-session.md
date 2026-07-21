@@ -16,6 +16,11 @@ Here is the shape of the work. It doesn't change much between tools:
 spec -> context -> plan -> edit -> run -> test -> inspect diff -> review -> commit
 ```
 
+let's remove inspect diff - the review is done by another agent 
+and let's see how to incoporate it into the flow we have 
+I also don't like the name, so let's remove it and take the relevant parts from here
+to other lessons
+
 Nobody disagrees with that diagram, and it looks obvious enough to
 skip. But the diagram is not the interesting part. What matters is what
 you do at each arrow: whether you look at the plan before the edits,
@@ -106,6 +111,9 @@ writing a third correction is the signal that you need one.
 
 ## Long sessions degrade
 
+we will start every task in a new session 
+and then later introduce subagents and do that there
+
 A long session is not a better-informed session. As the context fills
 up, quality drops. The agent starts forgetting constraints you set
 forty messages ago, reintroduces things you told it to remove, and gets
@@ -132,6 +140,10 @@ what yours has. The idea behind all of it is the same: the conversation
 is a resource you manage, not a log that accumulates.
 
 ## Autonomy levels
+
+let's do this earlier 
+and say that you choose the level that's confortable for you
+loop and graph engineering are advanced thisgs that require the skip permissions mode so you ahve to be confrortable with agent workign completely autonomously
 
 There's a spectrum between approving every action and letting the agent
 run unattended:
