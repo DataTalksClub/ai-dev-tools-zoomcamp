@@ -113,42 +113,36 @@ mkdir _docs
 mv ~/Downloads/plan.md _docs/plan.md
 ```
 
-Open the coding agent in that folder and give it this prompt:
+Open the coding agent in that folder. The first thing to settle is the
+stack, so ask for the decision rather than letting it happen on its
+own:
 
 ```text
-Read plan.md. Propose a backlog of tasks that would implement it.
-
-Each task should be small enough to finish in one session, and
-independent enough that I could hand it to someone who has not read
-the others. For each one give me a goal, acceptance criteria, what is
-out of scope, and any constraints.
-
-Do not write any code yet.
-```
-
-If the tech stack isn't decided yet, ask for the decision rather
-than letting it happen on its own:
-
-```text
-The stack is not decided yet. Before the backlog, propose one, with a
+Read plan.md. The stack is not decided yet. Propose one, with a
 sentence on why. Keep it boring and widely used - I want to be able to
 run this in two years.
+
+Do not write any code yet.
 ```
 
 If we don't have any tech stack in the plan, the agent will pick 
 the technologies itself. Which is fine if you don't care how it's implemented,
 but I'd still suggest to use something you're familiar with.
 
-Once the stack is settled, initialise the project:
+With the stack settled, we break the plan into tasks:
 
 ```text
-Set up an empty project on that stack: the folder layout, the
-dependencies, and one test that runs and passes. No features yet.
-```
+Now propose a backlog of tasks that would implement plan.md.
 
-Do this before the backlog, not as part of it. From here on, every task
-starts from a project that already runs, so a failing test means the
-task broke something rather than that nothing exists yet.
+Each task should be small enough to finish in one session, and
+independent enough that I could hand it to someone who has not read
+the others.
+
+Make the first task setting up an empty project on that stack, with a
+test that runs and passes.
+
+Do not write any code yet.
+```
 
 Next, we review a few tasks ourselves. Check that they're granular enough
 without being too granular, and that they make sense. We can merge
@@ -162,11 +156,23 @@ Then persist the backlog. GitHub issues work well for this, and the
 agent can create them:
 
 ```text
-Create a GitHub issue for each task, using the four sections. Label
-them so I can see the order you would do them in.
+Create a GitHub issue for each task. Label them so I can see the order
+you would do them in.
 ```
 
 For that to work, we need the `gh` CLI tool authenticated.
+
+Now we can do the first task, the project init:
+
+```text
+Do task 1: set up an empty project on the chosen stack - the folder
+layout, the dependencies, and one test that runs and passes. No
+features yet.
+```
+
+From here on, every task starts from a project that already runs, so a
+failing test means the task broke something rather than that nothing
+exists yet.
 
 
 ## Context engineering
