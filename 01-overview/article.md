@@ -113,9 +113,12 @@ mkdir _docs
 mv ~/Downloads/plan.md _docs/plan.md
 ```
 
-Open the coding agent in that folder. The first thing to settle is the
-stack, so ask for the decision rather than letting it happen on its
-own:
+Open the coding agent in that folder.
+
+The first thing to settle is the stack. If we already decided it in the
+chat session and it's written in the plan, skip this part and go
+straight to the backlog. If we didn't, we do it now, before anything
+else:
 
 ```text
 Read plan.md. The stack is not decided yet. Propose one, with a
@@ -126,8 +129,8 @@ Do not write any code yet.
 ```
 
 If we don't have any tech stack in the plan, the agent will pick 
-the technologies itself. Which is fine if you don't care how it's implemented,
-but I'd still suggest to use something you're familiar with.
+the technologies itself. Which is fine if we don't care how it's implemented,
+but I'd still suggest to use something we're familiar with.
 
 With the stack settled, we break the plan into tasks:
 
