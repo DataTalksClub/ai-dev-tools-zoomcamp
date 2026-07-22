@@ -151,10 +151,6 @@ test that runs and passes.
 Do not write any code yet.
 ```
 
-The goal is one line of intent. The description doesn't restate it, it
-complements it: the context that doesn't fit in one line. Nothing is
-checkable yet - that's what grooming adds.
-
 Next, we review a few tasks ourselves. Check that they're granular enough
 without being too granular, and that they make sense. We can merge
 some tasks into bigger ones, split big ones into smaller tasks, or say
@@ -163,8 +159,7 @@ that some things are out of scope.
 When the tasks are ready, save them in a task tracker. I usually use GitHub issues for this:
 
 ```text
-Create a GitHub issue for each task. Label them so I can see the order
-you would do them in.
+Create a GitHub issue for each task.
 ```
 
 For that to work, we need the `gh` CLI tool authenticated.
@@ -193,10 +188,6 @@ understandable to an agent before the agent starts working. It's not
 context is everything the agent needs to know before it starts the
 task.
 
-The agent that refactored our test suite yesterday doesn't know today
-that we use `pytest` and not `unittest`. So it has to discover it over
-and over again.
-
 We can help it by specifying these things in `AGENTS.md`, a plain
 Markdown file at the root of the repo describing the project to any
 coding agent that opens it. Agents read it at startup.
@@ -209,7 +200,7 @@ most other tools do. I use multiple coding assistants, so my
 @AGENTS.md
 ```
 
-### What goes in
+## `AGENTS.md`
 
 We don't describe the project in `AGENTS.md`. The description belongs
 in the README, which the agent can read anyway.
@@ -227,8 +218,9 @@ What we put there:
   than once
 
 It collects the things the agent got wrong, plus the things it can't
-guess or would spend time discovering. Keep it short. Here's the whole
-thing for the calculator:
+guess or would spend time discovering. Keep it short.
+
+Here's an example:
 
 ```markdown
 Commands
@@ -236,34 +228,26 @@ Commands
 - `npm run dev` - dev server
 - `npm test` - the whole suite
 - `npm test -- cost` - one test file
+- `npm run lint` - lint and format check, run it before committing
 
 Rules
 
 - Cost and rate calculations go in `src/cost/`, not in components
-- Money is integer cents everywhere
+- Money is integer cents everywhere, never floats
+- All time comes from `src/clock.ts`, do not call `Date.now()` anywhere
+  else
+- Salaries are entered as annual figures, the per-second rate is derived
+- Tests live next to the code they cover, as `*.test.ts`
 - Do not add dependencies without asking
-- Commit regularly
+- Do not edit `src/generated/`, it is rebuilt from the schema
+- Never log or commit real salary data, use `tests/fixtures/`
+- Commit regularly, and never commit with a failing suite
 ```
-
-Four commands and four rules, and every line earns its place. The
-single-test command is there because agents run the whole suite
-otherwise. The integer cents rule is there because the first session
-used floats and the totals drifted by a penny. The rule about
-dependencies is there because a session once added a date library to
-format one timestamp.
-
-That's the pattern: most lines in a good `AGENTS.md` are scar tissue.
-We write them after something goes wrong, not before.
 
 I avoid markup there like sections, bold formatting, or tables. They
 don't add any value and only result in higher token consumption.
 
-### What to leave out
-
-This is where beginners go wrong, and the failure is always the same:
-the file grows until nobody, human or model, follows it.
-
-Keep these out:
+Don't add these things to `AGENTS.md`:
 
 - Transient task state. "Currently working on the cost calculation" is
   a session note, not a project fact.
