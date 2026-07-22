@@ -312,59 +312,26 @@ someone to a meeting that has already started?
 
 From here the work splits across three roles, the same ones a product
 team has: a PM who grooms the task, an engineer who implements it, and
-a QA engineer who checks it. Each role is a Markdown file in a `_docs/team/`
-folder, and each runs in its own session.
+a QA engineer who checks it. Each role is a Markdown file in a
+`_docs/team/` folder, and each runs in its own session.
 
-```text
-_docs/team/
-  pm.md
-  software-engineer.md
-  qa-engineer.md
-  task-template.md
-```
+We add them one at a time. Each role gets a file with its instructions,
+and a line in `process.md` so the agent knows the role exists.
+`AGENTS.md` already points at `process.md`, so nothing else needs
+wiring.
 
-This is what `process.md` is for. Until now it held three lines, and
-now it describes the roles and how work moves between them:
-
-```markdown
-Three roles work on each task. A PM grooms it, an engineer implements
-it, a QA engineer verifies it. Each runs in its own session, and they
-talk to each other through the issue, not through a conversation.
-
-Roles
-
-- PM - grooms a task before anyone implements it, follows _docs/team/pm.md
-- Engineer - implements one groomed task, follows _docs/team/software-engineer.md
-- QA - checks the result against the acceptance criteria, follows _docs/team/qa-engineer.md
-
-The loop
-
-Every task moves through:
-
-PM -> engineer -> QA -> engineer -> QA -> ... -> PASS -> close
-
-Rules
-
-- Tasks are GitHub issues, one at a time
-- Read the acceptance criteria before starting and before closing
-- The engineer does not close the issue, QA does not fix the code
-- Do not commit until the tests pass
-```
-
-`AGENTS.md` already points at `process.md`, so the agent learns the
-roles exist when it starts, and opens the file for the role we asked
-for.
-
-This is a simplified version of what I use in my own projects. Mine
-also say which agent may commit, what a reviewer has to run before
-approving, and the anti-patterns worth naming out loud - like skipping
-review because a task looked small.
-
-### The product manager
+## The product manager
 
 Grooming turns a placeholder into something an engineer can implement
 without asking a single question. It's the same idea as the project
 spec, but for an individual task.
+
+The first role in the folder:
+
+```text
+_docs/team/
+  pm.md
+```
 
 `_docs/team/pm.md`:
 
@@ -374,7 +341,7 @@ You're a Product Manager
 You groom a task before anyone implements it.
 
 - Read the issue as written
-- Rewrite it using the template in `_docs/team/task-template.md`
+- Rewrite it using the template in `_docs/task-template.md`
 - Make the acceptance criteria checkable - someone should be able to
   point at the screen and say yes or no
 - Think about the edge cases the person who filed it did not
@@ -402,7 +369,7 @@ the same. A groomed task has four sections:
 4. Constraints - files it should stay inside, libraries it should or
    shouldn't use, prior decisions it has to follow.
 
-We save that as `_docs/team/task-template.md`:
+We save that as `_docs/task-template.md`:
 
 ```markdown
 ## Goal
@@ -469,6 +436,14 @@ The checkboxes in the template are worth the two extra characters. They
 give the tester a list to tick off one by one, and they make an
 unfinished task visible at a glance.
 
+And the role goes into `process.md`:
+
+```markdown
+Roles
+
+- PM - grooms a task before anyone implements it, follows _docs/team/pm.md
+```
+
 Then, in a fresh session - #4 being "add attendees", the rough one from
 above:
 
@@ -494,6 +469,14 @@ now.
 
 ### The software engineer
 
+The second role sits next to the first:
+
+```text
+_docs/team/
+  pm.md
+  software-engineer.md
+```
+
 `_docs/team/software-engineer.md`:
 
 ```markdown
@@ -517,6 +500,15 @@ Definition of done:
 
 If an acceptance criterion is wrong, impossible, or contradicts
 another one, create a comment on the issue about it.
+```
+
+`process.md` gains a line:
+
+```markdown
+Roles
+
+- PM - grooms a task before anyone implements it, follows _docs/team/pm.md
+- Engineer - implements one groomed task, follows _docs/team/software-engineer.md
 ```
 
 Then, in a fresh session:
@@ -544,7 +536,16 @@ correctly handles the edge case". But the edge cases are only the ones
 it thought of, handled the way it decided to handle them.
 
 So testing gets its own session, with no memory of how the code was
-written. `_docs/team/qa-engineer.md`:
+written. That's the third role:
+
+```text
+_docs/team/
+  pm.md
+  software-engineer.md
+  qa-engineer.md
+```
+
+`_docs/team/qa-engineer.md`:
 
 ```markdown
 You're a QA Engineer
@@ -578,6 +579,16 @@ Definition of done:
 
 Ignore what the implementation says it does. Only the acceptance
 criteria and the running code count.
+```
+
+And the last line in `process.md`:
+
+```markdown
+Roles
+
+- PM - grooms a task before anyone implements it, follows _docs/team/pm.md
+- Engineer - implements one groomed task, follows _docs/team/software-engineer.md
+- QA - checks the result against the acceptance criteria, follows _docs/team/qa-engineer.md
 ```
 
 Then, in a new session:
@@ -704,8 +715,8 @@ us. Something has to pick the next issue, dispatch each role in order,
 read the verdict, and route on it. We make the main session do that, so
 it dispatches the roles rather than doing the work.
 
-That's a fourth role, so it goes into `process.md` next to the other
-three:
+So far `process.md` only lists who the roles are. Now we say how work
+moves between them, and who moves it:
 
 ```markdown
 Orchestrator
@@ -723,8 +734,19 @@ Lifecycle
 6. On PASS, commit and close the issue
 7. Repeat until the backlog is empty
 
-Do not skip step 2, even when the task looks obvious.
+Rules
+
+- One issue at a time
+- Do not skip step 2, even when the task looks obvious
+- The engineer does not close the issue, QA does not fix the code
+- Do not commit until the tests pass
 ```
+
+That's the whole process file: three roles, an orchestrator, a
+lifecycle and four rules. Mine are longer - they also say which agent
+may commit, what a reviewer has to run before approving, and the
+anti-patterns worth naming out loud, like skipping review because a
+task looked small.
 
 Now we're ready for our loop:
 
