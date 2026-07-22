@@ -142,8 +142,8 @@ the others.
 Use this template for each task:
 
 ## <number>. <title>
-Goal: <one line - what this task is>
-Done when: <one line - how I will know it is finished>
+Goal: <one line>
+Done when: <one line>
 
 Make the first task setting up an empty project, with a
 test that runs and passes.
@@ -379,7 +379,15 @@ that issue, so it is clear what was moved and where it went.
 ```
 
 The PM needs a structure to fill in, so a groomed issue always looks
-the same. We save it as `team/task-template.md`:
+the same. A groomed task has four sections:
+
+1. Goal - one or two sentences on what should be true afterwards.
+2. Acceptance criteria - checkable statements.
+3. Out of scope - what this change must not do.
+4. Constraints - files it should stay inside, libraries it should or
+   shouldn't use, prior decisions it has to follow.
+
+We save that as `team/task-template.md`:
 
 ```markdown
 ## Goal
