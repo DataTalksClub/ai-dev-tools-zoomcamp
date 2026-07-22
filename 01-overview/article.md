@@ -133,80 +133,30 @@ than letting it happen on its own:
 The stack is not decided yet. Before the backlog, propose one, with a
 sentence on why. Keep it boring and widely used - I want to be able to
 run this in two years.
-
-Then make the first task setting up an empty project on that stack,
-with a test that runs and passes.
 ```
 
 If we don't have any tech stack in the plan, the agent will pick 
 the technologies itself. Which is fine if you don't care how it's implemented,
 but I'd still suggest to use something you're familiar with.
 
+Once the stack is settled, initialise the project:
+
+```text
+Set up an empty project on that stack: the folder layout, the
+dependencies, and one test that runs and passes. No features yet.
+```
+
+Do this before the backlog, not as part of it. From here on, every task
+starts from a project that already runs, so a failing test means the
+task broke something rather than that nothing exists yet.
+
 Next, we review a few tasks ourselves. Check that they're granular enough
 without being too granular, and that they make sense. We can merge
 some tasks into bigger ones, split big ones into smaller tasks, or say
 that some things are out of scope.
 
-## Anatomy of a good task
-
-Every task has four sections:
-
-1. Goal - one or two sentences on what should be true afterwards.
-2. Acceptance criteria - checkable statements.
-3. Out of scope - what this change must not do.
-4. Constraints - files it should stay inside, libraries should or shouldn't use, some prior decisions it should follow.
-
-As a template:
-
-```markdown
-## Goal
-
-One or two sentences on what should be true when this is done.
-
-## Acceptance criteria
-
-- [ ] A statement you can check by looking at the result
-- [ ] One line per case, including the awkward ones
-
-## Out of scope
-
-- Something that does not belong in this task, moved to #12
-
-## Constraints
-
-- Files this should stay inside
-- Libraries it may not add, patterns it must follow
-```
-
-"Pause and resume" from the backlog above, written out in full:
-
-```markdown
-# Pause the meeting
-
-## Goal
-The running meeting can be paused and resumed, so a break does not get
-billed.
-
-## Acceptance criteria
-- Pausing stops the cost increasing, and the displayed total stays put
-- Resuming continues from exactly the total shown, nothing is added for
-  the paused period
-- The elapsed time and the cost stay consistent with each other after
-  any number of pauses
-- Pausing before the meeting has started does nothing
-- The current state, running or paused, is visible on screen
-
-## Out of scope
-- No history of pauses, no breakdown of paused time
-- Do not touch the attendee list or the rate calculation
-
-## Constraints
-- Changes stay in the timer and cost modules
-- Do not add a library for this
-```
-
-The shape is enough for now. We come back to the acceptance criteria
-later, in grooming, where they get sharpened.
+The tasks stay rough for now. We sharpen them one at a time later, in
+grooming.
 
 Then persist the backlog. GitHub issues work well for this, and the
 agent can create them:
@@ -416,8 +366,62 @@ that issue, so it is clear what was moved and where it went.
 ```
 
 The PM needs a structure to fill in, so a groomed issue always looks
-the same. That's the template from earlier, saved as
-`team/task-template.md`.
+the same. A groomed task has four sections:
+
+1. Goal - one or two sentences on what should be true afterwards.
+2. Acceptance criteria - checkable statements.
+3. Out of scope - what this change must not do.
+4. Constraints - files it should stay inside, libraries it should or
+   shouldn't use, prior decisions it has to follow.
+
+We save that as `team/task-template.md`:
+
+```markdown
+## Goal
+
+One or two sentences on what should be true when this is done.
+
+## Acceptance criteria
+
+- [ ] A statement you can check by looking at the result
+- [ ] One line per case, including the awkward ones
+
+## Out of scope
+
+- Something that does not belong in this task, moved to #12
+
+## Constraints
+
+- Files this should stay inside
+- Libraries it may not add, patterns it must follow
+```
+
+Filled in, a groomed task looks like this:
+
+```markdown
+# Pause the meeting
+
+## Goal
+The running meeting can be paused and resumed, so a break does not get
+billed.
+
+## Acceptance criteria
+- Pausing stops the cost increasing, and the displayed total stays put
+- Resuming continues from exactly the total shown, nothing is added for
+  the paused period
+- The elapsed time and the cost stay consistent with each other after
+  any number of pauses
+- Pausing before the meeting has started does nothing
+- The current state, running or paused, is visible on screen
+
+## Out of scope
+- No history of pauses, no breakdown of paused time
+- Do not touch the attendee list or the rate calculation
+
+## Constraints
+- Changes stay in the timer and cost modules
+- Do not add a library for this
+```
 
 This is where the acceptance criteria get sharpened. "Pausing works"
 leaves the agent to decide what happens to the total on resume. "The
