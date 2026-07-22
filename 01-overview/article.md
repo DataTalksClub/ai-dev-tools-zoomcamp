@@ -104,15 +104,10 @@ when to use it, when not to, and the architecture.
 We have a spec, and now we turn it into a repo with a backlog the
 agent can work through.
 
-From here everything is shown on one project: a meeting cost
-calculator. We add the people in the room with their salaries, start
-the timer, and watch what the meeting costs while it runs. It's small
-enough to hold in our heads, and every file below comes from it.
-
 Make a folder, initialise git, and drop the spec in.
 
 ```bash
-mkdir meeting-cost && cd meeting-cost
+mkdir project-name && cd project-name
 git init
 mkdir _docs
 mv ~/Downloads/plan.md _docs/plan.md
@@ -143,35 +138,45 @@ Then make the first task setting up an empty project on that stack,
 with a test that runs and passes.
 ```
 
-The stack decides what half the tasks look like, so we have to settle
-it before the backlog means anything. And if we say nothing, the agent
-picks one anyway, silently, somewhere in the middle of task four. Write
-the answer into `_docs/plan.md` once we agree with it, because the next
-session won't remember this conversation.
+If we don't have any tech stack in the plan, the agent will pick 
+the technologies itself. Which is fine if you don't care how it's implemented,
+but I'd still suggest to use something you're familiar with.
 
-For the calculator the agent came back with a list along these lines:
-set up the project and a passing test, turn a salary into a per-second
-rate, add and remove attendees, start and stop the timer, accrue the
-running total, pause and resume, show it on screen.
-
-Next, we review the tasks ourselves. Check that they're granular enough
+Next, we review a few tasks ourselves. Check that they're granular enough
 without being too granular, and that they make sense. We can merge
 some tasks into bigger ones, split big ones into smaller tasks, or say
 that some things are out of scope.
 
-### Anatomy of a good task
+## Anatomy of a good task
 
 Every task has four sections:
 
 1. Goal - one or two sentences on what should be true afterwards.
-2. Acceptance criteria - checkable statements. Not "it works" but
-   things where we can point at the screen and say yes or no.
+2. Acceptance criteria - checkable statements.
 3. Out of scope - what this change must not do.
-4. Constraints - files it should stay inside, libraries it may not
-   add, patterns it must follow.
+4. Constraints - files it should stay inside, libraries should or shouldn't use, some prior decisions it should follow.
 
-If a task takes more than a few minutes to write down, it's too big.
-Split it.
+As a template:
+
+```markdown
+## Goal
+
+One or two sentences on what should be true when this is done.
+
+## Acceptance criteria
+
+- [ ] A statement you can check by looking at the result
+- [ ] One line per case, including the awkward ones
+
+## Out of scope
+
+- Something that does not belong in this task, moved to #12
+
+## Constraints
+
+- Files this should stay inside
+- Libraries it may not add, patterns it must follow
+```
 
 "Pause and resume" from the backlog above, written out in full:
 
@@ -200,9 +205,8 @@ billed.
 - Do not add a library for this
 ```
 
-Note what the acceptance criteria do here. "Pausing works" would have
-left the agent to decide what happens to the total on resume. These say
-it, so there is nothing left to assume.
+The shape is enough for now. We come back to the acceptance criteria
+later, in grooming, where they get sharpened.
 
 Then persist the backlog. GitHub issues work well for this, and the
 agent can create them:
@@ -412,31 +416,22 @@ that issue, so it is clear what was moved and where it went.
 ```
 
 The PM needs a structure to fill in, so a groomed issue always looks
-the same. `team/task-template.md`:
+the same. That's the template from earlier, saved as
+`team/task-template.md`.
 
-```markdown
-## Goal
+This is where the acceptance criteria get sharpened. "Pausing works"
+leaves the agent to decide what happens to the total on resume. "The
+displayed total stays put while paused, and resuming adds nothing for
+the paused period" doesn't. The PM's job is to turn the first kind into
+the second, one line per case, including the awkward ones.
 
-One or two sentences on what should be true when this is done.
+It's also where the size of a task shows. If the groomed issue takes
+more than a few minutes to read, it's too big - split it, and let the
+PM file the pieces.
 
-## Acceptance criteria
-
-- [ ] A statement you can check by looking at the result
-- [ ] One line per case, including the awkward ones
-
-## Out of scope
-
-- Something that does not belong in this task, moved to #12
-
-## Constraints
-
-- Files this should stay inside
-- Libraries it may not add, patterns it must follow
-```
-
-Checkboxes are worth the two extra characters. They give QA a list to
-tick off one by one, and they make an unfinished task visible at a
-glance.
+The checkboxes in the template are worth the two extra characters. They
+give the tester a list to tick off one by one, and they make an
+unfinished task visible at a glance.
 
 Then, in a fresh session - #4 being "add attendees", the rough one from
 above:
