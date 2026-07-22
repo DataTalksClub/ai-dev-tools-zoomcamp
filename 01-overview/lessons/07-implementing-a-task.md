@@ -2,12 +2,13 @@
 
 Video: TBA
 
-The issue is groomed. Now we need to write the code.
+The issue is groomed, so now we write the code.
 
 ## Software engineer
 
-The next role in the team is the one that does the implementation. Add
-`software-engineer.md` next to `pm.md`:
+The next role in the team is the one that does the implementation.
+
+Add `software-engineer.md` next to `pm.md`:
 
 ```text
 team/
@@ -58,14 +59,14 @@ Implement issue #4
 
 ## Small steps
 
-Make the agent work throug it one change at a time, and make sure it commits after every major step. 
+Make the agent work through it one change at a time, and make sure it commits after every major step.
 
 Frequent commits give you a cheap way to go back. If the last commit was
-five minutes ago, and something went wrong, throwing the current code away and rewinding it easy. If it
-was an hour ago, you will have to re-create it. 
+five minutes ago, and something went wrong, throwing the current code away and rewinding is easy. If it
+was an hour ago, you'll have to re-create it.
 
 The engineer session ends when the code is written and its own tests
-pass. That is not the same as the task being done - it is the agent
+pass. That's not the same as the task being done - it's the agent
 marking its own homework, which is what the next lesson is about.
 
 

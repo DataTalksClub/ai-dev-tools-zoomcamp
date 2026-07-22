@@ -2,25 +2,25 @@
 
 Video: TBA
 
-The code is written and the engineer says it works. But does it really work?
+The code is written and the engineer says it works. Now we check whether that's true.
 
 ## The best tester is not the author
 
 An agent that writes the code and then judges whether the code is
 correct is grading its own homework.
 
-By the time it finishes, it has spent its entire context convincing
-itself that its approach was the right one. If you ask "is this correct?"
-you will get "yes, this correctly handles the edge case". 
+By the time it finishes, it has spent its entire context building the
+case that its approach was the right one. If you ask "is this correct?"
+you'll get "yes, this correctly handles the edge case".
 
 But the edge cases are only the ones that it thought of, handled the way it decided to handle it.
 
 In software engineering teams we have QA engineers: people who specialize
 on testing software.
 
-We follow the same idea here: testing gets its own session, with no memory of
-how the code was written, checking the result against the acceptance
-criteria independently.
+We follow the same idea here. Testing gets its own session, with no
+memory of how the code was written. It checks the result against the
+acceptance criteria independently.
 
 ## QA engineer
 
@@ -87,16 +87,16 @@ Verify issue #4
 
 ## Tests as the guardrail
 
-The "do not fix anything" rule keeps the roles apart. A QA
+The "don't fix anything" rule keeps the roles apart. A QA
 session that repairs the findings becomes the author
 again, so you're back to marking your own homework.
 
 A FAIL goes back as a new engineer session, with the QA comment as the
 input. Then QA runs again. You repeat the process until it passes.
 
-A PASS is what closes the issue.
+You close the issue only on a PASS.
 
-"Mostly works, a couple of small things" is not the outcome, only `PASS` or `FAIL` are accepted.
+"Mostly works, a couple of small things" isn't an outcome. Only `PASS` or `FAIL` are accepted.
 
 
 Tests let you delegate the implementation to agents without reading every line.

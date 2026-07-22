@@ -2,7 +2,7 @@
 
 Video: TBA
 
-You have a spec. This lesson turns it into a repo with a backlog the
+You have a spec, and now we turn it into a repo with a backlog the
 agent can work through.
 
 ## The empty folder
@@ -18,6 +18,7 @@ mv ~/Downloads/plan.md _docs/plan.md
 
 ## Decompose the spec
 
+Open your coding agent in that folder and give it this prompt:
 
 ```text
 Read plan.md. Propose a backlog of tasks that would implement it.
@@ -44,33 +45,37 @@ Then make the first task setting up an empty project on that stack,
 with a test that runs and passes.
 ```
 
-Two reasons to handle it here rather than let it happen by itself. The
-stack decides what half the tasks look like, so it has to be settled
-before the backlog is worth anything. And if you say nothing, the agent
-picks one anyway - it just does it silently, somewhere in the middle of
-task four.
+Settle the stack here rather than let it happen on its own:
 
-Write the answer into `_docs/plan.md` once you agree with it. The next
-session will not remember this conversation.
+- the stack decides what half the tasks look like, so you have to
+  settle it before the backlog means anything
+- if you say nothing, the agent picks one anyway, silently, somewhere
+  in the middle of task four
+
+Write the answer into `_docs/plan.md` once you agree with it, because
+the next session won't remember this conversation.
 
 
-Next, you should look at these tasks. Are they granular enough but not too granular? Do they make sense? You first need to review them. 
+Next, review the tasks yourself. Check that they're granular enough
+without being too granular, and that they make sense.
 
-You can decide to merge some tasks into a bigger ones, or split big ones into smaller tasks. Or say that some things are out of scope. The planning you did previously will help, and if you're not sure about some things, discuss them with your coding assitant. 
+You can decide to merge some tasks into a bigger ones, or split big ones into smaller tasks. Or say that some things are out of scope. The planning you did previously will help, and if you're not sure about some things, discuss them with your coding assistant.
 
-## What a good task looks like
+## Anatomy of a good task
+
+Every task has four sections:
 
 1. Goal - one or two sentences on what should be true afterwards.
-2. Acceptance criteria - checkable statements. Not "works well" but
+2. Acceptance criteria - checkable statements. Not "it works" but
    things where you can point at the screen and say yes or no.
 3. Out of scope - what this change must not do.
 4. Constraints - files it should stay inside, libraries it may not
    add, patterns it must follow.
 
-If a task takes more than a few minutes to write down, it is too big.
+If a task takes more than a few minutes to write down, it's too big.
 Split it.
 
-Here is a whole task from the meeting cost calculator backlog:
+A whole task from the meeting cost calculator backlog looks like this:
 
 ```markdown
 # Pause the meeting
@@ -109,7 +114,7 @@ Create a GitHub issue for each task, using the four sections. Label
 them so I can see the order you would do them in.
 ```
 
-For that to work, you need to have authenticated `gh` cli tool. 
+For that to work, you need the `gh` CLI tool authenticated.
 
 
 [← Specs Before Code](03-specs.md) | [Context Engineering →](05-context-engineering.md)

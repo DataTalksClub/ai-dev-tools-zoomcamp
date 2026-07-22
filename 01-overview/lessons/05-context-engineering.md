@@ -7,30 +7,31 @@ Video: TBA
 Context engineering is the practice of making your project
 understandable to an agent before the agent starts working.
 
-It is not "writing better prompts". A prompt is one message in one
-session. Context is everything that is relevant for the agent to know before they start their task.
+It's not "writing better prompts". A prompt is one message in one
+session, while context is everything the agent needs to know before it starts the task.
 
 ## AGENTS.md
 
-Every session starts from a clean slate. The agent doesn't remember what happend in the past.
+Every session starts from a clean slate, and the agent doesn't remember what happened before.
 
-The agent that refactored your test suite yesterday does not know today
+The agent that refactored your test suite yesterday doesn't know today
 that you use `pytest` and not `unittest`. So it has to discover it over and over again.
 
-You can help it by spefying these things in `AGENTS.md`.
+You can help it by specifying these things in `AGENTS.md`.
 `AGENTS.md` is a plain Markdown file at the root of the repo
 describing the project to any coding agent that opens it.
 
-You can put anything you want to this file, and it will be read by the 
-agents at the startup. 
+You can put anything you want to this file, and the agents read it at startup.
 
-Note: Claude Code reads `CLAUDE.md`, not `AGENTS.md`, like Codex and most other tools. I use multuple coding assistants, so for me my `CLAUDE.md` looks like that:
+Note: Claude Code reads `CLAUDE.md`, not `AGENTS.md` like Codex and most other tools do.
+
+I use multiple coding assistants, so my `CLAUDE.md` looks like this:
 
 ```markdown
 @AGENTS.md
 ```
 
-## What belongs in it
+## Contents of AGENTS.md
 
 You don't describe the project in AGENTS.md. The
 description belongs in the README, which the agent can read anyway.
@@ -40,21 +41,20 @@ What you put there:
 - Commands, especially the non-obvious ones - how to run a single test,
   not just the whole suite
 - Tooling rules - which package manager, which command form
-- Constraints and cautions - what does not exist, and what must never
+- Constraints and cautions - what doesn't exist, and what must never
   be printed or committed
 - Pointers to the real documents - where the spec, the process and the
   tasks live
 - Corrections you got tired of repeating - anything you have typed more
   than once
 
-`AGENTS.md` is not
-documentation for humans (but it could be useful for them too).
-It is the accumulated set of things the agent got wrong,
-plus the things it cannot guess, or finding them out is not trivail.
+`AGENTS.md` isn't documentation for humans, though it can be useful for
+them too. It collects the things the agent got wrong, plus the things
+it can't guess or would spend time discovering.
 
 Keep it short.
 
-Here is one for the meeting cost calculator:
+Here's one for the meeting cost calculator:
 
 ```markdown
 Commands
@@ -71,14 +71,14 @@ Rules
 - Commit regularly
 ```
 
-I try to avoid putting markup tehre like sections or bold formatting, tables, etc. They don't add any value and only result in higher token consumption.
+I try to avoid putting markup there like sections, bold formatting, or tables. They don't add any value and only result in higher token consumption.
 
 
 
-## What does not belong in it
+## Things to leave out
 
-This is where beginners go wrong, and the failure always has the same
-shape: the file grows until nobody, human or model, follows it.
+This is where beginners go wrong, and the failure is always the same:
+the file grows until nobody, human or model, follows it.
 
 Keep these out:
 
@@ -87,14 +87,14 @@ Keep these out:
 - Anything secret. Keys, tokens, internal URLs, customer names.
   This file is read by tools, copied into contexts and committed to
   git. Use `.env` for that.
-- Long prose. 
+- Long explanations.
 - Rules nobody enforces. Delete it or enforce it programmatically.
 
 A lean file that gets followed beats a long one that gets skimmed.
 Every line you add makes the other lines slightly less likely to be
 noticed. That cost is invisible until the file is already too big. If
-yours is drifting past a couple of screens, the signal is to cut, not
-to add a table of contents.
+yours is drifting past a couple of screens, cut it rather than add a
+table of contents.
 
 
 ## The process document
@@ -125,7 +125,7 @@ thing you need to explain over and over again.
 In my projects I often have these files:
 
 - `testing-guidelines.md` - how to write tests
-- `design-system.md` - colours, typography, spacing, so the UI does not
+- `design-system.md` - colours, typography, spacing, so the UI doesn't
   drift every session
 - `setup.md` - how to get the project running
 - `api.md` - the endpoints, and what they return
@@ -133,9 +133,9 @@ In my projects I often have these files:
 I keep them together in a `_docs/` folder and link them from `AGENTS.md`.
 
 The agent reads `AGENTS.md` at the start of every session, so it learns that these documents exist. 
-It does not read them immediately, only when it's actually needed for the task.
+It doesn't read them immediately, only when it's actually needed for the task.
 
-The section with document can look like:
+In `AGENTS.md` we list them like this:
 
 ```markdown
 Documents
@@ -146,13 +146,13 @@ Documents
 - For anything touching the UI, read `_docs/design-system.md`
 ```
 
-It then opens the document relevant for the task: 
+The agent then opens the document relevant to the task:
 
 - A task about the UI pulls in the design system.
 - A task about tests pulls in the testing guidelines.
 
-it keeps `AGENTS.md` short while the project's written
-context keeps growing.
+This keeps `AGENTS.md` short while the project's written context keeps
+growing.
 
 
 [← Bootstrapping a Project](04-bootstrapping.md) | [Grooming a Task →](06-grooming-a-task.md)

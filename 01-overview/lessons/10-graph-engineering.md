@@ -2,17 +2,17 @@
 
 Video: TBA
 
-We already have three roles and a way to execute tasks in a loop.
+We already have three roles and a way to run tasks in a loop.
 
-But we're still moving manually between roles: you read the QA verdict, decide if it goes back to the engineer or if you can pick up the next task.
+But we're still moving manually between roles. You read the QA verdict and decide whether it goes back to the engineer or you pick up the next task.
 
-Now we will automate it.
+Now we'll automate it.
 
 ## The definition
 
 Graph engineering is structuring work across several specialized
-agents: what each one is responsible for, what order the work moves in,
-and how they hand results to each other.
+agents. You define what each one is responsible for, what order the
+work moves in, and how they pass results along.
 
 You can draw any such workflow as a graph. Each agent is a node, each
 handoff is an edge, and the design work is in the structure rather than
@@ -23,11 +23,11 @@ engineering.
 
 > Loop Engineering Is Dead ...
 
-TODO: screenshots of the X thread
+TODO - screenshots of the X thread
 
-To me this definition makes very little sense as a new idea. People have
+To me this definition makes little sense as a new idea. People have
 been building multi-agent systems and state machines for a long time,
-and specialized workers passing work between them is not new.
+and specialized workers passing work between them isn't new.
 
 In the
 same discussion, people who build agent-orchestration tools said the
@@ -37,7 +37,7 @@ Loop engineering is actually not dead, because we still need a way to run our ta
 
 ## You already built the graph
 
-Let's see what we build so far. It's actually already a graph:
+What we built so far is already a graph:
 
 ```text
 groom (PM)  ->  implement (engineer)  ->  test (QA)  ->  done
@@ -46,27 +46,27 @@ groom (PM)  ->  implement (engineer)  ->  test (QA)  ->  done
 ```
 
 Three nodes and four edges, including the one that sends failed work
-back for another pass. That is a graph, and you drew it without needing
+back for another pass. That's a graph, and you drew it without needing
 the term.
 
-- Each role has a file saying what it does and does not do
+- Each role has a file saying what it does and doesn't do
 - Each role has a definition of done
 - The handoff is the issue, not a conversation
 - One role's output is another role's input, and the FAIL edge exists
 
-In our case, the issue has all the context, so we can easily start 
-each node as a separate section.
+In our case, the issue has all the context, so we can easily start
+each node as a separate session.
 
 ## The orchestrator
 
-One thing we're still missing is the orchestrator. Previously we were doing it.  Something has to
-pick the next issue, dispatch each role in order, read the verdict, and
-route on it.
+One thing we're still missing is the orchestrator, which so far has
+been you. Something has to pick the next issue, dispatch each role in
+order, read the verdict, and route on it.
 
-We make the main sessoin do it: it dispatches,
-it does not do the work. 
+We make the main session do it, so it dispatches the roles rather than
+doing the work.
 
-Let's update our orchestartor:
+Let's update our orchestrator:
 
 ```markdown
 Lifecycle
@@ -82,7 +82,7 @@ Lifecycle
 The orchestrator does not groom, implement or test. It dispatches.
 Do not skip step 2, even when the task looks obvious.
 
-The main session is the orhestrator and it launches PMs, SWEs and QAs
+The main session is the orchestrator and it launches PMs, SWEs and QAs
 as subagents.
 ```
 
@@ -98,20 +98,20 @@ and dispatches the roles it finds in `team/`. Every piece of that
 sentence is something you built in an earlier lesson.
 
 
-So if now someone asks you about graph engineering, you can say: it is several
-agents with defined roles handing work to each other, the term is from
-July 2026, the practice is much older, and what makes it work is
-explicit roles, an explicit process, and specifications written before
-implementation.
+So if someone asks you about graph engineering, you can say that it's
+several agents with defined roles passing work to each other.
+
+The term is from July 2026, but the practice is much older. It works
+because the roles are explicit, the lifecycle is explicit, and the
+specifications come before the implementation.
 
 ## Going further
 
 You can learn about my own multi-agent setup here:
 
-- [I Built an AI Agent Team for Software
-  Development](https://alexeyondata.substack.com/p/i-built-an-ai-agent-team-for-software)
+- [I Built an AI Agent Team for Software Development](https://alexeyondata.substack.com/p/i-built-an-ai-agent-team-for-software)
 
-It is the same three roles plus an on-call agent watching CI, running
+It's the same three roles plus an on-call agent watching CI, running
 across five real projects.
 
 [← Loop Engineering](09-loop-engineering.md) | [Wrap-up →](11-wrap-up.md)

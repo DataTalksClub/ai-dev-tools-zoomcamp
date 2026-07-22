@@ -2,21 +2,21 @@
 
 Video: TBA
 
-[Lesson 3](03-specs.md) made the case that the quality of what an agent
-builds is decided before it writes any code. [Lesson 4](04-bootstrapping.md) turned the spec into a backlog.
+In [lesson 3](03-specs.md) we saw that you decide the quality of what
+an agent builds before it writes any code. In [lesson 4](04-bootstrapping.md) we turned the spec into a backlog.
 
 Those backlog items are still rough. A task like "add attendees" is a
 placeholder - it names the work without saying what done looks like.
-Grooming is the step that turns it into something an engineer can
-implement without asking you a single question.
+In grooming we turn it into something an engineer can implement without
+asking you a single question.
 
-It is the same idea as in lesson 3, but for an individual task, not the entire project.
+It's the same idea as in lesson 3, but for an individual task, not the entire project.
 
 ## Product manager
 
-In a product team, usually grooming is the reponsibility of the Product Manager. So let's have our own product manager who will be responsible for that. 
+In a product team, grooming is usually the responsibility of the Product Manager. So let's create our own product manager to do it.
 
-Create a `team/` folder and create the `pm.md` file:
+Create a `team/` folder with a `pm.md` file:
 
 ```text
 team/
@@ -51,8 +51,10 @@ is clear what was moved and where it went.
 
 ## The task template
 
-The PM needs a shape to fill in, so a groomed issue always looks the
-same. Put it in `team/task-template.md`:
+The PM needs a structure to fill in, so a groomed issue always looks
+the same.
+
+Put it in `team/task-template.md`:
 
 ```markdown
 ## Goal
@@ -75,8 +77,8 @@ One or two sentences on what should be true when this is done.
 ```
 
 Checkboxes are worth the two extra characters. They give the QA session
-in [lesson 8](08-testing-a-task.md) a list to tick off one by one, and
-they make an unfinished task visible at a glance.
+in [lesson 8](08-testing-a-task.md) a list to tick off one by one. They
+also make an unfinished task visible at a glance.
 
 Link the folder from `AGENTS.md`, the same way as the `_docs` files in
 [lesson 5](05-context-engineering.md):
@@ -98,7 +100,7 @@ Start a fresh session:
 Groom issue #4
 ```
 
-It's important to read and understand the result. Do not skip this.
+Read and understand the result before you move on.
 
 Grooming is the cheapest place in the whole process
 to catch a misunderstanding: the issue is a paragraph, and correcting
@@ -108,11 +110,11 @@ The same misunderstanding found after
 implementation costs a rewrite, and found after release costs
 considerably more.
 
-Four things to check:
+Check that:
 
-- Does the goal match what you actually wanted?
-- Is every acceptance criterion something you could check?
-- What got scoped out?
+- the goal matches what you actually wanted
+- every acceptance criterion is something you could check
+- nothing important got scoped out
 
 If the groomed issue surprises you, fix the result.
 
