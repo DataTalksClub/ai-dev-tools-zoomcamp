@@ -2,30 +2,34 @@
 
 This is the first article in a series based on
 [AI Dev Tools Zoomcamp](https://github.com/DataTalksClub/ai-dev-tools-zoomcamp),
-the free course we run at DataTalks.Club. It's an experiment for me:
-I want to see what happens if a course is released as a set of Substack
-articles rather than only as videos and a repository. There will be
-four or five of them, one per module, and each one reads on its own -
-you don't need the others, and you don't need to enrol in anything to
-follow along.
+the free course we run at DataTalks.Club.
 
-This one covers the module on the AI-native developer workflow.
+This year I wanted to do an experiment and publish a series of course notes as articles on Substack. My plan is to have one per module, and each one should be independent from others. I start with the first one: AI-native developer workflows.
 
-Coding agents now write code faster than I can read it. That sounds
-like a good problem to have, but it isn't the one that bites.
+Coding agents now write code faster than I can read it. 
 
-The one that bites is this: if a task is vague, the agent fills the
-gaps with its own assumptions. A weak agent that misunderstands you
-writes fifty lines of broken code and you notice in a minute. A strong
-agent that misunderstands you writes eight files and wires them
-together. It adds tests that pass and gives you a working version of
-the wrong thing. The more capable the agent, the further in the wrong
-direction it goes before you notice it.
+When we give an agent a task, it can quickly implement it.
+But if a task is vague, the agent fills the
+gaps with its own assumptions.
+A weak agent that misunderstands you
+writes fifty lines of broken code. A strong
+agent that misunderstands you creates eight files and wires them
+together. It adds tests that pass and gives you a thing that works great,
+but is not what you needed.
 
-So I stopped driving agents prompt by prompt. Instead I specify the
-work before it starts, write down what the project already knows, split
-the work across three roles that don't grade their own homework, and
-run the whole thing in a loop.
+Typing is no longer the bottleneck. Saying precisely what you want, and
+checking what came back, is. And neither of those survives being
+improvised one message at a time: you type a rough sentence, the agent
+guesses, it tells you the result is correct, and the next session starts
+from nothing again.
+
+So I stopped driving agents prompt by prompt, and wrote things down
+instead. I specify the work before it starts, so there are no gaps left
+to fill in. I keep what the project already knows in the repo, so no
+session begins from zero. I split the work across three roles, so the
+agent that wrote the code is not the one that decides it's correct. And
+once all of that is on disk, the whole thing runs in a loop without me
+in the middle of it.
 
 In this article I'll explain that workflow: how to turn an idea into a
 spec with a chat assistant, how to decompose the spec into a backlog,
