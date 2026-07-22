@@ -115,48 +115,66 @@ mv ~/Downloads/plan.md _docs/plan.md
 
 Open the coding agent in that folder.
 
-The first thing to settle is the stack. If we already decided it in the
-chat session and it's written in the plan, skip this part and go
-straight to the backlog. If we didn't, we do it now, before anything
-else:
-
-```text
-Read plan.md. The stack is not decided yet. Propose one, with a
-sentence on why. Keep it boring and widely used - I want to be able to
-run this in two years.
-
-Do not write any code yet.
-```
+If we didn't decide on the tech stack in the previous conversation, we need
+to do it now.
 
 If we don't have any tech stack in the plan, the agent will pick 
 the technologies itself. Which is fine if we don't care how it's implemented,
 but I'd still suggest to use something we're familiar with.
 
-With the stack settled, we break the plan into tasks:
+Let's do it:
 
 ```text
-Now propose a backlog of tasks that would implement plan.md.
+Read plan.md. Propose multiple options for the tech stack and explain each option.
+
+Do not write any code yet.
+```
+
+Now break the plan into tasks:
+
+```text
+Propose a backlog of tasks. Create a document `tasks.md`
 
 Each task should be small enough to finish in one session, and
 independent enough that I could hand it to someone who has not read
 the others.
 
-Make the first task setting up an empty project on that stack, with a
+For each task give a title, a one-line goal, and a one-line "done
+when".
+
+Make the first task setting up an empty project, with a
 test that runs and passes.
 
 Do not write any code yet.
 ```
+
+Two lines per task is all we need at this point:
+
+```markdown
+## 1. Project setup
+Goal: an empty project on the chosen stack
+Done when: the app starts, and one test runs and passes
+
+## 2. Rate from salary
+Goal: turn an annual salary into a per-second rate
+Done when: entering a salary shows the right cost per second
+
+## 3. Attendees
+Goal: add and remove people, each with a salary
+Done when: someone can be added mid-meeting and removed again, and
+the list shows who is in
+```
+
+The goal says what the task is, the "done when" says how we'd know it's
+finished. That's enough to tell whether a task is one task, and it's
+still short enough to read the whole backlog in one go.
 
 Next, we review a few tasks ourselves. Check that they're granular enough
 without being too granular, and that they make sense. We can merge
 some tasks into bigger ones, split big ones into smaller tasks, or say
 that some things are out of scope.
 
-The tasks stay rough for now. We sharpen them one at a time later, in
-grooming.
-
-Then persist the backlog. GitHub issues work well for this, and the
-agent can create them:
+When the tasks are ready, save them in a task tracker. I usually use GitHub issues for this:
 
 ```text
 Create a GitHub issue for each task. Label them so I can see the order
@@ -375,15 +393,7 @@ that issue, so it is clear what was moved and where it went.
 ```
 
 The PM needs a structure to fill in, so a groomed issue always looks
-the same. A groomed task has four sections:
-
-1. Goal - one or two sentences on what should be true afterwards.
-2. Acceptance criteria - checkable statements.
-3. Out of scope - what this change must not do.
-4. Constraints - files it should stay inside, libraries it should or
-   shouldn't use, prior decisions it has to follow.
-
-We save that as `team/task-template.md`:
+the same. We save it as `team/task-template.md`:
 
 ```markdown
 ## Goal
@@ -432,7 +442,11 @@ billed.
 - Do not add a library for this
 ```
 
-This is where the acceptance criteria get sharpened. "Pausing works"
+The goal carries over from the backlog unchanged. The one-line "done
+when" turns into the acceptance criteria, and the last two sections are
+what grooming adds.
+
+That's where the criteria get sharpened. "Pausing works"
 leaves the agent to decide what happens to the total on resume. "The
 displayed total stays put while paused, and resuming adds nothing for
 the paused period" doesn't. The PM's job is to turn the first kind into
