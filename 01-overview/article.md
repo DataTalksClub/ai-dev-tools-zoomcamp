@@ -240,8 +240,7 @@ Rules
 - Tests live next to the code they cover, as `*.test.ts`
 - Do not add dependencies without asking
 - Do not edit `src/generated/`, it is rebuilt from the schema
-- Never log or commit real salary data, use `tests/fixtures/`
-- Commit regularly, and never commit with a failing suite
+- Commit regularly
 ```
 
 I avoid markup there like sections, bold formatting, or tables. They
@@ -255,41 +254,49 @@ Don't add these things to `AGENTS.md`:
   file is read by tools, copied into contexts and committed to git. Use
   `.env` for that.
 - Long explanations.
-- Rules nobody enforces. Delete it or enforce it programmatically.
 
-A lean file that gets followed beats a long one that gets skimmed.
-Every line we add makes the other lines slightly less likely to be
-noticed. If the file is drifting past a couple of screens, cut it
-rather than add a table of contents.
+Keep this file short. If it becomes larger than a couple of screens,
+move parts of it outside to separate markdown documents.
 
-### The other documents
+## The other documents
 
-`process.md` says how work moves through the project. It could live
-inside `AGENTS.md`, but I keep a separate file for it:
+In addition to `AGENTS.md`, I usually have a few other markdown documents in 
+my projects. 
+
+One of them is `process.md` - it descrives how work is done in this project.
+
+It could live inside `AGENTS.md`, but I keep a separate file for it:
 
 ```markdown
 - Tasks are GitHub issues, one at a time
 - Read the acceptance criteria before starting and before closing
-- Do not commit until the tests pass
+- Commit regularly
 ```
 
-Beyond that, keep a separate document for each thing we need to
-explain over and over again. In my projects I often have
-`testing-guidelines.md`, `design-system.md` so the UI doesn't drift
-every session, `setup.md`, and `api.md`. I keep them together in
-`_docs/` and link them from `AGENTS.md`:
+As I continue working on a project, I create a separate document for
+each thing we need to explain over and over again.
+
+In my projects I often have
+
+- `testing-guidelines.md` for testing
+- `design-system.md` so the UI doesn't drift every session
+- `setup.md`
+- `api.md`
+
+I keep them together in `_docs/` and link them from `AGENTS.md`:
 
 ```markdown
 Documents
 
-- `_docs/plan.md` - what we are building
-- `_docs/process.md` - how work moves through the project
+- `_docs/process.md` - how work is organized
 - Before writing tests, read `_docs/testing-guidelines.md`
 - For anything touching the UI, read `_docs/design-system.md`
 ```
 
 The agent reads `AGENTS.md` at the start of every session, so it learns
-that these documents exist. It doesn't read them immediately, only when
+that these documents exist.
+
+It doesn't the content them immediately, only when
 the task actually needs them. A task about the UI pulls in the design
 system, a task about tests pulls in the testing guidelines. This keeps
 `AGENTS.md` short while the project's written context keeps growing.
@@ -297,37 +304,61 @@ system, a task about tests pulls in the testing guidelines. This keeps
 
 ## Three roles
 
-Most backlog items are still rough. Only one of ours got written out in
-full earlier; the rest are still lines like "add attendees", which names
+We have a backlog of tasks, but they are not precise enough.  tasks. Only one of ours got written out in
+full earlier, the rest are still lines like "add attendees", which names
 the work without saying what done looks like. Does an attendee have a
 name, or only a salary? What happens to the running total when we add
 someone to a meeting that has already started?
 
 From here the work splits across three roles, the same ones a product
 team has: a PM who grooms the task, an engineer who implements it, and
-a QA engineer who checks it. Each role is a Markdown file in a `team/`
+a QA engineer who checks it. Each role is a Markdown file in a `_docs/team/`
 folder, and each runs in its own session.
 
 ```text
-team/
+_docs/team/
   pm.md
   software-engineer.md
   qa-engineer.md
   task-template.md
 ```
 
-All three are linked from `AGENTS.md`:
+This is what `process.md` is for. Until now it held three lines, and
+now it describes the roles and how work moves between them:
 
 ```markdown
-Team
+Three roles work on each task. A PM grooms it, an engineer implements
+it, a QA engineer verifies it. Each runs in its own session, and they
+talk to each other through the issue, not through a conversation.
 
-- To groom a task, follow `team/pm.md`
-- To implement a task, follow `team/software-engineer.md`
-- To test a task, follow `team/qa-engineer.md`
+Roles
+
+- PM - grooms a task before anyone implements it, follows _docs/team/pm.md
+- Engineer - implements one groomed task, follows _docs/team/software-engineer.md
+- QA - checks the result against the acceptance criteria, follows _docs/team/qa-engineer.md
+
+The loop
+
+Every task moves through:
+
+PM -> engineer -> QA -> engineer -> QA -> ... -> PASS -> close
+
+Rules
+
+- Tasks are GitHub issues, one at a time
+- Read the acceptance criteria before starting and before closing
+- The engineer does not close the issue, QA does not fix the code
+- Do not commit until the tests pass
 ```
 
-The agent learns the roles exist when it starts, and opens the file
-when we ask it to groom, implement or verify something.
+`AGENTS.md` already points at `process.md`, so the agent learns the
+roles exist when it starts, and opens the file for the role we asked
+for.
+
+This is a simplified version of what I use in my own projects. Mine
+also say which agent may commit, what a reviewer has to run before
+approving, and the anti-patterns worth naming out loud - like skipping
+review because a task looked small.
 
 ### The product manager
 
@@ -335,7 +366,7 @@ Grooming turns a placeholder into something an engineer can implement
 without asking a single question. It's the same idea as the project
 spec, but for an individual task.
 
-`team/pm.md`:
+`_docs/team/pm.md`:
 
 ```markdown
 You're a Product Manager
@@ -343,7 +374,7 @@ You're a Product Manager
 You groom a task before anyone implements it.
 
 - Read the issue as written
-- Rewrite it using the template in `team/task-template.md`
+- Rewrite it using the template in `_docs/team/task-template.md`
 - Make the acceptance criteria checkable - someone should be able to
   point at the screen and say yes or no
 - Think about the edge cases the person who filed it did not
@@ -371,7 +402,7 @@ the same. A groomed task has four sections:
 4. Constraints - files it should stay inside, libraries it should or
    shouldn't use, prior decisions it has to follow.
 
-We save that as `team/task-template.md`:
+We save that as `_docs/team/task-template.md`:
 
 ```markdown
 ## Goal
@@ -463,7 +494,7 @@ now.
 
 ### The software engineer
 
-`team/software-engineer.md`:
+`_docs/team/software-engineer.md`:
 
 ```markdown
 You're a Software Engineer
@@ -513,7 +544,7 @@ correctly handles the edge case". But the edge cases are only the ones
 it thought of, handled the way it decided to handle them.
 
 So testing gets its own session, with no memory of how the code was
-written. `team/qa-engineer.md`:
+written. `_docs/team/qa-engineer.md`:
 
 ```markdown
 You're a QA Engineer
@@ -671,24 +702,28 @@ start as a separate session.
 The one thing still missing is the orchestrator, which so far has been
 us. Something has to pick the next issue, dispatch each role in order,
 read the verdict, and route on it. We make the main session do that, so
-it dispatches the roles rather than doing the work. In `process.md`:
+it dispatches the roles rather than doing the work.
+
+That's a fourth role, so it goes into `process.md` next to the other
+three:
 
 ```markdown
+Orchestrator
+
+The main session is the orchestrator. It launches the PM, the engineer
+and QA as subagents. It does not groom, implement or test itself.
+
 Lifecycle
 
-1. Orchestrator picks the next open issue from the backlog
-2. PM grooms it, following `team/pm.md`
-3. Engineer implements it, following `team/software-engineer.md`
-4. QA verifies it, following `team/qa-engineer.md`
+1. Pick the next open issue from the backlog
+2. PM grooms it
+3. Engineer implements it
+4. QA verifies it
 5. On FAIL, back to step 3 with the QA comment as input
 6. On PASS, commit and close the issue
 7. Repeat until the backlog is empty
 
-The orchestrator does not groom, implement or test. It dispatches.
 Do not skip step 2, even when the task looks obvious.
-
-The main session is the orchestrator and it launches PMs, SWEs and QAs
-as subagents.
 ```
 
 Now we're ready for our loop:
@@ -698,7 +733,7 @@ Now we're ready for our loop:
 ```
 
 The agent reads `AGENTS.md`, finds `process.md`, follows the lifecycle,
-and dispatches the roles it finds in `team/`. Every piece of that
+and dispatches the roles it finds in `_docs/team/`. Every piece of that
 sentence is something we built earlier.
 
 So if someone asks about graph engineering: it's several agents with
