@@ -138,16 +138,17 @@ Self-paced steps:
 
 ### [Module 1: AI-Native Developer Workflow](01-overview/)
 
-Learn how to use AI developer tools without handing over control of the codebase.
+Learn how to take a software idea from a written specification to verified code. You make the decisions and review the result.
 
-You will:
+In this module, you'll:
 
-- Compare chat assistants, terminal coding agents, agentic IDEs, cloud agents, and project bootstrappers.
-- Learn when to use tools such as ChatGPT, Claude, Gemini, Claude Code, Codex, Gemini CLI, Cursor, GitHub Copilot, Antigravity, Lovable, Bolt, and similar systems.
-- Practice context engineering with `AGENTS.md`, repository instructions, product specs, architecture notes, testing guidelines, and security checklists.
-- Complete a small feature using a disciplined loop: spec, context, plan, edit, run, test, inspect diff, review, commit.
+- Compare chat assistants, coding agents, agentic IDEs, cloud agents, and project bootstrappers, then choose a tool for the course.
+- Turn an idea into a project specification and a backlog of small tasks with goals, acceptance criteria, constraints, and clear boundaries.
+- Give coding agents durable context with `AGENTS.md`, project documents, and an explicit way of working.
+- Separate task grooming, implementation, and verification across focused sessions with product manager, software engineer, and QA roles.
+- Use agent loops and multi-agent orchestration to work through a backlog while retaining responsibility for review.
 
-Outcome: a repeatable AI-assisted development workflow you can use in your own repositories.
+After this module, you can specify, delegate, and independently verify AI-assisted development work.
 
 ### [Module 2: Build and Ship an AI-Assisted Full-Stack App](02-end-to-end/)
 

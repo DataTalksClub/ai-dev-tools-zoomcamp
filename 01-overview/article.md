@@ -33,6 +33,30 @@ what belongs in `AGENTS.md` and what doesn't, the three role files that
 groom, implement and test a task, and how to run them repeatedly so the
 agent works through the backlog on its own.
 
+Everything is shown on one project, so the files build up as we go
+rather than appearing out of nowhere.
+
+
+## The example project
+
+We build a meeting cost calculator.
+
+Meetings in the company have taken over the calendar, and nobody
+notices, because a meeting feels free. So we put a number on it. You add
+the people in the room with their salaries, start the timer, and watch
+what the meeting costs while it runs. Put it on the screen in the room
+and let it argue on your behalf.
+
+It's a good teaching app. It's small enough to hold in your head, you
+can see whether it works in a second, and the core still needs a real
+spec:
+
+- turning salaries into a per-second rate
+- accruing cost over time
+- pausing without losing the total
+
+Every file in this article comes from that project.
+
 
 ## Specs before code
 
@@ -92,11 +116,18 @@ That file is your spec. Mine usually covers:
 - the stack, and the constraints it has to live inside
 - a rough architecture: the main pieces and how they relate
 
-This is how I built
-[SQLiteSearch](https://alexeyondata.substack.com/p/how-i-built-sqlitesearch-a-lightweight),
-a small SQLite-backed search library. First a long chat session to get
-the design straight, then I downloaded the `plan.md` file and started
-coding. That file had all five sections: what the library is, how it
+For the calculator, that conversation is where you settle the things
+that decide the code later: whether salaries are entered annually or
+hourly, what happens to the total when someone leaves the room
+mid-meeting, whether a pause is a first-class state or just a stopped
+timer. None of that is hard, but if you leave it to the agent it will
+pick for you.
+
+If you want to see a finished one, the spec I wrote for
+[SQLiteSearch](https://alexeyondata.substack.com/p/how-i-built-sqlitesearch-a-lightweight)
+is public. It came out of exactly this kind of session: a long chat to
+get the design straight, then I downloaded the `plan.md` file and
+started coding. It had all five sections - what the library is, how it
 differs from `minsearch`, when you should use it, when you shouldn't,
 and the architecture.
 
@@ -109,7 +140,7 @@ agent can work through.
 Make a folder, initialise git, and drop the spec in.
 
 ```bash
-mkdir project-name && cd project-name
+mkdir meeting-cost && cd meeting-cost
 git init
 mkdir _docs
 mv ~/Downloads/plan.md _docs/plan.md
@@ -146,6 +177,11 @@ picks one anyway, silently, somewhere in the middle of task four. Write
 the answer into `_docs/plan.md` once you agree with it, because the next
 session won't remember this conversation.
 
+For the calculator the agent came back with a list along these lines:
+set up the project and a passing test, turn a salary into a per-second
+rate, add and remove attendees, start and stop the timer, accrue the
+running total, pause and resume, show it on screen.
+
 Next, review the tasks yourself. Check that they're granular enough
 without being too granular, and that they make sense. You can merge
 some tasks into bigger ones, split big ones into smaller tasks, or say
@@ -164,6 +200,37 @@ Every task has four sections:
 
 If a task takes more than a few minutes to write down, it's too big.
 Split it.
+
+"Pause and resume" from the backlog above, written out in full:
+
+```markdown
+# Pause the meeting
+
+## Goal
+The running meeting can be paused and resumed, so a break does not get
+billed.
+
+## Acceptance criteria
+- Pausing stops the cost increasing, and the displayed total stays put
+- Resuming continues from exactly the total shown, nothing is added for
+  the paused period
+- The elapsed time and the cost stay consistent with each other after
+  any number of pauses
+- Pausing before the meeting has started does nothing
+- The current state, running or paused, is visible on screen
+
+## Out of scope
+- No history of pauses, no breakdown of paused time
+- Do not touch the attendee list or the rate calculation
+
+## Constraints
+- Changes stay in the timer and cost modules
+- Do not add a library for this
+```
+
+Note what the acceptance criteria do here. "Pausing works" would have
+left the agent to decide what happens to the total on resume. These say
+it, so there is nothing left to assume.
 
 Then persist the backlog. GitHub issues work well for this, and the
 agent can create them:
@@ -221,22 +288,33 @@ What you put there:
   than once
 
 It collects the things the agent got wrong, plus the things it can't
-guess or would spend time discovering. Keep it short:
+guess or would spend time discovering. Keep it short. Here's the whole
+thing for the calculator:
 
 ```markdown
 Commands
 
 - `npm run dev` - dev server
 - `npm test` - the whole suite
-- `npm test -- <name>` - one test file
+- `npm test -- cost` - one test file
 
 Rules
 
-- Business logic goes in `src/`, not in components
+- Cost and rate calculations go in `src/cost/`, not in components
 - Money is integer cents everywhere
 - Do not add dependencies without asking
 - Commit regularly
 ```
+
+Four commands and four rules, and every line earns its place. The
+single-test command is there because agents run the whole suite
+otherwise. The integer cents rule is there because the first session
+used floats and the totals drifted by a penny. The rule about
+dependencies is there because a session once added a date library to
+format one timestamp.
+
+That's the pattern: most lines in a good `AGENTS.md` are scar tissue.
+You write them after something goes wrong, not before.
 
 I avoid markup there like sections, bold formatting, or tables. They
 don't add any value and only result in higher token consumption.
@@ -296,9 +374,11 @@ system, a task about tests pulls in the testing guidelines. This keeps
 
 ## Three roles
 
-The backlog items are still rough. A task named in three words is a
-placeholder - it says what the work is about without saying what done
-looks like.
+Most backlog items are still rough. Only one of ours got written out in
+full earlier; the rest are still lines like "add attendees", which names
+the work without saying what done looks like. Does an attendee have a
+name, or only a salary? What happens to the running total when you add
+someone to a meeting that has already started?
 
 From here the work splits across three roles, the same ones a product
 team has: a PM who grooms the task, an engineer who implements it, and
@@ -386,11 +466,17 @@ Checkboxes are worth the two extra characters. They give QA a list to
 tick off one by one, and they make an unfinished task visible at a
 glance.
 
-Then, in a fresh session:
+Then, in a fresh session - #4 being "add attendees", the rough one from
+above:
 
 ```text
 Groom issue #4
 ```
+
+What comes back should answer the questions the original didn't: that a
+salary is entered as an annual figure, that adding someone mid-meeting
+starts charging from that moment and doesn't backdate, that removing
+them stops it.
 
 Read the result before you move on. Grooming is the cheapest place in
 the whole process to catch a misunderstanding: the issue is a
@@ -473,9 +559,9 @@ acceptance criterion fails. Post it as a comment on the issue:
 
 ## QA: FAIL
 
-- [x] The value is stored as an integer - PASS
-- [ ] Removing an entry updates the total - FAIL
-      Removed one, the total kept rising
+- [x] Salary is entered as an annual figure - PASS
+- [ ] Removing an attendee stops their cost accruing - FAIL
+      Removed someone mid-meeting, the total kept rising
 
 Tests: `npm test`, 14 passed, 0 failed
 
@@ -496,6 +582,11 @@ Then, in a new session:
 ```text
 Verify issue #4
 ```
+
+That verdict is what the whole setup is for. The engineer session
+finished, the tests were green, and the removal bug was still there -
+because the tests were written by the same agent that misread the
+criterion.
 
 The "don't fix anything" rule keeps the roles apart. A QA session that
 repairs its own findings becomes the author again, so you're back to
@@ -547,7 +638,7 @@ in that cycle.
 Something more realistic:
 
 ```text
-/goal refactor src/ so no file is over 200 lines, tests stay green
+/goal refactor src/cost so no file is over 200 lines, tests stay green
 ```
 
 The stop condition has to be something a model can evaluate. "All tests
