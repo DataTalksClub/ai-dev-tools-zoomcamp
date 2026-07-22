@@ -1,32 +1,70 @@
-# The AI-Native Developer Workflow
+# AI-Native Development: Specifications, Loop and Graph Engineering
 
-## Specs Before Code
+This is the first article in a series based on
+[AI Dev Tools Zoomcamp](https://github.com/DataTalksClub/ai-dev-tools-zoomcamp),
+the free course we run at DataTalks.Club. It's an experiment for me:
+I want to see what happens if a course is released as a set of Substack
+articles rather than only as videos and a repository. There will be
+four or five of them, one per module, and each one reads on its own -
+you don't need the others, and you don't need to enrol in anything to
+follow along.
 
-### The spec decides the outcome
+This one covers the module on the AI-native developer workflow.
 
-You decide the quality of what an agent builds before it writes the
-first line of code.
+Coding agents now write code faster than I can read it. That sounds
+like a good problem to have, but it isn't the one that bites.
 
-If a task is vague, the agent fills the gaps with its own assumptions.
-The result will be far from what you imagined.
-
-This gets worse as models get better. A weak agent that misunderstands
-you writes fifty lines of broken code and you notice in a minute. A
-strong agent that misunderstands you writes eight files and wires them
+The one that bites is this: if a task is vague, the agent fills the
+gaps with its own assumptions. A weak agent that misunderstands you
+writes fifty lines of broken code and you notice in a minute. A strong
+agent that misunderstands you writes eight files and wires them
 together. It adds tests that pass and gives you a working version of
 the wrong thing. The more capable the agent, the further in the wrong
 direction it goes before you notice it.
 
-So you need to think in detail about what you want to build, and give
-explicit instructions. Then the result will be close to what you want.
+So I stopped driving agents prompt by prompt. Instead I specify the
+work before it starts, write down what the project already knows, split
+the work across three roles that don't grade their own homework, and
+run the whole thing in a loop.
+
+In this article I'll explain that workflow: how to turn an idea into a
+spec with a chat assistant, how to decompose the spec into a backlog,
+what belongs in `AGENTS.md` and what doesn't, the three role files that
+groom, implement and test a task, and how to run them repeatedly so the
+agent works through the backlog on its own.
+
+
+## Specs before code
+
+You decide the quality of what an agent builds before it writes the
+first line of code. So you need to think in detail about what you want
+to build, and give explicit instructions. Then the result will be close
+to what you want.
+
+This approach has a name: spec-driven development. You start with the
+specification, treat it as the canonical version, and write the code
+from it.
+
+There are two levels of specifications:
+
+- Project-level - what the project is. We create it once and don't
+  modify often.
+- Feature-level - what a change should do and how you'll know it
+  worked, written per task and thrown away after.
+
+In my case the project level specs live in `plan.md`, `process.md` and
+`AGENTS.md`, in a `_docs` folder. The feature level specs are tasks in
+a task tracking system, usually GitHub issues.
 
 ### Start in a chat assistant
 
-Don't start your coding session with a coding agent. Coding agents write code, but you don't know what you want yet, so you'll only waste time and tokens.
+Don't start your coding session with a coding agent. Coding agents
+write code, but you don't know what you want yet, so you'll only waste
+time and tokens.
 
 Instead, open a chat assistant and talk the idea through. I use
-dictation for this. It's faster than typing and it keeps me in the
-mode of explaining rather than specifying.
+dictation for this. It's faster than typing and it keeps me in the mode
+of explaining rather than specifying.
 
 In that conversation, cover:
 
@@ -39,25 +77,14 @@ In that conversation, cover:
 Also ask it about what's already out there, so you don't spend a
 weekend rebuilding something that exists.
 
-As you progress through your session, you'll get a clearer vision of what you want to build.
-
-At the end of the session, ask:
+As you progress through your session, you'll get a clearer vision of
+what you want to build. At the end, ask:
 
 ```text
 Save this to a markdown file I can download.
 ```
 
-That file is your spec.
-
-This is how I built [SQLiteSearch](https://alexeyondata.substack.com/p/how-i-built-sqlitesearch-a-lightweight),
-a small SQLite-backed search library. First it was a long chat
-session to get the design straight. Then I downloaded the `plan.md` file, and started coding.
-
-### Inside the spec
-
-We write the spec once and keep it with the project.
-
-Mine usually covers:
+That file is your spec. Mine usually covers:
 
 - what the project is, in a couple of sentences
 - who it's for, and what they're trying to do
@@ -65,36 +92,19 @@ Mine usually covers:
 - the stack, and the constraints it has to live inside
 - a rough architecture: the main pieces and how they relate
 
-The [`plan.md` for SQLiteSearch](https://github.com/alexeygrigorev/sqlitesearch/blob/main/plan.md)
-had all five. It opened with what the library is, then a section on how
-it differs from `minsearch`, the in-memory library it's a sibling to.
-After that came explicit "when should you use this" and "when should
-you not use this" sections, and it ended with the architecture.
-
-### Two tiers
-
-This approach has a name: spec-driven development.
-
-You start with the specification, treat it as the canonical version,
-and write the code from it.
-
-There are two levels of specifications:
-
-- Project-level - what the project is. We create it once and don't modify often.
-- Feature-level - what a change should do and how you'll know it
-  worked, written per task and thrown away after.
-
-In my case the project level specs live in `plan.md`, `process.md` and `AGENTS.md`. I put these files in the `_docs` folder.
-
-The feature level specs are tasks in a task tracking system. I usually use GitHub issues for that.
+This is how I built
+[SQLiteSearch](https://alexeyondata.substack.com/p/how-i-built-sqlitesearch-a-lightweight),
+a small SQLite-backed search library. First a long chat session to get
+the design straight, then I downloaded the `plan.md` file and started
+coding. That file had all five sections: what the library is, how it
+differs from `minsearch`, when you should use it, when you shouldn't,
+and the architecture.
 
 
-## Bootstrapping a Project
+## Bootstrapping a project
 
 You have a spec, and now we turn it into a repo with a backlog the
 agent can work through.
-
-### The empty folder
 
 Make a folder, initialise git, and drop the spec in.
 
@@ -104,8 +114,6 @@ git init
 mkdir _docs
 mv ~/Downloads/plan.md _docs/plan.md
 ```
-
-### Decompose the spec
 
 Open your coding agent in that folder and give it this prompt:
 
@@ -120,10 +128,8 @@ out of scope, and any constraints.
 Do not write any code yet.
 ```
 
-If you haven't decided what the tech stack for this project is, you should also do it.
-
-Add a paragraph to the prompt asking for the decision rather than
-assuming it:
+If you haven't decided the tech stack yet, ask for the decision rather
+than letting it happen on its own:
 
 ```text
 The stack is not decided yet. Before the backlog, propose one, with a
@@ -134,21 +140,16 @@ Then make the first task setting up an empty project on that stack,
 with a test that runs and passes.
 ```
 
-Settle the stack here rather than let it happen on its own:
-
-- the stack decides what half the tasks look like, so you have to
-  settle it before the backlog means anything
-- if you say nothing, the agent picks one anyway, silently, somewhere
-  in the middle of task four
-
-Write the answer into `_docs/plan.md` once you agree with it, because
-the next session won't remember this conversation.
-
+The stack decides what half the tasks look like, so you have to settle
+it before the backlog means anything. And if you say nothing, the agent
+picks one anyway, silently, somewhere in the middle of task four. Write
+the answer into `_docs/plan.md` once you agree with it, because the next
+session won't remember this conversation.
 
 Next, review the tasks yourself. Check that they're granular enough
-without being too granular, and that they make sense.
-
-You can decide to merge some tasks into a bigger ones, or split big ones into smaller tasks. Or say that some things are out of scope. The planning you did previously will help, and if you're not sure about some things, discuss them with your coding assistant.
+without being too granular, and that they make sense. You can merge
+some tasks into bigger ones, split big ones into smaller tasks, or say
+that some things are out of scope.
 
 ### Anatomy of a good task
 
@@ -164,39 +165,8 @@ Every task has four sections:
 If a task takes more than a few minutes to write down, it's too big.
 Split it.
 
-A whole task from the meeting cost calculator backlog looks like this:
-
-```markdown
-# Pause the meeting
-
-## Goal
-The running meeting can be paused and resumed, so a break does not get
-billed.
-
-## Acceptance criteria
-- Pausing stops the cost increasing, and the displayed total stays put
-- Resuming continues from exactly the total shown, nothing is added for
-  the paused period
-- The elapsed time and the cost stay consistent with each other after
-  any number of pauses
-- Pausing before the meeting has started does nothing
-- The current state, running or paused, is visible on screen
-
-## Out of scope
-- No history of pauses, no breakdown of paused time
-- Do not touch the attendee list or the rate calculation
-
-## Constraints
-- Changes stay in the timer and cost modules
-- Do not add a library for this
-```
-
-
-### Put the backlog in GitHub issues
-
-After we decomposed the specs into backlog, we need to persist it.
-
-GitHub issues work well for this, and the agent can create them:
+Then persist the backlog. GitHub issues work well for this, and the
+agent can create them:
 
 ```text
 Create a GitHub issue for each task, using the four sections. Label
@@ -206,44 +176,37 @@ them so I can see the order you would do them in.
 For that to work, you need the `gh` CLI tool authenticated.
 
 
-## Context Engineering
+## Context engineering
 
 The repo has a backlog now, but the agent that works through it still
 starts every session knowing nothing about the project.
 
-### Definition
-
 Context engineering is the practice of making your project
-understandable to an agent before the agent starts working.
-
-It's not "writing better prompts". A prompt is one message in one
-session, while context is everything the agent needs to know before it starts the task.
-
-### AGENTS.md
-
-Every session starts from a clean slate, and the agent doesn't remember what happened before.
+understandable to an agent before the agent starts working. It's not
+"writing better prompts". A prompt is one message in one session, while
+context is everything the agent needs to know before it starts the
+task.
 
 The agent that refactored your test suite yesterday doesn't know today
-that you use `pytest` and not `unittest`. So it has to discover it over and over again.
+that you use `pytest` and not `unittest`. So it has to discover it over
+and over again.
 
-You can help it by specifying these things in `AGENTS.md`.
-`AGENTS.md` is a plain Markdown file at the root of the repo
-describing the project to any coding agent that opens it.
+You can help it by specifying these things in `AGENTS.md`, a plain
+Markdown file at the root of the repo describing the project to any
+coding agent that opens it. Agents read it at startup.
 
-You can put anything you want to this file, and the agents read it at startup.
-
-Note: Claude Code reads `CLAUDE.md`, not `AGENTS.md` like Codex and most other tools do.
-
-I use multiple coding assistants, so my `CLAUDE.md` looks like this:
+Note: Claude Code reads `CLAUDE.md`, not `AGENTS.md` like Codex and
+most other tools do. I use multiple coding assistants, so my
+`CLAUDE.md` looks like this:
 
 ```markdown
 @AGENTS.md
 ```
 
-### Contents of AGENTS.md
+### What goes in
 
-You don't describe the project in AGENTS.md. The
-description belongs in the README, which the agent can read anyway.
+You don't describe the project in `AGENTS.md`. The description belongs
+in the README, which the agent can read anyway.
 
 What you put there:
 
@@ -257,61 +220,51 @@ What you put there:
 - Corrections you got tired of repeating - anything you have typed more
   than once
 
-`AGENTS.md` isn't documentation for humans, though it can be useful for
-them too. It collects the things the agent got wrong, plus the things
-it can't guess or would spend time discovering.
-
-Keep it short.
-
-Here's one for the meeting cost calculator:
+It collects the things the agent got wrong, plus the things it can't
+guess or would spend time discovering. Keep it short:
 
 ```markdown
 Commands
 
 - `npm run dev` - dev server
 - `npm test` - the whole suite
-- `npm test -- cost` - one test file
+- `npm test -- <name>` - one test file
 
 Rules
 
-- Cost and rate calculations go in `src/cost/`, not in components
-- Money is integer cents everywhere.
+- Business logic goes in `src/`, not in components
+- Money is integer cents everywhere
 - Do not add dependencies without asking
 - Commit regularly
 ```
 
-I try to avoid putting markup there like sections, bold formatting, or tables. They don't add any value and only result in higher token consumption.
+I avoid markup there like sections, bold formatting, or tables. They
+don't add any value and only result in higher token consumption.
 
-
-
-### Things to leave out
+### What to leave out
 
 This is where beginners go wrong, and the failure is always the same:
 the file grows until nobody, human or model, follows it.
 
 Keep these out:
 
-- Transient task state. "Currently working on the cost calculation" is a
-  session note, not a project fact.
-- Anything secret. Keys, tokens, internal URLs, customer names.
-  This file is read by tools, copied into contexts and committed to
-  git. Use `.env` for that.
+- Transient task state. "Currently working on the cost calculation" is
+  a session note, not a project fact.
+- Anything secret. Keys, tokens, internal URLs, customer names. This
+  file is read by tools, copied into contexts and committed to git. Use
+  `.env` for that.
 - Long explanations.
 - Rules nobody enforces. Delete it or enforce it programmatically.
 
 A lean file that gets followed beats a long one that gets skimmed.
 Every line you add makes the other lines slightly less likely to be
-noticed. That cost is invisible until the file is already too big. If
-yours is drifting past a couple of screens, cut it rather than add a
-table of contents.
+noticed. If yours is drifting past a couple of screens, cut it rather
+than add a table of contents.
 
+### The other documents
 
-### The process document
-
-`process.md` says how work moves through the project. It could live inside `AGENTS.md`, but I keep a separate file for that specifically. 
-
-For now we can only add three lines there, but it will certainly grow as our project gets bigger.
-
+`process.md` says how work moves through the project. It could live
+inside `AGENTS.md`, but I keep a separate file for it:
 
 ```markdown
 - Tasks are GitHub issues, one at a time
@@ -319,32 +272,11 @@ For now we can only add three lines there, but it will certainly grow as our pro
 - Do not commit until the tests pass
 ```
 
-Let's include it in our AGENTS.md:
-
-```md
-The working process in `_docs/process.md`. When implementing a task, read this file.
-```
-
-
-### Other documents
-
-In addition to `process.md`, you can keep a separate document for each
-thing you need to explain over and over again.
-
-In my projects I often have these files:
-
-- `testing-guidelines.md` - how to write tests
-- `design-system.md` - colours, typography, spacing, so the UI doesn't
-  drift every session
-- `setup.md` - how to get the project running
-- `api.md` - the endpoints, and what they return
-
-I keep them together in a `_docs/` folder and link them from `AGENTS.md`.
-
-The agent reads `AGENTS.md` at the start of every session, so it learns that these documents exist. 
-It doesn't read them immediately, only when it's actually needed for the task.
-
-In `AGENTS.md` we list them like this:
+Beyond that, keep a separate document for each thing you need to
+explain over and over again. In my projects I often have
+`testing-guidelines.md`, `design-system.md` so the UI doesn't drift
+every session, `setup.md`, and `api.md`. I keep them together in
+`_docs/` and link them from `AGENTS.md`:
 
 ```markdown
 Documents
@@ -355,39 +287,52 @@ Documents
 - For anything touching the UI, read `_docs/design-system.md`
 ```
 
-The agent then opens the document relevant to the task:
-
-- A task about the UI pulls in the design system.
-- A task about tests pulls in the testing guidelines.
-
-This keeps `AGENTS.md` short while the project's written context keeps
-growing.
+The agent reads `AGENTS.md` at the start of every session, so it learns
+that these documents exist. It doesn't read them immediately, only when
+the task actually needs them. A task about the UI pulls in the design
+system, a task about tests pulls in the testing guidelines. This keeps
+`AGENTS.md` short while the project's written context keeps growing.
 
 
-## Grooming a Task
+## Three roles
 
-We saw that you decide the quality of what an agent builds before it
-writes any code, and then we turned the spec into a backlog.
+The backlog items are still rough. A task named in three words is a
+placeholder - it says what the work is about without saying what done
+looks like.
 
-Those backlog items are still rough. A task like "add attendees" is a
-placeholder - it names the work without saying what done looks like.
-In grooming we turn it into something an engineer can implement without
-asking you a single question.
-
-It's the same idea as the project spec, but for an individual task, not the entire project.
-
-### Product manager
-
-In a product team, grooming is usually the responsibility of the Product Manager. So let's create our own product manager to do it.
-
-Create a `team/` folder with a `pm.md` file:
+From here the work splits across three roles, the same ones a product
+team has: a PM who grooms the task, an engineer who implements it, and
+a QA engineer who checks it. Each role is a Markdown file in a `team/`
+folder, and each runs in its own session.
 
 ```text
 team/
   pm.md
+  software-engineer.md
+  qa-engineer.md
+  task-template.md
 ```
 
-Here's what's inside:
+All three are linked from `AGENTS.md`:
+
+```markdown
+Team
+
+- To groom a task, follow `team/pm.md`
+- To implement a task, follow `team/software-engineer.md`
+- To test a task, follow `team/qa-engineer.md`
+```
+
+The agent learns the roles exist when it starts, and opens the file
+when you ask it to groom, implement or verify something.
+
+### The product manager
+
+Grooming turns a placeholder into something an engineer can implement
+without asking you a single question. It's the same idea as the project
+spec, but for an individual task.
+
+`team/pm.md`:
 
 ```markdown
 You're a Product Manager
@@ -409,16 +354,13 @@ Definition of done:
 - An engineer who has never spoken to you could implement it from the
   issue alone
 
-If something does not belong in this task, do not silently drop it - file a follow-up issue, and list it under out of scope with a link to that issue, so it
-is clear what was moved and where it went.
+If something does not belong in this task, do not silently drop it -
+file a follow-up issue, and list it under out of scope with a link to
+that issue, so it is clear what was moved and where it went.
 ```
 
-### The task template
-
 The PM needs a structure to fill in, so a groomed issue always looks
-the same.
-
-Put it in `team/task-template.md`:
+the same. `team/task-template.md`:
 
 ```markdown
 ## Goal
@@ -440,65 +382,30 @@ One or two sentences on what should be true when this is done.
 - Libraries it may not add, patterns it must follow
 ```
 
-Checkboxes are worth the two extra characters. They give the QA session
-later a list to tick off one by one. They
-also make an unfinished task visible at a glance.
+Checkboxes are worth the two extra characters. They give QA a list to
+tick off one by one, and they make an unfinished task visible at a
+glance.
 
-Link the folder from `AGENTS.md`, the same way as the `_docs` files:
-
-```markdown
-Team
-
-- To groom a task, follow `team/pm.md`
-```
-
-The agent learns the role exists when it starts, and opens the file
-when you ask it to groom something.
-
-### Running the session
-
-Start a fresh session:
+Then, in a fresh session:
 
 ```text
 Groom issue #4
 ```
 
-Read and understand the result before you move on.
+Read the result before you move on. Grooming is the cheapest place in
+the whole process to catch a misunderstanding: the issue is a
+paragraph, and correcting it costs one sentence. The same
+misunderstanding found after implementation costs a rewrite, and found
+after release costs considerably more.
 
-Grooming is the cheapest place in the whole process
-to catch a misunderstanding: the issue is a paragraph, and correcting
-it costs one sentence.
+Check that the goal matches what you actually wanted, that every
+acceptance criterion is something you could check, and that nothing
+important got scoped out. If the groomed issue surprises you, fix it
+now.
 
-The same misunderstanding found after
-implementation costs a rewrite, and found after release costs
-considerably more.
+### The software engineer
 
-Check that:
-
-- the goal matches what you actually wanted
-- every acceptance criterion is something you could check
-- nothing important got scoped out
-
-If the groomed issue surprises you, fix the result.
-
-
-## Implementing a Task
-
-The issue is groomed, so now we write the code.
-
-### Software engineer
-
-The next role in the team is the one that does the implementation.
-
-Add `software-engineer.md` next to `pm.md`:
-
-```text
-team/
-  pm.md
-  software-engineer.md
-```
-
-Here's what's inside:
+`team/software-engineer.md`:
 
 ```markdown
 You're a Software Engineer
@@ -523,69 +430,32 @@ If an acceptance criterion is wrong, impossible, or contradicts
 another one, create a comment on the issue about it.
 ```
 
-And add it to `AGENTS.md`:
-
-```markdown
-Team
-
-- To groom a task, follow `team/pm.md`
-- To implement a task, follow `team/software-engineer.md`
-```
-
-Then start a fresh session:
+Then, in a fresh session:
 
 ```text
 Implement issue #4
 ```
 
-
-### Small steps
-
-Make the agent work through it one change at a time, and make sure it commits after every major step.
-
-Frequent commits give you a cheap way to go back. If the last commit was
-five minutes ago, and something went wrong, throwing the current code away and rewinding is easy. If it
-was an hour ago, you'll have to re-create it.
+Make the agent work through it one change at a time, and make sure it
+commits after every major step. Frequent commits give you a cheap way
+to go back: if the last commit was five minutes ago and something went
+wrong, throwing the current code away and rewinding is easy. If it was
+an hour ago, you'll have to re-create it.
 
 The engineer session ends when the code is written and its own tests
-pass. That's not the same as the task being done - it's the agent
-marking its own homework, which is what we deal with next.
+pass. That's not the same as the task being done.
 
-
-## Testing a Task
-
-The code is written and the engineer says it works. Now we check whether that's true.
-
-### The best tester is not the author
+### The QA engineer
 
 An agent that writes the code and then judges whether the code is
-correct is grading its own homework.
+correct is grading its own homework. By the time it finishes, it has
+spent its entire context building the case that its approach was the
+right one. If you ask "is this correct?" you'll get "yes, this
+correctly handles the edge case". But the edge cases are only the ones
+it thought of, handled the way it decided to handle them.
 
-By the time it finishes, it has spent its entire context building the
-case that its approach was the right one. If you ask "is this correct?"
-you'll get "yes, this correctly handles the edge case".
-
-But the edge cases are only the ones that it thought of, handled the way it decided to handle it.
-
-In software engineering teams we have QA engineers: people who specialize
-on testing software.
-
-We follow the same idea here. Testing gets its own session, with no
-memory of how the code was written. It checks the result against the
-acceptance criteria independently.
-
-### QA engineer
-
-Add `qa-engineer.md` to the team:
-
-```text
-team/
-  pm.md
-  software-engineer.md
-  qa-engineer.md
-```
-
-Here's what's inside:
+So testing gets its own session, with no memory of how the code was
+written. `team/qa-engineer.md`:
 
 ```markdown
 You're a QA Engineer
@@ -603,9 +473,9 @@ acceptance criterion fails. Post it as a comment on the issue:
 
 ## QA: FAIL
 
-- [x] Salary is entered as an annual figure - PASS
-- [ ] Removing an attendee stops their cost accruing - FAIL
-      Removed someone mid-meeting, the total kept rising
+- [x] The value is stored as an integer - PASS
+- [ ] Removing an entry updates the total - FAIL
+      Removed one, the total kept rising
 
 Tests: `npm test`, 14 passed, 0 failed
 
@@ -621,81 +491,48 @@ Ignore what the implementation says it does. Only the acceptance
 criteria and the running code count.
 ```
 
-And add it to `AGENTS.md`:
-
-```markdown
-Team
-
-- To groom a task, follow `team/pm.md`
-- To implement a task, follow `team/software-engineer.md`
-- To test a task, follow `team/qa-engineer.md`
-```
-
 Then, in a new session:
 
 ```text
 Verify issue #4
 ```
 
-### Tests as the guardrail
-
-The "don't fix anything" rule keeps the roles apart. A QA
-session that repairs the findings becomes the author
-again, so you're back to marking your own homework.
+The "don't fix anything" rule keeps the roles apart. A QA session that
+repairs its own findings becomes the author again, so you're back to
+marking your own homework.
 
 A FAIL goes back as a new engineer session, with the QA comment as the
-input. Then QA runs again. You repeat the process until it passes.
-
-You close the issue only on a PASS.
-
-"Mostly works, a couple of small things" isn't an outcome. Only `PASS` or `FAIL` are accepted.
+input. Then QA runs again. You repeat until it passes, and you close
+the issue only on a PASS. "Mostly works, a couple of small things"
+isn't an outcome - only PASS or FAIL are accepted.
 
 
-Tests let you delegate the implementation to agents without reading every line.
-
-
-## Loop Engineering
+## Loop engineering
 
 So far you have typed every prompt yourself, running three sessions per
-task to groom, implement, and test.
-
-That's the right way to learn it, but it doesn't scale to many issues.
-
-Loop engineering helps with that.
+task. That's the right way to learn it, but it doesn't scale to many
+issues.
 
 Loop engineering is designing the system that runs a coding agent
-repeatedly, instead of driving the agent prompt by prompt.
+repeatedly, instead of driving the agent prompt by prompt. The "system"
+is the harness that controls your agent, plus whatever you wrap around
+it. It decides what the agent picks up next, checks the result, and
+decides whether to go again.
 
-The "system" is the harness that controls your agent, plus whatever you
-wrap around it. It decides what the agent picks up next, checks the
-result, and decides whether to go again.
-
-
-### The ladder
-
-Loop engineering is usually presented as one step on a ladder:
+It's usually presented as one step on a ladder:
 
 - Prompt engineering - what you say in one message
 - Context engineering - what the agent knows before it starts
 - Loop engineering - how often it runs, on what, and when it stops
 - Graph engineering - who does what, when there's more than one agent
 
-In June 2026 Addy Osmani published the [Loop Engineering essay](https://addyo.substack.com/p/loop-engineering) that gave it a name and Peter Steinberger compressed the whole idea into one
-sentence:
+In June 2026 Addy Osmani published the
+[Loop Engineering essay](https://addyo.substack.com/p/loop-engineering)
+that gave it a name, and Peter Steinberger compressed the whole idea
+into one sentence:
 
 > stop prompting your agents and start designing the loops that
 > prompt them.
-
-TODO - screenshots of the original X posts
-
-Many harnesses have built-in support for loops like
-`/goal`, `/loop` and `/schedule`.
-
-That's what puts this term on firmer ground than the one in the next
-section. The vendors shipped features for it, rather than only arguing
-about it on X.
-
-### /goal in practice
 
 The simplest useful loop is one command:
 
@@ -707,72 +544,51 @@ The agent works, runs the suite, and reads the failures. It works again
 and stops when the suite is green or it hits the turn limit. You're not
 in that cycle.
 
-Something more realistic for our project:
+Something more realistic:
 
 ```text
-/goal refactor src/cost so no file is over 200 lines, tests stay green
+/goal refactor src/ so no file is over 200 lines, tests stay green
 ```
 
-The stop condition has to be something a model can evaluate: "all tests
-pass" is checkable, and so is "no file over 200 lines".
+The stop condition has to be something a model can evaluate. "All tests
+pass" is checkable, and so is "no file over 200 lines". "Make the code
+better" isn't, so your agent can run forever, or stop too early.
 
-"Make the code better" isn't checkable, so your agent can run forever (or stop too early).
-
-### Building the loop yourself
-
-Many harnesses have the primitives you need to implement loops:
-
-- Claude Code has `/goal` and `/loop`
-- Codex only has `/goal`
-
-But some harnesses may not have it, so it could be useful to know how to write them yourself.
-
-You need these:
+Many harnesses ship these primitives: Claude Code has `/goal` and
+`/loop`, Codex only has `/goal`. If yours doesn't, you can build them:
 
 - Stop hooks. A hook that fires when the agent finishes a turn can
-  check a condition and prompt it again, which is how you implement `/goal`.
+  check a condition and prompt it again, which is how you implement
+  `/goal`.
 - Scheduled pings into a tmux session. If the agent is running in tmux,
-  you can send keystrokes to that session on a timer, which is how you implement `/loop`.
+  you can send keystrokes to that session on a timer, which is how you
+  implement `/loop`.
 
 
-## Graph Engineering
+## Graph engineering
 
-We already have three roles and a way to run tasks in a loop.
-
-But we're still moving manually between roles. You read the QA verdict and decide whether it goes back to the engineer or you pick up the next task.
-
-Now we'll automate it.
-
-### The definition
+We have three roles and a way to run tasks in a loop, but we're still
+moving manually between the roles. You read the QA verdict and decide
+whether it goes back to the engineer or you pick up the next task.
 
 Graph engineering is structuring work across several specialized
 agents. You define what each one is responsible for, what order the
-work moves in, and how they pass results along.
-
-You can draw any such workflow as a graph. Each agent is a node, each
-handoff is an edge, and the design work is in the structure rather than
-in any single agent's behaviour.
+work moves in, and how they pass results along. You can draw any such
+workflow as a graph: each agent is a node, each handoff is an edge, and
+the design work is in the structure rather than in any single agent's
+behaviour.
 
 The term appeared on X around 18 July 2026, a month after loop
-engineering.
+engineering, under the headline "Loop Engineering Is Dead". To me it
+makes little sense as a new idea. People have been building
+multi-agent systems and state machines for a long time, and
+specialized workers passing work between them isn't new. In the same
+discussion, people who build agent-orchestration tools said the term
+was being used loosely, and they were right. Loop engineering isn't
+dead either, because we still need a way to run our tasks. On top of
+that, we add roles.
 
-> Loop Engineering Is Dead ...
-
-TODO - screenshots of the X thread
-
-To me this definition makes little sense as a new idea. People have
-been building multi-agent systems and state machines for a long time,
-and specialized workers passing work between them isn't new.
-
-In the
-same discussion, people who build agent-orchestration tools said the
-term was being used loosely, and they were right.
-
-Loop engineering is actually not dead, because we still need a way to run our tasks. But on top of that, we add roles.
-
-### You already built the graph
-
-What we built so far is already a graph:
+And what we built so far is already a graph:
 
 ```text
 groom (PM)  ->  implement (engineer)  ->  test (QA)  ->  done
@@ -781,27 +597,18 @@ groom (PM)  ->  implement (engineer)  ->  test (QA)  ->  done
 ```
 
 Three nodes and four edges, including the one that sends failed work
-back for another pass. That's a graph, and you drew it without needing
-the term.
-
-- Each role has a file saying what it does and doesn't do
-- Each role has a definition of done
-- The handoff is the issue, not a conversation
-- One role's output is another role's input, and the FAIL edge exists
-
-In our case, the issue has all the context, so we can easily start
-each node as a separate session.
+back for another pass. Each role has a file saying what it does and
+doesn't do, each has a definition of done, one role's output is
+another's input, and the handoff is the issue rather than a
+conversation. Because the issue carries all the context, each node can
+start as a separate session.
 
 ### The orchestrator
 
-One thing we're still missing is the orchestrator, which so far has
-been you. Something has to pick the next issue, dispatch each role in
-order, read the verdict, and route on it.
-
-We make the main session do it, so it dispatches the roles rather than
-doing the work.
-
-Let's update our orchestrator:
+The one thing still missing is the orchestrator, which so far has been
+you. Something has to pick the next issue, dispatch each role in order,
+read the verdict, and route on it. We make the main session do that, so
+it dispatches the roles rather than doing the work. In `process.md`:
 
 ```markdown
 Lifecycle
@@ -823,7 +630,6 @@ as subagents.
 
 Now we're ready for our loop:
 
-
 ```text
 /goal work through the backlog
 ```
@@ -832,19 +638,31 @@ The agent reads `AGENTS.md`, finds `process.md`, follows the lifecycle,
 and dispatches the roles it finds in `team/`. Every piece of that
 sentence is something you built earlier.
 
+So if someone asks you about graph engineering, you can say it's
+several agents with defined roles passing work to each other. The term
+is from July 2026, but the practice is much older. It works because the
+roles are explicit, the lifecycle is explicit, and the specifications
+come before the implementation.
 
-So if someone asks you about graph engineering, you can say that it's
-several agents with defined roles passing work to each other.
 
-The term is from July 2026, but the practice is much older. It works
-because the roles are explicit, the lifecycle is explicit, and the
-specifications come before the implementation.
+## Next in the series
 
-### Going further
+This was the first module. The ones after it build on the same
+workflow:
 
-You can learn about my own multi-agent setup here:
+- Building and shipping a full-stack app end to end: spec to frontend,
+  backend, tests, Docker, deployment and CI/CD
+- Coding agent capabilities: MCP, skills, plugins, hooks and custom
+  agents
+- AI for security, audit and DevOps
+- Taking a project of your own from an empty folder to something
+  running
 
-- [I Built an AI Agent Team for Software Development](https://alexeyondata.substack.com/p/i-built-an-ai-agent-team-for-software)
+If you'd rather do the course than read it, the materials, the
+homework and the next cohort are here:
+[AI Dev Tools Zoomcamp](https://github.com/DataTalksClub/ai-dev-tools-zoomcamp).
+It's free.
 
-It's the same three roles plus an on-call agent watching CI, running
-across five real projects.
+You can also read about my own multi-agent setup, the same three roles
+plus an on-call agent watching CI, running across five real projects:
+[I Built an AI Agent Team for Software Development](https://alexeyondata.substack.com/p/i-built-an-ai-agent-team-for-software).
