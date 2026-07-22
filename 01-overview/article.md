@@ -151,9 +151,9 @@ test that runs and passes.
 Do not write any code yet.
 ```
 
-The goal is one line of intent, and the description gives enough
-context to pick the task up later. Nothing is checkable yet - that's
-what grooming adds.
+The goal is one line of intent. The description doesn't restate it, it
+complements it: the context that doesn't fit in one line. Nothing is
+checkable yet - that's what grooming adds.
 
 Next, we review a few tasks ourselves. Check that they're granular enough
 without being too granular, and that they make sense. We can merge
