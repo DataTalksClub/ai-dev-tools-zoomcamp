@@ -139,30 +139,16 @@ Each task should be small enough to finish in one session, and
 independent enough that I could hand it to someone who has not read
 the others.
 
-For each task give a title, a one-line goal, and a one-line "done
-when".
+Use this template for each task:
+
+## <number>. <title>
+Goal: <one line - what this task is>
+Done when: <one line - how I will know it is finished>
 
 Make the first task setting up an empty project, with a
 test that runs and passes.
 
 Do not write any code yet.
-```
-
-Two lines per task is all we need at this point:
-
-```markdown
-## 1. Project setup
-Goal: an empty project on the chosen stack
-Done when: the app starts, and one test runs and passes
-
-## 2. Rate from salary
-Goal: turn an annual salary into a per-second rate
-Done when: entering a salary shows the right cost per second
-
-## 3. Attendees
-Goal: add and remove people, each with a salary
-Done when: someone can be added mid-meeting and removed again, and
-the list shows who is in
 ```
 
 The goal says what the task is, the "done when" says how we'd know it's
