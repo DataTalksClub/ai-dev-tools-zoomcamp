@@ -91,12 +91,13 @@ That file is the spec. Mine usually covers:
 I describe this process in some detail in the
 [SQLiteSearch](https://alexeyondata.substack.com/p/how-i-built-sqlitesearch-a-lightweight) article.
 
-It came out of exactly this kind of session: a long chat to
-get the design straight, then I downloaded the `plan.md` file and
-started coding. It had all five sections - what the library is, how it
-differs from `minsearch`, when to use it, when not to, and the
-architecture.
-
+First, I had a long chat to get the design straight,
+then I downloaded the
+[`plan.md`](https://github.com/alexeygrigorev/sqlitesearch/blob/main/plan.md)
+file and started coding.
+It had all five sections - what the library is, how it
+differs from [minsearch](https://alexeyondata.substack.com/p/minsearch-the-small-search-library),
+when to use it, when not to, and the architecture.
 
 ## Bootstrapping a project
 
