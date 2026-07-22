@@ -143,7 +143,7 @@ Use this template for each task:
 
 ## <number>. <title>
 Goal: <one line>
-Done when: <one line>
+Description: <two or three sentences on what the task involves>
 
 Make the first task setting up an empty project, with a
 test that runs and passes.
@@ -151,9 +151,9 @@ test that runs and passes.
 Do not write any code yet.
 ```
 
-The goal says what the task is, the "done when" says how we'd know it's
-finished. That's enough to tell whether a task is one task, and it's
-still short enough to read the whole backlog in one go.
+The goal is one line of intent, and the description gives enough
+context to pick the task up later. Nothing is checkable yet - that's
+what grooming adds.
 
 Next, we review a few tasks ourselves. Check that they're granular enough
 without being too granular, and that they make sense. We can merge
