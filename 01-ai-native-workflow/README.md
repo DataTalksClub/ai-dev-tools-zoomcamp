@@ -1,7 +1,10 @@
 # Module 1 — AI-Native Developer Workflow
 
-Tools change every month. But workflows don't. In this module we cover
-the flow for AI-driven development:
+Tools change every month, but we keep working in much the same way. In this module, we take a
+vague product idea through specification and context. Then we implement it and
+run independent QA.
+
+You learn:
 
 - Spec-driven development
 - Context engineering
@@ -9,28 +12,39 @@ the flow for AI-driven development:
 - Loop engineering
 - Graph engineering
 
-The module is written up as a single article:
+Use the article and recording to follow the same example:
 
-- [AI-Native Development: Specifications, Loop and Graph Engineering](https://alexeyondata.substack.com/p/ai-native-development-specifications)
+- [Article: AI-Native Development: Specifications, Loop and Graph Engineering](https://alexeyondata.substack.com/p/ai-native-development-specifications)
+- [Markdown source for the article](../articles/01-ai-native-workflow.md)
+- [Recording: AI-Native Developer Workflow](https://www.youtube.com/watch?v=VUJxJGpaDEs)
+
+## Example projects
+
+We build the weekly-feedback idea twice to show why we need a specification:
+
+- [`weekly-feedback`](weekly-feedback/) is the working CLI that Claude Code
+  produces from one vague sentence, with its source and tests included here.
+- [`retroloop`](https://github.com/alexeygrigorev/retroloop) is the Django
+  retrospective app produced after we specified the product and worked through
+  a groomed GitHub backlog.
 
 
 ## Homework
 
-- [2026 Homework](../cohorts/2026/01-overview/homework.md) - Build a
+Complete the module with this project:
+
+- [2026 homework](../cohorts/2026/01-overview/homework.md) - Build a
   Django TODO app with the AI tool of your choice. You don't need to know
   Django.
 
-## Previous Cohort Materials
+## Previous cohort materials
 
-The 2025 version of this module was a fuller tour of the tool landscape.
-The specific tools it names have moved on, but the categories still hold,
-so it's worth reading for the shape of each category rather than for the
-product list.
+In 2025, we gave a fuller tour of the tool landscape.
+Those tools have changed, but we can still use the categories to understand
+what each kind of tool does.
 
 - [2025 archived Module 1](../cohorts/2025/01-overview/)
 
-## Community Notes
+## Community notes
 
-Did you take notes? You can share them here.
-
-- Add a link to your notes above this line
+Add links to your notes above this line.
