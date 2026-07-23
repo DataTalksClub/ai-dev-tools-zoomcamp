@@ -49,14 +49,14 @@ Before the 2026 cohort starts, we are running a free live event series to help y
 
 The sessions are optional, but useful if you want to see the workflows in action before starting the course.
 
-| Event | What it covers | Link |
-| --- | --- | --- |
-| Workshop 1: AI-Native Developer Workflow | How to use AI coding tools for planning, implementation, review, testing, and debugging without losing control of the code. | [RSVP](https://luma.com/lmkti8zj) |
-| Workshop 2: Build and Ship an AI-Assisted Full-Stack App | How to move from product spec to frontend, backend, OpenAPI contract, tests, Docker, deployment, and CI/CD. | [RSVP](https://luma.com/50kvfku2) |
-| Workshop 3: Coding Agent Capabilities | How MCP, skills, plugins, hooks, subagents, and custom agents fit into practical coding-agent workflows. | [RSVP](https://luma.com/ap4l3qlj) |
-| Workshop 4: Open-Source AI Tools for Security, Audit, and DevOps | How to use AI-assisted review, security scanning, audit, diagnostics, and DevOps tools around a project. | [RSVP](https://luma.com/ycsfxigi) |
-| Pre-Course Live Q&A | Bring questions about prerequisites, tools, homework, deadlines, projects, peer review, and certificates. | [RSVP](https://luma.com/a8qa5s2s) |
-| Course Launch | Start the cohort with the course overview, first-week workflow, community links, and live questions. | [RSVP](https://luma.com/tsiusx8s) |
+| Event | Date | What it covers | Link | Article |
+| --- | --- | --- | --- | --- |
+| Workshop 1: AI-Native Developer Workflow | Wed, July 22, 09:00 CEST | How to use AI coding tools for planning, implementation, review, testing, and debugging without losing control of the code. | [Recording](https://www.youtube.com/watch?v=VUJxJGpaDEs) | [Substack](https://alexeyondata.substack.com/p/ai-native-development-specifications) |
+| Workshop 2: Build and Ship an AI-Assisted Full-Stack App | Mon, August 3, 15:00 CEST | How to move from product spec to frontend, backend, OpenAPI contract, tests, Docker, deployment, and CI/CD. | [RSVP](https://luma.com/50kvfku2) | |
+| Workshop 3: Coding Agent Capabilities | Mon, August 17, 14:00 CEST | How MCP, skills, plugins, hooks, subagents, and custom agents fit into practical coding-agent workflows. | [RSVP](https://luma.com/ap4l3qlj) | |
+| Workshop 4: Open-Source AI Tools for Security, Audit, and DevOps | Tue, August 18, 14:00 CEST | How to use AI-assisted review, security scanning, audit, diagnostics, and DevOps tools around a project. | [RSVP](https://luma.com/ycsfxigi) | |
+| Pre-Course Live Q&A | Mon, August 24, 17:00 CEST | Bring questions about prerequisites, tools, homework, deadlines, projects, peer review, and certificates. | [RSVP](https://luma.com/a8qa5s2s) | |
+| Course Launch | Mon, August 31, 17:00 CEST | Start the cohort with the course overview, first-week workflow, community links, and live questions. | [RSVP](https://luma.com/tsiusx8s) | |
 
 
 ## About the Course
@@ -136,7 +136,7 @@ Self-paced steps:
 
 ## Syllabus
 
-### [Module 1: AI-Native Developer Workflow](01-overview/)
+### [Module 1: AI-Native Developer Workflow](01-ai-native-workflow/)
 
 Learn how to take a software idea from a written specification to verified code. You make the decisions and review the result.
 

@@ -302,38 +302,25 @@ system, a task about tests pulls in the testing guidelines. This keeps
 `AGENTS.md` short while the project's written context keeps growing.
 
 
-## Three roles
+## Grooming: The product manager agent
 
-We have a backlog of tasks, but they are not precise enough.  tasks. Only one of ours got written out in
-full earlier, the rest are still lines like "add attendees", which names
-the work without saying what done looks like. Does an attendee have a
-name, or only a salary? What happens to the running total when we add
-someone to a meeting that has already started?
+We have a backlog of tasks, but they are not precise enough. 
 
-From here the work splits across three roles, the same ones a product
-team has: a PM who grooms the task, an engineer who implements it, and
-a QA engineer who checks it. Each role is a Markdown file in a
-`_docs/team/` folder, and each runs in its own session.
+The next step is "grooming", or making them more specific.
+Grooming turns a placeholder task into something an engineer can
+implement without asking a single question.
 
-We add them one at a time. Each role gets a file with its instructions,
-and a line in `process.md` so the agent knows the role exists.
-`AGENTS.md` already points at `process.md`, so nothing else needs
-wiring.
+In teams, usually product managers do that. We will also have our own product
+manager. 
 
-## The product manager
-
-Grooming turns a placeholder into something an engineer can implement
-without asking a single question. It's the same idea as the project
-spec, but for an individual task.
-
-The first role in the folder:
+For that, we need to describe the role. Let's create a doucment for that:
 
 ```text
 _docs/team/
   pm.md
 ```
 
-`_docs/team/pm.md`:
+Inside, write the description:
 
 ```markdown
 You're a Product Manager
@@ -391,52 +378,7 @@ One or two sentences on what should be true when this is done.
 - Libraries it may not add, patterns it must follow
 ```
 
-Filled in, a groomed task looks like this:
-
-```markdown
-# Pause the meeting
-
-## Goal
-The running meeting can be paused and resumed, so a break does not get
-billed.
-
-## Acceptance criteria
-- Pausing stops the cost increasing, and the displayed total stays put
-- Resuming continues from exactly the total shown, nothing is added for
-  the paused period
-- The elapsed time and the cost stay consistent with each other after
-  any number of pauses
-- Pausing before the meeting has started does nothing
-- The current state, running or paused, is visible on screen
-
-## Out of scope
-- No history of pauses, no breakdown of paused time
-- Do not touch the attendee list or the rate calculation
-
-## Constraints
-- Changes stay in the timer and cost modules
-- Do not add a library for this
-```
-
-The goal carries over from the backlog unchanged. The one-line "done
-when" turns into the acceptance criteria, and the last two sections are
-what grooming adds.
-
-That's where the criteria get sharpened. "Pausing works"
-leaves the agent to decide what happens to the total on resume. "The
-displayed total stays put while paused, and resuming adds nothing for
-the paused period" doesn't. The PM's job is to turn the first kind into
-the second, one line per case, including the awkward ones.
-
-It's also where the size of a task shows. If the groomed issue takes
-more than a few minutes to read, it's too big - split it, and let the
-PM file the pieces.
-
-The checkboxes in the template are worth the two extra characters. They
-give the tester a list to tick off one by one, and they make an
-unfinished task visible at a glance.
-
-And the role goes into `process.md`:
+Grooming is a part of the process, so let's add it to `process.md`:
 
 ```markdown
 Roles
@@ -444,19 +386,15 @@ Roles
 - PM - grooms a task before anyone implements it, follows _docs/team/pm.md
 ```
 
-Then, in a fresh session - #4 being "add attendees", the rough one from
-above:
+Let's work through an issue:
 
 ```text
 Groom issue #4
 ```
 
-What comes back should answer the questions the original didn't: that a
-salary is entered as an annual figure, that adding someone mid-meeting
-starts charging from that moment and doesn't backdate, that removing
-them stops it.
+Read the result before moving on.
 
-Read the result before moving on. Grooming is the cheapest place in
+Grooming is the cheapest place in
 the whole process to catch a misunderstanding: the issue is a
 paragraph, and correcting it costs one sentence. The same
 misunderstanding found after implementation costs a rewrite, and found
@@ -467,7 +405,9 @@ acceptance criterion is something we could check, and that nothing
 important got scoped out. If the groomed issue surprises us, fix it
 now.
 
-### The software engineer
+## Implementation: The software engineer agent
+
+Now the issue is groomed, so let's implement it. For that we need a software engineer.
 
 The second role sits next to the first:
 
@@ -502,7 +442,7 @@ If an acceptance criterion is wrong, impossible, or contradicts
 another one, create a comment on the issue about it.
 ```
 
-`process.md` gains a line:
+Add one more like to `process.md`:
 
 ```markdown
 Roles
@@ -518,7 +458,7 @@ Implement issue #4
 ```
 
 Make the agent work through it one change at a time, and make sure it
-commits after every major step. Frequent commits give us a cheap way
+commits after every major step. Frequent commits give us a simple way
 to go back: if the last commit was five minutes ago and something went
 wrong, throwing the current code away and rewinding is easy. If it was
 an hour ago, we'll have to re-create it.
@@ -526,17 +466,14 @@ an hour ago, we'll have to re-create it.
 The engineer session ends when the code is written and its own tests
 pass. That's not the same as the task being done.
 
-### The QA engineer
+## testing: The QA engineer agent
 
-An agent that writes the code and then judges whether the code is
-correct is grading its own homework. By the time it finishes, it has
-spent its entire context building the case that its approach was the
-right one. If we ask "is this correct?" we'll get "yes, this
-correctly handles the edge case". But the edge cases are only the ones
-it thought of, handled the way it decided to handle them.
+An agent that writes the code and then judges this code is grading its own homework.
 
-So testing gets its own session, with no memory of how the code was
-written. That's the third role:
+If we ask "is this correct?" we'll get "yes". But it might have missed 
+a lot of the edge cases. 
+
+So we need to test it in a separate sessoin. In teams, this is often done by QA engineers. That's the third role:
 
 ```text
 _docs/team/
@@ -545,7 +482,7 @@ _docs/team/
   qa-engineer.md
 ```
 
-`_docs/team/qa-engineer.md`:
+The description:
 
 ```markdown
 You're a QA Engineer
@@ -594,22 +531,13 @@ Roles
 Then, in a new session:
 
 ```text
-Verify issue #4
+Test issue #4
 ```
 
-That verdict is what the whole setup is for. The engineer session
-finished, the tests were green, and the removal bug was still there -
-because the tests were written by the same agent that misread the
-criterion.
-
-The "don't fix anything" rule keeps the roles apart. A QA session that
-repairs its own findings becomes the author again, so we're back to
-marking our own homework.
-
-A FAIL goes back as a new engineer session, with the QA comment as the
-input. Then QA runs again. We repeat until it passes, and we close
-the issue only on a PASS. "Mostly works, a couple of small things"
-isn't an outcome - only PASS or FAIL are accepted.
+If we get a `PASS`, it's great. If we get a `FAIL`, it's also good: 
+we caught a regression. So we get back as a new engineer session, use 
+the QA comment as the input, implement it, and iterate until QA says
+`PASS`.
 
 
 ## Loop engineering

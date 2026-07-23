@@ -99,7 +99,7 @@ What's the command you use for running tests in the terminal?
 Now the application is developed and tested. Run it:
 
 ```bash
-python manage.py runserver
+uv run python manage.py runserver
 ```
 
 Since we asked AI to test everything, it should just work. If it doesn't, iterate with AI until it works. 
