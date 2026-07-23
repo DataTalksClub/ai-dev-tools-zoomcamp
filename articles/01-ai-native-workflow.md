@@ -2,9 +2,7 @@
 
 This is the first article in a series based on
 [AI Dev Tools Zoomcamp](https://github.com/DataTalksClub/ai-dev-tools-zoomcamp),
-the free course we run at DataTalks.Club. You can also
-[watch the recorded workshop](https://www.youtube.com/watch?v=VUJxJGpaDEs)
-that accompanies this article.
+the free course we run at DataTalks.Club.
 
 This year I wanted to do an experiment and publish a series of course notes as articles on Substack. My plan is to have one per module, and each one should be independent from others. I start with the first one: AI-native developer workflows.
 
@@ -29,38 +27,6 @@ We cover topics like:
 - Context engineering
 - Loop engineering
 - Graph engineering
-
-
-## A working answer to the wrong question
-
-In the recorded session, we start with an audience suggestion: "a tool for
-weekly feedback for projects."
-
-I give Claude Code the idea as a one-line prompt:
-
-```text
-Implement a tool for weekly feedback for projects.
-```
-
-The agent writes a complete zero-dependency Python CLI. You can register
-projects, record their status, generate a Markdown digest, and list the people
-who haven't reported. It also writes tests and documentation.
-
-![The one-shot weekly-feedback CLI](images/01-wrong-implementation.png)
-
-You can read and run the
-[`weekly-feedback` source](../01-ai-native-workflow/weekly-feedback/).
-The code works, but I had a team retrospective app in mind rather than a
-personal status-reporting CLI. Claude Code had no way to know that because the
-prompt said nothing about teams or anonymity. It also omitted
-Start/Stop/Continue cards, clustering, voting, and action items.
-
-We use the same idea for the rest of the session, but first we talk through
-those decisions and save them in a spec. The finished project is
-[`retroloop`](https://github.com/alexeygrigorev/retroloop), a Django app for
-weekly feedback cycles and the retrospectives that follow them. Its
-[issues](https://github.com/alexeygrigorev/retroloop/issues) also show the
-backlog, grooming, implementation, and QA history described below.
 
 
 ## Specs before code
@@ -106,7 +72,7 @@ In that conversation, cover:
 Also ask it about what's already out there, so we don't spend a
 weekend rebuilding something that exists.
 
-As the session progresses, we get a clearer vision of what we want to
+As the conversation progresses, we get a clearer vision of what we want to
 build.
 
 At the end, ask:
@@ -123,11 +89,11 @@ I save the answer as the spec, which usually covers:
 - the stack, and the constraints it has to live inside
 - a rough architecture: the main pieces and how they relate
 
-During the live-session conversation, we turn "weekly feedback for projects"
-into a specific flow. Team members submit anonymous Start/Stop/Continue cards,
-the facilitator reveals them together, the group clusters and votes on them,
-and the meeting ends with action items. We also decide what each role can see
-and which features don't belong in the first version.
+For the retrospective app, we turn "weekly feedback for projects" into a
+specific flow. Team members submit anonymous Start/Stop/Continue cards, the
+facilitator reveals them together, the group clusters and votes on them, and
+the meeting ends with action items. We also decide what each role can see and
+which features don't belong in the first version.
 
 I describe the same planning process in more detail in the
 [SQLiteSearch](https://alexeyondata.substack.com/p/how-i-built-sqlitesearch-a-lightweight) article.
@@ -137,6 +103,37 @@ First, I had a long chat to get the design straight. Then I downloaded the
 file and started coding. It explained what the library is and how it differs
 from [minsearch](https://alexeyondata.substack.com/p/minsearch-the-small-search-library).
 It also covered when to use each library and how SQLiteSearch is organized.
+
+## A working answer to the wrong question
+
+Now that we know what the retrospective app should do, we can test what happens
+when we withhold that context.
+
+I give Claude Code only the original idea:
+
+```text
+Implement a tool for weekly feedback for projects.
+```
+
+The agent writes a complete zero-dependency Python CLI. You can register
+projects, record their status, generate a Markdown digest, and list the people
+who haven't reported. It also writes tests and documentation.
+
+![The one-shot weekly-feedback CLI](images/01-wrong-implementation.png)
+
+You can read and run the
+[`weekly-feedback` source](../01-ai-native-workflow/weekly-feedback/).
+The code works, but I had a team retrospective app in mind rather than a
+personal status-reporting CLI. Claude Code had no way to know that because the
+prompt said nothing about teams or anonymity. It also omitted
+Start/Stop/Continue cards, clustering, voting, and action items.
+
+To build the intended product, we give the coding agent the spec instead. The
+finished project is
+[`retroloop`](https://github.com/alexeygrigorev/retroloop), a Django app for
+weekly feedback cycles and the retrospectives that follow them. Its
+[issues](https://github.com/alexeygrigorev/retroloop/issues) also show the
+backlog, grooming, implementation, and QA history.
 
 ## Bootstrapping a project
 
@@ -734,8 +731,8 @@ sentence is something we built earlier.
 
 ![The goal continues from one backlog issue to the next](images/01-goal-is-not-met.png)
 
-The recording ends while the orchestrator is still working, so I let it
-continue afterwards. You can see the resulting commits and issue discussions in
+The orchestrator continues until it meets the backlog-level goal, and its
+commits and issue discussions remain visible in
 [`retroloop`](https://github.com/alexeygrigorev/retroloop).
 
 An agent can spend hours on a backlog-level goal and use several times more
