@@ -36,8 +36,7 @@ for projects. It doesn't say who gives the feedback, who receives it, or what
 happens next.
 
 We work out what the product should be while writing the specification with
-ChatGPT. Then we compare it with what Claude Code builds from the original
-one-line description.
+ChatGPT.
 
 
 ## Specs before code
