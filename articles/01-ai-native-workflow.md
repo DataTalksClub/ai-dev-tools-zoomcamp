@@ -21,17 +21,26 @@ In this article, I show how to make the request specific, so the agents
 don't need to guess. Then we decompose the request into tasks, and assign each one to a team of agents: a product manager, a software engineer and a tester. 
 Finally, we implement all the tasks in a backlog through a loop.
 
-Throughout the article, we'll implement one project: "a tool for weekly
-feedback for projects." We chose it on purpose because it's vague. It doesn't
-say who gives the feedback, who receives it, or what happens after someone
-submits it. We have to clarify those decisions before we write code.
-
 We cover topics like:
 
 - Spec-driven development
 - Context engineering
 - Loop engineering
 - Graph engineering
+
+
+## Running example
+
+Throughout the article, we'll implement one project: "a tool for weekly
+feedback for projects." We chose it on purpose because it's vague. It doesn't
+say who gives the feedback, who receives it, or what happens after someone
+submits it.
+
+We first clarify those decisions with ChatGPT and turn the idea into a team
+retrospective app. Then we deliberately give Claude Code only the original
+sentence and compare its assumptions with our specification. We use the
+specified project to work through the backlog, context, roles, and agent
+orchestration.
 
 
 ## Specs before code
