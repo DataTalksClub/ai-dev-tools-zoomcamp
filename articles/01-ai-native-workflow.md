@@ -31,16 +31,23 @@ We cover topics like:
 
 ## Running example
 
-Throughout the article, we'll implement one project: "a tool for weekly
-feedback for projects." We chose it on purpose because it's vague. It doesn't
+We'll build a web app that helps teams run weekly project retrospectives. Team
+members submit anonymous Start, Stop, and Continue feedback during the week.
+When the retrospective begins, the facilitator reveals all cards at the same
+time. The team clusters similar cards, votes on what matters most, and finishes
+with action items.
+
+We begin with a much less specific description: a tool for weekly feedback for
+projects. That could mean a personal status-tracking CLI, a survey, a reporting
+dashboard, or the retrospective app described above. The description doesn't
 say who gives the feedback, who receives it, or what happens after someone
 submits it.
 
-We first clarify those decisions with ChatGPT and turn the idea into a team
-retrospective app. Then we deliberately give Claude Code only the original
-sentence and compare its assumptions with our specification. We use the
-specified project to work through the backlog, context, roles, and agent
-orchestration.
+We chose this project because that ambiguity is easy to see without knowing
+the technology. We first use ChatGPT to make the product decisions and write a
+specification. Then we give Claude Code only the vague description and compare
+what it builds with what we intended. We use the specified retrospective app
+for the backlog, context, roles, and agent orchestration that follow.
 
 
 ## Specs before code
