@@ -4,7 +4,7 @@ This is the first article in a series based on
 [AI Dev Tools Zoomcamp](https://github.com/DataTalksClub/ai-dev-tools-zoomcamp),
 the free course we run at DataTalks.Club.
 
-This year I wanted to do an experiment and publish a series of course notes as articles on Substack. My plan is to have one per module, and each one should be independent from others. I start with the first one: AI-native developer workflows.
+This year I wanted to do an experiment and publish a series of course notes as articles on Substack. I plan to publish one independent article per module. I start with the first one: AI-native developer workflows.
 
 Coding agents now write code faster than I can read it. 
 
@@ -31,20 +31,26 @@ We cover topics like:
 
 ## Running example
 
-We start with a deliberately vague project idea: a tool for weekly feedback
-for projects. It doesn't say who gives the feedback, who receives it, or what
-happens next.
+We use a deliberately vague project idea: a tool for weekly feedback for
+projects. It doesn't say who gives the feedback, who receives it, or what
+"projects" means.
 
-We work out what the product should be while writing the specification with
-ChatGPT.
+First, we give the idea to Claude Code exactly as written:
+
+```text
+Implement a tool for weekly feedback for projects.
+```
+
+We let the agent work without answering questions or correcting its
+assumptions. While it does that, we work out what we want to build.
 
 
 ## Specs before code
 
-We need to understand what we want to build before the agent produces
-the first line of code. So we think it through in detail, and give
-explicit instructions. If we do that, the agent will produce something close
-to what we want.
+We need to understand what we want to build before the agent produces the first
+line of code for the intended project. So we think it through in detail and
+give explicit instructions. If we do that, the agent will produce something
+close to what we want.
 
 We call this spec-driven development. We start with the
 specification, treat it as the canonical version, and write the code
@@ -57,19 +63,18 @@ There are two levels of specifications:
 - Feature-level - what a change should do and how we'll know it
   worked, written per task and thrown away after.
 
-In my case the project level specs live in `plan.md`, `process.md` and
-`AGENTS.md`, in a `_docs` folder. The feature level specs are tasks in
-a task tracking system, usually GitHub issues.
+For this project, we save the project-level spec in `_docs/plan.md` and turn
+the feature-level specs into tasks in GitHub issues.
 
 ## Start in a chat assistant
 
-Don't start the coding session with a coding agent. Coding agents
-write code, but we don't know what we want yet, so we'll only waste
-time and tokens.
+Don't use the one-shot implementation as the foundation for the real project.
+The coding agent is already making decisions, but we still don't know what we
+want.
 
 Instead, open a chat assistant and talk the idea through. I use ChatGPT in
-dictation mode for this. It's faster than typing and it keeps me in the mode
-of explaining rather than specifying.
+dictation mode for this. It's faster than typing, and I keep explaining rather
+than switching into specification mode.
 
 In that conversation, cover:
 
@@ -82,8 +87,7 @@ In that conversation, cover:
 Also ask it about what's already out there, so we don't spend a
 weekend rebuilding something that exists.
 
-As the conversation progresses, we get a clearer vision of what we want to
-build.
+As we talk, we get a clearer vision of what we want to build.
 
 At the end, ask:
 
@@ -105,25 +109,10 @@ facilitator reveals them together, the group clusters and votes on them, and
 the meeting ends with action items. We also decide what each role can see and
 which features don't belong in the first version.
 
-I describe the same planning process in more detail in the
-[SQLiteSearch](https://alexeyondata.substack.com/p/how-i-built-sqlitesearch-a-lightweight) article.
+## One line, different product
 
-First, I had a long chat to get the design straight. Then I downloaded the
-[`plan.md`](https://github.com/alexeygrigorev/sqlitesearch/blob/main/plan.md)
-file and started coding. It explained what the library is and how it differs
-from [minsearch](https://alexeyondata.substack.com/p/minsearch-the-small-search-library).
-It also covered when to use each library and how SQLiteSearch is organized.
-
-## A working answer to the wrong question
-
-Now that we know what the retrospective app should do, we can test what happens
-when we withhold that context.
-
-I give Claude Code only the original idea:
-
-```text
-Implement a tool for weekly feedback for projects.
-```
+By the time we finish the specification, Claude Code has also finished its
+one-shot implementation.
 
 The agent writes a complete zero-dependency Python CLI. You can register
 projects, record their status, generate a Markdown digest, and list the people
@@ -138,21 +127,13 @@ personal status-reporting CLI. Claude Code had no way to know that because the
 prompt said nothing about teams or anonymity. It also omitted
 Start/Stop/Continue cards, clustering, voting, and action items.
 
-To build the intended product, we give the coding agent the spec instead. The
-finished project is
-[`retroloop`](https://github.com/alexeygrigorev/retroloop), a Django app for
-weekly feedback cycles and the retrospectives that follow them. Its
-[issues](https://github.com/alexeygrigorev/retroloop/issues) also show the
-backlog, grooming, implementation, and QA history.
+The CLI is useful, but it solves a different problem. We keep it as the
+comparison and use the specification to start the intended project.
 
 ## Bootstrapping a project
 
 We have a spec, and now we turn it into a repo with a backlog the
-agent can work through. You can compare these steps with `retroloop`'s
-[`plan.md`](https://github.com/alexeygrigorev/retroloop/blob/main/_docs/outdated/plan.md),
-[`architecture.md`](https://github.com/alexeygrigorev/retroloop/blob/main/_docs/outdated/architecture.md),
-and
-[`tasks.md`](https://github.com/alexeygrigorev/retroloop/blob/main/_docs/outdated/tasks.md).
+agent can work through.
 
 Make a folder, initialise git, and drop the spec in.
 
@@ -204,8 +185,24 @@ Do not write any code yet.
 Review a few tasks before creating the backlog. Merge tasks that are too small,
 split tasks that don't fit one session, and move unrelated work out of scope.
 
-When the tasks are ready, save them in a task tracker. I usually use GitHub
-issues.
+I used the same plan-first sequence for
+[SQLiteSearch](https://alexeyondata.substack.com/p/how-i-built-sqlitesearch-a-lightweight).
+Its
+[`plan.md`](https://github.com/alexeygrigorev/sqlitesearch/blob/main/plan.md)
+explains what the library is, how it differs from
+[minsearch](https://alexeyondata.substack.com/p/minsearch-the-small-search-library),
+when to use each library, and how SQLiteSearch is organized.
+
+When the tasks are ready, create the
+[`retroloop`](https://github.com/alexeygrigorev/retroloop) GitHub repository.
+Its
+[`plan.md`](https://github.com/alexeygrigorev/retroloop/blob/main/_docs/outdated/plan.md),
+[`architecture.md`](https://github.com/alexeygrigorev/retroloop/blob/main/_docs/outdated/architecture.md),
+and
+[`tasks.md`](https://github.com/alexeygrigorev/retroloop/blob/main/_docs/outdated/tasks.md)
+show the artifacts we have created so far.
+
+We use GitHub issues as the task tracker.
 
 Give the agent this instruction:
 
@@ -213,9 +210,10 @@ Give the agent this instruction:
 Create a GitHub issue for each task.
 ```
 
-For that to work, we need the `gh` CLI tool authenticated.
+For that to work, we need the `gh` CLI tool authenticated and the repo
+connected to the GitHub remote.
 
-We can then initialize the project:
+We can then implement the first task:
 
 ```text
 Do task 1: set up an empty project on the chosen stack - the folder
@@ -252,7 +250,7 @@ My `CLAUDE.md` contains one line:
 
 ## `AGENTS.md`
 
-We don't describe the project in `AGENTS.md`. The description belongs
+We don't describe the project in `AGENTS.md`. We put that description
 in the README, which the agent can read anyway.
 
 What we put there:
@@ -267,7 +265,7 @@ What we put there:
 - Corrections we got tired of repeating - anything we have typed more
   than once
 
-It collects the things the agent got wrong, plus the things it can't
+Use it to collect the things the agent got wrong, plus the things it can't
 guess or would spend time discovering. Keep it short.
 
 For example:
@@ -349,7 +347,7 @@ find the process, testing, and design rules.
 
 It loads the design system only for a UI task and the testing guidelines only
 for a testing task. By loading each document only when it's relevant, we keep
-`AGENTS.md` short while the project's written context keeps growing.
+`AGENTS.md` short while we continue adding written context to the project.
 
 
 ## Grooming: The product manager agent
@@ -397,7 +395,7 @@ file a follow-up issue, and list it under out of scope with a link to
 that issue, so it is clear what was moved and where it went.
 ```
 
-The PM needs a structure to fill in so every groomed issue looks the same.
+We give the PM a structure to fill in so every groomed issue looks the same.
 
 A groomed task has four sections:
 
@@ -446,14 +444,62 @@ Groom issue #4
 Read the result before moving on.
 
 We can catch a misunderstanding most cheaply while grooming: the issue is a
-paragraph, and correcting it costs one sentence. The same
-misunderstanding found after implementation costs a rewrite, and found
-after release costs considerably more.
+paragraph, and correcting it costs one sentence. If we catch the same
+misunderstanding after implementation, we need a rewrite. If we catch it after
+release, fixing it costs considerably more.
 
 Check that the goal matches what we actually wanted, that every
 acceptance criterion is something we could check, and that nothing
 important got scoped out. If the groomed issue surprises us, fix it
 now.
+
+## Loop engineering
+
+We have groomed one issue by hand, but the backlog contains many more.
+
+Instead of prompting the PM for each issue ourselves, we can give the agent a
+goal:
+
+```text
+/goal groom all MVP issues
+```
+
+The agent works through the issues and checks its progress against the goal. If
+it stops early, the harness prompts it to continue. It stops when every MVP
+issue is groomed or when it reaches the turn limit.
+
+When we engineer a loop, we design the system that runs a coding agent
+repeatedly instead of driving it prompt by prompt.
+
+We add one layer at a time:
+
+- Prompt engineering - what we say in one message
+- Context engineering - what the agent knows before it starts
+- Loop engineering - how often it runs, on what, and when it stops
+- Graph engineering - who does what when there's more than one agent
+
+In June 2026 Addy Osmani published the
+[Loop Engineering essay](https://addyo.substack.com/p/loop-engineering)
+that gave it a name, and Peter Steinberger compressed the idea into one
+sentence:
+
+> stop prompting your agents and start designing the loops that
+> prompt them.
+
+The stop condition must be something the model can evaluate. "All MVP issues
+are groomed" is checkable, as are "all tests pass" and "no file is over 200
+lines." "Make the code better" isn't, so the agent can stop too early or run
+forever.
+
+Claude Code provides `/goal` and `/loop`, while Codex provides `/goal`.
+`/loop` sends a scheduled prompt, while `/goal` prompts the agent again when it
+tries to stop before meeting the goal.
+
+If our harness doesn't provide them, we can build them:
+
+- Stop hooks can check a condition when the agent finishes a turn and prompt
+  it again.
+- Scheduled pings can send keystrokes to an agent running in a tmux session.
 
 ## Implementation: The software engineer agent
 
@@ -590,66 +636,6 @@ the QA comment as the input, implement it, and iterate until QA says
 `PASS`.
 
 
-## Loop engineering
-
-So far we have typed every prompt ourselves, running three sessions per
-task. That's the right way to learn it, but it doesn't scale to many
-issues.
-
-When we engineer a loop, we design a system that runs a coding agent
-repeatedly, instead of driving the agent prompt by prompt. The "system"
-is the harness that controls the agent, plus whatever we wrap around
-it. It decides what the agent picks up next, checks the result, and
-decides whether to go again.
-
-It's usually presented as one step on a ladder:
-
-- Prompt engineering - what we say in one message
-- Context engineering - what the agent knows before it starts
-- Loop engineering - how often it runs, on what, and when it stops
-- Graph engineering - who does what, when there's more than one agent
-
-In June 2026 Addy Osmani published the
-[Loop Engineering essay](https://addyo.substack.com/p/loop-engineering)
-that gave it a name, and Peter Steinberger compressed the whole idea
-into one sentence:
-
-> stop prompting your agents and start designing the loops that
-> prompt them.
-
-The simplest useful loop is one command:
-
-```text
-/goal all tests pass
-```
-
-The agent works, runs the suite, and reads the failures. It works again
-and stops when the suite is green or it hits the turn limit. We're not
-in that cycle.
-
-Something more realistic:
-
-```text
-/goal refactor src/cost so no file is over 200 lines, tests stay green
-```
-
-The stop condition has to be something a model can evaluate. "All tests
-pass" is checkable, and so is "no file over 200 lines". "Make the code
-better" isn't, so the agent can run forever, or stop too early.
-
-Many harnesses ship these primitives: Claude Code has `/goal` and
-`/loop`, while Codex has `/goal`.
-
-If our harness doesn't provide them, we can build them:
-
-- Stop hooks. A hook that fires when the agent finishes a turn can
-  check a condition and prompt it again, which is how we implement
-  `/goal`.
-- Scheduled pings into a tmux session. If the agent is running in tmux,
-  we can send keystrokes to that session on a timer, which is how we
-  implement `/loop`.
-
-
 ## Graph engineering
 
 We have three roles and a way to run tasks in a loop, but we're still
@@ -684,7 +670,8 @@ groom (PM)  ->  implement (engineer)  ->  test (QA)  ->  done
 
 The graph has three nodes. When QA returns `FAIL`, the orchestrator sends the
 issue back to the engineer for another pass. Each role has its own instructions
-and definition of done, while one role's output becomes another's input.
+and definition of done, and each role passes its output to the next role as
+input.
 
 The agents hand off an issue rather than a conversation. Because the issue
 includes the required context, each node can start as a separate session.
@@ -724,10 +711,10 @@ Rules
 - Do not commit until the tests pass
 ```
 
-This process file defines three roles, an orchestrator, the lifecycle, and its
-rules. In larger projects, I also specify which agent may commit and what a
-reviewer must run before approving. I name known failure modes too, such as
-skipping review because a task looked small.
+In `process.md`, we now define three roles and an orchestrator along with the
+lifecycle and its rules. In larger projects, I specify which agent may commit
+and what a reviewer must run before approving. I name known failure modes too,
+such as skipping review because a task looked small.
 
 We can now run the backlog:
 
@@ -736,8 +723,8 @@ We can now run the backlog:
 ```
 
 The agent reads `AGENTS.md`, finds `process.md`, follows the lifecycle,
-and dispatches the roles it finds in `_docs/team/`. Every piece of that
-sentence is something we built earlier.
+and dispatches the roles it finds in `_docs/team/`. We added each of those
+instructions earlier.
 
 ![The goal continues from one backlog issue to the next](images/01-goal-is-not-met.png)
 
