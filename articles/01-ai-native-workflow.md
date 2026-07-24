@@ -1,10 +1,12 @@
-# AI-Native Development: Specifications, Loop and Graph Engineering
+# AI-Native Development: Specifications, Loop Engineering, and Graph Engineering
 
 This is the first article in a series based on
 [AI Dev Tools Zoomcamp](https://github.com/DataTalksClub/ai-dev-tools-zoomcamp),
 the free course we run at DataTalks.Club.
 
-This year I wanted to do an experiment and publish a series of course notes as articles on Substack. I plan to publish one independent article per module. I start with the first one: AI-native developer workflows.
+This year, I wanted to run an experiment and publish a series of course notes
+as articles on Substack. I plan to publish one independent article per module,
+starting with the first one: AI-native developer workflows.
 
 Coding agents now write code faster than I can read it. 
 
@@ -17,9 +19,10 @@ tests that pass. The code works, but it isn't what we needed.
 We no longer spend most of our time typing. We spend it saying precisely what
 we want and checking what came back.
 
-In this article, I show how to make the request specific, so the agents
-don't need to guess. Then we decompose the request into tasks, and assign each one to a team of agents: a product manager, a software engineer and a tester. 
-Finally, we implement all the tasks in a backlog through a loop.
+In this article, I show how to make the request specific so the agents
+don't need to guess. Then we decompose the request into tasks and assign them
+to a product manager, a software engineer, and a QA engineer. Finally, we
+implement all the tasks in a backlog through a loop.
 
 We cover topics like:
 
@@ -28,51 +31,55 @@ We cover topics like:
 - Loop engineering
 - Graph engineering
 
-We will use a deliberately vague project idea: a tool for weekly feedback for
+We'll use a deliberately vague project idea: a tool for weekly feedback for
 projects. It doesn't say who gives the feedback, who receives it, or what
 "projects" means.
 
-You can see the final result here (todo link the retroloop project here)
+You can see the final result in the
+[`retroloop` repository](https://github.com/alexeygrigorev/retroloop).
 
 ## Specs before code
 
 We need to understand what we want to build before the agent produces the first
-line of code. We have to think it through in detail and give explicit instructions.
-If we do that, the agent will produce something close to what we want.
+line of code. We have to think it through in detail and give explicit
+instructions. If we do that, the agent will produce something close to what we
+want.
 
 We call this "spec-driven development". We start with the
 specification, make sure it aligns with our vision, and only then
 write the code from it.
 
-In our example, "a tool for weekly feedback for
-projects", many things are not clear.
+In our example, "a tool for weekly feedback for projects", many things aren't
+clear.
 
 - Who are the users for this tool?
-- What  is the problem they will solve?
+- What problem will they solve?
 - How are they going to use it?
 
-If we don't speficy these things, and just give it to a coding agent,
-it will fill the gaps by itself. 
+If we don't specify these things and give the idea directly to a coding agent,
+it'll fill the gaps.
 
-When I asked Claude Code to implement this project, the only prompt I gave 
-was "a tool for weekly feedback for projects". It came up with  [`weekly-feedback`](../01-ai-native-workflow/weekly-feedback/) [todo: full guthub path] - a command line tool for ... 
-It created documentation and covered the app with tests (X of them) which all pass.
+When I asked Claude Code to implement this project, the only prompt I gave was
+"a tool for weekly feedback for projects". It came up with
+[`weekly-feedback`](https://github.com/DataTalksClub/ai-dev-tools-zoomcamp/tree/main/01-ai-native-workflow/weekly-feedback),
+a command-line tool for tracking weekly project status. It records wins,
+issues, blockers, and next steps. It also created documentation and covered the
+app with 62 tests, which all pass.
 
 ![The one-shot weekly-feedback CLI](images/01-wrong-implementation.png)
 
-It all works perfectly. But that's very far from what I actually needed.
+It all works perfectly, but that's far from what I needed.
 I needed a web tool for a team retrospective that captures feedback
-from teams in the form of "stop, start, continue". And it was my fault 
-that I didn't tell that to Claude.
-
+from teams in the form of "Start/Stop/Continue". It was my fault that I
+didn't tell Claude that.
 
 ## Start in a chat assistant
 
-Instead of giving a prompt directly to the coding assistant,
-I start first in a chat application and talk the idea through.
-I use ChatGPT in dictation mode for this. 
+Instead of giving a prompt directly to the coding assistant, I start in a chat
+application and talk the idea through. I use ChatGPT in dictation mode for
+this.
 
-There I begin with the same vague idea:
+I begin with the same vague idea:
 
 ```text
 I want to build a tool for weekly feedback for projects.
@@ -83,24 +90,35 @@ and understand how the tool should work. Give me options.
 Ask me one question at a time and keep your output short.
 ```
 
-This way we can use AI as our brainstorming partner and find out precisely what we want:
+This way, we can use AI as our brainstorming partner and find out precisely
+what we want:
 
-- Who is the user? "our answer"
-- ... continue in the same way. question - short answer.
-- TODO finish the list
+- Who contributes feedback? All team members.
+- What format do they use? Start/Stop/Continue.
+- Is the feedback anonymous? Names appear by default, but contributors can
+  choose to remain anonymous.
+- What can people see before the reveal? Only their own cards.
+- How does the facilitator reveal the feedback? All cards appear at the same
+  time.
+- What happens next? The team clusters the cards, then each person casts three
+  votes for the topics to discuss and can give multiple votes to one topic.
+- What does the team record? Decisions and action items from the discussion.
+- Can the facilitator add a recording? They can upload audio, video, or a
+  transcript after the meeting, but built-in recording isn't part of the first
+  version.
 
-When we finish, I want to download a file with all the specs:
+When we finish, I ask for a file with all the specifications:
 
 ```text
 Save everything to a markdown file that I can download.
 ```
 
-Download this file and save it as `plan.md`.
+Download the file and save it as `plan.md`.
 
 
 ## Bootstrapping a project
 
-Now let's create a project from this specification:
+Create a project from this specification:
 
 ```bash
 mkdir project-name
@@ -109,7 +127,7 @@ cd project-name
 git init
 ```
 
-Copy the `plan.md` file: 
+Copy the `plan.md` file:
 
 ```bash
 mkdir -p _docs
@@ -118,17 +136,19 @@ git add _docs/plan.md
 git commit -m "Add project plan"
 ```
 
-You can find the plan [here](inclide the link to the plan). 
+You can find the
+[`plan.md` file](https://github.com/alexeygrigorev/retroloop/blob/711c33cc5b6b/_docs/plan.md)
+from this project in the Retroloop repository.
 
-I try to commit as often as possible. Commit after every meaningful decision.
-With those commits, we can review what the agent changed. If something is not
-working well, we can easily return to the last good state.
+I try to commit as often as possible, after every meaningful decision. With
+those commits, we can review what the agent changed. If something isn't working
+well, we can easily return to the last good state.
 
 ## Choose the stack and architecture
 
-During the brainstorming session we didn't choose the tech stack. 
+During the brainstorming session, we didn't choose the tech stack.
 
-Let's do it now. Ask the coding agent to come up with several options:
+Ask the coding agent to come up with several options:
 
 ```text
 Read _docs/plan.md. Propose multiple options for the tech stack and
@@ -137,17 +157,16 @@ explain each option.
 Don't write code yet.
 ```
 
-It proposed multiple options: option 1, 2, 3 ...
+It proposes multiple options and explains the tradeoffs of each one.
 
 I choose Django because I know it well enough to review. In your case,
-you can select any technology you're comfortable with. It's also okay 
-to not have preferences and let the agent select what it things works best.
-
+you can select any technology you're comfortable with. It's also okay not to
+have a preference and to let the agent select what it thinks will work best.
 
 ## Turn the decisions into a backlog
 
-Now we settled on the tech stack and can ask the agent to decompose the specs
-into a backlog with tasks:
+Now that we've settled on the tech stack, we can ask the agent to decompose the
+specifications into a backlog with tasks:
 
 ```text
 Create a backlog with tasks in _docs/tasks.md.
@@ -167,96 +186,87 @@ The first task should be setting up an empty project with a passing test.
 Don't write code yet.
 ```
 
-It created these tasks: [`tasks.md`](TODO add link).
+It created these
+[`tasks.md`](https://github.com/alexeygrigorev/retroloop/blob/711c33cc5b6b/_docs/tasks.md).
 
-Now review the tasks. Ask the agent to merge tasks that are too small, or
-split tasks that don't fit one session. If something is out of scope for your 
-vision of the MVP (the first version of your app), remove it.
+Review the tasks and ask the agent to merge tasks that are too small or split
+tasks that don't fit into one session.
+We want to create an MVP - the first version of the app. If something is out of scope for your
+vision of the MVP, remove it.
 
-When we're okay with the tasks, ask the coding assistant to create 
-tasks in a task tracker. I use GitHub issues for that.  
+When we're happy with the tasks, move them to a task tracker. I use GitHub
+issues for that.
 
 Ask the agent to do it:
 
 ```text
 Create a public GitHub repo for this project.
-Then create an issue in that repo for each task in _docs/tasks.md.
+Move each task from _docs/tasks.md into a GitHub issue.
 ```
 
 For that to work, we need the `gh` CLI tool authenticated and the repo
 connected to the GitHub remote.
 
-You can see the project that came out of it here: [`retroloop`](https://github.com/alexeygrigorev/retroloop).
+From this point on, GitHub issues are the canonical tasks and the only active
+backlog. We no longer need `_docs/tasks.md`.
+
+You can see the project that came out of it here:
+[`retroloop`](https://github.com/alexeygrigorev/retroloop).
 
 
 ## Context engineering
 
-The repository has a backlog now. But when we start a new session and ask it
-to implement a task, it has no idea which task we mean.
-Every time it will need to figure that out. 
+The repository has a backlog now. When we start a new session, however, the
+agent doesn't know which task we mean. It must figure that out every time.
 
-These details go to `AGENTS.md`. Coding agents like Codex or OpenCode
-read it when they start a new session.
+These details go in `AGENTS.md`, which coding agents like Codex or OpenCode read
+when they start a new session.
 
-But Claude Code reads `CLAUDE.md`. I use multiple coding assistants, so I want
-my workflow to be tool agnostic. That's why I also create `CLAUDE.md`
-that contains one single line:
+Claude Code reads `CLAUDE.md`, while I use multiple coding assistants and want
+my workflow to be tool-agnostic.
+
+That's why I also create `CLAUDE.md` with a single line:
 
 ```markdown
 @AGENTS.md
 ```
 
-It tells Claude to read AGENTS.md. 
+It tells Claude to read `AGENTS.md`.
 
-This is called context engineering. TODO explan the term more. We had some explanation about it.
-
-Prompt engineering is the prompts we give to our agents. This way we control one message in one session.
-
-With context engineering, we contol what the agents know about the project
-when they start a new session. We include useful facts and working rules
-it would otherwise have to rediscover.
+This is called context engineering. With prompt engineering, we control one
+message in one session. With context engineering, we control what agents know
+when they start a new session and what information they can find while they
+work. We include useful facts and working rules they would otherwise have to
+rediscover.
 
 
 ## `AGENTS.md`
 
-This is how the initial version of `AGENTS.md` can look like: 
+To make this context available in every new session, create `AGENTS.md`:
 
 ```text
-TODO include the initial version of agents.md that we had in retroloop 
+Commands
+
+- `uv sync` - install dependencies
+- `uv run pytest` - the whole suite
+- `uv run pytest tests/test_home.py` - one test file
+
+Rules
+
+- Dependencies are added in `pyproject.toml`. Do not add one without
+  asking
+- Commit regularly
 ```
-
-You can copy this file, and ask the coding assistnat to create somethin similar but tailored to your project.
-
-We don't repeat the project description in `AGENTS.md`. We put it in 
-README.md, which the agent can read also when it needs that context. 
-
-What we put there:
-
-- Commands - how to run all tests and a single test
-- Tooling rules - which package manager we use
-- Corrections we don't want to repeat - anything that could be useful in every session
-
-Don't add these things to `AGENTS.md`:
-
-- Transient task state. "Currently working on task #4" is
-  a session note, not a project fact.
-- Anything secret. Keys, tokens or internal URLs. Use `.env` for that.
-- Long explanations.
-
-I avoid markup like sections (`##`), bold formatting (`**`), or tables. It doesn't add
-any value and only result in higher token consumption.
-
-If `AGENTS.md` becomes larger than a couple of screens, move parts of it into
-separate Markdown documents.
 
 ## The other documents
 
-In addition to `AGENTS.md`, I usually have a few other markdown documents in 
-my projects. 
+In addition to `AGENTS.md`, I usually have a few other Markdown documents in
+my projects.
 
-The main one is `process.md` that I use to describe how work is organized. It could live inside `AGENTS.md`, but I keep it separate.
+The main one is `process.md`, which I use to describe how work is organized.
+It could live inside `AGENTS.md`, but I keep it separate.
 
-Let's create `_docs/process.md`:
+Create `_docs/process.md`:
 
 ```markdown
 - Tasks are GitHub issues, one at a time
@@ -264,12 +274,11 @@ Let's create `_docs/process.md`:
 - Commit regularly
 ```
 
-As I continue working on a project, I may create other documents
-like
+As I continue working on a project, I may create other documents, such as:
 
 - `testing-guidelines.md` for testing
 - `design-system.md` so the UI doesn't drift every session
-- `api.md` that describes how API should look like 
+- `api.md`, which describes what the API should look like
 
 I keep them together in `_docs/` and link them from `AGENTS.md`:
 
@@ -289,11 +298,11 @@ testing guidelines only for a testing task.
 By loading each document only when it's relevant, we keep
 `AGENTS.md` short while we continue adding written context to the project.
 
-These documents are live documents and I update them often. If I need to correct
-an agent during a coding session, I can ask it to modify the documents.
-Next time it knows what I need, so I don't have to correct it again.
+These documents are living documents, and I update them often. If I need to
+correct an agent during a coding session, I can ask it to modify the documents.
+Next time, it knows what I need, so I don't have to correct it again.
 
-You can use a prompt like that:
+You can use a prompt like this:
 
 ```text
 Based on the corrections I made, find the relevant documents
@@ -304,7 +313,8 @@ Commit the current work before changing the documents.
 
 ## Bootstrap the first task
 
-Now with `AGENTS.md` and `process.md` in place, we can start a new session and ask the agent to implement the first task:
+With `AGENTS.md` and `process.md` in place, we can start a new session and ask
+the agent to implement the first task:
 
 ```text
 Implement task 1.
@@ -314,23 +324,23 @@ For this project, the agent creates the Django app, dependencies, and a
 passing test.
 
 
-## Grooming: The product manager agent
+## Grooming: the product manager agent
 
 We have a backlog of tasks, but they're not precise enough.
 
-We discussed this problem already: if the task is not specific, the agent
-will fill in the gaps during implementation. This way, we risk spending time
+We discussed this problem already: if the task isn't specific, the agent
+will fill in the gaps during implementation. We risk spending time
 and tokens on something we don't need.
 
 Instead, we should ask the AI assistant to fill these gaps before writing any
-code. Then we review the specification, correct it, and hand it over to the
-coding agent to implement it.
+code. Then we review the specification, correct it, and give it to the coding
+agent to implement.
 
-This process is called "grooming" - we groom a task to make it more specific.
+This process is called "grooming": we groom a task to make it more specific.
 Then an engineer can implement it without asking a single question.
 
-In real teams, product managers usually do this work. So let's define that
-role for our agent team.
+In real teams, product managers usually do this work. Here we'll create a team
+of agents, and the first role we'll define will be a PM.
 
 Create a document:
 
@@ -350,7 +360,7 @@ You groom a task before anyone implements it.
 - Rewrite it using the template in `_docs/task-template.md`
 - Make the acceptance criteria checkable - someone should be able to
   point at the screen and say yes or no
-- Think about the edge cases the person who filed it did not
+- Think about the edge cases the person who filed it did not consider
 - Do not write any code
 
 Definition of done:
@@ -359,10 +369,10 @@ Definition of done:
 - Every acceptance criterion can be checked by looking at the result
 - Everything moved out of scope links to a follow-up issue
 - An engineer who has never spoken to you could implement it from the
-  issue alone
+  issue and the documents it links
 
-If something does not belong in this task, do not silently drop it -
-file a follow-up issue, and list it under out of scope with a link to
+If something does not belong in this task, do not silently drop it.
+File a follow-up issue and list it under out of scope with a link to
 that issue, so it is clear what was moved and where it went.
 ```
 
@@ -397,7 +407,7 @@ One or two sentences on what should be true when this is done.
 - Guidelines to follow
 ```
 
-We will need to groom every task, so let's add it to our `process.md`:
+We'll need to groom every task, so we'll add it to `process.md`:
 
 ```markdown
 Roles
@@ -405,13 +415,13 @@ Roles
 - PM - grooms a task before anyone implements it, follows _docs/team/pm.md
 ```
 
-Now we can start a new session and ask the agent to groom an issue:
+We can now start a new session and ask the agent to groom an issue:
 
 ```text
 Groom issue #4
 ```
 
-After it finishes, review the result. 
+After it finishes, review the result.
 
 We can catch a misunderstanding most cheaply while grooming: the issue is a
 paragraph, and correcting it costs one sentence. If we catch the same
@@ -420,18 +430,18 @@ misunderstanding after implementation, we need a rewrite.
 
 ## Loop engineering
 
-We have groomed one issue. Next, we can groom the rest. We can ask the agent
-to do it:
+After grooming one issue, we can ask the agent to groom the rest:
 
 ```text
 Groom all GitHub issues. Process one issue at a time.
 ```
 
-This will mostly work, but at some point the agent may stop and tell you
-something like "I've groomed issues 1, 2 and 3. Do you want me to proceed?". 
+This will mostly work, but the agent may eventually stop. It might say, "I've
+groomed issues 1, 2, and 3. Do you want me to proceed?"
 
-The answer is almost always "yes", but the agent has stopped and is waiting for us
-to explicitly say that. In many cases I want the agent to continue automatically. 
+The answer is almost always "yes", but the agent has stopped and is waiting for
+us to say that explicitly. In many cases, I want the agent to continue
+automatically.
 
 To do it, we can give the agent a goal:
 
@@ -439,48 +449,56 @@ To do it, we can give the agent a goal:
 /goal groom all issues
 ```
 
-The "/goal" command will prompt the agent to continue, so we won't need to do
-it manually. Instead, we delegate it to the harness - the system around your agent like Claude Code or Codex. When the agent stops, the harness will check if the goal is met, and if it's not, it will resume working.
+The `/goal` command will prompt the agent to continue, so we won't need to do
+it manually. Instead, we delegate that responsibility to the harness: the
+system around an agent, such as Claude Code or Codex. When the agent stops, the
+harness checks whether the condition has been met. If it hasn't, the harness
+resumes the work.
 
 ![The goal prompts the agent to continue](images/01-goal-is-not-met.png)
 
-This approach is called "loop engineering". It's similar to a while loop:
-we iterate over a loop until a condition is met. 
+This approach is called "loop engineering". It's similar to a `while` loop:
+we repeat the work until a condition is met.
 
-With loop engineering, we system runs a coding agent by itself
-repeatedly instead of driving it manually prompt by prompt.
+With loop engineering, the system runs a coding agent repeatedly instead of
+having us drive it manually, prompt by prompt.
 
-There are multiple "engineering" levels when we work with coding agents: 
+There are multiple "engineering" levels when we work with coding agents:
 
 - Prompt engineering - what we say when we interact with the agent
-- Context engineering - what the agent knows before it starts and what it can get during the session
+- Context engineering - what the agent knows before it starts and what it can
+  get during the session
 - Loop engineering - when it stops working
-- Graph engineering - who does what when there's more than one agent (we'll talk about it later)
+- Graph engineering - who does what when there's more than one agent (we'll
+  discuss it later)
 
-In June 2026 Addy Osmani published the
+In June 2026, Addy Osmani published the
 [Loop Engineering essay](https://addyo.substack.com/p/loop-engineering)
 that gave it a name, and Peter Steinberger compressed the idea into one
 sentence:
 
-> stop prompting your agents and start designing the loops that
-> prompt them.
+> [stop prompting your agents and start designing the loops that
+> prompt them.](https://x.com/steipete/status/2063697162748260627)
 
-TODO: add tweet URL here
+A loop needs a stop condition: a checkable statement that tells the harness
+when to stop. For `/goal groom all issues`, the stop condition is "all issues
+are groomed". After each agent run, the harness checks whether that condition
+is true and resumes the agent if it isn't.
 
-The stop condition must be something the model can evaluate. "All issues
-are groomed", "all tests pass" and "no file is over 200 lines" are checkable,
-but "make the code better" is not. If the stop condition is not checkable,
-the agent can stop too early or run forever.
+The stop condition must be something the model can evaluate. "All issues are
+groomed", "all tests pass", and "no file is over 200 lines" are checkable, but
+"make the code better" isn't. If the stop condition isn't checkable, the agent
+can stop too early or run forever.
 
-Claude Code and Codex provide the `/goal` loop out of the box.
+Claude Code and Codex provide the `/goal` loop by default.
 If your harness doesn't provide it, you can implement it yourself
-using stop hooks. 
+using stop hooks.
 
 
-## Implementation: The software engineer agent
+## Implementation: the software engineer agent
 
-After grooming the issue, we can give it to a software engineer. This is the agent
-who will do the actual coding.
+After grooming the issue, we can give it to a software engineer, the agent who
+will write the code.
 
 Define the second role:
 
@@ -529,25 +547,23 @@ Then ask the agent to implement a task in a fresh session:
 Implement issue #2
 ```
 
-The engineer stops when the code is written and its own tests pass.
-But it's still too early to say that the task it properly implemented.
-We need to test it.
+The engineer stops when the code is written and its own tests pass. It's still
+too early to say that the task is properly implemented, so we need to test it.
 
-## Testing: The QA engineer agent
+## Testing: the QA engineer agent
 
-An agent that writes the code and then judges this code is grading
-its own homework.
+When the same agent writes and judges the code, it's grading its own homework.
 
-If we ask "is this correct?" we'll get a definite "yes".
-But the agent might have missed many edge cases.
+If we ask, "Is this correct?" we'll get a definite "yes", but the agent might
+have missed many edge cases.
 
-In real word, we ask other people to validate our work. We have code reviews
-and many teams have designated QA engineers whos focus is to
-make sure the code is reliable. 
+In the real world, we ask other people to validate our work. We have code
+reviews, and many teams have designated QA engineers whose focus is making
+sure the code is reliable.
 
-That's why we will also get a QA engineer to our team.
+That's why we'll also add a QA engineer to our team.
 
-Let's the add third role:
+Add the third role:
 
 ```text
 _docs/team/
@@ -590,7 +606,8 @@ Ignore what the implementation says it does. Only the acceptance
 criteria and the running code count.
 ```
 
-Note: you may need to adjust this role to your project if you don't use uv and pytest.
+Note: you may need to adjust this role for your project if you don't use `uv`
+and `pytest`.
 
 And the last line in `process.md`:
 
@@ -608,9 +625,9 @@ Then, in a new session, ask:
 Test issue #2
 ```
 
-If we get a `PASS`, it's great. If we get a `FAIL`, it's also good: 
+If we get a `PASS`, that's great. If we get a `FAIL`, that's also useful:
 we caught a regression. So we start a new engineer session, use the QA comment
-as input, and ask to fix it. We iterate until QA says `PASS`.
+as input, and ask the engineer to fix it. We iterate until QA says `PASS`.
 
 
 ## Graph engineering
@@ -621,36 +638,40 @@ We have three roles:
 - Software engineer implements it
 - QA engineer tests it, outputs `PASS` or `FAIL`
 
-If QA says `FAIL`, the engineer will need to re-implement it. Otherwise, 
-the task is done. 
+If QA says `FAIL`, the engineer will need to reimplement it. Otherwise, the task
+is done.
 
 We can visualize this process as a graph:
 
-```text
-groom (PM)  ->  implement (engineer)  ->  test (QA)  ->  done
-                       ^                        |
-                       +--------- FAIL ---------+
-```
+![Groom, implement, test, and repeat on failure](images/01-agent-workflow.png)
 
-If we have an orchestrator that launches these agents automatically
-instead of us doing it manually, we get "graph engineering".
-We define a graph with specialized agents
-as nodes and describe how the work goes from one to another. 
+If we have an orchestrator that launches these agents automatically instead of
+us doing it manually, we get "graph engineering". We define a graph with
+specialized agents as nodes and describe how the work moves from one to
+another.
 
-The term appeared on X around 18 July 2026, a month after loop
-engineering, under the headline "Loop Engineering Is Dead".
+The earliest explicit use of the term I found in the article from Josh C. Simmons (July 4, 2026): [The Graph Engineering phase](https://www.drjoshcsimmons.com/writing/we-are-entering-the-graph-engineering-phase).
 
-TODO add link to tweet
+Peter Steinberger sparked a wider discussion in a
+[July 18 post](https://x.com/steipete/status/2078277297791189132) by asking
+whether the conversation had shifted from loops to graphs.
+A few hours later, Hamel Husain used
+["graph engineering"](https://x.com/HamelHusain/article/2078346425621237935)
+in an article headline.
 
-I wouldn't call it a new idea though, and loop engineering is definitely not dead.
-Even with graphs, we still need a loop to drive the work and orchestrate
+
+Hamel put just a GIF saying "stop it" in the article,
+but people liked the term and started using it for multi-agent orchestration.
+
+I wouldn't call it a new idea, though, and loop engineering is definitely not
+dead. Even with graphs, we still need a loop to drive the work and orchestrate
 it across multiple agents with different roles.
 
 ## The orchestrator
 
-Let's implement it. For that we need the orchestrator.
+To implement it, we need an orchestrator.
 
-Descibe it in `process.md`:
+Describe it in `process.md`:
 
 ```markdown
 Orchestrator
@@ -665,7 +686,7 @@ Lifecycle
 3. Engineer implements it
 4. QA verifies it
 5. On FAIL, back to step 3 with the QA comment as input
-6. On PASS, commit and close the issue
+6. On PASS, close the issue
 7. Repeat until the backlog is empty
 
 Rules
@@ -673,29 +694,33 @@ Rules
 - Do not skip step 2
 - The engineer does not close the issue
 - QA does not fix the code, only outputs PASS or FAIL
+- The orchestrator closes the issue only after QA outputs PASS
 ```
 
-We can now start a fresh session and lauch the loop:
+We can now start a fresh session and launch the loop:
 
 ```text
 /goal work through the backlog
 ```
 
 The agent reads `AGENTS.md`, finds `process.md`, follows the lifecycle,
-and dispatches the agents according to the documents in `_docs/team/`. 
+and dispatches the agents according to the documents in `_docs/team/`.
 
-Because we combine it with a goal, the orchestrator runs until it's met. 
+Because we combine it with a goal, the orchestrator runs until the condition
+holds.
 
 You can see the result in [`retroloop`](https://github.com/alexeygrigorev/retroloop).
 
-Note: this approach takes significantly more time and tokens than a direct
-loop with just sofware engineer. In many cases you don't need this complexity. 
-Often a simple prompt or a simple loom is enough.
+Note: this approach takes significantly more time and tokens than a direct loop
+with only a software engineer. In many cases, you don't need this complexity.
+Often, a simple prompt or loop is enough.
 
-This tutorial is based on the process I have used for many projects like
-[AI Shipping Labs website](link).
-I describe it in [I Built an AI Agent Team for Software Development](https://alexeyondata.substack.com/p/i-built-an-ai-agent-team-for-software).
-This is a distilled version from that article. 
+I've followed this approach on many projects, including the
+[AI Shipping Labs website](https://aishippinglabs.com/).
+
+I describe it in
+[I Built an AI Agent Team for Software Development](https://alexeyondata.substack.com/p/i-built-an-ai-agent-team-for-software).
+Here, I distill that article into a tutorial.
 
 ## Next in the series
 
