@@ -14,8 +14,8 @@ A weak agent that misunderstands us writes fifty lines of broken code. A strong
 agent that misunderstands us creates eight files, wires them together, and adds
 tests that pass. The code works, but it isn't what we needed.
 
-Typing is no longer the bottleneck. Saying precisely what we want, and
-checking what came back, is.
+We no longer spend most of our time typing. We spend it saying precisely what
+we want and checking what came back.
 
 In this article, I show how to make the request specific, so the agents
 don't need to guess. Then we decompose the request into tasks, and assign each one to a team of agents: a product manager, a software engineer and a tester. 
@@ -76,38 +76,64 @@ Instead, open a chat assistant and talk the idea through. I use ChatGPT in
 dictation mode for this. It's faster than typing, and I keep explaining rather
 than switching into specification mode.
 
-In that conversation, cover:
+We begin with the same vague idea:
 
-- what the thing is
-- who it's for
-- what it should do
-- what it shouldn't do
-- what we're unsure about
+```text
+I want to build a tool for weekly feedback for projects. Help me set
+the scope for this project precisely. I want to brainstorm with you
+and understand how the tool should work. Give me some options and ask
+me some questions.
+```
 
-Also ask it about what's already out there, so we don't spend a
-weekend rebuilding something that exists.
+ChatGPT answers at length and asks several questions in one batch. We want a
+conversation we can follow without reading a wall of text.
 
-As we talk, we get a clearer vision of what we want to build.
+Ask ChatGPT to slow down:
+
+```text
+Ask me one question at a time and keep your output short.
+```
+
+ChatGPT now asks who contributes feedback. We choose all team members rather
+than only the project owner. We therefore design a retrospective where the team
+discusses the feedback together.
+
+As we answer the next questions, we make the product more specific and choose
+Start/Stop/Continue feedback. Submissions show the contributor's name by default,
+but someone can choose to submit anonymously. Before the facilitator reveals
+the feedback, each person sees only their own cards.
+
+The facilitator reveals all cards at the same time. The team clusters them and
+votes for the topics to discuss. Each person gets three votes and may put more
+than one vote on the same topic. The team records decisions and action items
+after the discussion.
+
+We also limit the first version. The facilitator uploads audio, video, or a
+transcript after the meeting. We don't add built-in recording yet.
+
+We could continue answering questions for a long time. Once the important
+choices are clear, we delegate the remaining ones.
+
+Ask ChatGPT to finish the open decisions:
+
+```text
+Make the remaining decisions yourself. Explain why you chose each
+option, why you chose it over the alternatives, and which other
+options you considered.
+```
+
+We review those decisions instead of accepting them blindly. In the finished
+specification, we describe the product and its roles. We also record the main
+screens, the first version, and what we have left out.
 
 At the end, ask:
 
 ```text
-Save this to a markdown file I can download.
+Save everything to a markdown file that I can download.
 ```
 
-I save the answer as the spec, which usually covers:
-
-- what the project is, in a couple of sentences
-- who it's for, and what they're trying to do
-- what it doesn't do
-- the stack, and the constraints it has to live inside
-- a rough architecture: the main pieces and how they relate
-
-For the retrospective app, we turn "weekly feedback for projects" into a
-specific flow. Team members submit anonymous Start/Stop/Continue cards, the
-facilitator reveals them together, the group clusters and votes on them, and
-the meeting ends with action items. We also decide what each role can see and
-which features don't belong in the first version.
+We save the file as `_docs/plan.md` without discussing the stack or code, so we
+know what we want to build but not how we'll build it.
 
 ## One line, different product
 
@@ -132,39 +158,83 @@ comparison and use the specification to start the intended project.
 
 ## Bootstrapping a project
 
-We have a spec, and now we turn it into a repo with a backlog the
-agent can work through.
+We spend substantial time on bootstrap because every later agent session
+depends on it. We first turn the specification into a versioned project and
+choose the architecture. We then create the backlog, publish the repository,
+and leave the first task running with a passing test.
 
-Make a folder, initialise git, and drop the spec in.
+Create a folder, initialise Git, and add the specification:
 
 ```bash
-mkdir project-name && cd project-name
+mkdir project-feedback
+cd project-feedback
 git init
-mkdir _docs
+mkdir -p _docs
 mv ~/Downloads/plan.md _docs/plan.md
+git add _docs/plan.md
+git commit -m "Add project plan"
 ```
 
-Open the coding agent in that folder.
+Commit after every meaningful decision. With those commits, we can review what
+the agent changed and return to the last good state.
 
-If we didn't decide on the tech stack in the previous conversation, we need
-to do it now.
+## Choose the stack and architecture
 
-If the plan doesn't name a stack, the agent will pick the technologies. That
-works when we don't care about the implementation, but I still suggest using
-something familiar.
+We don't choose technologies in the product specification.
 
-Ask the agent to compare the options:
+Ask the coding agent to compare several options before it writes code:
 
 ```text
-Read plan.md. Propose multiple options for the tech stack and explain each option.
+Read _docs/plan.md. Propose multiple options for the tech stack and
+explain each option.
 
-Do not write any code yet.
+Don't write code yet.
 ```
 
-Then break the plan into tasks:
+We choose Django because we know it well enough to review.
+
+Record the decision:
 
 ```text
-Propose a backlog of tasks. Create a document `tasks.md`
+We'll use Django. Create architecture.md with the chosen technologies
+and architecture decisions. Commit when you finish.
+```
+
+The agent includes infrastructure that we don't need in its first architecture
+draft.
+
+We correct it before creating tasks:
+
+- Use current stable Python and PostgreSQL versions.
+- Use username and password authentication without email.
+- Don't add Redis or background workers.
+- Process uploaded recordings and discard them instead of storing them.
+- Use OpenAI Whisper for transcription.
+- Keep deployment out of scope and use Docker Compose for local services.
+
+After the corrections, verify that the technology choices haven't gone stale:
+
+```text
+For every technology choice in architecture.md, check whether a newer
+stable version is available. Update the document where needed.
+```
+
+If the agent changes its conclusions without changing the file, correct it:
+
+```text
+Update architecture.md before you commit.
+```
+
+In `plan.md`, we describe what we want to build, and in `architecture.md`, we
+describe how we'll build it.
+
+## Turn the decisions into a backlog
+
+Ask the agent to read both documents and split the work:
+
+```text
+Read _docs/plan.md and _docs/architecture.md. Create a backlog in
+_docs/tasks.md.
 
 Each task should be small enough to finish in one session, and
 independent enough that I could hand it to someone who has not read
@@ -179,7 +249,7 @@ Description: <two or three sentences on what the task involves>
 Make the first task setting up an empty project, with a
 test that runs and passes.
 
-Do not write any code yet.
+Don't write code yet.
 ```
 
 Review a few tasks before creating the backlog. Merge tasks that are too small,
@@ -187,42 +257,71 @@ split tasks that don't fit one session, and move unrelated work out of scope.
 
 I used the same plan-first sequence for
 [SQLiteSearch](https://alexeyondata.substack.com/p/how-i-built-sqlitesearch-a-lightweight).
-Its
-[`plan.md`](https://github.com/alexeygrigorev/sqlitesearch/blob/main/plan.md)
-explains what the library is, how it differs from
-[minsearch](https://alexeyondata.substack.com/p/minsearch-the-small-search-library),
-when to use each library, and how SQLiteSearch is organized.
+In its
+[`plan.md`](https://github.com/alexeygrigorev/sqlitesearch/blob/main/plan.md),
+I explain what the library is, how it differs from
+[minsearch](https://alexeyondata.substack.com/p/minsearch-the-small-search-library).
+I also explain when to use each library and how SQLiteSearch is organized.
 
 When the tasks are ready, create the
 [`retroloop`](https://github.com/alexeygrigorev/retroloop) GitHub repository.
-Its
+You can review what we have created so far in its
 [`plan.md`](https://github.com/alexeygrigorev/retroloop/blob/main/_docs/outdated/plan.md),
 [`architecture.md`](https://github.com/alexeygrigorev/retroloop/blob/main/_docs/outdated/architecture.md),
 and
-[`tasks.md`](https://github.com/alexeygrigorev/retroloop/blob/main/_docs/outdated/tasks.md)
-show the artifacts we have created so far.
+[`tasks.md`](https://github.com/alexeygrigorev/retroloop/blob/main/_docs/outdated/tasks.md).
 
-We use GitHub issues as the task tracker.
+We use these documents to seed the backlog. We move the actual work to GitHub
+issues, so the plan, architecture, and task list may become stale later.
+
+## Publish the project and bootstrap the first task
+
+Before publishing the repository, choose a name that describes the product:
+
+```text
+I want to publish this project on GitHub, but I don't like the name.
+Help me choose a name that reflects its purpose. Read plan.md to
+understand what we're building.
+```
+
+We choose `retroloop`, create it in a personal GitHub account, and make it
+public:
+
+```text
+Create a public GitHub repository named retroloop in my personal
+account.
+```
+
+We use GitHub issues as the task tracker:
 
 Give the agent this instruction:
 
 ```text
-Create a GitHub issue for each task.
+Create a GitHub issue for each task in _docs/tasks.md.
 ```
 
 For that to work, we need the `gh` CLI tool authenticated and the repo
 connected to the GitHub remote.
 
-We can then implement the first task:
+Start the first task with the short instruction used in the project:
 
 ```text
-Do task 1: set up an empty project on the chosen stack - the folder
-layout, the dependencies, and one test that runs and passes. No
-features yet.
+Implement task number one.
 ```
 
-From here on, we start every task from a project that already runs. A failing
-test means the task broke something rather than that nothing exists yet.
+We left an important detail out of this instruction. The agent finds task 1 in
+`tasks.md` instead of opening the GitHub issue.
+
+Tell it where the task lives:
+
+```text
+Implement task number one, which is a GitHub issue.
+```
+
+For the first task, the agent creates the Django project, dependencies, and a
+passing test. From here on, every task starts from a project that already runs.
+A failing test now means the task broke something rather than that the project
+never worked.
 
 
 ## Context engineering
@@ -230,11 +329,14 @@ test means the task broke something rather than that nothing exists yet.
 The repo has a backlog now, but the agent that works through it still
 starts every session knowing nothing about the project.
 
-When we engineer context, we make the project understandable to an agent before
-the agent starts working. This isn't
-"writing better prompts". A prompt is one message in one session, while
-context is everything the agent needs to know before it starts the
-task.
+When the agent implemented the first task, we saw what was missing. We wrote
+`Implement task number one`, and the agent had to guess where the task lived.
+It found the archived task list even though GitHub issues were supposed to hold
+the canonical tasks.
+
+With prompt engineering, we control one message in one session. With context
+engineering, we give every new session the project facts and working rules it
+would otherwise have to rediscover.
 
 We can put these details in `AGENTS.md`. Coding agents read this plain
 Markdown file from the repo root when they start.
@@ -250,8 +352,32 @@ My `CLAUDE.md` contains one line:
 
 ## `AGENTS.md`
 
-We don't describe the project in `AGENTS.md`. We put that description
-in the README, which the agent can read anyway.
+The agent that bootstrapped the project already knows the stack and useful
+commands.
+
+Ask it to preserve that information before starting a fresh session:
+
+```text
+Commit what you have. Then create AGENTS.md with content similar to
+this example.
+```
+
+Agents tend to fill the generated file with project descriptions, markup,
+speculative rules, and details relevant to only one task. We pay the token cost
+of that text in every session.
+
+Review and trim the file:
+
+```text
+Do we really need all these rules? Every agent session in this
+repository will read this file. Keep only the most important
+information that every session needs.
+```
+
+We don't repeat the project description in `AGENTS.md`. We put it in the
+README, which the agent can read when it needs that context. We also remove
+statements about tools or services that don't exist. Saying that the project
+doesn't use five unrelated technologies doesn't help an agent complete a task.
 
 What we put there:
 
@@ -349,6 +475,17 @@ It loads the design system only for a UI task and the testing guidelines only
 for a testing task. By loading each document only when it's relevant, we keep
 `AGENTS.md` short while we continue adding written context to the project.
 
+Whenever we have to correct an agent, we decide whether the correction belongs
+in the written process:
+
+```text
+Based on the corrections I made, find the relevant project documents
+and update them so the next agent follows the right process. Commit
+the current work before changing the documents.
+```
+
+Review process changes as carefully as code because agents will apply one
+incorrect rule to every task that follows it.
 
 ## Grooming: The product manager agent
 
@@ -435,13 +572,39 @@ Roles
 - PM - grooms a task before anyone implements it, follows _docs/team/pm.md
 ```
 
-Let's work through an issue:
+First, ask the PM to work through the backlog one issue at a time:
 
 ```text
-Groom issue #4
+Groom all GitHub issues, starting with issue #4. If something is
+unclear, consult plan.md in the outdated documents folder. The issues
+should become self-contained.
+
+Process one issue at a time for now.
 ```
 
-Read the result before moving on.
+Read issue 4 before moving on. During the first pass, the PM creates follow-up
+issues before it finishes rewriting the original issue.
+
+Correct the order:
+
+```text
+First update the original issue. After that, create follow-up issues
+for work moved out of scope.
+```
+
+The PM also creates `MVP` and `post-MVP` labels. We assign the original backlog
+to the MVP and usually schedule follow-up work created during grooming for
+later.
+
+Label the issues explicitly:
+
+```text
+Create MVP and post-MVP labels. Mark issues 1 through 26 as MVP and
+mark the remaining issues as post-MVP.
+```
+
+Review those labels rather than assuming every new issue belongs in the first
+version.
 
 We can catch a misunderstanding most cheaply while grooming: the issue is a
 paragraph, and correcting it costs one sentence. If we catch the same
@@ -455,13 +618,15 @@ now.
 
 ## Loop engineering
 
-We have groomed one issue by hand, but the backlog contains many more.
+We introduce loop engineering here, as soon as we have groomed one issue and
+can see the repeated work. We don't wait until the whole agent team exists.
 
 Instead of prompting the PM for each issue ourselves, we can give the agent a
 goal:
 
 ```text
-/goal groom all MVP issues
+/goal groom all MVP issues. Make clear, documented decisions for any
+loose ends.
 ```
 
 The agent works through the issues and checks its progress against the goal. If
@@ -553,9 +718,14 @@ Then, in a fresh session:
 Implement issue #4
 ```
 
+The agent discovers that issue 4 depends on the project setup from issues 2
+and 3. We let it finish those technical prerequisites before returning to the
+first user-facing feature. We skip the full PM, engineering, and QA sequence for
+small setup tasks, but use it for user-facing work.
+
 Ask the agent to implement the issue in small changes and commit after each
-major step. Frequent commits give us a simple way to go back. Rewinding five
-minutes of work is easy, while re-creating an hour of work isn't.
+major step. By committing frequently, we can go back. Rewinding five minutes of
+work is easy, while re-creating an hour of work isn't.
 
 The engineer stops when the code is written and its own tests pass.
 That's not the same as the task being done.
@@ -596,11 +766,11 @@ acceptance criterion fails. Post it as a comment on the issue:
 
 ## QA: FAIL
 
-- [x] Salary is entered as an annual figure - PASS
-- [ ] Removing an attendee stops their cost accruing - FAIL
-      Removed someone mid-meeting, the total kept rising
+- [x] A visitor can create an account with a username and password - PASS
+- [ ] A duplicate username shows a visible error - FAIL
+      Submitted an existing username and received an unhandled error
 
-Tests: `npm test`, 14 passed, 0 failed
+Tests: `uv run pytest`, 18 passed, 0 failed
 
 Definition of done:
 
@@ -613,6 +783,10 @@ Definition of done:
 Ignore what the implementation says it does. Only the acceptance
 criteria and the running code count.
 ```
+
+If you adapt a role description from another project, update its commands and
+examples. A QA role that tells a Django project to run `npm test` will fail
+before it checks any acceptance criteria.
 
 And the last line in `process.md`:
 
@@ -673,8 +847,8 @@ issue back to the engineer for another pass. Each role has its own instructions
 and definition of done, and each role passes its output to the next role as
 input.
 
-The agents hand off an issue rather than a conversation. Because the issue
-includes the required context, each node can start as a separate session.
+The agents hand off an issue rather than a conversation. Because we put the
+required context in the issue, we can start each role in a separate session.
 
 ## The orchestrator
 
@@ -708,7 +882,7 @@ Rules
 - One issue at a time
 - Do not skip step 2, even when the task looks obvious
 - The engineer does not close the issue, QA does not fix the code
-- Do not commit until the tests pass
+- Focus on MVP issues
 ```
 
 In `process.md`, we now define three roles and an orchestrator along with the
@@ -719,7 +893,7 @@ such as skipping review because a task looked small.
 We can now run the backlog:
 
 ```text
-/goal work through the backlog
+/goal work through the backlog. Focus on MVP issues only.
 ```
 
 The agent reads `AGENTS.md`, finds `process.md`, follows the lifecycle,
@@ -732,10 +906,15 @@ The orchestrator continues until it meets the backlog-level goal, and its
 commits and issue discussions remain visible in
 [`retroloop`](https://github.com/alexeygrigorev/retroloop).
 
+We won't anticipate every failure in the first version of `process.md`. When we
+have to steer the orchestrator manually, we update the process so the next run
+knows what to do. Over time, we expand a short lifecycle into the project's
+working instructions by adding those corrections.
+
 An agent can spend hours on a backlog-level goal and use several times more
 tokens than direct implementation. The PM grooms each issue, the engineer
-implements it, and QA tests it. A failed QA verdict adds another implementation
-pass.
+implements it, and QA tests it. When QA returns `FAIL`, the engineer makes
+another implementation pass.
 
 So if someone asks about graph engineering: it's several agents with
 defined roles passing work to each other. The term
