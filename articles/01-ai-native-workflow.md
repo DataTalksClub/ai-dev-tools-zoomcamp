@@ -28,22 +28,9 @@ We cover topics like:
 - Loop engineering
 - Graph engineering
 
-
-## Running example
-
-We use a deliberately vague project idea: a tool for weekly feedback for
+We will use a deliberately vague project idea: a tool for weekly feedback for
 projects. It doesn't say who gives the feedback, who receives it, or what
 "projects" means.
-
-First, we give the idea to Claude Code exactly as written:
-
-```text
-Implement a tool for weekly feedback for projects.
-```
-
-We let the agent work without answering questions or correcting its
-assumptions. While it does that, we work out what we want to build.
-
 
 ## Specs before code
 
@@ -63,8 +50,6 @@ There are two levels of specifications:
 - Feature-level - what a change should do and how we'll know it
   worked, written per task and thrown away after.
 
-For this project, we save the project-level spec in `_docs/plan.md` and turn
-the feature-level specs into tasks in GitHub issues.
 
 ## Start in a chat assistant
 
