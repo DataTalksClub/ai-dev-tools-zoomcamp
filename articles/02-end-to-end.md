@@ -5,8 +5,11 @@ This is the second article in a series based on
 the free course we run at DataTalks.Club.
 
 The [first one](https://alexeyondata.substack.com/p/ai-native-development-specifications)
-was about the workflow: specifications, context, and a team of agents
-working through a backlog. This one is about what that workflow
+was about the AI-native developer workflow: spec-driven development,
+context engineering, loop engineering, a speficialized team of agents,
+and graph engineering.
+
+This one is about what that workflow
 produces - one app, from an empty repo to a public URL, with a
 database, tests, containers, and a pipeline that deploys on every push.
 
