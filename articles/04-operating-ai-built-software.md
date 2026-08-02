@@ -523,24 +523,41 @@ If we extend the session to two hours, I would spend the extra time on the
 ambiguous incident and the capability table. A second live model review is
 less important than seeing why the first responder must stop.
 
-## Continue toward production
+## Next steps after this module
 
-To run this in production, we need more than this first version:
+After this module, we have a narrow operating baseline. We can observe one
+important user journey, respond to one known failure and audit one class of
+security finding. I wouldn't add every production practice in one batch. I
+would extend the system in four stages.
 
-- SLIs, SLOs, error budgets and burn-rate alerts
-- synthetic browser checks and capacity planning
-- telemetry sampling, retention and PII redaction
-- canary deployments and tested backups
-- incident command, status communication and postmortems
+![After the first observable and auditable response, continue with reliability,
+safer delivery, deeper security and agent governance.](images/04-next-steps-roadmap.png)
 
-We also need dependency, secret, container and infrastructure scanning. Add
-SBOMs, build provenance, penetration testing and a process for coordinated
-disclosure. Before replacing an audit baseline, we should test new model
-versions against known safe and vulnerable fixtures.
+Start with reliability by defining a service-level indicator (SLI) for an
+important user journey such as score submission, then set a service-level
+objective (SLO). Replace the demo threshold with an error-budget burn-rate
+alert. Add an external synthetic check so we notice when the app or the
+monitoring path stops responding.
 
-We can't cover all of that in the first 90 minutes. Instead, we observe one
-real failure and send a useful alert. We bound the agent's authority, verify
-the response and keep enough evidence for a person to check what happened.
+Next, make deployments safer with a canary or progressive rollout. Put risky
+changes behind feature flags, and keep the previous release ready for rollback.
+Test database backups by restoring one because a backup we have never restored
+is only a promise.
+
+Then broaden the security evidence by scanning dependencies, secrets,
+containers and infrastructure code. Generate an SBOM, record build provenance
+and add manual penetration testing for authorization and business-logic paths.
+Define how the team receives and handles vulnerability reports.
+
+Raise agent autonomy last by keeping the capability table current, testing model
+upgrades against known incidents and measuring which audit findings people
+accept or reject. Add budgets, provider-retention rules and monitoring for the
+responder. Give the agent another automatic action only after incident records
+show that the action is repetitive, bounded and independently verifiable.
+
+If I could add only one thing after this module, I would start with the SLI and
+SLO for the app's most important user journey. They tell us which failures
+matter before we add more dashboards, alerts or agents.
 
 ## Next in the series
 

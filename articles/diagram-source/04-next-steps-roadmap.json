@@ -1,0 +1,66 @@
+{
+  "title": "Where to go next",
+  "canvas": {
+    "width": 1360,
+    "height": 420,
+    "background": "#ffffff"
+  },
+  "layout": {
+    "type": "manual",
+    "card_width": 220,
+    "card_height": 100
+  },
+  "nodes": [
+    {
+      "id": "baseline",
+      "title": "Current module",
+      "subtitle": "Observe, respond, audit",
+      "icon": "check",
+      "color": "blue",
+      "x": 30,
+      "y": 150
+    },
+    {
+      "id": "reliability",
+      "title": "Reliability",
+      "subtitle": "SLIs, SLOs, burn rates",
+      "icon": "search",
+      "color": "green",
+      "x": 300,
+      "y": 150
+    },
+    {
+      "id": "delivery",
+      "title": "Safer delivery",
+      "subtitle": "Canaries and restore drills",
+      "icon": "pull-request",
+      "color": "purple",
+      "x": 570,
+      "y": 150
+    },
+    {
+      "id": "security",
+      "title": "Security depth",
+      "subtitle": "Supply chain and pentests",
+      "icon": "warning",
+      "color": "red",
+      "x": 840,
+      "y": 150
+    },
+    {
+      "id": "governance",
+      "title": "Agent governance",
+      "subtitle": "Capabilities, data, evals",
+      "icon": "settings",
+      "color": "amber",
+      "x": 1110,
+      "y": 150
+    }
+  ],
+  "edges": [
+    {"from": "baseline", "to": "reliability", "from_anchor": "right", "to_anchor": "left"},
+    {"from": "reliability", "to": "delivery", "from_anchor": "right", "to_anchor": "left"},
+    {"from": "delivery", "to": "security", "from_anchor": "right", "to_anchor": "left"},
+    {"from": "security", "to": "governance", "from_anchor": "right", "to_anchor": "left"}
+  ]
+}

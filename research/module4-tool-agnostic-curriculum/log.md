@@ -25,3 +25,4 @@
 2026-08-02T10:44:23+02:00 | render | drafted articles/04-operating-ai-built-software.md and overview diagram | matched Articles 1–2 voice, preserved problem-first structure, and added private provenance report
 2026-08-02T10:45:50+02:00 | state | approved -> rendered | Rendered the approved guideline as the Module 4 series article with a published overview diagram and private provenance report
 2026-08-02T10:47:00+02:00 | state | rendered -> verified | Article passed provenance, memory-wiki, stylint, markdownlint, command-surface, link, diagram, and repository checks
+2026-08-02T12:58:00+02:00 | render-update | added a four-stage next-steps section and roadmap illustration | clarified the recommended path from workshop baseline to reliability, safer delivery, deeper security, and agent governance

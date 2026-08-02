@@ -22,6 +22,7 @@ Private writing record. This file is not part of the published article.
 | ChatGPT is not an independent vote when backed by the same GPT family | [INFERENCE current-audit-models] | Clearly explained as model-family independence |
 | Agent Scan may start configured MCP commands and remote analysis sends component information to a provider | [FACT tool-repositories] | Direct, with cautious wording and official repo link |
 | LiteLLM is a gateway; Ollama provides local inference; garak targets LLM-application evaluation | [FACT tool-repositories] | Brief classification only |
+| After the workshop, prioritize user-journey reliability, safer delivery, broader security evidence, and agent governance in that order | [INFERENCE alerting-sre,nist-ssdf,nist-incident-response,safe-remediation,mcp-security] | Presented as the author's recommended sequence, not a universal maturity model |
 
 ## Time-sensitive statements
 
@@ -41,6 +42,7 @@ Refresh these before publication or recording:
 - The article does not claim certain automated root-cause analysis.
 - The article does not claim that the example stack or responder has been implemented in this repository.
 - The article labels the 90-minute sequence as the author's proposed teaching plan.
+- The article labels the post-workshop sequence as the author's recommendation.
 
 ## Material deviations from the approved guideline
 
