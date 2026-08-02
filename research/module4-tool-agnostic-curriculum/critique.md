@@ -21,13 +21,15 @@
 - Security scanner installation and two model calls can be slow. Cache dependencies and provide fixture output as a fallback.
 - The final three-minute audit-trail reconstruction needs a prebuilt incident record view or concise command, not a new reporting exercise.
 
-## Subjective decisions for the author
+## Subjective decisions
 
-1. Approve or revise the title.
-2. Approve the bad-deployment rollback as the known safe action.
-3. Select the optional extension: ambiguous escalation plus capability audit is recommended over a second-model live audit because it teaches the security boundary of agents themselves.
-4. Decide whether implementation includes two adapters or demonstrates one while documenting portability to the other.
+- [INFERENCE current-module-4] Use an action-led series title: “Operate an AI-Built App with Observability, Agents, and Security Audits”.
+- [INFERENCE safe-remediation] Use the bad-deployment rollback as the prepared safe action.
+- [INFERENCE safe-remediation,mcp-security] Use ambiguous escalation plus a capability audit for the optional extension.
+- [INFERENCE current-audit-models] Present one portable adapter contract with concrete Codex and Claude headless commands.
+- [HUMAN] The user's instruction to finish the research and create the write-up approves the writing pass.
 
 ## Accepted risks
 
-- None accepted yet.
+- [HUMAN] The article explains a concrete DIY design but does not claim that the full observability and response stack has been implemented in this repository.
+- [HUMAN] Product and model details are current as of August 2026 and may need a pre-publication refresh.

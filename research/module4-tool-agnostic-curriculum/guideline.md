@@ -1,10 +1,10 @@
 # Guideline: 90-minute Module 4 outline for discussion
 
-Status: proposed outline; not approved for article writing or implementation
+Status: approved for article writing by the user's instruction to finish the research and create the write-up
 
 ## Working title
 
-**Module 4 — From Deployment to Operations: Observability, Agent Response, and Security Audits** [PROPOSAL]
+**Operate an AI-Built App with Observability, Agents, and Security Audits** [PROPOSAL]
 
 The title describes the system learners will operate. Product names belong inside implementation examples, not in the module structure. [HUMAN]
 
@@ -322,11 +322,10 @@ These are excluded because they would obscure the workshop's main feedback loop,
 
 Primary standards and official documentation support the architecture, alert design, safe automation controls, and layered security review. Reddit/social research supports the relevance of the pain points but is anecdotal, self-selected, and sometimes promotional. It should appear in the article as practitioner experience, never as measured industry prevalence. [FACT practitioner-observability,practitioner-ai-operations,practitioner-ai-security]
 
-Open questions that remain product decisions rather than research gaps:
+Editorial decisions for the writing pass:
 
-1. Is the working title right?
-2. Is the prepared incident specifically a bad deployment rollback, or should it be a different bounded repair?
-3. Should the optional 30 minutes prioritize the ambiguous escalation plus agent capability audit, as recommended, or the second independent model audit?
-4. Should the workshop repository include both Codex and Claude adapters, or one reference adapter plus documented commands for the other?
-
-No public article or implementation should begin until this outline is discussed and explicitly approved. [HUMAN]
+1. [PROPOSAL] Use the action-led title above to match Articles 1 and 2.
+2. [INFERENCE safe-remediation] Use a bad-deployment rollback as the known safe action and a changed evidence condition to demonstrate escalation.
+3. [PROPOSAL] Use ambiguous escalation plus a capability audit for the optional 30 minutes.
+4. [PROPOSAL] Define one portable adapter contract and show thin headless command examples for both Codex and Claude.
+5. [PROPOSAL] Create the publishable series article under `articles/` rather than replacing the curriculum draft in the module README.

@@ -21,3 +21,7 @@
 2026-08-02T10:22:20+02:00 | state | distilled -> researching | Researching practitioner experience and mapping tools to durable concepts before revising the outline
 2026-08-02T10:29:41+02:00 | state | researching -> distilled | Mapped the original tools and practitioner discussions into a problem-first 90-minute workshop design
 2026-08-02T10:29:41+02:00 | state | distilled -> critiqued | Revised outline reflected for feasibility and ready for human discussion
+2026-08-02T10:33:20+02:00 | state | critiqued -> approved | User explicitly requested finishing the research and creating the write-up; editorial defaults recorded
+2026-08-02T10:44:23+02:00 | render | drafted articles/04-operating-ai-built-software.md and overview diagram | matched Articles 1–2 voice, preserved problem-first structure, and added private provenance report
+2026-08-02T10:45:50+02:00 | state | approved -> rendered | Rendered the approved guideline as the Module 4 series article with a published overview diagram and private provenance report
+2026-08-02T10:47:00+02:00 | state | rendered -> verified | Article passed provenance, memory-wiki, stylint, markdownlint, command-surface, link, diagram, and repository checks

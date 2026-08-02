@@ -1,0 +1,113 @@
+{
+  "title": "From deployment to safe response",
+  "canvas": {
+    "width": 1360,
+    "height": 690,
+    "background": "#ffffff"
+  },
+  "layout": {
+    "type": "manual",
+    "card_width": 220,
+    "card_height": 100
+  },
+  "nodes": [
+    {
+      "id": "app",
+      "title": "Deployed app",
+      "subtitle": "Module 2 release",
+      "icon": "api",
+      "color": "blue",
+      "x": 30,
+      "y": 250
+    },
+    {
+      "id": "observe",
+      "title": "Observe",
+      "subtitle": "Metrics, traces, logs",
+      "icon": "search",
+      "color": "blue",
+      "x": 300,
+      "y": 250
+    },
+    {
+      "id": "alert",
+      "title": "Alert",
+      "subtitle": "Sustained user impact",
+      "icon": "warning",
+      "color": "red",
+      "x": 570,
+      "y": 250
+    },
+    {
+      "id": "agent",
+      "title": "Investigate",
+      "subtitle": "Read-only evidence packet",
+      "icon": "sparkles",
+      "color": "purple",
+      "x": 840,
+      "y": 250
+    },
+    {
+      "id": "policy",
+      "title": "Check policy",
+      "subtitle": "Authority stays outside AI",
+      "icon": "settings",
+      "color": "amber",
+      "x": 1110,
+      "y": 250
+    },
+    {
+      "id": "human",
+      "title": "Escalate",
+      "subtitle": "Unknown or high-risk",
+      "icon": "user",
+      "color": "red",
+      "x": 1110,
+      "y": 60
+    },
+    {
+      "id": "rollback",
+      "title": "Run rollback",
+      "subtitle": "Known reversible runbook",
+      "icon": "pull-request",
+      "color": "green",
+      "x": 1110,
+      "y": 440
+    },
+    {
+      "id": "verify",
+      "title": "Verify recovery",
+      "subtitle": "Health and error rate",
+      "icon": "check",
+      "color": "green",
+      "x": 840,
+      "y": 560
+    },
+    {
+      "id": "record",
+      "title": "Record the incident",
+      "subtitle": "Evidence, action, result",
+      "icon": "document",
+      "color": "gray",
+      "x": 570,
+      "y": 560
+    }
+  ],
+  "edges": [
+    {"from": "app", "to": "observe", "from_anchor": "right", "to_anchor": "left"},
+    {"from": "observe", "to": "alert", "from_anchor": "right", "to_anchor": "left"},
+    {"from": "alert", "to": "agent", "from_anchor": "right", "to_anchor": "left"},
+    {"from": "agent", "to": "policy", "from_anchor": "right", "to_anchor": "left"},
+    {"from": "policy", "to": "human", "from_anchor": "top", "to_anchor": "bottom"},
+    {"from": "policy", "to": "rollback", "from_anchor": "bottom", "to_anchor": "top"},
+    {
+      "from": "rollback",
+      "to": "verify",
+      "route": "curve",
+      "from_anchor": "left",
+      "to_anchor": "right",
+      "controls": [[1060, 585], [1060, 610]]
+    },
+    {"from": "verify", "to": "record", "from_anchor": "left", "to_anchor": "right"}
+  ]
+}
