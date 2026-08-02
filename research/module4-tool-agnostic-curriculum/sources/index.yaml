@@ -1,0 +1,194 @@
+schema_version: 1
+sources:
+  - id: current-module-4
+    title: Current Module 4 draft
+    type: repository-document
+    locator: /home/alexey/git/ai-dev-tools-zoomcamp/04-ai-security-audit-devops/README.md
+    captured: 2026-08-02
+    published: 2026-07-21
+    authority: personal
+    summary: Current tool-led lesson structure and deliverables that the redesign must preserve or replace deliberately.
+    page: wiki/sources/current-module-4.md
+    raw:
+    relevance: 1.00
+    status: selected
+  - id: syllabus-proposal
+    title: 2026 syllabus proposal
+    type: repository-document
+    locator: /home/alexey/git/ai-dev-tools-zoomcamp/docs/2026-syllabus-proposal.md
+    captured: 2026-08-02
+    published: 2026-07-21
+    authority: personal
+    summary: Longer rationale for Module 4 scope, tool choices, exercises, artifacts, and rubric.
+    page: wiki/sources/syllabus-proposal.md
+    raw:
+    relevance: 0.95
+    status: selected
+  - id: nist-csf-2
+    title: NIST Cybersecurity Framework 2.0
+    type: standard
+    locator: https://www.nist.gov/news-events/news/2024/02/nist-releases-version-20-landmark-cybersecurity-framework
+    captured: 2026-08-02
+    published: 2024-02-26
+    authority: primary
+    summary: Outcome-oriented lifecycle vocabulary for governance, identification, protection, detection, response, and recovery.
+    page: wiki/sources/nist-csf-2.md
+    raw:
+    relevance: 0.92
+    status: selected
+  - id: nist-ssdf
+    title: NIST Secure Software Development Framework 1.1
+    type: standard
+    locator: https://csrc.nist.gov/projects/ssdf
+    captured: 2026-08-02
+    published: 2022-02-03
+    authority: primary
+    summary: Outcome-based secure development practices designed to allow multiple valid implementation methods.
+    page: wiki/sources/nist-ssdf.md
+    raw:
+    relevance: 0.91
+    status: selected
+  - id: nist-incident-response
+    title: NIST SP 800-61 Revision 3
+    type: standard
+    locator: https://csrc.nist.gov/pubs/sp/800/61/r3/final
+    captured: 2026-08-02
+    published: 2025-04-03
+    authority: primary
+    summary: Integrates incident preparation, detection, response, and recovery into continuous risk management.
+    page: wiki/sources/nist-incident-response.md
+    raw:
+    relevance: 0.87
+    status: selected
+  - id: owasp-secure-code-review
+    title: OWASP Secure Code Review Cheat Sheet
+    type: guidance
+    locator: https://cheatsheetseries.owasp.org/cheatsheets/Secure_Code_Review_Cheat_Sheet.html
+    captured: 2026-08-02
+    published:
+    authority: primary
+    summary: Risk-based review workflow combining threat context, diff inspection, automated signals, and manual business-logic analysis.
+    page: wiki/sources/owasp-secure-code-review.md
+    raw:
+    relevance: 0.90
+    status: selected
+  - id: owasp-prompt-injection
+    title: OWASP LLM01:2025 Prompt Injection
+    type: guidance
+    locator: https://genai.owasp.org/llmrisk/llm01-prompt-injection/
+    captured: 2026-08-02
+    published: 2025-01-01
+    authority: primary
+    summary: Agent-specific guidance on untrusted content, least privilege, output handling, and human approval for risky actions.
+    page: wiki/sources/owasp-prompt-injection.md
+    raw:
+    relevance: 0.91
+    status: selected
+  - id: mcp-security
+    title: Model Context Protocol Security Best Practices
+    type: specification-guidance
+    locator: https://modelcontextprotocol.io/docs/tutorials/security/security_best_practices
+    captured: 2026-08-02
+    published: 2025-11-25
+    authority: primary
+    summary: Concrete risks and controls for local tools, consent, sandboxing, scopes, tokens, sessions, and auditability.
+    page: wiki/sources/mcp-security.md
+    raw:
+    relevance: 0.93
+    status: selected
+  - id: opentelemetry-signals
+    title: OpenTelemetry Signals
+    type: specification-guidance
+    locator: https://opentelemetry.io/docs/concepts/signals/
+    captured: 2026-08-02
+    published: 2026-03-10
+    authority: primary
+    summary: Vendor-neutral evidence model for traces, metrics, logs, and correlated operational context.
+    page: wiki/sources/opentelemetry-signals.md
+    raw:
+    relevance: 0.83
+    status: selected
+  - id: nist-ai-rmf
+    title: NIST AI Risk Management Framework Core
+    type: framework
+    locator: https://airc.nist.gov/airmf-resources/airmf/5-sec-core/
+    captured: 2026-08-02
+    published: 2023-01-26
+    authority: primary
+    summary: Defines roles, task scope, third-party risk, human oversight, measurement, and governance for AI systems.
+    page: wiki/sources/nist-ai-rmf.md
+    raw:
+    relevance: 0.88
+    status: selected
+  - id: tool-repositories
+    title: Current official repositories for the proposed Module 4 tools
+    type: source-collection
+    locator: https://github.com/The-PR-Agent/pr-agent
+    captured: 2026-08-02
+    published: 2026-06-01
+    authority: primary
+    summary: Current capabilities and constraints of PR-Agent, Semgrep MCP, Snyk Agent Scan, K8sGPT, HolmesGPT, LiteLLM, and Ollama.
+    page: wiki/sources/tool-repositories.md
+    raw:
+    relevance: 0.94
+    status: selected
+  - id: observability-pipeline
+    title: OpenTelemetry and Grafana observability pipeline guidance
+    type: source-collection
+    locator: https://opentelemetry.io/docs/collector/deploy/
+    captured: 2026-08-02
+    published: 2026-01-29
+    authority: primary
+    summary: Architecture and deployment guidance for instrumentation, collectors, metrics, logs, traces, correlation, and observability backends.
+    page: wiki/sources/observability-pipeline.md
+    raw:
+    relevance: 1.00
+    status: selected
+  - id: alerting-sre
+    title: Prometheus and Google SRE alerting guidance
+    type: source-collection
+    locator: https://prometheus.io/docs/practices/alerting/
+    captured: 2026-08-02
+    published:
+    authority: primary
+    summary: Actionable symptom-based alerts, golden signals, alert routing, metamonitoring, and evidence-driven troubleshooting.
+    page: wiki/sources/alerting-sre.md
+    raw:
+    relevance: 0.98
+    status: selected
+  - id: safe-remediation
+    title: Safe operations automation and human escalation guidance
+    type: source-collection
+    locator: https://sre.google/sre-book/automation-at-google/
+    captured: 2026-08-02
+    published:
+    authority: primary
+    summary: Criteria and controls for moving from read-only diagnosis to idempotent runbook automation while bounding blast radius and escalation cost.
+    page: wiki/sources/safe-remediation.md
+    raw:
+    relevance: 1.00
+    status: selected
+  - id: current-audit-models
+    title: Current OpenAI and Anthropic models for demanding code audit work
+    type: source-collection
+    locator: https://developers.openai.com/api/docs/guides/latest-model
+    captured: 2026-08-02
+    published: 2026-07-01
+    authority: primary
+    summary: Official current model identities, reasoning controls, defensive-security positioning, retention constraints, and automation interfaces.
+    page: wiki/sources/current-audit-models.md
+    raw:
+    relevance: 0.98
+    status: selected
+  - id: agent-security-review
+    title: Official agent-assisted security review guidance
+    type: source-collection
+    locator: https://support.anthropic.com/en/articles/11932705-automated-security-reviews-in-claude-code/
+    captured: 2026-08-02
+    published: 2025-08-01
+    authority: primary
+    summary: Current product examples for on-demand, PR-triggered, and deep agent security review, with explicit human validation limits.
+    page: wiki/sources/agent-security-review.md
+    raw:
+    relevance: 0.93
+    status: selected
