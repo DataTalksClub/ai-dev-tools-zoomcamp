@@ -192,3 +192,51 @@ sources:
     raw:
     relevance: 0.93
     status: selected
+  - id: practitioner-observability
+    title: Practitioner discussions on observability and alerting
+    type: discussion-collection
+    locator: https://www.reddit.com/r/sre/comments/1nm7sbi/alert_fatigue_is_killing_me/
+    captured: 2026-08-02
+    published: 2025-09-01
+    authority: personal
+    summary: Anecdotal reports about alert fatigue, unused telemetry, actionable pages, runbooks, and OpenTelemetry adoption tradeoffs.
+    page: wiki/sources/practitioner-observability.md
+    raw:
+    relevance: 0.91
+    status: selected
+  - id: practitioner-ai-operations
+    title: Practitioner discussions on AI-assisted operations
+    type: discussion-collection
+    locator: https://www.reddit.com/r/sre/comments/1t6wqux/anyone_using_ai_for_actual_sreoncall_operations/
+    captured: 2026-08-02
+    published: 2026-05-07
+    authority: personal
+    summary: Anecdotal reports on useful first-triage tasks, missing context, unreliable RCA, blast radius, and human approval before writes.
+    page: wiki/sources/practitioner-ai-operations.md
+    raw:
+    relevance: 0.98
+    status: selected
+  - id: practitioner-ai-security
+    title: Practitioner discussions on AI security review and agent tooling
+    type: discussion-collection
+    locator: https://www.reddit.com/r/cybersecurity/comments/1raqles/claude_code_security/
+    captured: 2026-08-02
+    published: 2026-02-27
+    authority: personal
+    summary: Anecdotal debate about model-review accuracy, deterministic scanners, separation of duties, and terminal-agent capability risk.
+    page: wiki/sources/practitioner-ai-security.md
+    raw:
+    relevance: 0.94
+    status: selected
+  - id: practitioner-model-infrastructure
+    title: Practitioner discussions on model gateways and local inference
+    type: discussion-collection
+    locator: https://www.reddit.com/r/LLMDevs/comments/1l1n95h/llm_proxy_in_production_litellm_portkey_helicone/
+    captured: 2026-08-02
+    published: 2025-06-02
+    authority: personal
+    summary: Anecdotal requirements and tradeoffs for gateways, provider switching, local data placement, endpoint security, and operations.
+    page: wiki/sources/practitioner-model-infrastructure.md
+    raw:
+    relevance: 0.75
+    status: selected

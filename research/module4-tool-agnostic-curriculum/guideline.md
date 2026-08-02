@@ -1,326 +1,332 @@
-# Guideline: initial Module 4 outline for discussion
+# Guideline: 90-minute Module 4 outline for discussion
 
 Status: proposed outline; not approved for article writing or implementation
 
 ## Working title
 
-**Module 4 — Operating AI-Built Software: Observability, Agent Response, and Security Audits** [PROPOSAL]
+**Module 4 — From Deployment to Operations: Observability, Agent Response, and Security Audits** [PROPOSAL]
 
-Alternative: **From Deployment to Operations: Observability, First-Line Agents, and Security Audits** [PROPOSAL]
+The title describes the system learners will operate. Product names belong inside implementation examples, not in the module structure. [HUMAN]
 
-The title should describe the system learners build and operate. Individual products belong inside implementation sections, not in the module title. [HUMAN]
+## Audience and promise
 
-## Reader and promised transformation
+The learner has the Module 2 application: React frontend, FastAPI backend, Postgres, containers, public deployment, and CI/CD. [FACT current-module-4,syllabus-proposal]
 
-The reader has completed Module 2: a React frontend and FastAPI backend, Postgres, containers, public deployment, and CI/CD. [FACT current-module-4,syllabus-proposal] Module 4 takes that same application beyond “deployed” into “operable.” [HUMAN]
+In 90 minutes, the learner will turn that application from merely deployed into minimally operable. They will be able to:
 
-The reader should finish with a system that:
+1. follow one failed backend request through a metric, trace, structured log, and deployment version;
+2. create one alert that represents sustained user impact and contains enough context to act;
+3. invoke Codex, Claude, or another headless terminal agent as a read-only first responder;
+4. enforce outside the model whether a known rollback may run or a human must take over;
+5. run a repeatable security audit that combines deterministic evidence, model reasoning, and human validation. [INFERENCE observability-pipeline,alerting-sre,safe-remediation,agent-security-review]
 
-- emits useful metrics, logs, and traces through OpenTelemetry;
-- shows application health and request behavior in Grafana;
-- raises a small number of actionable alerts;
-- gives a sandboxed coding agent the first opportunity to collect evidence and diagnose an incident;
-- permits only narrow, pre-approved automatic remediation and otherwise escalates with a human-ready incident packet;
-- runs repeatable change-level and scheduled security audits with deterministic checks and independent frontier-model review;
-- preserves an audit trail across deployment, alert, diagnosis, action, verification, escalation, and security findings. [INFERENCE observability-pipeline,alerting-sre,safe-remediation,agent-security-review]
+The optional extra 30 minutes deepens one or two controls; it must not be required to complete the core story. [HUMAN]
 
-## Core claim
+## Central idea
 
-Deployment is not the end of the development loop. A production system must tell us when users are affected, provide evidence about why, constrain what automation may change, and preserve enough history for a human to verify every important decision. [INFERENCE alerting-sre,nist-incident-response,safe-remediation]
-
-The module has three pillars:
+The module teaches one feedback loop:
 
 ```text
-observe the system
-respond safely to incidents
-audit the code and the response system
+change
+→ observe user impact
+→ alert with context
+→ investigate from evidence
+→ authorize a bounded response or escalate
+→ verify recovery
+→ audit the code and the response trail
 ```
 
-## Running system
+Deployment is not the end of delivery. An operable system must expose user impact, preserve evidence, constrain automation, verify recovery, and let a human reconstruct important decisions. [INFERENCE nist-incident-response,alerting-sre,safe-remediation]
+
+## Why this is problem-first rather than tool-first
+
+The original tools expose real problems, but a 90-minute catalogue would produce fragile knowledge. The outline therefore starts with the problem and adds products only after a small DIY implementation demonstrates the pattern. [HUMAN]
+
+| Problem | Concept taught | DIY version | Products mentioned afterward |
+| --- | --- | --- | --- |
+| We cannot explain a failed request | Correlated metrics, traces, logs, and deployment identity | Instrument one FastAPI path; export through OTLP | OpenTelemetry, Collector, Prometheus, Loki, Tempo, Grafana |
+| Alerts are noisy or context-free | User-impact symptoms, duration, actionability, ownership, runbook | One sustained 5xx alert with a structured webhook | Prometheus/Alertmanager and equivalent platforms |
+| Humans collect the same evidence under pressure | Read-only evidence adapters and a structured incident packet | Shell/Python orchestrator invokes a generic headless agent | HolmesGPT, K8sGPT, commercial AI-SRE products |
+| Agent confidence gets mistaken for authority | External policy, least privilege, reversibility, verification, escalation | Allowlist one versioned rollback; block everything else | Agent platforms and policy engines |
+| Model reviews are persuasive but fallible | Deterministic checks + independent reasoning + human disposition | Scanner JSON plus one model review and manual validation | Semgrep MCP, PR-Agent, Codex, Claude security review |
+| Agent extensions become a supply chain | Capability inventory, provenance, read/write/network/secrets scope | Small capability bill of materials | Snyk Agent Scan and other MCP/agent scanners |
+| Model calls need placement and governance | Provider-neutral interface, data policy, identity, budget, audit | A tiny CLI adapter and recorded model metadata | LiteLLM, Ollama, hosted model APIs |
+
+[INFERENCE problem-first-tool-landscape] K8sGPT, Agent Scan, gateways, and local inference are valid examples, but not all belong in the core live build.
+
+## Concrete teaching architecture
 
 ```text
-Module 2 application and CI/CD
-              |
-      OpenTelemetry signals
-              |
-     OpenTelemetry Collector
-      /        |        \
-Prometheus    Loki      Tempo
- metrics      logs      traces
-      \        |        /
-             Grafana
-       dashboards + alerts
-                  |
-         first-line agent
-       /                  \
-safe runbook          human escalation
-       |               + evidence packet
-verify recovery
+Module 2 app + CI/CD
+        |
+  OpenTelemetry SDK
+        |
+OpenTelemetry Collector
+   /      |       \
+metrics  logs    traces
+   \      |       /
+       Grafana
+ dashboard + one alert
+             |
+      incident webhook
+             |
+   evidence collector ──→ headless agent
+             |                  |
+       external policy ← proposed action
+          /        \
+ allowlisted       escalation packet
+ rollback                to human
+     |
+ recovery check + append-only incident record
 
-Scheduled/PR security audit runs alongside this operational path.
+Separate path: deterministic security check → model review → human disposition
 ```
 
-[INFERENCE observability-pipeline] The collector is the stable, vendor-neutral boundary. Prometheus, Loki, Tempo, and Grafana are the concrete teaching backends, not the concepts themselves.
+The collector is the stable telemetry boundary. The agent adapter is the stable reasoning boundary. The external policy is the stable authorization boundary. Backends and model vendors can change independently. [INFERENCE observability-pipeline,mcp-security,safe-remediation]
 
-## Initial article/module outline
+## The prepared incident
 
-### Opening — We deployed the app; now we have to operate it
+Use one deliberately bad deployment that increases 5xx responses on an important backend operation. It provides a complete, teachable story:
 
-Continue directly from Module 2. The Snake Royale application is public and deploys through CI/CD, but we cannot yet answer basic operational questions:
+- the dashboard shows user-visible errors beginning after a deployment;
+- an exemplar or trace link leads to a failed request;
+- correlated structured logs expose the concrete failure without leaking sensitive data;
+- the incident packet includes the active commit and previous known-good deployment;
+- the agent proposes the versioned rollback runbook;
+- external policy recognizes the known signature and allows only that runbook;
+- a health request and error-rate query verify recovery. [PROPOSAL]
 
-- Is it working for users?
-- Which requests are failing or slow?
-- Did the last deployment cause the problem?
-- What evidence should an agent inspect?
-- What may the agent fix without waking a human?
-- How do we know the fix actually worked?
-- How do we regularly audit the code and the automation itself? [HUMAN] [PROPOSAL]
+The instructor then changes one fact—remove the known signature, make evidence conflict, or involve data/security—to show the exact same agent being forced to escalate. This demonstrates the human boundary without requiring a second full incident build. [PROPOSAL]
 
-Introduce the end-to-end architecture and state that the module will deliberately break the application twice: one known, safely recoverable incident and one ambiguous incident that must be escalated.
+## 90-minute workshop outline
 
-### 4.1 — Instrument the Module 2 application with OpenTelemetry
+### 0–10 minutes — The operational gap
 
-Concepts:
+Start from the deployed Module 2 application and trigger the prepared regression.
 
-- Instrumentation, collection, storage, and visualization are separate layers.
-- Metrics show trends and alert conditions; logs record events; traces show a request crossing components.
-- Consistent resource attributes identify service, version, environment, and instance.
-- Trace IDs connect a slow or failed request to its logs.
-- Telemetry can contain sensitive data, so collection, redaction, retention, authentication, and cardinality are security/cost concerns. [FACT observability-pipeline]
+Questions:
 
-Core implementation scope:
+- Is the app failing for users?
+- Which operation is affected?
+- Did the latest deployment cause it?
+- What evidence can a responder trust?
+- What is the responder allowed to change?
 
-- Instrument FastAPI requests, outbound/database operations where feasible, and custom game/business operations.
-- Export traces and metrics through OTLP to an upstream OpenTelemetry Collector.
-- Keep application logs structured on stdout and inject trace/service context so the collector can route and correlate them.
-- Add deployment version/commit as a resource attribute or annotation.
-- Treat React/browser tracing as an optional extension because current OpenTelemetry browser instrumentation remains experimental. [FACT observability-pipeline]
+Show the end-to-end loop and establish three boundaries: telemetry, reasoning, and authorization. Do not begin with installation commands. [PROPOSAL]
 
-Deliverables:
+### 10–30 minutes — Observe one request end to end
+
+Teach:
+
+- traces describe the request path;
+- metrics aggregate behavior and support alert conditions;
+- logs preserve event detail;
+- stable service/environment/version attributes and trace IDs connect the evidence;
+- telemetry is also sensitive, costly data that needs redaction and cardinality discipline. [FACT observability-pipeline]
+
+Live work:
+
+- add or inspect OpenTelemetry instrumentation on one FastAPI path;
+- send OTLP to the collector;
+- trigger one successful and one failed request;
+- pivot in the prebuilt Grafana stack from error metric to trace to correlated log and deployment version.
+
+React/browser tracing is an optional extension because current browser instrumentation remains experimental. [FACT observability-pipeline]
+
+### 30–45 minutes — Create one alert worth waking up for
+
+Teach:
+
+- page on sustained user-visible symptoms, not every internal cause;
+- dashboards hold diagnostic context; alerts imply action;
+- thresholds need duration/slack;
+- alerts need service, severity, symptom, time, evidence links, recent change, owner, and runbook;
+- grouping, deduplication, inhibition, and metamonitoring matter in a mature system. [FACT alerting-sre]
+
+Live work:
+
+- create or inspect one sustained 5xx-rate rule;
+- test it with the prepared regression;
+- inspect its structured webhook payload.
+
+Practitioner evidence supports keeping the core to one carefully designed alert: teams report alert fatigue, rotting rule packs, missing runbooks, and dashboards that nobody uses. [FACT practitioner-observability]
+
+### 45–70 minutes — Agent as first responder, policy as authority
+
+Teach this sequence:
+
+```text
+alert → collect facts → form/test hypotheses → propose action
+      → policy decision → act or escalate → verify → record
+```
+
+The DIY responder:
+
+1. receives the alert webhook;
+2. runs allowlisted, read-only queries for health, metrics, logs/traces, and deployment/git history;
+3. writes a bounded evidence packet;
+4. invokes a configured headless terminal-agent adapter;
+5. validates the response against a schema;
+6. sends the proposed action to an external policy check;
+7. runs only the exact allowlisted rollback script or writes an escalation packet;
+8. verifies and records the result. [PROPOSAL]
+
+Portable adapter contract:
+
+```text
+input:  versioned task + evidence directory + output schema
+output: structured facts, hypotheses, proposed action, uncertainty
+limits: working directory, read-only credentials, timeout, command budget, network scope
+```
+
+Codex CLI and Claude Code headless mode are concrete adapters. Model prompts do not grant authority; shell wrappers, credentials, sandboxing, and policy do. [INFERENCE mcp-security,practitioner-ai-operations]
+
+Autonomy levels:
+
+| Level | What happens | Core policy |
+| --- | --- | --- |
+| 0 | Alert enrichment | Automatic |
+| 1 | Read-only investigation and recommendation | Automatic within limits |
+| 2 | Tested, reversible, versioned runbook | Only for an allowlisted signature and deterministic postcondition |
+| 3 | Patch/PR in isolation | Human reviews; never auto-merge in this module |
+| 4 | Novel, destructive, broad, security/data/secret action | Human required |
+
+Automatic repair requires a known signature, versioned runbook, bounded blast radius, reversibility/idempotence, deterministic recovery check, strict retry/time/cost limits, and a full log. Unknown causes, conflicting evidence, security/data implications, missing verification, or failed retries escalate. [INFERENCE safe-remediation]
+
+Practitioners describe evidence gathering, incident summaries, and proposed commands as useful; unreliable root-cause claims and write access remain the difficult boundary. [FACT practitioner-ai-operations]
+
+### 70–87 minutes — Recurring security audit: evidence before eloquence
+
+Teach three layers:
+
+1. deterministic checks for known patterns and dependencies;
+2. focused model reasoning for context, abuse paths, business logic, and missed interactions;
+3. human validation and disposition. [INFERENCE owasp-secure-code-review,agent-security-review]
+
+Live work:
+
+- run one deterministic scanner and preserve structured output;
+- run one headless model with a versioned audit brief against the same commit;
+- require each finding to include code evidence, impact/abuse path, uncertainty, and a validation method;
+- validate or reject one finding and record the disposition.
+
+Current quality-first examples may include OpenAI `gpt-5.6-sol` with `max` reasoning and Anthropic `claude-fable-5`. A scheduled deeper audit can run both independently; the 90-minute live exercise requires only one so it does not depend on two paid accounts. ChatGPT is an interactive product surface, not an independent model vote when it uses the same GPT family. [FACT current-audit-models] [PROPOSAL]
+
+Semgrep MCP and PR-Agent are examples after the DIY flow. The pattern is scanner evidence plus contextual review, not dependence on MCP or one PR bot. Practitioner discussions report both useful model findings and false positives/misses, supporting independent evidence and separation of duties. [FACT practitioner-ai-security]
+
+### 87–90 minutes — Close the loop
+
+Given a commit or incident ID, show that we can reconstruct:
+
+- deployed version and user impact;
+- alert and evidence inspected;
+- model/configuration and proposed action;
+- policy decision and command executed;
+- recovery verification or escalation;
+- related security finding and human disposition.
+
+End on the operating principle: the model may reason; the system must observe, authorize, verify, and remember. [PROPOSAL]
+
+## Optional extension to 120 minutes
+
+Choose based on audience; do not attempt every option.
+
+### Recommended extension: ambiguous incident and capability audit
+
+- **90–105:** replay the incident with conflicting or security-sensitive evidence; learners inspect the escalation packet and improve its next-action recommendation.
+- **105–120:** inventory the agent's skills, MCP servers, shell, filesystem, network, and credentials; classify provenance and read/write/network/secrets scope; remove or mitigate one unsafe capability.
+
+This adds the two concepts the compressed demo can only show briefly: good escalation under uncertainty and security of the responder itself. Snyk Agent Scan is then shown as a product that automates part of the inventory/inspection problem. [PROPOSAL]
+
+Alternative extensions include adding the second independent model audit, instrumenting the frontend, writing alert tests, or swapping the model adapter to a gateway/local endpoint. [PROPOSAL]
+
+## Deliverables
+
+Keep artifacts small enough that learners understand them:
 
 ```text
 observability/
   collector.yaml
   compose.yaml
-  README.md
-docs/
-  telemetry-data-flow.md
-```
-
-Teaching point: instrument once against an open protocol; choose or replace backends later.
-
-### 4.2 — Turn telemetry into dashboards and actionable alerts
-
-Concepts:
-
-- Start with traffic, errors, latency, and saturation/health—the golden signals.
-- Alert on sustained user-visible symptoms rather than every internal cause.
-- A page/incident must imply an action; dashboards keep the diagnostic detail.
-- Group, deduplicate, silence, and inhibit related alerts.
-- Monitor the monitoring path with an external health check. [FACT alerting-sre]
-
-Minimum dashboard:
-
-- request rate;
-- error rate by endpoint/status family;
-- p50/p95 latency;
-- current service version and recent deployment marker;
-- representative traces and correlated logs;
-- one saturation/health measure appropriate to the app.
-
-Minimum alerts:
-
-1. Public application/health endpoint unavailable for a sustained period.
-2. Elevated user-visible 5xx/error rate.
-3. Elevated p95 request latency.
-4. Optional saturation alert.
-5. Metamonitoring alert when telemetry or alert delivery stops. [INFERENCE alerting-sre]
-
-Every alert includes severity, affected service, start time, user symptom, dashboard/trace link, recent deployment, and a runbook reference.
-
-Deliverables:
-
-```text
-observability/
-  dashboards/
+  dashboard.json
   alerts.yaml
-  alert-tests/
-runbooks/
-  availability.md
-  error-rate.md
-  latency.md
-```
-
-Teaching point: an alert without context, ownership, and a possible action is noise.
-
-### 4.3 — Make a coding agent the first line of support
-
-When an alert fires, an incident orchestrator starts Codex, Claude Code, or another compatible terminal agent in a constrained environment. The agent receives the alert, system map, read-only observability commands, deployment history, and relevant runbook. [HUMAN]
-
-The response loop:
-
-```text
-alert
-→ enrich with telemetry and recent changes
-→ state observed facts
-→ form and test hypotheses
-→ choose safe runbook or escalate
-→ execute only if policy permits
-→ verify recovery
-→ record the incident
-```
-
-The agent initially has read-only access. It can query metrics/logs/traces, inspect configuration and git history, and run health/diagnostic commands. [INFERENCE safe-remediation,alerting-sre]
-
-First prepared incident: deploy a version that causes a clear error-rate regression. The evidence identifies the recent deployment; a versioned, pre-approved rollback is available; the agent invokes it and verifies the health/error-rate postcondition. [PROPOSAL]
-
-Second prepared incident: create an ambiguous database/latency failure with incomplete or competing evidence. The agent must stop and escalate rather than guess. [PROPOSAL]
-
-Deliverables:
-
-```text
 incident-response/
+  collect-evidence.sh
   responder-task.md
-  evidence-schema.json
-  incident-record.schema.json
-  incidents/
-```
-
-Teaching point: the agent’s first value is fast, consistent evidence collection—not unrestricted production mutation.
-
-### 4.4 — Decide what the agent may fix and when humans take over
-
-Use action levels:
-
-| Level | Capability | Policy |
-| --- | --- | --- |
-| 0 | Enrich alert with evidence | Automatic |
-| 1 | Read-only diagnosis and recommendation | Automatic within limits |
-| 2 | Execute a tested, reversible runbook | Policy-gated |
-| 3 | Create a code patch/PR and run CI | Isolated branch; no auto-merge |
-| 4 | Destructive, broad, secret/data, or novel production action | Human approval |
-
-Automatic remediation requires all of:
-
-- known failure signature;
-- pre-approved and versioned runbook;
-- idempotent or reversible action;
-- bounded blast radius;
-- no unresolved security, privacy, data-integrity, or authorization concern;
-- deterministic recovery check;
-- strict retry, time, command, and cost limits;
-- full action logging. [INFERENCE safe-remediation]
-
-Escalation is mandatory for unknown/ambiguous causes, high or growing impact, sensitive data/security involvement, missing telemetry or recovery test, novel/destructive actions, repeated failure, or exhausted budgets. [INFERENCE safe-remediation,alerting-sre]
-
-The escalation packet contains facts, hypotheses, evidence links, recent changes, actions attempted, current state, remaining risk, and the recommended next human action.
-
-Deliverables:
-
-```text
-incident-response/
+  evidence.schema.json
   autonomy-policy.yaml
-  escalation-policy.md
-  runbook-allowlist.yaml
-  audit.jsonl
-```
-
-Teaching point: confidence is not authorization. Policy, reversibility, blast radius, and verification determine autonomy.
-
-### 4.5 — Run recurring AI-assisted security audits
-
-Security review has three cadences:
-
-1. **Every change:** tests and deterministic security checks plus a focused agent review of the diff.
-2. **Scheduled or release audit:** a deeper full-repository review using two independent model families.
-3. **Human review:** high-severity, disputed, business-logic, data/IAM, and audit-system findings. [INFERENCE owasp-secure-code-review,agent-security-review]
-
-Current model examples:
-
-- OpenAI `gpt-5.6-sol` with `max` reasoning for a quality-first review. [FACT current-audit-models]
-- Anthropic `claude-fable-5` as an independent reviewer, subject to classifier refusal and 30-day retention policy. [FACT current-audit-models]
-- ChatGPT for interactive, human-guided investigation of selected findings. If ChatGPT uses GPT-5.6, it is another surface over the same family, not a third independent vote. [INFERENCE current-audit-models]
-
-The two automated reviewers receive the same versioned audit brief and repository snapshot but do not see each other’s output. Findings must include code/config evidence, impact/abuse path, uncertainty, validation method, and remediation. Agreement raises priority but is not proof. [INFERENCE agent-security-review,owasp-secure-code-review]
-
-Deterministic scanners/tests and a human validate findings. Agents may create patch branches and regression tests, but they do not directly merge a security fix or declare their own finding resolved without independent evidence. [FACT agent-security-review] [INFERENCE owasp-secure-code-review]
-
-Rotating audit themes:
-
-- authentication and authorization;
-- injection, unsafe commands, and file access;
-- secrets and sensitive data in code/logs/telemetry;
-- dependencies, containers, CI/CD, and infrastructure;
-- business logic, abuse cases, race conditions, and resource limits;
-- agent instructions, tools, permissions, and prompt-injection paths.
-
-Deliverables:
-
-```text
+  runbooks/rollback.sh
+  incidents/
 security-audit/
   audit-brief.md
   findings.schema.json
-  baselines/
   runs/
-  accepted-findings.md
+docs/
+  operations-and-security-report.md
 ```
 
-Teaching point: multiple fluent reviewers do not replace evidence. Models propose findings; repeatable checks and humans decide.
+The stack configuration should be mostly prepared before the workshop. Learners should edit the semantic parts—instrumentation, alert meaning, evidence, policy, and validation—not spend the session debugging infrastructure downloads. [PROPOSAL]
 
-### 4.6 — Audit the whole operating system
+## Tool decisions
 
-Tie the three pillars together. Given a code commit or incident ID, the learner should be able to reconstruct:
+### Core, because they implement the running system
 
-- who or what initiated the change/action;
-- which commit and deployment were active;
-- which alert fired and why;
-- which telemetry and commands the agent inspected;
-- which policy authorized or blocked an action;
-- whether recovery was independently verified;
-- whether a human was notified or approved;
-- which security findings remain open. [INFERENCE nist-ai-rmf,nist-incident-response]
+- OpenTelemetry SDK and Collector;
+- Prometheus, Loki, Tempo, Grafana, and alert delivery;
+- a deterministic security scanner with structured output;
+- one configurable terminal-agent adapter. [PROPOSAL]
 
-Final deliverable: an **Operations and Security Audit Report** containing the observability data flow, dashboards/alerts, one automatically recovered incident, one escalated incident, one recurring security audit, remediation evidence, and residual risks.
+### Mention after the concept
 
-## What we should mention but not teach deeply
+- HolmesGPT for cross-source investigation;
+- K8sGPT for Kubernetes-specific analysis/explanation;
+- PR-Agent for pull-request workflows;
+- Semgrep MCP as an agent transport over deterministic scanning;
+- Snyk Agent Scan for extension/capability discovery;
+- Stakpak and similar packaged DevOps agents. [INFERENCE tool-repositories]
 
-The article should end with a production-maturity map, clearly separating the core module from important extensions:
+### Extension only
 
-- formal SLIs, SLOs, error budgets, and multi-window burn-rate alerts;
-- frontend real-user monitoring and synthetic browser checks;
-- infrastructure/database/host monitoring and capacity planning;
-- continuous profiling and eBPF-based observability;
-- sampling, telemetry retention, PII redaction, tenant isolation, and observability cost control;
-- progressive/canary deployments, feature flags, and automatic rollback;
-- load, stress, chaos, and disaster-recovery testing;
-- backups and tested restore procedures;
-- on-call rotations, status communication, incident command, and blameless postmortems;
-- SBOMs, provenance/signing, secret scanning, dependency/container/IaC scanning, penetration testing, and coordinated disclosure;
-- model/provider evaluation, prompt/version regression tests, and audit false-positive/false-negative measurement;
-- high availability for the observability and incident-response systems themselves. [INFERENCE nist-ssdf,nist-incident-response,alerting-sre,observability-pipeline]
+- LiteLLM for multi-provider gateway policy;
+- Ollama for local inference/data placement;
+- formal LLM red-team tools such as garak when the target is itself an LLM application. [INFERENCE practitioner-model-infrastructure,tool-repositories]
 
-These are not unimportant. They are excluded because implementing them would obscure the module’s main loop.
+Kubernetes is not a prerequisite. This module extends the Module 2 Docker/AWS system. [HUMAN]
 
-## Explicit non-goals
+## Important production practices we acknowledge but do not teach deeply
 
-- Do not teach Grafana, Prometheus, Loki, or Tempo as isolated product tours.
-- Do not build a general autonomous SRE agent.
-- Do not give a coding agent unrestricted cloud or production credentials.
-- Do not claim automatic root-cause certainty from telemetry correlation.
-- Do not auto-merge model-generated security fixes.
-- Do not send proprietary source or sensitive telemetry to a model without an explicit provider/retention policy.
-- Do not make Kubernetes a prerequisite; the Module 2 Docker/AWS deployment is sufficient.
+- SLIs/SLOs, error budgets, and multi-window burn-rate alerts;
+- synthetic browser monitoring, frontend real-user monitoring, profiling, and host/database capacity;
+- sampling, retention, PII redaction, tenant isolation, and observability cost control;
+- canary/progressive delivery, feature flags, chaos testing, backups, and restore drills;
+- on-call ownership, incident command, status communication, and blameless postmortems;
+- secrets/dependency/container/IaC scanning, SBOMs, build provenance/signing, penetration testing, and disclosure;
+- evaluation sets for model/provider upgrades and measurement of audit false positives/negatives;
+- high availability and metamonitoring for the observability/response system. [INFERENCE nist-ssdf,nist-incident-response,alerting-sre,observability-pipeline]
 
-## Feasibility boundary for the implementation pass
+These are excluded because they would obscure the workshop's main feedback loop, not because they are unimportant.
 
-The later implementation should demonstrate the complete control flow locally or in a safe staging environment. It does not need to build a production-grade incident platform. A small alert webhook/orchestrator may invoke Codex or Claude Code in headless mode, preserve structured outputs, call allowlisted scripts, and generate escalation artifacts. [PROPOSAL]
+## Guardrails and non-goals
 
-“Implement ourselves” means building this orchestration, policy, evidence, and audit layer around standard telemetry and CLI interfaces—not recreating Prometheus, a tracing backend, a security scanner, or a model API. [INFERENCE observability-pipeline,nist-ssdf]
+- Do not present dashboards or successful telemetry ingestion as proof of observability value.
+- Do not copy a large alert pack or page on every resource fluctuation.
+- Do not promise certain automated root-cause analysis.
+- Do not use prompt instructions or command regexes as authorization.
+- Do not give the agent unrestricted production/cloud credentials.
+- Do not auto-merge model-generated changes or let a model certify its own fix.
+- Do not send source or telemetry to a provider without an explicit data/retention decision.
+- Do not claim local inference is automatically private or production-ready.
+- Do not rebuild telemetry storage, static analysis, or model serving; build the orchestration, policy, evidence, and audit layer around standard interfaces. [INFERENCE mcp-security,practitioner-ai-operations,practitioner-model-infrastructure]
 
-## Decisions needed before approval
+## Research confidence and disagreements
 
-1. Is the working title and three-pillar story correct?
-2. Should browser/frontend tracing be optional, or must both frontend and backend be instrumented in the core lab despite the browser SDK’s experimental status?
-3. Are the two incident scenarios right: one safe rollback and one mandatory escalation?
-4. Should recurring audits use both model families in the required exercise, or show one required reviewer plus an optional independent second reviewer to control cost and account requirements?
-5. Is six sections realistic for the module duration, or should Sections 4.3 and 4.4 be one lesson?
+Primary standards and official documentation support the architecture, alert design, safe automation controls, and layered security review. Reddit/social research supports the relevance of the pain points but is anecdotal, self-selected, and sometimes promotional. It should appear in the article as practitioner experience, never as measured industry prevalence. [FACT practitioner-observability,practitioner-ai-operations,practitioner-ai-security]
+
+Open questions that remain product decisions rather than research gaps:
+
+1. Is the working title right?
+2. Is the prepared incident specifically a bad deployment rollback, or should it be a different bounded repair?
+3. Should the optional 30 minutes prioritize the ambiguous escalation plus agent capability audit, as recommended, or the second independent model audit?
+4. Should the workshop repository include both Codex and Claude adapters, or one reference adapter plus documented commands for the other?
+
+No public article or implementation should begin until this outline is discussed and explicitly approved. [HUMAN]
