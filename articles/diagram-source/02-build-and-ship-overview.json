@@ -1,0 +1,155 @@
+{
+  "title": "From frontend prototype to public app",
+  "description": "Build the frontend first, derive an API contract, add the backend and persistence, then containerize, deploy, and automate releases.",
+  "canvas": {
+    "width": 1040,
+    "height": 600,
+    "background": "#ffffff"
+  },
+  "layout": {
+    "type": "manual",
+    "card_width": 240,
+    "card_height": 90
+  },
+  "nodes": [
+    {
+      "id": "frontend",
+      "title": "Build the frontend",
+      "subtitle": "React + mock services",
+      "color": "blue",
+      "icon": "sparkles",
+      "x": 50,
+      "y": 55
+    },
+    {
+      "id": "contract",
+      "title": "Define the API",
+      "subtitle": "openapi.yaml contract",
+      "color": "purple",
+      "icon": "api",
+      "x": 400,
+      "y": 55
+    },
+    {
+      "id": "backend",
+      "title": "Build the backend",
+      "subtitle": "FastAPI + memory store",
+      "color": "amber",
+      "icon": "settings",
+      "x": 750,
+      "y": 55
+    },
+    {
+      "id": "connect",
+      "title": "Connect both sides",
+      "subtitle": "Switch mock to HTTP",
+      "color": "purple",
+      "icon": "api",
+      "x": 750,
+      "y": 255
+    },
+    {
+      "id": "persistence",
+      "title": "Add persistence",
+      "subtitle": "SQLite, then Postgres",
+      "color": "green",
+      "icon": "database",
+      "x": 400,
+      "y": 255
+    },
+    {
+      "id": "containers",
+      "title": "Containerize",
+      "subtitle": "App image + Compose",
+      "color": "amber",
+      "icon": "settings",
+      "x": 50,
+      "y": 255
+    },
+    {
+      "id": "deploy",
+      "title": "Deploy the infrastructure",
+      "subtitle": "AWS via CloudFormation",
+      "color": "green",
+      "icon": "database",
+      "x": 50,
+      "y": 455
+    },
+    {
+      "id": "pipeline",
+      "title": "Automate releases",
+      "subtitle": "Tests, deploy, OIDC",
+      "color": "purple",
+      "icon": "github",
+      "x": 400,
+      "y": 455
+    },
+    {
+      "id": "public",
+      "title": "Ship the public app",
+      "subtitle": "Every push to main",
+      "color": "green",
+      "icon": "check",
+      "x": 750,
+      "y": 455
+    }
+  ],
+  "edges": [
+    {
+      "from": "frontend",
+      "to": "contract",
+      "route": "straight",
+      "from_anchor": "right",
+      "to_anchor": "left"
+    },
+    {
+      "from": "contract",
+      "to": "backend",
+      "route": "straight",
+      "from_anchor": "right",
+      "to_anchor": "left"
+    },
+    {
+      "from": "backend",
+      "to": "connect",
+      "route": "straight",
+      "from_anchor": "bottom",
+      "to_anchor": "top"
+    },
+    {
+      "from": "connect",
+      "to": "persistence",
+      "route": "straight",
+      "from_anchor": "left",
+      "to_anchor": "right"
+    },
+    {
+      "from": "persistence",
+      "to": "containers",
+      "route": "straight",
+      "from_anchor": "left",
+      "to_anchor": "right"
+    },
+    {
+      "from": "containers",
+      "to": "deploy",
+      "route": "straight",
+      "from_anchor": "bottom",
+      "to_anchor": "top"
+    },
+    {
+      "from": "deploy",
+      "to": "pipeline",
+      "route": "straight",
+      "from_anchor": "right",
+      "to_anchor": "left"
+    },
+    {
+      "from": "pipeline",
+      "to": "public",
+      "route": "straight",
+      "from_anchor": "right",
+      "to_anchor": "left"
+    }
+  ]
+}

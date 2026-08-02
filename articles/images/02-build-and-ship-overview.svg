@@ -1,0 +1,114 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1040" height="600" viewBox="0 0 1040 600" role="img" aria-labelledby="title desc">
+  <title id="title">From frontend prototype to public app</title>
+  <desc id="desc">Build the frontend first, derive an API contract, add the backend and persistence, then containerize, deploy, and automate releases.</desc>
+  <defs>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="150%">
+      <feDropShadow dx="0" dy="4" stdDeviation="5" flood-color="#0f172a" flood-opacity="0.08"/>
+    </filter>
+    <marker id="arrow-purple" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 10 5 0 10Z" fill="#7c3aed"/></marker>
+    <marker id="arrow-blue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 10 5 0 10Z" fill="#2563eb"/></marker>
+    <marker id="arrow-amber" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 10 5 0 10Z" fill="#c2410c"/></marker>
+    <marker id="arrow-green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 10 5 0 10Z" fill="#15803d"/></marker>
+    <marker id="arrow-red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 10 5 0 10Z" fill="#dc2626"/></marker>
+    <marker id="arrow-gray" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 10 5 0 10Z" fill="#64748b"/></marker>
+    <symbol id="icon-api" viewBox="0 0 24 24">
+        <path d="m8 5-5 7 5 7M16 5l5 7-5 7M14 3l-4 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </symbol>
+    <symbol id="icon-check" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path d="m7.5 12 3 3 6-7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </symbol>
+    <symbol id="icon-database" viewBox="0 0 24 24">
+        <ellipse cx="12" cy="5" rx="8" ry="3" fill="none" stroke="currentColor" stroke-width="2"/>
+        <path d="M4 5v7c0 1.66 3.58 3 8 3s8-1.34 8-3V5M4 12v7c0 1.66 3.58 3 8 3s8-1.34 8-3v-7" fill="none" stroke="currentColor" stroke-width="2"/>
+      </symbol>
+    <symbol id="icon-github" viewBox="0 0 24 24">
+        <path fill="currentColor" d="M12 .7a11.5 11.5 0 0 0-3.64 22.41c.58.11.79-.25.79-.56v-2.23c-3.22.7-3.9-1.37-3.9-1.37-.53-1.34-1.29-1.7-1.29-1.7-1.05-.72.08-.71.08-.71 1.17.08 1.78 1.2 1.78 1.2 1.04 1.77 2.72 1.26 3.38.96.1-.75.4-1.26.74-1.55-2.57-.29-5.27-1.28-5.27-5.68 0-1.26.45-2.28 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.16 1.18a10.9 10.9 0 0 1 5.76 0c2.2-1.49 3.16-1.18 3.16-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.83 1.19 3.09 0 4.42-2.71 5.38-5.29 5.67.42.36.79 1.06.79 2.14v3.27c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .7Z"/>
+      </symbol>
+    <symbol id="icon-settings" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9 7 7M17 17l2.1 2.1M19.1 4.9 17 7M7 17l-2.1 2.1" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </symbol>
+    <symbol id="icon-sparkles" viewBox="0 0 24 24">
+        <path d="m12 2 1.4 4.6L18 8l-4.6 1.4L12 14l-1.4-4.6L6 8l4.6-1.4ZM19 14l.8 2.2L22 17l-2.2.8L19 20l-.8-2.2L16 17l2.2-.8ZM5 14l.8 2.2L8 17l-2.2.8L5 20l-.8-2.2L2 17l2.2-.8Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+      </symbol>
+    <style>
+      text { font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #172033; }
+      .node rect { stroke-width: 2; }
+      .node-title { font-size: 16px; font-weight: 750; text-anchor: middle; }
+      .node-title.icon-copy { text-anchor: start; }
+      .node-subtitle { font-size: 14px; font-weight: 500; fill: #64748b; text-anchor: middle; }
+      .eyebrow { font-size: 12px; font-weight: 750; letter-spacing: 1px; fill: #64748b; text-anchor: middle; }
+      .mention-icon { font-size: 27px; font-weight: 750; text-anchor: middle; }
+      .edge { fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+      .edge-label rect { stroke-width: 2; }
+      .edge-label text { font-size: 14px; font-weight: 750; text-anchor: middle; dominant-baseline: central; }
+      .center-annotation { fill: #f8fafc; stroke: #cbd5e1; stroke-width: 2; stroke-dasharray: 7 7; }
+      .center-title { font-size: 16px; font-weight: 800; letter-spacing: 1.3px; fill: #334155; text-anchor: middle; }
+      .center-detail { font-size: 13px; font-weight: 600; fill: #64748b; text-anchor: middle; }
+    </style>
+  </defs>
+  <rect width="1040" height="600" fill="#ffffff"/>
+
+  <path class="edge" d="M290 100L400 100" stroke="#64748b" marker-end="url(#arrow-gray)"/>
+  <path class="edge" d="M640 100L750 100" stroke="#64748b" marker-end="url(#arrow-gray)"/>
+  <path class="edge" d="M870 145L870 255" stroke="#64748b" marker-end="url(#arrow-gray)"/>
+  <path class="edge" d="M750 300L640 300" stroke="#64748b" marker-end="url(#arrow-gray)"/>
+  <path class="edge" d="M400 300L290 300" stroke="#64748b" marker-end="url(#arrow-gray)"/>
+  <path class="edge" d="M170 345L170 455" stroke="#64748b" marker-end="url(#arrow-gray)"/>
+  <path class="edge" d="M290 500L400 500" stroke="#64748b" marker-end="url(#arrow-gray)"/>
+  <path class="edge" d="M640 500L750 500" stroke="#64748b" marker-end="url(#arrow-gray)"/>
+
+  <g class="node node-blue" transform="translate(50 55)" filter="url(#shadow)">
+    <rect width="240" height="90" rx="18" fill="#eff6ff" stroke="#2563eb"/>
+    <use href="#icon-sparkles" x="16" y="31" width="28" height="28" color="#2563eb"/>
+    <text class="node-title icon-copy" x="56" y="51" textLength="168" lengthAdjust="spacingAndGlyphs">Build the frontend</text>
+    <text class="node-subtitle" x="120" y="76">React + mock services</text>
+  </g>
+  <g class="node node-purple" transform="translate(400 55)" filter="url(#shadow)">
+    <rect width="240" height="90" rx="18" fill="#f5f3ff" stroke="#7c3aed"/>
+    <use href="#icon-api" x="16" y="31" width="28" height="28" color="#7c3aed"/>
+    <text class="node-title icon-copy" x="56" y="51">Define the API</text>
+    <text class="node-subtitle" x="120" y="76">openapi.yaml contract</text>
+  </g>
+  <g class="node node-amber" transform="translate(750 55)" filter="url(#shadow)">
+    <rect width="240" height="90" rx="18" fill="#fff7ed" stroke="#c2410c"/>
+    <use href="#icon-settings" x="16" y="31" width="28" height="28" color="#c2410c"/>
+    <text class="node-title icon-copy" x="56" y="51">Build the backend</text>
+    <text class="node-subtitle" x="120" y="76">FastAPI + memory store</text>
+  </g>
+  <g class="node node-purple" transform="translate(750 255)" filter="url(#shadow)">
+    <rect width="240" height="90" rx="18" fill="#f5f3ff" stroke="#7c3aed"/>
+    <use href="#icon-api" x="16" y="31" width="28" height="28" color="#7c3aed"/>
+    <text class="node-title icon-copy" x="56" y="51" textLength="168" lengthAdjust="spacingAndGlyphs">Connect both sides</text>
+    <text class="node-subtitle" x="120" y="76">Switch mock to HTTP</text>
+  </g>
+  <g class="node node-green" transform="translate(400 255)" filter="url(#shadow)">
+    <rect width="240" height="90" rx="18" fill="#ecfdf5" stroke="#15803d"/>
+    <use href="#icon-database" x="16" y="31" width="28" height="28" color="#15803d"/>
+    <text class="node-title icon-copy" x="56" y="51">Add persistence</text>
+    <text class="node-subtitle" x="120" y="76">SQLite, then Postgres</text>
+  </g>
+  <g class="node node-amber" transform="translate(50 255)" filter="url(#shadow)">
+    <rect width="240" height="90" rx="18" fill="#fff7ed" stroke="#c2410c"/>
+    <use href="#icon-settings" x="16" y="31" width="28" height="28" color="#c2410c"/>
+    <text class="node-title icon-copy" x="56" y="51">Containerize</text>
+    <text class="node-subtitle" x="120" y="76">App image + Compose</text>
+  </g>
+  <g class="node node-green" transform="translate(50 455)" filter="url(#shadow)">
+    <rect width="240" height="90" rx="18" fill="#ecfdf5" stroke="#15803d"/>
+    <use href="#icon-database" x="16" y="31" width="28" height="28" color="#15803d"/>
+    <text class="node-title icon-copy" x="56" y="51" textLength="168" lengthAdjust="spacingAndGlyphs">Deploy the infrastructure</text>
+    <text class="node-subtitle" x="120" y="76">AWS via CloudFormation</text>
+  </g>
+  <g class="node node-purple" transform="translate(400 455)" filter="url(#shadow)">
+    <rect width="240" height="90" rx="18" fill="#f5f3ff" stroke="#7c3aed"/>
+    <use href="#icon-github" x="16" y="31" width="28" height="28" color="#7c3aed"/>
+    <text class="node-title icon-copy" x="56" y="51">Automate releases</text>
+    <text class="node-subtitle" x="120" y="76">Tests, deploy, OIDC</text>
+  </g>
+  <g class="node node-green" transform="translate(750 455)" filter="url(#shadow)">
+    <rect width="240" height="90" rx="18" fill="#ecfdf5" stroke="#15803d"/>
+    <use href="#icon-check" x="16" y="31" width="28" height="28" color="#15803d"/>
+    <text class="node-title icon-copy" x="56" y="51" textLength="168" lengthAdjust="spacingAndGlyphs">Ship the public app</text>
+    <text class="node-subtitle" x="120" y="76">Every push to main</text>
+  </g>
+</svg>

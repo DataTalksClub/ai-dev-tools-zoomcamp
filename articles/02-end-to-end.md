@@ -1,35 +1,34 @@
 # Build and Ship a Full-Stack App with AI Coding Assistants
 
-This is the second article in a series based on
+In the [first article](https://alexeyondata.substack.com/p/ai-native-development-specifications)
+in this series, I wrote about turning an idea into a specification that a
+coding agent can follow. But a specification is only the beginning. I also
+wanted to see how the same way of working holds up across an entire project.
+
+So for the second module of
 [AI Dev Tools Zoomcamp](https://github.com/DataTalksClub/ai-dev-tools-zoomcamp),
-the free course we run at DataTalks.Club.
+I took one app from an empty repo to a public URL. We run Zoomcamp for free at
+DataTalks.Club. Along the way, I added a database and tests, put the app in
+containers, and created a pipeline that deploys it on every push.
 
-The [first one](https://alexeyondata.substack.com/p/ai-native-development-specifications)
-was about the AI-native developer workflow: spec-driven development,
-context engineering, loop engineering, a speficialized team of agents,
-and graph engineering.
+The app is [snake-royale](https://github.com/alexeygrigorev/snake-royale), a
+multi-user version of the classic Snake game. You can sign in, compete on a
+leaderboard, and watch other people's games. It has a React frontend, a
+FastAPI backend, and one container that serves both.
 
-This one is about what that workflow
-produces - one app, from an empty repo to a public URL, with a
-database, tests, containers, and a pipeline that deploys on every push.
+I didn't write much of the code myself. Instead, I turned each step into a
+prompt for a coding assistant. I used
+[Codex](https://developers.openai.com/codex/), but I wrote the prompts in plain
+English. They also work with Claude Code and Copilot, as well as Cursor and
+Antigravity.
 
-This is a stripped-down version of a full-day workshop,
+I adapted this walkthrough from my full-day workshop,
 [Build and Deploy a Full-Stack App with AI Coding Assistants](https://aishippinglabs.com/workshops/full-stack-vibe-coding).
-Here I keep the prompts and the reasoning behind them, and skip the
-step-by-step. The finished app is
-[snake-royale](https://github.com/alexeygrigorev/snake-royale).
-
-We build the classic Snake game, made multi-user: a leaderboard, a page
-for watching other people's games, and login. React on the front,
-FastAPI on the back, one container serving both.
-
-We won't write much of it ourselves. Every step is a prompt to a coding
-assistant. I use [Codex](https://developers.openai.com/codex/), but the
-prompts are plain English and work the same in Claude Code, Copilot,
-Cursor, or Antigravity.
+I kept the prompts and the reasoning behind them, but left out the
+step-by-step instructions.
 
 
-## The order
+## Overview
 
 The stack matters less than the order we build in:
 
@@ -37,6 +36,9 @@ The stack matters less than the order we build in:
 2. An OpenAPI spec, derived from what that frontend calls.
 3. The backend, generated from the spec.
 4. Then persistence, containers, deployment, pipeline.
+
+![The build starts with a mock-backed frontend and ends with an automated
+deployment of the public app.](images/02-build-and-ship-overview.svg)
 
 Each step hands the next one a precise target instead of a guess. This
 is the same idea as the first article - specify, then build - applied
