@@ -53,8 +53,9 @@ The sessions are optional, but useful if you want to see the workflows in action
 | --- | --- | --- | --- | --- |
 | Workshop 1: AI-Native Developer Workflow | Wed, July 22, 09:00 CEST | How to use AI coding tools for planning, implementation, review, testing, and debugging without losing control of the code. | [Recording](https://www.youtube.com/watch?v=VUJxJGpaDEs) | [Substack](https://alexeyondata.substack.com/p/ai-native-development-specifications) |
 | Workshop 2: Build and Ship an AI-Assisted Full-Stack App | Mon, August 3, 15:00 CEST | How to move from product spec to frontend, backend, OpenAPI contract, tests, Docker, deployment, and CI/CD. | [Recording](https://www.youtube.com/watch?v=x9dq5nBpDg8) | |
-| Workshop 3: Coding Agent Capabilities | Mon, August 17, 14:00 CEST | How MCP, skills, plugins, hooks, subagents, and custom agents fit into practical coding-agent workflows. | [RSVP](https://luma.com/ap4l3qlj) | |
+| Workshop 3: Test, Containerize, and Deploy an AI-Assisted App | To be announced | How to add integration tests, move from SQLite to Postgres in containers, set up CI, deploy the app, and ship every merge automatically. | Coming soon | |
 | Workshop 4: Open-Source AI Tools for Security, Audit, and DevOps | Tue, August 18, 14:00 CEST | How to use AI-assisted review, security scanning, audit, diagnostics, and DevOps tools around a project. | [RSVP](https://luma.com/ycsfxigi) | |
+| Workshop 5: Coding Agent Capabilities | Mon, August 17, 14:00 CEST | How MCP, skills, plugins, hooks, subagents, and custom agents fit into practical coding-agent workflows. | [RSVP](https://luma.com/ap4l3qlj) | |
 | Pre-Course Live Q&A | Mon, August 24, 17:00 CEST | Bring questions about prerequisites, tools, homework, deadlines, projects, peer review, and certificates. | [RSVP](https://luma.com/a8qa5s2s) | |
 | Course Launch | Mon, August 31, 17:00 CEST | Start the cohort with the course overview, first-week workflow, community links, and live questions. | [RSVP](https://luma.com/tsiusx8s) | |
 
