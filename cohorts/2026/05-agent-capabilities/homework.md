@@ -151,7 +151,7 @@ Now you can ask your assistant to implement it as a tool in main.py - and voila,
 
 ## Homework URL
 
-Commit your code to GitHub. You can create a repository for this course. Within the repository, create a folder, e.g. "03-mcp", where you put the code.
+Commit your code to GitHub. You can create a repository for this course. Within the repository, create a folder, e.g. "05-agent-capabilities", where you put the code.
 
 Use the link to this folder in the homework submission form.
 

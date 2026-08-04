@@ -33,7 +33,7 @@ Add the following to `config.toml`:
     command = "uv"
     args = [
       "--directory",
-      "/path/to/ai-dev-tools-zoomcamp/03-mcp",
+      "/path/to/ai-dev-tools-zoomcamp/05-agent-capabilities",
       "run",
       "python",
       "main.py"

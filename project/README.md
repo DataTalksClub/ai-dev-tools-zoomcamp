@@ -31,7 +31,7 @@ security/
 ops/
 ```
 
-If you complete Module 3, it should also include an agent extension pack:
+If you complete Module 5, it should also include an agent extension pack:
 
 ```text
 agent-capabilities/

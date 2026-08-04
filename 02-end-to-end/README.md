@@ -5,7 +5,7 @@
 
 ## Overview
 
-In this module, you build an end-to-end application with AI assistance. The default project remains a small Snake Arena app because it is visual, interactive, and still requires the main parts of a real system:
+In this module, you build a working end-to-end application with AI assistance. The default project remains a small Snake Arena app because it is visual, interactive, and still requires the main parts of a real system:
 
 - product spec
 - frontend
@@ -13,11 +13,10 @@ In this module, you build an end-to-end application with AI assistance. The defa
 - backend
 - database
 - tests
-- Docker
-- deployment
-- CI/CD
 
 The goal is not to let an AI tool build everything unchecked. The goal is to practice a controlled workflow where AI helps you move faster and you verify each step.
+
+The module ends with an app that runs on your machine: a frontend and a backend that talk to each other over a defined contract, with data persisted in SQLite. Everything needed to put it in front of other people — integration tests, containers, CI, deployment, and CI/CD — is [Module 3](../03-deployment/).
 
 Reference app from the previous version:
 
@@ -102,44 +101,26 @@ Use the OpenAPI contract as the source of truth for backend behavior.
 
 ### Lesson 2.5 — Database Support
 
+Replace the in-memory store with a real database so data survives a restart.
+
 Topics:
 
-- SQLite for local tests
-- Postgres for Docker/production
+- SQLite for local development
 - SQLAlchemy or Django ORM
-- migrations
-- integration tests
+- configuring the connection through an environment variable
+- staying database-agnostic so Postgres can be added later without a rewrite
 
-### Lesson 2.6 — Containerization
+Teaching point: tell the agent up front that another database will replace this one. Otherwise the first version quietly depends on SQLite-specific behavior.
 
-Deliverables:
+### Lesson 2.6 — Tests
 
-```text
-Dockerfile
-docker-compose.yml
-.env.example
-```
+Cover the behavior described in the spec and the contract:
 
-### Lesson 2.7 — Deployment
-
-Suggested platforms:
-
-- Render
-- Fly.io
-- Railway
-- Cloud Run
-
-Keep the default deployment path simple and reproducible.
-
-### Lesson 2.8 — CI/CD
-
-Required checks:
-
-- backend tests
+- unit tests for the key backend endpoints
 - frontend tests
-- integration tests if feasible
-- build check
-- deployment trigger
+- what the tests would catch if an agent rewrote the code tomorrow
+
+Integration tests against a production-like database come in [Module 3](../03-deployment/).
 
 ## Module Deliverables
 
@@ -151,13 +132,11 @@ AGENTS.md or equivalent
 frontend/
 backend/
 openapi.yaml
-docker-compose.yml
 tests/
-.github/workflows/
 docs/ai-usage-report.md
 ```
 
-The app should be deployed, tested, and reproducible from the README.
+The app should run locally from the README, persist data in SQLite, and pass its own tests.
 
 ## Previous Cohort Materials
 

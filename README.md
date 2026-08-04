@@ -160,15 +160,44 @@ You will:
 - Build a frontend prototype with AI assistance.
 - Define the API contract with OpenAPI.
 - Implement a FastAPI or Django backend.
-- Add database support.
-- Add unit and integration tests.
-- Containerize the app with Docker.
-- Deploy the app.
-- Add CI/CD where possible.
+- Add database support with SQLite, without locking the code to it.
+- Add unit tests for the behavior the spec describes.
 
-Outcome: a deployed full-stack application with tests, Docker setup, OpenAPI contract, and reproducible development instructions.
+Outcome: a working full-stack application with an OpenAPI contract, tests, and reproducible development instructions.
 
-### [Module 3: Coding Agent Capabilities: MCP, Skills, Plugins, and Custom Agents](03-mcp/)
+### [Module 3: Test, Containerize, and Deploy an AI-Assisted App](03-deployment/)
+
+Take the app from your machine to a public URL, with the checks that make shipping safe.
+
+You will:
+
+- Write integration tests that exercise the API, the database, and the frontend together.
+- Containerize the app and move from SQLite to Postgres.
+- Set up CI so every pull request is linted, tested, and built.
+- Deploy the app to a platform such as Render, Fly.io, Railway, or Cloud Run.
+- Wire up CI/CD so merging to the main branch ships the change.
+
+Outcome: a deployed, containerized application that redeploys automatically when tests pass.
+
+### [Module 4: Operate an AI-Built App: Observability, Agents, and Security Audits](04-devops/)
+
+A deployed app is not an operable one. Build the loop that tells you when it breaks, responds to the failure, and audits both the code and the responder.
+
+You will:
+
+- Instrument one important request with OpenTelemetry and follow it through a metric, a trace, a log, and a deployment version.
+- Send telemetry through a collector into Prometheus, Loki, Tempo, and Grafana.
+- Write one alert that represents sustained user impact and carries enough context to act on.
+- Collect a bounded evidence packet and run a coding agent as a read-only first responder.
+- Enforce outside the model whether a known rollback may run or a human must take over.
+- Run a recurring security audit that combines a deterministic scanner, model reasoning, and human validation.
+- Inventory what your responder can read, write, reach, and spend.
+
+Example tools include OpenTelemetry, Grafana, Prometheus, Semgrep, PR-Agent, Snyk Agent Scan, K8sGPT, HolmesGPT, LiteLLM, and Ollama.
+
+Outcome: an operations and security package that lets you reconstruct any incident from alert to recovery.
+
+### [Module 5: Coding Agent Capabilities: MCP, Skills, Plugins, and Custom Agents](05-agent-capabilities/)
 
 Learn how modern coding agents are extended, customized, and connected to external tools.
 
@@ -182,22 +211,6 @@ You will:
 - Discuss local vs. remote tools, permissions, and security risks.
 
 Outcome: project-specific agent capabilities that make AI tools more useful and safer inside your development workflow.
-
-### [Module 4: Open-Source AI Tools for Security, Audit, and DevOps](04-ai-security-audit-devops/)
-
-Use open-source AI tools around the production workflow, not only during coding.
-
-You will:
-
-- Use AI-assisted pull request review and audit tools.
-- Connect AI workflows to security scanning and policy checks.
-- Explore agent, MCP, and skill security scanning.
-- Use AI-assisted diagnostics for infrastructure and incidents.
-- Discuss AI tool governance, secrets, data exposure, and auditability.
-
-Example tools include PR-Agent, Semgrep MCP, Snyk Agent Scan, K8sGPT, LiteLLM, Ollama, and related open-source tooling.
-
-Outcome: a security, audit, and DevOps hardening package for your final project.
 
 ## Final Project
 

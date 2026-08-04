@@ -1,4 +1,4 @@
-# Module 3 — Coding Agent Capabilities: MCP, Skills, Plugins, and Custom Agents
+# Module 5 — Coding Agent Capabilities: MCP, Skills, Plugins, and Custom Agents
 
 > [!NOTE]
 > This 2026 module page is currently a draft. You can use it to see what we are preparing, but the final videos, exercises, homework, and requirements may change before the cohort starts.
@@ -27,7 +27,7 @@ Different products use different names for these capabilities. For example, one 
 
 ## Lessons
 
-### Lesson 3.1 — How Coding Agents Work
+### Lesson 5.1 — How Coding Agents Work
 
 Goal: understand the agent loop.
 
@@ -46,7 +46,7 @@ iteration
 diff/PR output
 ```
 
-Lab: use the Module 2 app and ask an agent to:
+Lab: use the app you built in Modules 2 and 3 and ask an agent to:
 
 - understand the repo
 - summarize the architecture
@@ -65,7 +65,7 @@ docs/agent-workflow-notes.md
 AGENTS.md or equivalent project instructions
 ```
 
-### Lesson 3.2 — Project Instructions and Context Engineering
+### Lesson 5.2 — Project Instructions and Context Engineering
 
 Goal: create project-level context that agents can reuse.
 
@@ -92,7 +92,7 @@ The exact file names depend on the tool. The content should be portable:
 - review checklist
 - security and permission boundaries
 
-### Lesson 3.3 — MCP as One Integration Capability
+### Lesson 5.3 — MCP as One Integration Capability
 
 Goal: teach MCP as a tool/context protocol, not as the whole module.
 
@@ -141,7 +141,7 @@ docs/mcp-tools.md
 
 Teaching point: MCP should expose useful capabilities with safe boundaries. It should not mean giving the agent access to everything.
 
-### Lesson 3.4 — Reusable Workflows: Skills, Commands, Rules, and Recipes
+### Lesson 5.4 — Reusable Workflows: Skills, Commands, Rules, and Recipes
 
 Goal: teach when repeated instructions should become a reusable capability.
 
@@ -176,7 +176,7 @@ agent-capabilities/debug-ci-failure/
 docs/reusable-workflows.md
 ```
 
-### Lesson 3.5 — Hooks and Guardrails
+### Lesson 5.5 — Hooks and Guardrails
 
 Goal: show that agent workflows can be controlled and automated.
 
@@ -199,7 +199,7 @@ docs/hooks-and-guardrails.md
 
 Teaching point: hooks turn "please be careful" into repeatable guardrails.
 
-### Lesson 3.6 — Specialized Subagents
+### Lesson 5.6 — Specialized Subagents
 
 Goal: teach specialized agents with scoped context and permissions.
 
@@ -225,7 +225,7 @@ docs/subagents.md
 
 Teaching point: subagents are a permission and context management tool, not just a multi-agent feature.
 
-### Lesson 3.7 — Plugins and Extension Packaging
+### Lesson 5.7 — Plugins and Extension Packaging
 
 Goal: teach when standalone project configuration should become a shareable package.
 
@@ -251,7 +251,7 @@ plugins/ai-devtools-agent-pack/
 docs/plugin-usage.md
 ```
 
-### Lesson 3.8 — Creating Custom Agents
+### Lesson 5.8 — Creating Custom Agents
 
 Goal: teach when to build a custom agent instead of using an interactive coding agent.
 
@@ -276,7 +276,7 @@ docs/custom-agent-design.md
 
 ## Module Deliverable: Agent Extension Pack
 
-Students extend their Module 2 app with an agent extension pack.
+Students extend the app they built in Modules 2 and 3 with an agent extension pack.
 
 Minimum requirements:
 
@@ -335,4 +335,4 @@ The previous MCP-focused version of this module is archived here:
 
 - [2025 archived Module 3](../cohorts/2025/03-mcp/)
 - [MCP client configuration notes](clients.md)
-- [2026 homework](../cohorts/2026/03-mcp/homework.md)
+- [2026 homework](../cohorts/2026/05-agent-capabilities/homework.md)
