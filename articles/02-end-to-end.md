@@ -1,70 +1,89 @@
 # Build and Ship a Full-Stack App with AI Coding Assistants
 
-In the [first article](https://alexeyondata.substack.com/p/ai-native-development-specifications)
-in this series, I wrote about turning an idea into a specification that a
-coding agent can follow. But a specification is only the beginning. I also
-wanted to see how the same way of working holds up across an entire project.
+This is the second article in a series for [AI Dev Tools Zoomcamp](https://github.com/DataTalksClub/ai-dev-tools-zoomcamp), the free course we run at DataTalks.Club.
 
-So for the second module of
-[AI Dev Tools Zoomcamp](https://github.com/DataTalksClub/ai-dev-tools-zoomcamp),
-I took one app from an empty repo to a public URL. We run Zoomcamp for free at
-DataTalks.Club. Along the way, I added a database and tests, put the app in
-containers, and created a pipeline that deploys it on every push.
+In the [first article](https://alexeyondata.substack.com/p/ai-native-development-specifications), I wrote about turning an idea into a specification. The specification is only the beginning. In this article, we will create an end-to-end application from scratch. We will cover both frontend and backend, add a database and package everything in Docker.
 
-The app is [snake-royale](https://github.com/alexeygrigorev/snake-royale), a
-multi-user version of the classic Snake game. You can sign in, compete on a
-leaderboard, and watch other people's games. It has a React frontend, a
-FastAPI backend, and one container that serves both.
+We will create an application for system-design interviews. As an interviewer, you create a session and share the link with the interviewee. They can create diagrams in the app, and you see the changes in real time.
 
-I didn't write much of the code myself. Instead, I turned each step into a
-prompt for a coding assistant. I used
-[Codex](https://developers.openai.com/codex/), but I wrote the prompts in plain
-English. They also work with Claude Code and Copilot, as well as Cursor and
-Antigravity.
+This article is a draft and will be updated after the workshop.
 
-I adapted this walkthrough from my full-day workshop,
-[Build and Deploy a Full-Stack App with AI Coding Assistants](https://aishippinglabs.com/workshops/full-stack-vibe-coding).
-I kept the prompts and the reasoning behind them, but left out the
-step-by-step instructions.
+You can find the code in the [interview-canvas-share](https://github.com/alexeygrigorev/interview-canvas-share) repository.
+
+It's based on the workshop I did for AI Shipping Labs:
+[Build and Deploy a Full-Stack App with AI Coding Assistants](https://aishippinglabs.com/workshops/full-stack-vibe-coding). There we built a multi-user Snake game.
+Here, we create a system design canvas.
+
 
 
 ## Overview
 
-The stack matters less than the order we build in:
+Like in the [previous article](https://alexeyondata.substack.com/p/ai-native-development-specifications), we start with an idea. As this is only
+an idea, we turn it into a specification using ChatGPT.
 
-1. The frontend, running on a fake backend.
-2. An OpenAPI spec, derived from what that frontend calls.
-3. The backend, generated from the spec.
-4. Then persistence, containers, deployment, pipeline.
+From there, we start building:
 
-![The build starts with a mock-backed frontend and ends with an automated
-deployment of the public app.](images/02-build-and-ship-overview.svg)
+1. Generate a frontend that uses mocked backend calls.
+2. Establish backend-fronend contract by creating OpenAPI specifications from the frontend service layer.
+3. Implement the FastAPI backend, connect it to the frontend, and test the application.
+4. Add persistence with SQLite and SQLAlchemy.
+5. Package the app in Docker.
 
-Each step hands the next one a precise target instead of a guess. This
-is the same idea as the first article - specify, then build - applied
-to a whole app rather than one task.
+At each stage we get something concrete that we can test:
+
+- First we define the specication and make sure it refects what we want to build.
+- After that, we use the specs to create a frontend prototype that we can interact with. We mock backend calls so we can test the idea.
+- Then we connect the frontend to the backend. We start with an in-memory store
+  to make sure the frontend-backend connection works.
+- Finally, we add a database and package everything with Docker.  
+
+At the end we get a working application packaged in Docker that we can deploy anywhere.
+
+
+## Start with a specification
+
+Before building the frontend, we need to describe the application precisely. If we don't do it, we will get something that works but we don't need.
+
+For our application, we need to specify:
+
+- who creates an interview session
+- how a candidate joins it
+- which components they can place on the canvas
+- how both people see changes in real time
+
+This is called "Specification-Driven Development". We don't spend a lot of time here because it was the focus of the [first article](https://alexeyondata.substack.com/p/ai-native-development-specifications).
+
+You can see the result [here](https://github.com/alexeygrigorev/interview-canvas-share/blob/main/docs/spec.md).
 
 
 ## Frontend first
 
-We start with the UI because it's the part we can judge by looking at
-it. Once it runs, it tells us what the backend has to support.
+Now we have the specification, but it's only text. There are multiple options of what you can do next:
 
-I use [Lovable](https://lovable.dev/), which generates a React app from
-one prompt. v0, Bolt, or a coding assistant writing React directly all
-work.
+- Focus on the database layer, define the entities, and work all the way up through backend to frontend
+- Alternatively, you can start with speficying OpenAPI and define how backend and frontend interact and build both independently from there
+- Or you can focus on the frontend first and then build the rest
+
+All these approaches make sense and have their pros and cons.
+
+For simple projects that you're building alone, I recommend starting with frontend. You can quickly judge if you're moving in the right direction, and if this can solve your problem or not.
+
+Treat it as a way to test your idea and your specification, and do it before you build the rest of the application. 
+
+For this step I use [Lovable](https://lovable.dev/), which generates a React app from
+one prompt. Replit, v0, and Bolt are similar tools that you can use too.
+
+Alternatively, you can start with coding assistants directly and ask them to create a React app (or whatever technology you want).
+
+I use Lovable because it creates really nice designs. Also, I'm not a frontend engineer and I don't know much about the frontend world. Lovable makes technology choices for me that I know will make sense, while a coding agent can select something arbitrary.
+
+Now open any tool of your choice and give it this prompt:
+
 
 ```text
-Create an interactive Snake game with two modes:
+Create a system design interview application. 
 
-- walls (you die hitting a wall)
-- pass-through (you wrap around the edges)
-
-Make it multi-user. Add
-
-- a leaderboard showing top scores per mode
-- a page to watch other players' active games
-- login and signup screens
+[Paste the ChatGPT-generated specification here.]
 
 Centralize every backend call in one services layer, and create a mock
 implementation of it so the whole app runs without a real backend.
@@ -72,34 +91,53 @@ implementation of it so the whole app runs without a real backend.
 Add tests.
 ```
 
-The last two paragraphs are the ones people skip, and they're the ones
-that make the rest work.
+This part is quite important:
 
-One services layer means every backend call lives in one place, so
-switching from fake to real later is a one-line change. A mock
-implementation means the app runs before the backend exists - we can
-play the game, submit a score, and sign up while the server is still
-hypothetical.
+> Centralize every backend call in one services layer, and create a mock
+> implementation of it so the whole app runs without a real backend.
 
-Ask for both explicitly, whatever tool you use.
+Without it, the agent can do something arbirary, but here we explicitly say that we
+want a mock service. Later, it will become the single point of integration of our frontend with backend. And because we mock it, it will work from the beginning.
 
-What comes back has a `services/` folder with `mock.ts`, `http.ts`, and
-an `index.ts` that picks between them. Right now it points at the mock.
+Next, save it to GitHub. If you use Lovable:
 
-Get the code out of the generator and into GitHub early, run it
-locally, and commit at the end of every step. When the assistant takes
-a wrong turn - and it will, around the Docker part - you want a working
-commit to go back to.
+- Select the plus icon in the bottom-left corner
+- Connect your GitHub account.
+- Lovable creates a private repository. I usually change it to public.
 
 
-## Give the assistant the house rules
+## Move the frontend into the project
 
-Assistants guess at the tools we use, and the guesses aren't always
-right. Ours would reach for pip, write a `requirements.txt` we don't
-want, and install packages into the global Python.
+Next, we can clone the repository locally. For the rest of the project, I want this setup:
 
-An `AGENTS.md` at the repo root fixes that. The assistant reads it on
-startup, from anywhere in the project:
+```text
+/backend     # backend application and its tests
+/docs        # supporting documentation
+/frontend    # frontend application
+AGENTS.md    # instructions for coding agents
+openapi.yaml # API agreement
+```
+
+So let's create these folders and move all the frontend stuff to "frontend", and the specification we created to "/docs/spec.md".
+
+After we re-arranged the files, commit the changes.
+
+At this point, you should also run the application locally and test that things work
+the way you want. If they don't, use a coding agent to fix it.
+
+To run a project you exported from Lovable:
+
+```bash
+cd frontend
+npm i
+npm run dev
+```
+
+## AGENTS.md
+
+We already discussed the importance of `AGENTS.md` in the first article.
+
+Let's create one for this project too. Place it in the repository root:
 
 ```text
 for backend, use uv for dependency management. a few useful commands:
@@ -111,122 +149,121 @@ uv run python <PYTHON-FILE>
 regularly commit code to git
 ```
 
-It starts short and grows. Watch for the assistant repeating a mistake
-or hunting for something it should already know, and write the answer
-down.
+## OpenAPI Specifications
 
+When creating frontend, we asked the AI assistant to put everything in a centralized 
+service layer. Later we will replace it with actual calls to backend.
 
-## The spec between the two sides
+But now we should define the specification - the agreement between frontend and backend. We will use [OpenAPI](https://learn.openapis.org/introduction.html) for that.
 
-The services layer already lists every call the UI makes. Before
-building anything that answers them, we write them down:
+This specification gives explicit information about the endpoints, paths, request bodies, response bodies, and authentication rules.
+
+Let's create it:
 
 ```text
 Read the frontend's API client in frontend/
 
-Create openapi.yaml at the repo root that specifies the backend this frontend
-expects: every endpoint, method, path, request body, response body, and which
-endpoints need authentication
+Create openapi.yaml at the repository root.
+
+Specify the backend this frontend expects:
+every endpoint, method, path, request body, response body, and which
+endpoints need authentication.
 ```
 
-You can skip this step. I wouldn't. It takes a few minutes and pays
-back three times:
+You can skip this step. But I wouldn't recommend it.
 
-- The backend gets a precise target instead of being inferred from
-  frontend code.
-- We can argue about the API while it's still cheap to change, before
-  anything depends on it.
-- Every later disagreement between the two sides has one document that
-  settles it.
+It takes a few minutes, but has many benefits.
 
-It also saves tokens. When we change an endpoint, the assistant reads
-the agreed spec instead of reverse-engineering the frontend again.
+The backend gets a precise target instead of being inferred from
+frontend code. Not only we save tokens this way, but also get a clear 
+picture of what exactly the backend needs.
+
+You can see the resulting [openapi.yaml](https://github.com/alexeygrigorev/interview-canvas-share/blob/main/openapi.yaml).
 
 
-## The backend from the spec
+## The Backend
 
-We start with an in-memory store, not a database. The first thing worth
-proving is that the two sides can talk. A database at this point is one
-more thing that can be wrong.
+Now we have the OpenAPI specs and we can use this file to create the backend. We will use Python and FastAPI for that.
+
+When I start with frontend, I use a mocked backend and then replace it with a real one. In the same way, for FastAPI backends, I start with a mocked database, and then later change it.
+
+I do that because I want to make sure the frontend-backend connection works, and until it's smooth, I don't worry about the persistance. 
+
+Let's ask the coding assitant to implement it:
 
 ```text
-Build a FastAPI backend in backend/ that implements the openapi.yaml spec
-
-Use an in-memory store for now (no database yet) and seed it
-with a few fake users, scores, and active games so the frontend has something
-to show
-
-Add authentication with hashed passwords and bearer tokens for the
-endpoints that need it
-
+Build a FastAPI backend in backend/ that implements the openapi.yaml spec.
+Use an in-memory store and seed it with data so the frontend has something to show.
+Add authentication with hashed passwords and bearer tokens for the endpoints
+that need it.
 Split the code into modules - routers, models, store, auth
-
 Write tests
 ```
 
-FastAPI publishes interactive docs at `/docs`, generated from the
-routes that actually exist. Diffing that against `openapi.yaml`
-confirms the backend implements the API we agreed on. From here the
-running app is the ground truth.
+## Makefile
 
+When it's ready, you can run the application. Normally, for FastAPI, the command is something like that:
 
-## Connecting them
-
-The switch is anticlimactic, which is the point of having asked for a
-services layer:
-
-```text
-Switch the frontend to use the real backend client
+```bash
+cd backend
+uv run uvicorn backend.main:app --reload --port 8091
 ```
 
-**Expect to debug here.** This is where the two sides disagree, and
-it's normal: a field named differently on each side, a 422 from a
-request body that doesn't match, a missing trailing slash. Read the
-error in the browser console or the server log, hand it to the
-assistant, and ask for the fix. When they disagree, let `openapi.yaml`
-settle it and change whichever one diverged.
+I'll use port 8091 but you can replace it with any other port you like.
 
-Somewhere around here, collect the commands into a `Makefile` -
-install, run each side, run each test suite. Keeping the test targets
-separate matters later, when the pipeline runs them as separate jobs.
+But for me it's always hard to remember these commands, so I ask the coding assistant to create a Makefile:
+
+```text
+Create a Makefile so I can easily run it.
+```
+
+Then running it is as simple as 
+
+```bash
+make run
+```
+
+When it's running, open http://localhost:8091/docs in the browser. You will see the 
+OpenAPI specification of the implemented backend.
+
+We can compare it with the actual specs. From this point we no longer need the original `openapi.yaml` - the one that's generated by FastAPI is enough.
 
 
-## Persistence
+## Connecting Frontend and Backend
 
-Every restart still wipes the accounts and scores.
+Now when we have a running backend, we can connect it to the frontend:
+
+```text
+Switch the frontend to use the real backend client. 
+```
+
+It most likely won't work from the first try. You will hist CORS errors and probably some others. 
+
+It's also time to test the application thoroughly. Open two browser windows:
+
+- Createa session in one and get the join link
+- Use the join link in the second window 
+- Interact with the system in the second window and see the changes being propagated to the first one.
+
+If something doesn't work, ask the agent to fix it.
+
+## Database
+
+At this point we have a working application with frontend and backend. They can connect to each other. But because we don't have a real database yet, when the backend is restarted, all the data is lost. 
+
+Let's fix it:
 
 ```text
 Replace the in-memory store with a database. Use SQLite and SQLAlchemy
-
 Use an environment variable to configure which DB the server should connect to
-
 Make it database-agnostic - later we will add support for other databases (e.g. postgres)
 ```
 
-The last two lines are the whole trick. Three steps later, moving to
-Postgres is adding a driver and changing one environment variable -
-no code change. Cheap instructions when you ask for them, expensive
-when you don't.
+There are a few important parts in this prompt:
 
-Then a second test suite, because the existing ones don't cover what
-just changed:
-
-```text
-Add integration tests in a tests_integration/ folder that run against a
-temporary SQLite database
-
-They should exercise full flows:
-
-- sign up
-- log in
-- submit a score
-- read it back from the leaderboard
-```
-
-The unit tests are fast and isolated, and they prove a single request
-behaves. They don't prove the app works when data has to survive across
-separate database connections - which is exactly what was broken when
-the store was in memory. Fast tests first, slow ones after.
+- First, I ask it to use SQLite. It's a very nice and lightweight database for testing the application locally.
+- At some point, you'll want to switch to a different database for production, e.g. Postgres. Using SQLAlchemy makes this process very simple.
+- But we also mention that explicitly so the agent doesn't use any SQLite specific features in the first version.  
 
 
 ## Containers
@@ -239,105 +276,23 @@ Create a Dockerfile that builds the frontend with Node, then builds a Python
 image with backend with frontend static files. Backend should serve the frontend.
 ```
 
-This is where the workshop went wrong, and it's the most useful part of
-it. The frontend framework's build produces a server bundle, not the
-static files we assumed, so the first image doesn't work. In the live
-session a participant who does frontend for a living spotted it: we
-need the static build, not the server one.
+The first image did not work because the frontend build did not produce the
+static files the backend expected. Ask the assistant to look at the generated
+frontend setup, adjust the build, and test the running container through its
+public port.
 
-Given that hint, the assistant adds a prerender step, points the
-backend at the output, then installs Playwright and clicks through the
-running container to confirm the app loads.
-
-You don't need to understand that framework's build to get past this,
-and neither did we. What matters is the loop: the first attempt fails,
-you feed back the error and what you know, and it converges. Knowing
-enough to say "that's a server bundle, not a static build" is the part
-that stays yours.
-
-Then Postgres and Compose, which are short because of the groundwork:
-
-```text
-Write a compose.yaml with a postgres service and the app service built from
-the Dockerfile
-
-Give Postgres a named volume so data survives
-
-Make the app wait for Postgres to be ready
-```
-
-`docker compose up --build` and the full stack runs. If you stop here
-you have a complete app - frontend, backend, database, tests,
-containers. Everything after is about putting it somewhere public.
-
-
-## Deploying it
-
-A managed host is the quickest way to a public URL for a proof of
-concept. We tried that first, hit free-tier restarts, and moved to AWS:
-Aurora Serverless for the database, a single EC2 instance for the
-container.
-
-The fundamental here isn't AWS. It's that the infrastructure gets
-written down as code rather than clicked together:
-
-```text
-Create a CloudFormation template that deploys this app to AWS, with:
-
-- an Aurora PostgreSQL (Serverless v2) database
-- the database user and password stored in Secrets Manager
-- a single EC2 instance that reads those secrets at boot, builds the image, and
-  runs the container with docker
-- a public URL for the app
-- an idempotent deploy: re-running it must not rotate the secrets
-```
-
-Terraform, CDK, and Pulumi do the same job. What you get either way is
-a deployment you can re-run, review, and delete in one command - and
-you will want to delete it, because a stack like this runs to a couple
-of dollars a day.
-
-
-## The pipeline, and taking the keys away
-
-Deploying by hand works. Across several projects, remembering the exact
-steps for this one doesn't.
-
-There's a second reason, specific to building this way. Once you're
-past the proof of concept, you don't want agents reaching into your
-cloud account. You can't be sure what they'll do there - dropping the
-database, for one. Experiment with the infrastructure early, work it
-out, then take that access away and let the agents ship only through
-CI/CD.
-
-```text
-Create a GitHub Actions workflow.
-
-- first run frontend and backend tests in parallel
-- then backend integration tests
-- then deploy
-
-For deployment, authenticate with OIDC - don't create a user.
-```
-
-Fast tests in parallel, integration tests once they pass, deploy only
-after that and only on `main`. OIDC means the pipeline authenticates
-with short-lived credentials, so no long-lived key sits in the repo.
-
-Once it runs, delete the admin key you used for the first deploy.
-
+You do not need to know every frontend build tool in advance. You do need to
+test the generated artifact and give the assistant the observed failure.
 
 ## What we left out
 
-A day-long build means taking the simplest option at several points. In
-rough order of when it starts to matter: restrict CORS to your own
-domain, persist sessions so redeploys don't log everyone out, add
-migrations before the schema changes under live data, move to a managed
-database and container host, and replace polling with WebSockets if you
-want spectating to be live.
+A working container is not a production deployment. The session leaves out
+Postgres, deployment, and CI/CD. It also leaves out complete authentication and
+authorization, database migrations, and CORS rules restricted to the deployed
+frontend domain.
 
-Each one is a good next prompt. Same workflow: say what you want, name
-the file, read the result against what you know.
+Each one is a good next prompt. Say what you want, name the file, read the
+result against what you know, and test it in the environment where it will run.
 
 
 ## What changes after the first version
@@ -354,10 +309,9 @@ each change written down before anyone builds it, and separate agents
 for grooming, implementing, and verifying, so nothing grades its own
 work.
 
-The material for that is already here. `openapi.yaml` specifies the
-API, the two test suites turn acceptance criteria into checks, and the
-pipeline ships whatever passes. A new feature extends the spec first,
-and the code follows.
+The material for that is already here. `openapi.yaml` specifies the API, and
+the test suites turn acceptance criteria into checks. A new feature extends
+the specification first, and the code follows.
 
 
 ## Next in the series
@@ -375,5 +329,5 @@ and the next cohort are here:
 [AI Dev Tools Zoomcamp](https://github.com/DataTalksClub/ai-dev-tools-zoomcamp).
 It's free.
 
-The full workshop, with every step written out, is
-[Build and Deploy a Full-Stack App with AI Coding Assistants](https://aishippinglabs.com/workshops/full-stack-vibe-coding).
+For a full step-by-step walkthrough of the same frontend-to-Docker workflow,
+see [Build and Deploy a Full-Stack App with AI Coding Assistants](https://aishippinglabs.com/workshops/full-stack-vibe-coding).

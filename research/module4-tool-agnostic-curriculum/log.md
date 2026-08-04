@@ -26,3 +26,4 @@
 2026-08-02T10:45:50+02:00 | state | approved -> rendered | Rendered the approved guideline as the Module 4 series article with a published overview diagram and private provenance report
 2026-08-02T10:47:00+02:00 | state | rendered -> verified | Article passed provenance, memory-wiki, stylint, markdownlint, command-surface, link, diagram, and repository checks
 2026-08-02T12:58:00+02:00 | render-update | added a four-stage next-steps section and roadmap illustration | clarified the recommended path from workshop baseline to reliability, safer delivery, deeper security, and agent governance
+2026-08-02T16:12:06+02:00 | command-verification | smoke-tested the published Codex and Claude headless responder commands | added timeouts, a shared-schema compatibility note, output-directory creation, and Claude metadata-envelope extraction
