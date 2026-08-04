@@ -52,7 +52,7 @@ The sessions are optional, but useful if you want to see the workflows in action
 | Event | Date | What it covers | Link | Article |
 | --- | --- | --- | --- | --- |
 | Workshop 1: AI-Native Developer Workflow | Wed, July 22, 09:00 CEST | How to use AI coding tools for planning, implementation, review, testing, and debugging without losing control of the code. | [Recording](https://www.youtube.com/watch?v=VUJxJGpaDEs) | [Substack](https://alexeyondata.substack.com/p/ai-native-development-specifications) |
-| Workshop 2: Build and Ship an AI-Assisted Full-Stack App | Mon, August 3, 15:00 CEST | How to move from product spec to frontend, backend, OpenAPI contract, tests, Docker, deployment, and CI/CD. | [RSVP](https://luma.com/50kvfku2) | |
+| Workshop 2: Build and Ship an AI-Assisted Full-Stack App | Mon, August 3, 15:00 CEST | How to move from product spec to frontend, backend, OpenAPI contract, tests, Docker, deployment, and CI/CD. | [Recording](https://www.youtube.com/watch?v=x9dq5nBpDg8) | |
 | Workshop 3: Coding Agent Capabilities | Mon, August 17, 14:00 CEST | How MCP, skills, plugins, hooks, subagents, and custom agents fit into practical coding-agent workflows. | [RSVP](https://luma.com/ap4l3qlj) | |
 | Workshop 4: Open-Source AI Tools for Security, Audit, and DevOps | Tue, August 18, 14:00 CEST | How to use AI-assisted review, security scanning, audit, diagnostics, and DevOps tools around a project. | [RSVP](https://luma.com/ycsfxigi) | |
 | Pre-Course Live Q&A | Mon, August 24, 17:00 CEST | Bring questions about prerequisites, tools, homework, deadlines, projects, peer review, and certificates. | [RSVP](https://luma.com/a8qa5s2s) | |
@@ -67,7 +67,7 @@ The course is built around one core workflow:
 
 > Give AI tools the right context, use them for the right job, review what they produce, test the result, and ship software with guardrails.
 
-You will compare modern AI developer tools, build and deploy a full-stack application, extend coding agents with MCP and reusable capabilities, and use open-source AI tools for security, audit, and DevOps workflows.
+You will compare modern AI developer tools, build and deploy a full-stack application, operate it with observability and an agent-assisted incident response, and extend coding agents with MCP and reusable capabilities.
 
 This is not a prompt-engineering-only course, and it is not a course about training models or building RAG systems. The focus is day-to-day software development with AI coding assistants, agents, tests, CI/CD, deployment, documentation, and review.
 
