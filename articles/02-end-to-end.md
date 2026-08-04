@@ -13,7 +13,7 @@ in both sessions simulataneously.
 The FastAPI backend handles those events and saves them to SQLite.
 
 <figure>
-  <img src="images/02-user-session-flow.svg" alt="An interviewer and candidate use separate browser sessions connected through a shared WebSocket room to a FastAPI backend backed by SQLite">
+  <img src="images/02-user-session-flow.png" alt="An interviewer and candidate use separate browser sessions connected through a shared WebSocket room to a FastAPI backend backed by SQLite">
   <figcaption>Two browser sessions collaborate through one WebSocket-backed interview room</figcaption>
 </figure>
 
@@ -47,7 +47,7 @@ At each stage we get something concrete that we can test:
 At the end, we have a working local application that is ready for deployment.
 
 <figure>
-  <img src="images/02-article-build-flow.svg" alt="Three architectural snapshots show a mock service replaced by FastAPI and an in-memory store replaced by SQLite">
+  <img src="images/02-article-build-flow.png" alt="Three architectural snapshots show a mock service replaced by FastAPI and an in-memory store replaced by SQLite">
   <figcaption>The interfaces stay stable while temporary components are replaced one at a time</figcaption>
 </figure>
 
@@ -119,7 +119,7 @@ Without it, the agent can do something arbirary, but here we explicitly say that
 want a mock service. Later, it will become the single point of integration of our frontend with backend. And because we mock it, it will work from the beginning.
 
 <figure>
-  <img src="images/02-mocked-frontend.svg" alt="A user interacts with a real frontend whose backend calls are handled by a local mock service">
+  <img src="images/02-mocked-frontend.png" alt="A user interacts with a real frontend whose backend calls are handled by a local mock service">
   <figcaption>The frontend is real and interactive; only its backend service is mocked</figcaption>
 </figure>
 
@@ -185,7 +185,7 @@ But now we should define the specification - the agreement between frontend and 
 This specification gives explicit information about the endpoints, paths, request bodies, response bodies, and authentication rules.
 
 <figure>
-  <img src="images/02-openapi-contract.svg" alt="The frontend and backend both connect to a shared OpenAPI contract">
+  <img src="images/02-openapi-contract.png" alt="The frontend and backend both connect to a shared OpenAPI contract">
   <figcaption>OpenAPI is the explicit contract shared by the frontend and backend</figcaption>
 </figure>
 
@@ -269,7 +269,7 @@ Switch the frontend to use the real backend client.
 ```
 
 <figure>
-  <img src="images/02-backend-mock-database.svg" alt="A user interacts with the frontend, which calls the FastAPI backend backed by a temporary in-memory store">
+  <img src="images/02-backend-mock-database.png" alt="A user interacts with the frontend, which calls the FastAPI backend backed by a temporary in-memory store">
   <figcaption>Connect the real frontend and backend while keeping persistence mocked</figcaption>
 </figure>
 
@@ -296,7 +296,7 @@ Make it database-agnostic - later we will add support for other databases (e.g. 
 ```
 
 <figure>
-  <img src="images/02-backend-sqlite.svg" alt="A user interacts with the frontend, which calls the FastAPI backend backed by SQLite">
+  <img src="images/02-backend-sqlite.png" alt="A user interacts with the frontend, which calls the FastAPI backend backed by SQLite">
   <figcaption>SQLite replaces the in-memory store without changing the rest of the application flow</figcaption>
 </figure>
 
