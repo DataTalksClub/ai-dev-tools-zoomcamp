@@ -1,4 +1,4 @@
-# Module 4 — Operate an AI-Built App: Observability, Agents, and Security Audits
+# Module 4 — DevOps and Observability for AI-Built Apps
 
 > [!NOTE]
 > This 2026 module page is currently a draft. You can use it to see what we are preparing, but the final videos, exercises, homework, and requirements may change before the cohort starts.
@@ -27,7 +27,7 @@ The concrete stack is OpenTelemetry into Prometheus, Loki, and Tempo, with Grafa
 
 Prerequisite: the deployed app from [Module 3](../03-deployment/).
 
-The long-form version of this module is the series article [Operate an AI-Built App with Observability, Agents, and Security Audits](../articles/04-operating-ai-built-software.md).
+The long-form version of this module is the series article [DevOps and Observability for an AI-Built App](../articles/04-devops.md).
 
 ## Lessons
 

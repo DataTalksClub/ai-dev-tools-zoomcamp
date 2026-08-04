@@ -7,4 +7,4 @@ created: 2026-08-02
 seed_sha256: b9a27e7816dc0d0afaa90414246d07c12720e207a7419f273984dc4023741f18
 source_roots:
   - "/home/alexey/git/ai-dev-tools-zoomcamp"
-target_repo: "/home/alexey/git/ai-dev-tools-zoomcamp/articles/04-operating-ai-built-software.md"
+target_repo: "/home/alexey/git/ai-dev-tools-zoomcamp/articles/04-devops.md"

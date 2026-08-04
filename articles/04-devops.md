@@ -1,4 +1,4 @@
-# Operate an AI-Built App with Observability, Agents, and Security Audits
+# DevOps and Observability for an AI-Built App
 
 In the [second article](https://github.com/DataTalksClub/ai-dev-tools-zoomcamp/blob/main/articles/02-end-to-end.md)
 in this series, I used a coding assistant to build and deploy a full-stack app.
@@ -247,9 +247,10 @@ Do not call something the root cause unless the evidence rules out the main
 alternatives. A proposed action is not permission to run it.
 ```
 
-We also require a JSON schema for the response. The schema catches a missing
-field, but it doesn't make the diagnosis true. We still need evidence and a
-policy decision.
+We also require a JSON schema for the response. To share it between the two
+CLIs, we use their common JSON Schema subset and omit the optional `$schema`
+declaration. The schema catches a missing field, but it doesn't make the
+diagnosis true. We still need evidence and a policy decision.
 
 ## Keep the responder tool-agnostic
 
@@ -262,11 +263,16 @@ task + evidence directory + output schema + resource limits
 It expects one structured response through an interface that doesn't mention a
 model vendor.
 
+The examples assume that the adapter has already written the task, the portable
+schema and the incident evidence files shown above.
+
 With Codex, the adapter can call
 [`codex exec`](https://learn.chatgpt.com/docs/non-interactive-mode.md):
 
 ```bash
-codex exec \
+mkdir -p incidents/2026-08-02T10-30-00Z
+
+timeout 120s codex exec \
   --sandbox read-only \
   --ephemeral \
   --output-schema incident-response/response.schema.json \
@@ -279,19 +285,25 @@ With Claude Code, the adapter uses [print mode](https://docs.anthropic.com/en/do
 and exposes only file-reading tools:
 
 ```bash
-claude -p \
+mkdir -p incidents/2026-08-02T10-30-00Z
+
+set -o pipefail
+timeout 120s claude -p \
   --permission-mode plan \
   --tools "Read,Grep,Glob" \
   --no-session-persistence \
   --output-format json \
   --json-schema "$(jq -c . incident-response/response.schema.json)" \
   < incident-response/responder-task.md \
+  | jq -e '.structured_output' \
   > incidents/2026-08-02T10-30-00Z/response.json
 ```
 
-The exact flags will change, but we keep the same adapter interface. It accepts
-one task and bounded evidence. It enforces permissions, structured output, a
-timeout and an audit record.
+Claude's JSON output also contains timing, usage and session metadata, so the
+adapter extracts `structured_output` to give both commands the same response
+structure. The exact flags will change, but we keep the same adapter interface.
+It accepts one task and bounded evidence. It enforces permissions, structured
+output, a timeout and an audit record.
 
 Projects such as [HolmesGPT](https://github.com/HolmesGPT/holmesgpt) connect an
 agent to live observability sources and investigate across them.

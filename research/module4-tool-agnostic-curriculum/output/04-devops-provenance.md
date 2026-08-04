@@ -1,4 +1,4 @@
-# Provenance report: `04-operating-ai-built-software.md`
+# Provenance report: `04-devops.md`
 
 Private writing record. This file is not part of the published article.
 
@@ -15,7 +15,7 @@ Private writing record. This file is not part of the published article.
 | Automatic remediation should require a known signature, allowlisted reversible/idempotent action, bounded target, no security/data ambiguity, and independent verification | [INFERENCE safe-remediation,alerting-sre] | Presented as the article's policy design, not a universal standard |
 | HolmesGPT connects agents to observability evidence; K8sGPT runs analyzers and can add model explanations | [FACT tool-repositories] | Direct and linked to official repos |
 | `codex exec` supports read-only non-interactive runs and JSON Schema output | Fresh Codex manual plus local `codex-cli 0.146.0 --help` | Direct; command verified against installed CLI flags |
-| `claude -p` supports plan permissions, tool restriction, JSON output, and JSON Schema | Official Claude CLI docs plus local Claude Code 2.1.220 `--help` | Direct; command verified against installed CLI flags |
+| `claude -p` supports plan permissions, tool restriction, JSON output, and JSON Schema; the adapter must extract `structured_output` from its metadata envelope | Official Claude CLI docs plus a local Claude Code 2.1.220 smoke test on 2026-08-02 | Direct; full command and response structure verified locally |
 | Deterministic scanner evidence should be combined with model reasoning and human validation | [FACT owasp-secure-code-review,agent-security-review] and [INFERENCE practitioner-ai-security] | Direct recommendation with product examples |
 | Current OpenAI quality-first example is `gpt-5.6-sol`; `max` is reasoning effort rather than a separate model | [FACT current-audit-models] and current OpenAI model guidance checked 2026-08-02 | Direct and dated |
 | Claude Fable 5 requires 30-day retention and has cyber safeguards that can reroute/block requests | [FACT current-audit-models] and current Anthropic Fable pages checked 2026-08-02 | Direct and dated |
@@ -30,6 +30,7 @@ Refresh these before publication or recording:
 
 - OpenTelemetry language signal maturity and browser status.
 - Codex and Claude CLI flags.
+- The JSON Schema subset shared by Codex and Claude, including Claude's handling of the optional `$schema` declaration.
 - GPT-5.6 model IDs and supported reasoning effort.
 - Claude Fable 5 availability, safeguards, and retention.
 - Agent Scan execution/data behavior.
