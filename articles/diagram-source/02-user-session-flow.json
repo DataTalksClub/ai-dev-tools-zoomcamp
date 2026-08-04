@@ -1,0 +1,132 @@
+{
+  "title": "Two users collaborate in one interview room",
+  "description": "An interviewer and a candidate use separate browser sessions. Both connect through a bidirectional WebSocket channel to the FastAPI backend, which saves the shared canvas in SQLite.",
+  "canvas": {
+    "width": 1050,
+    "height": 600,
+    "background": "#ffffff"
+  },
+  "layout": {
+    "type": "manual",
+    "card_width": 220,
+    "card_height": 100
+  },
+  "nodes": [
+    {
+      "id": "interviewer",
+      "title": "Interviewer",
+      "subtitle": "Creates and shares the link",
+      "icon": "user",
+      "variant": "icon",
+      "color": "blue",
+      "x": 32,
+      "y": 72
+    },
+    {
+      "id": "interviewer_browser",
+      "title": "Browser session A",
+      "subtitle": "Interviewer frontend",
+      "icon": "browser",
+      "variant": "icon",
+      "color": "purple",
+      "x": 140,
+      "y": 44
+    },
+    {
+      "id": "candidate",
+      "title": "Candidate",
+      "subtitle": "Opens the shared link",
+      "icon": "user",
+      "variant": "icon",
+      "color": "blue",
+      "x": 32,
+      "y": 472
+    },
+    {
+      "id": "candidate_browser",
+      "title": "Browser session B",
+      "subtitle": "Candidate frontend",
+      "icon": "browser",
+      "variant": "icon",
+      "color": "purple",
+      "x": 140,
+      "y": 444
+    },
+    {
+      "id": "realtime",
+      "title": "Shared interview room",
+      "subtitle": "Bidirectional WebSocket sync",
+      "icon": "websocket",
+      "color": "purple",
+      "x": 380,
+      "y": 250,
+      "width": 240,
+      "height": 110
+    },
+    {
+      "id": "backend",
+      "title": "FastAPI backend",
+      "subtitle": "Sessions and canvas events",
+      "icon": "api",
+      "color": "amber",
+      "x": 770,
+      "y": 250,
+      "width": 240,
+      "height": 110
+    },
+    {
+      "id": "sqlite",
+      "title": "SQLite database",
+      "subtitle": "Sessions and canvas state",
+      "icon": "database",
+      "variant": "icon",
+      "color": "green",
+      "x": 848,
+      "y": 436
+    }
+  ],
+  "edges": [
+    {
+      "from": "interviewer",
+      "to": "interviewer_browser",
+      "route": "straight"
+    },
+    {
+      "from": "candidate",
+      "to": "candidate_browser",
+      "route": "straight"
+    },
+    {
+      "from": "interviewer_browser",
+      "to": "realtime",
+      "color": "purple",
+      "route": "curve",
+      "from_anchor": "right",
+      "to_anchor": "top",
+      "controls": [[320, 100], [500, 160]]
+    },
+    {
+      "from": "candidate_browser",
+      "to": "realtime",
+      "color": "purple",
+      "route": "curve",
+      "from_anchor": "right",
+      "to_anchor": "bottom",
+      "controls": [[320, 500], [500, 450]]
+    },
+    {
+      "from": "realtime",
+      "to": "backend",
+      "color": "purple",
+      "route": "straight"
+    },
+    {
+      "from": "backend",
+      "to": "sqlite",
+      "color": "green",
+      "route": "straight",
+      "from_anchor": "bottom",
+      "to_anchor": "top"
+    }
+  ]
+}

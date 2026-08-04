@@ -1,0 +1,59 @@
+{
+  "title": "Test the product before building the backend",
+  "description": "A user interacts with the real frontend while a local mock service supplies fake data and behavior. No backend is required at this stage.",
+  "canvas": {
+    "width": 620,
+    "height": 320,
+    "background": "#ffffff"
+  },
+  "layout": {
+    "type": "manual",
+    "card_width": 240,
+    "card_height": 110
+  },
+  "nodes": [
+    {
+      "id": "user",
+      "title": "User",
+      "subtitle": "Tests the complete experience",
+      "icon": "user",
+      "variant": "icon",
+      "color": "blue",
+      "x": 42,
+      "y": 132
+    },
+    {
+      "id": "frontend",
+      "title": "Frontend",
+      "subtitle": "Real, interactive application",
+      "icon": "browser",
+      "variant": "icon",
+      "color": "purple",
+      "x": 220,
+      "y": 104
+    },
+    {
+      "id": "mock",
+      "title": "Mock service",
+      "subtitle": "Fake data, no backend yet",
+      "icon": "settings",
+      "variant": "icon",
+      "color": "purple",
+      "x": 480,
+      "y": 132
+    }
+  ],
+  "edges": [
+    {
+      "from": "user",
+      "to": "frontend",
+      "route": "straight"
+    },
+    {
+      "from": "frontend",
+      "to": "mock",
+      "color": "purple",
+      "route": "straight"
+    }
+  ]
+}

@@ -1,0 +1,64 @@
+{
+  "title": "OpenAPI becomes the shared contract",
+  "description": "The frontend describes the API it expects in OpenAPI. The backend is then implemented against the same explicit contract.",
+  "canvas": {
+    "width": 960,
+    "height": 400,
+    "background": "#ffffff"
+  },
+  "layout": {
+    "type": "grid",
+    "card_width": 240,
+    "card_height": 110,
+    "column_gap": 80,
+    "row_gap": 60,
+    "column_width": 240,
+    "row_height": 112
+  },
+  "nodes": [
+    {
+      "id": "frontend",
+      "title": "Frontend",
+      "subtitle": "Defines the calls it needs",
+      "icon": "browser",
+      "variant": "icon",
+      "color": "purple",
+      "row": 0,
+      "column": 0
+    },
+    {
+      "id": "openapi",
+      "title": "OpenAPI",
+      "subtitle": "Shared API contract",
+      "icon": "document",
+      "color": "blue",
+      "row": 0,
+      "column": 1
+    },
+    {
+      "id": "backend",
+      "title": "Backend",
+      "subtitle": "Implements the contract",
+      "icon": "api",
+      "color": "amber",
+      "row": 0,
+      "column": 2
+    }
+  ],
+  "edges": [
+    {
+      "from": "frontend",
+      "to": "openapi",
+      "color": "purple",
+      "route": "straight",
+      "bidirectional": true
+    },
+    {
+      "from": "openapi",
+      "to": "backend",
+      "color": "blue",
+      "route": "straight",
+      "bidirectional": true
+    }
+  ]
+}

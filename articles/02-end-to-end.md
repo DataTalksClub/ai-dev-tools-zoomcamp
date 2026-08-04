@@ -2,18 +2,26 @@
 
 This is the second article in a series for [AI Dev Tools Zoomcamp](https://github.com/DataTalksClub/ai-dev-tools-zoomcamp), the free course we run at DataTalks.Club.
 
-In the [first article](https://alexeyondata.substack.com/p/ai-native-development-specifications), I wrote about turning an idea into a specification. The specification is only the beginning. In this article, we will create an end-to-end application from scratch. We will cover both frontend and backend, add a database and package everything in Docker.
+In the [first article](https://alexeyondata.substack.com/p/ai-native-development-specifications), I wrote about turning an idea into a specification. The specification is only the beginning. In this article, we will create an end-to-end application from scratch. We will cover both frontend and backend, add a database, and get the application working locally.
 
-We will create an application for system-design interviews. As an interviewer, you create a session and share the link with the interviewee. They can create diagrams in the app, and you see the changes in real time.
+We will create an application for system-design interviews.
 
-This article is a draft and will be updated after the workshop.
+As an interviewer, you create a session and share the link with the interviewee. They can create diagrams in the app, and you see the changes in real time.
+
+Both frontends connect to the same room through WebSockets, so the changes appear
+in both sessions simulataneously.
+The FastAPI backend handles those events and saves them to SQLite.
+
+<figure>
+  <img src="images/02-user-session-flow.svg" alt="An interviewer and candidate use separate browser sessions connected through a shared WebSocket room to a FastAPI backend backed by SQLite">
+  <figcaption>Two browser sessions collaborate through one WebSocket-backed interview room</figcaption>
+</figure>
+
 
 You can find the code in the [interview-canvas-share](https://github.com/alexeygrigorev/interview-canvas-share) repository.
 
-It's based on the workshop I did for AI Shipping Labs:
-[Build and Deploy a Full-Stack App with AI Coding Assistants](https://aishippinglabs.com/workshops/full-stack-vibe-coding). There we built a multi-user Snake game.
-Here, we create a system design canvas.
-
+It's based on my full-day workshop I did for AI Shipping Labs:
+[Build and Deploy a Full-Stack App with AI Coding Assistants](https://aishippinglabs.com/workshops/full-stack-vibe-coding).
 
 
 ## Overview
@@ -27,7 +35,6 @@ From there, we start building:
 2. Establish backend-fronend contract by creating OpenAPI specifications from the frontend service layer.
 3. Implement the FastAPI backend, connect it to the frontend, and test the application.
 4. Add persistence with SQLite and SQLAlchemy.
-5. Package the app in Docker.
 
 At each stage we get something concrete that we can test:
 
@@ -35,9 +42,14 @@ At each stage we get something concrete that we can test:
 - After that, we use the specs to create a frontend prototype that we can interact with. We mock backend calls so we can test the idea.
 - Then we connect the frontend to the backend. We start with an in-memory store
   to make sure the frontend-backend connection works.
-- Finally, we add a database and package everything with Docker.  
+- Finally, we add a database so the application keeps its state after a restart.
 
-At the end we get a working application packaged in Docker that we can deploy anywhere.
+At the end, we have a working local application that is ready for deployment.
+
+<figure>
+  <img src="images/02-article-build-flow.svg" alt="Three architectural snapshots show a mock service replaced by FastAPI and an in-memory store replaced by SQLite">
+  <figcaption>The interfaces stay stable while temporary components are replaced one at a time</figcaption>
+</figure>
 
 
 ## Start with a specification
@@ -51,7 +63,14 @@ For our application, we need to specify:
 - which components they can place on the canvas
 - how both people see changes in real time
 
-This is called "Specification-Driven Development". We don't spend a lot of time here because it was the focus of the [first article](https://alexeyondata.substack.com/p/ai-native-development-specifications).
+This is called "Specification-Driven Development". We don't spend a lot of time here because it was the focus of the previous article [AI-Native Development: Specifications, Loop and Graph Engineering](https://alexeyondata.substack.com/p/ai-native-development-specifications).
+
+For creating the specification, I always use ChatGPT in dictation mode. Give the assistant as much information as possible at this stage.
+
+<figure>
+  <img src="images/02-chatgpt-dictation.png" alt="Using ChatGPT in dictation mode to describe the system-design interview application">
+  <figcaption>Dictating the initial application idea to ChatGPT</figcaption>
+</figure>
 
 You can see the result [here](https://github.com/alexeygrigorev/interview-canvas-share/blob/main/docs/spec.md).
 
@@ -98,6 +117,13 @@ This part is quite important:
 
 Without it, the agent can do something arbirary, but here we explicitly say that we
 want a mock service. Later, it will become the single point of integration of our frontend with backend. And because we mock it, it will work from the beginning.
+
+<figure>
+  <img src="images/02-mocked-frontend.svg" alt="A user interacts with a real frontend whose backend calls are handled by a local mock service">
+  <figcaption>The frontend is real and interactive; only its backend service is mocked</figcaption>
+</figure>
+
+Lovable creates a React app in TypeScript. We can interact with it in the Lovable interface. 
 
 Next, save it to GitHub. If you use Lovable:
 
@@ -157,6 +183,11 @@ service layer. Later we will replace it with actual calls to backend.
 But now we should define the specification - the agreement between frontend and backend. We will use [OpenAPI](https://learn.openapis.org/introduction.html) for that.
 
 This specification gives explicit information about the endpoints, paths, request bodies, response bodies, and authentication rules.
+
+<figure>
+  <img src="images/02-openapi-contract.svg" alt="The frontend and backend both connect to a shared OpenAPI contract">
+  <figcaption>OpenAPI is the explicit contract shared by the frontend and backend</figcaption>
+</figure>
 
 Let's create it:
 
@@ -237,6 +268,11 @@ Now when we have a running backend, we can connect it to the frontend:
 Switch the frontend to use the real backend client. 
 ```
 
+<figure>
+  <img src="images/02-backend-mock-database.svg" alt="A user interacts with the frontend, which calls the FastAPI backend backed by a temporary in-memory store">
+  <figcaption>Connect the real frontend and backend while keeping persistence mocked</figcaption>
+</figure>
+
 It most likely won't work from the first try. You will hist CORS errors and probably some others. 
 
 It's also time to test the application thoroughly. Open two browser windows:
@@ -259,6 +295,11 @@ Use an environment variable to configure which DB the server should connect to
 Make it database-agnostic - later we will add support for other databases (e.g. postgres)
 ```
 
+<figure>
+  <img src="images/02-backend-sqlite.svg" alt="A user interacts with the frontend, which calls the FastAPI backend backed by SQLite">
+  <figcaption>SQLite replaces the in-memory store without changing the rest of the application flow</figcaption>
+</figure>
+
 There are a few important parts in this prompt:
 
 - First, I ask it to use SQLite. It's a very nice and lightweight database for testing the application locally.
@@ -266,68 +307,57 @@ There are a few important parts in this prompt:
 - But we also mention that explicitly so the agent doesn't use any SQLite specific features in the first version.  
 
 
-## Containers
+## Ready for deployment
 
-We want one image with the backend and the compiled frontend, so
-there's a single thing to build, run, and ship:
+Now we have a working application:
 
-```text
-Create a Dockerfile that builds the frontend with Node, then builds a Python
-image with backend with frontend static files. Backend should serve the frontend.
-```
-
-The first image did not work because the frontend build did not produce the
-static files the backend expected. Ask the assistant to look at the generated
-frontend setup, adjust the build, and test the running container through its
-public port.
-
-You do not need to know every frontend build tool in advance. You do need to
-test the generated artifact and give the assistant the observed failure.
-
-## What we left out
-
-A working container is not a production deployment. The session leaves out
-Postgres, deployment, and CI/CD. It also leaves out complete authentication and
-authorization, database migrations, and CORS rules restricted to the deployed
-frontend domain.
-
-Each one is a good next prompt. Say what you want, name the file, read the
-result against what you know, and test it in the environment where it will run.
+- we turned an idea into a specification,
+- created frontend
+- defined the API contract
+- implemented the backend from the contract
+- connected them 
+- added SQLite for persistence
 
 
-## What changes after the first version
+But this application is only working locally. Next, we need to deploy it. 
+That's something we will do in the next article. We will take what we developed here and turn it into a deployed service.
 
-We drove all of this one prompt at a time. That's the right speed for
-going from nothing to a first version, and it stops being the right
-speed shortly after.
+We will:
 
-Once the codebase is real and growing, ad-hoc prompting drifts. The
-assistant forgets earlier decisions, skips tests, and calls work done
-too early. What replaces it is the workflow from the
-[first article](https://alexeyondata.substack.com/p/ai-native-development-specifications):
-each change written down before anyone builds it, and separate agents
-for grooming, implementing, and verifying, so nothing grades its own
-work.
+- containerize the frontend and backend
+- add integration tests for the full application flow
+- set up CI to run the checks automatically
+- run Postgres with Docker Compose
+- add database migrations
+- deploy the application to a public environment
+- set up CD to deploy changes after the checks pass
 
-The material for that is already here. `openapi.yaml` specifies the API, and
-the test suites turn acceptance criteria into checks. A new feature extends
-the specification first, and the code follows.
+## Step-by-Step Approach
 
+In this workshop, we created a working application using the step-by-step approach.
+At the end of each step, we had something funcioning:
+
+- Clear spefication
+- Working frontend prototype with mock backend
+- Properly integrated backend with mock database
+- Proper persistant with SQL
+
+For each step, we started from a new session and drove the agent 
+to produce a working version.
+
+But we did it one prompt at a time. After the first version is working,
+it's time to introduce the development process. 
+We talked about it in the [first article](https://alexeyondata.substack.com/p/ai-native-development-specifications). This process will help you application
+continue working properly as it grows bigger.
 
 ## Next in the series
 
 The remaining modules build on the same app:
 
-- Coding agent capabilities: MCP, skills, plugins, hooks and custom
-  agents
-- AI for security, audit and DevOps
-- Taking a project of your own from an empty folder to something
-  running
+- Deployment 
+- DevOps and Observability
 
-If you'd rather do the course than read it, the materials, the homework
-and the next cohort are here:
-[AI Dev Tools Zoomcamp](https://github.com/DataTalksClub/ai-dev-tools-zoomcamp).
-It's free.
+You can find the entire course in [the course repository](https://github.com/DataTalksClub/ai-dev-tools-zoomcamp). It's free.
 
-For a full step-by-step walkthrough of the same frontend-to-Docker workflow,
-see [Build and Deploy a Full-Stack App with AI Coding Assistants](https://aishippinglabs.com/workshops/full-stack-vibe-coding).
+This article is based on the the workshop I did for AI Shipping Labs:
+[Build and Deploy a Full-Stack App with AI Coding Assistants](https://aishippinglabs.com/workshops/full-stack-vibe-coding). In that workshop I created the snake game, deployed it with AWS and configured CI/CD to make sure tests run on every push. Check it out! 

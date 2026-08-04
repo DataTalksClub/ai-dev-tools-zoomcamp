@@ -1,0 +1,97 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1050" height="600" viewBox="0 0 1050 600" role="img" aria-labelledby="title desc">
+  <title id="title">Two users collaborate in one interview room</title>
+  <desc id="desc">An interviewer and a candidate use separate browser sessions. Both connect through a bidirectional WebSocket channel to the FastAPI backend, which saves the shared canvas in SQLite.</desc>
+  <defs>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="150%">
+      <feDropShadow dx="0" dy="4" stdDeviation="5" flood-color="#0f172a" flood-opacity="0.08"/>
+    </filter>
+    <marker id="arrow-purple" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 10 5 0 10Z" fill="#7c3aed"/></marker>
+    <marker id="arrow-blue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 10 5 0 10Z" fill="#2563eb"/></marker>
+    <marker id="arrow-amber" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 10 5 0 10Z" fill="#c2410c"/></marker>
+    <marker id="arrow-green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 10 5 0 10Z" fill="#15803d"/></marker>
+    <marker id="arrow-red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 10 5 0 10Z" fill="#dc2626"/></marker>
+    <marker id="arrow-gray" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 10 5 0 10Z" fill="#64748b"/></marker>
+    <symbol id="icon-api" viewBox="0 0 24 24">
+        <path d="m8 5-5 7 5 7M16 5l5 7-5 7M14 3l-4 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </symbol>
+    <symbol id="icon-browser" viewBox="0 0 32 22">
+        <rect x="1" y="1.5" width="30" height="19" rx="2.25" fill="none" stroke="currentColor" stroke-width="1.75" vector-effect="non-scaling-stroke"/>
+        <path d="M1.5 6.5h29" fill="none" stroke="currentColor" stroke-width="1.5" vector-effect="non-scaling-stroke"/>
+        <circle cx="4" cy="4" r=".48" fill="currentColor"/>
+        <circle cx="6.2" cy="4" r=".48" fill="currentColor"/>
+        <circle cx="8.4" cy="4" r=".48" fill="currentColor"/>
+        <rect x="12" y="3.3" width="15" height="1.5" rx=".75" fill="currentColor" opacity=".35"/>
+      </symbol>
+    <symbol id="icon-database" viewBox="0 0 24 24">
+        <ellipse cx="12" cy="5" rx="8" ry="3" fill="none" stroke="currentColor" stroke-width="1.75" vector-effect="non-scaling-stroke"/>
+        <path d="M4 5v7c0 1.66 3.58 3 8 3s8-1.34 8-3V5M4 12v7c0 1.66 3.58 3 8 3s8-1.34 8-3v-7" fill="none" stroke="currentColor" stroke-width="1.75" vector-effect="non-scaling-stroke"/>
+      </symbol>
+    <symbol id="icon-user" viewBox="0 0 24 24">
+        <circle cx="12" cy="8" r="4" fill="none" stroke="currentColor" stroke-width="1.75" vector-effect="non-scaling-stroke"/>
+        <path d="M4 22c.6-5 3.3-7 8-7s7.4 2 8 7" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" vector-effect="non-scaling-stroke"/>
+      </symbol>
+    <symbol id="icon-websocket" viewBox="0 0 24 24">
+        <path d="M4 7a8 8 0 0 1 12.8-2.1M20 17a8 8 0 0 1-12.8 2.1" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        <path d="m14 3 3 2-2 3M10 21l-3-2 2-3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M8.5 9 6 12l2.5 3M15.5 9l2.5 3-2.5 3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </symbol>
+    <style>
+      text { font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #172033; }
+      .node rect { stroke-width: 2; }
+      .node-title { font-size: 16px; font-weight: 750; text-anchor: middle; }
+      .node-title.icon-copy { text-anchor: start; }
+      .node-subtitle { font-size: 14px; font-weight: 500; fill: #64748b; text-anchor: middle; }
+      .eyebrow { font-size: 12px; font-weight: 750; letter-spacing: 1px; fill: #64748b; text-anchor: middle; }
+      .mention-icon { font-size: 27px; font-weight: 750; text-anchor: middle; }
+      .standalone-mention { font-size: 52px; font-weight: 750; text-anchor: middle; }
+      .icon-node-title { font-size: 16px; font-weight: 750; text-anchor: middle; }
+      .edge { fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+      .edge-label rect { stroke-width: 2; }
+      .edge-label text { font-size: 14px; font-weight: 750; text-anchor: middle; dominant-baseline: central; }
+      .center-annotation { fill: #f8fafc; stroke: #cbd5e1; stroke-width: 2; stroke-dasharray: 7 7; }
+      .center-title { font-size: 16px; font-weight: 800; letter-spacing: 1.3px; fill: #334155; text-anchor: middle; }
+      .center-detail { font-size: 13px; font-weight: 600; fill: #64748b; text-anchor: middle; }
+    </style>
+  </defs>
+  <rect width="1050" height="600" fill="#ffffff"/>
+
+  <path class="edge" d="M88 100L140 100" stroke="#64748b" marker-end="url(#arrow-gray)"/>
+  <path class="edge" d="M88 500L140 500" stroke="#64748b" marker-end="url(#arrow-gray)"/>
+  <path class="edge" d="M300 100C320 100 500 160 500 250" stroke="#7c3aed" marker-end="url(#arrow-purple)"/>
+  <path class="edge" d="M300 500C320 500 500 450 500 360" stroke="#7c3aed" marker-end="url(#arrow-purple)"/>
+  <path class="edge" d="M620 305L770 305" stroke="#7c3aed" marker-end="url(#arrow-purple)"/>
+  <path class="edge" d="M890 360L890 436" stroke="#15803d" marker-end="url(#arrow-green)"/>
+
+  <g class="node-icon-only node-blue" transform="translate(32 72)">
+    <use href="#icon-user" x="0" y="0" width="56" height="56" color="#2563eb"/>
+    <text class="icon-node-title" x="28" y="81">Interviewer</text>
+  </g>
+  <g class="node-icon-only node-purple" transform="translate(140 44)">
+    <use href="#icon-browser" x="0" y="0" width="160" height="112" color="#7c3aed"/>
+    <text class="icon-node-title" x="80" y="137">Browser session A</text>
+  </g>
+  <g class="node-icon-only node-blue" transform="translate(32 472)">
+    <use href="#icon-user" x="0" y="0" width="56" height="56" color="#2563eb"/>
+    <text class="icon-node-title" x="28" y="81">Candidate</text>
+  </g>
+  <g class="node-icon-only node-purple" transform="translate(140 444)">
+    <use href="#icon-browser" x="0" y="0" width="160" height="112" color="#7c3aed"/>
+    <text class="icon-node-title" x="80" y="137">Browser session B</text>
+  </g>
+  <g class="node node-purple" transform="translate(380 250)" filter="url(#shadow)">
+    <rect width="240" height="110" rx="18" fill="#f5f3ff" stroke="#7c3aed"/>
+    <use href="#icon-websocket" x="16" y="41" width="28" height="28" color="#7c3aed"/>
+    <text class="node-title icon-copy" x="56" y="61" textLength="168" lengthAdjust="spacingAndGlyphs">Shared interview room</text>
+    <text class="node-subtitle" x="120" y="86">Bidirectional WebSocket sync</text>
+  </g>
+  <g class="node node-amber" transform="translate(770 250)" filter="url(#shadow)">
+    <rect width="240" height="110" rx="18" fill="#fff7ed" stroke="#c2410c"/>
+    <use href="#icon-api" x="16" y="41" width="28" height="28" color="#c2410c"/>
+    <text class="node-title icon-copy" x="56" y="61">FastAPI backend</text>
+    <text class="node-subtitle" x="120" y="86">Sessions and canvas events</text>
+  </g>
+  <g class="node-icon-only node-green" transform="translate(848 436)">
+    <use href="#icon-database" x="0" y="0" width="84" height="84" color="#15803d"/>
+    <text class="icon-node-title" x="42" y="109">SQLite database</text>
+  </g>
+</svg>

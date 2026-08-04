@@ -1,0 +1,162 @@
+{
+  "title": "Replace one temporary component at a time",
+  "description": "Three architectural snapshots show the application evolving from a frontend with a mock service, to a real backend with temporary in-memory state, to a complete local application backed by SQLite.",
+  "canvas": {
+    "width": 1110,
+    "height": 520,
+    "background": "#ffffff"
+  },
+  "layout": {
+    "type": "grid",
+    "card_width": 220,
+    "card_height": 90,
+    "column_width": 220,
+    "row_height": 112,
+    "column_gap": 50,
+    "row_gap": 50
+  },
+  "nodes": [
+    {
+      "id": "prototype_stage",
+      "title": "Prototype",
+      "subtitle": "Test the experience",
+      "icon": "number-1",
+      "color": "blue",
+      "row": 0,
+      "column": 0,
+      "variant": "plain"
+    },
+    {
+      "id": "prototype_frontend",
+      "title": "Frontend",
+      "icon": "browser",
+      "variant": "icon",
+      "color": "purple",
+      "row": 0,
+      "column": 1
+    },
+    {
+      "id": "mock_service",
+      "title": "Mock service",
+      "subtitle": "No backend yet",
+      "icon": "settings",
+      "color": "purple",
+      "row": 0,
+      "column": 2
+    },
+    {
+      "id": "integration_stage",
+      "title": "Integration",
+      "subtitle": "Test the API boundary",
+      "icon": "number-2",
+      "color": "amber",
+      "row": 1,
+      "column": 0,
+      "variant": "plain"
+    },
+    {
+      "id": "integration_frontend",
+      "title": "Frontend",
+      "icon": "browser",
+      "variant": "icon",
+      "color": "purple",
+      "row": 1,
+      "column": 1
+    },
+    {
+      "id": "integration_backend",
+      "title": "FastAPI backend",
+      "subtitle": "Real API",
+      "icon": "api",
+      "color": "amber",
+      "row": 1,
+      "column": 2
+    },
+    {
+      "id": "memory_store",
+      "title": "In-memory store",
+      "icon": "database",
+      "variant": "icon",
+      "color": "gray",
+      "row": 1,
+      "column": 3
+    },
+    {
+      "id": "local_stage",
+      "title": "Local app",
+      "subtitle": "Keep state after restart",
+      "icon": "number-3",
+      "color": "green",
+      "row": 2,
+      "column": 0,
+      "variant": "plain"
+    },
+    {
+      "id": "local_frontend",
+      "title": "Frontend",
+      "icon": "browser",
+      "variant": "icon",
+      "color": "purple",
+      "row": 2,
+      "column": 1
+    },
+    {
+      "id": "local_backend",
+      "title": "FastAPI backend",
+      "subtitle": "Real API",
+      "icon": "api",
+      "color": "amber",
+      "row": 2,
+      "column": 2
+    },
+    {
+      "id": "sqlite",
+      "title": "SQLite database",
+      "icon": "database",
+      "variant": "icon",
+      "color": "green",
+      "row": 2,
+      "column": 3
+    }
+  ],
+  "edges": [
+    {
+      "from": "prototype_frontend",
+      "to": "mock_service",
+      "color": "purple",
+      "route": "straight"
+    },
+    {
+      "from": "integration_frontend",
+      "to": "integration_backend",
+      "color": "purple",
+      "route": "straight"
+    },
+    {
+      "from": "integration_backend",
+      "to": "memory_store",
+      "color": "amber",
+      "route": "straight"
+    },
+    {
+      "from": "local_frontend",
+      "to": "local_backend",
+      "color": "purple",
+      "route": "straight"
+    },
+    {
+      "from": "local_backend",
+      "to": "sqlite",
+      "color": "green",
+      "route": "straight"
+    }
+  ],
+  "dividers": [
+    {
+      "after_row": 0
+    },
+    {
+      "after_row": 1
+    }
+  ]
+}

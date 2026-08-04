@@ -1,0 +1,74 @@
+{
+  "title": "Replace temporary state with SQLite",
+  "description": "The user, frontend, and FastAPI backend stay the same. Only the temporary in-memory store is replaced with SQLite so application state survives backend restarts.",
+  "canvas": {
+    "width": 900,
+    "height": 320,
+    "background": "#ffffff"
+  },
+  "layout": {
+    "type": "manual",
+    "card_width": 240,
+    "card_height": 110
+  },
+  "nodes": [
+    {
+      "id": "user",
+      "title": "User",
+      "subtitle": "Uses the application",
+      "icon": "user",
+      "variant": "icon",
+      "color": "blue",
+      "x": 32,
+      "y": 132
+    },
+    {
+      "id": "frontend",
+      "title": "Frontend",
+      "subtitle": "Uses the real API client",
+      "icon": "browser",
+      "variant": "icon",
+      "color": "purple",
+      "x": 160,
+      "y": 104
+    },
+    {
+      "id": "backend",
+      "title": "FastAPI backend",
+      "subtitle": "Handles application logic",
+      "icon": "api",
+      "color": "amber",
+      "x": 400,
+      "y": 105
+    },
+    {
+      "id": "sqlite",
+      "title": "SQLite database",
+      "subtitle": "State survives restarts",
+      "icon": "database",
+      "variant": "icon",
+      "color": "green",
+      "x": 758,
+      "y": 118
+    }
+  ],
+  "edges": [
+    {
+      "from": "user",
+      "to": "frontend",
+      "route": "straight"
+    },
+    {
+      "from": "frontend",
+      "to": "backend",
+      "color": "purple",
+      "route": "straight"
+    },
+    {
+      "from": "backend",
+      "to": "sqlite",
+      "color": "green",
+      "route": "straight"
+    }
+  ]
+}
