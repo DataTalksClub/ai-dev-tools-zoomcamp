@@ -1,0 +1,12 @@
+schema_version: 1
+id: article-3-deploying-the-interview-canvas-app
+title: "Article 3: Deploying the Interview Canvas App"
+mode: writing
+status: rendered
+created: 2026-08-09
+seed_sha256: 341956e9f26c372dca6b5756aa37ba3d56b176a64eb4451dd1465abedead922b
+source_roots:
+  - /home/alexey/git/ai-dev-tools-zoomcamp/articles
+  - /home/alexey/git/ai-shipping-labs-workshops-raw/2026/06/2026-06-23-full-stack-vibe-coding
+  - https://github.com/alexeygrigorev/interview-canvas-share
+target_repo: "/home/alexey/git/ai-dev-tools-zoomcamp"

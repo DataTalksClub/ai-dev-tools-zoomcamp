@@ -1,0 +1,38 @@
+schema_version: 1
+sources:
+  - id: article-2-end-to-end
+    title: Build and Ship a Full-Stack App with AI Coding Assistants
+    type: article
+    locator: /home/alexey/git/ai-dev-tools-zoomcamp/articles/02-end-to-end.md
+    captured: 2026-08-09
+    published:
+    authority: personal
+    summary: Defines the interview-canvas running example, the author's voice, and the exact deployment promises Article 3 must fulfill.
+    page: wiki/sources/article-2-end-to-end.md
+    raw:
+    relevance: 1.00
+    status: selected
+  - id: full-stack-workshop-deployment
+    title: Build and Deploy a Full-Stack App with AI Coding Assistants — deployment chapters
+    type: workshop
+    locator: /home/alexey/git/ai-shipping-labs-workshops-raw/2026/06/2026-06-23-full-stack-vibe-coding
+    captured: 2026-08-09
+    published: 2026-06-23
+    authority: personal
+    summary: Supplies the tested sequence from containerization through Postgres, Compose, AWS, CI/CD, and cleanup.
+    page: wiki/sources/full-stack-workshop-deployment.md
+    raw:
+    relevance: 0.98
+    status: selected
+  - id: interview-canvas-repository
+    title: interview-canvas-share repository
+    type: repository
+    locator: https://github.com/alexeygrigorev/interview-canvas-share
+    captured: 2026-08-09
+    published:
+    authority: primary
+    summary: Confirms the current app structure, Docker build output, environment variables, test commands, and WebSocket flow at commit 80d78eb.
+    page: wiki/sources/interview-canvas-repository.md
+    raw:
+    relevance: 1.00
+    status: selected
