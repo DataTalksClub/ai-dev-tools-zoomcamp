@@ -1,100 +1,87 @@
-# Containerize and Deploy a Full-Stack App with AI Coding Assistants
+# Deploy a Full-Stack App with AI Coding Assistants
 
 This is the third article in a series for [AI Dev Tools Zoomcamp](https://github.com/DataTalksClub/ai-dev-tools-zoomcamp),
 the free course we run at DataTalks.Club.
 
-In the [previous article](https://github.com/DataTalksClub/ai-dev-tools-zoomcamp/blob/main/articles/02-end-to-end.md),
-we built an application for system-design interviews. An interviewer creates a
-session and shares a link with a candidate. Both people work on the same canvas,
-and FastAPI sends their changes through WebSockets. We use SQLAlchemy with
-SQLite to keep the data after a restart.
+In this article, I want to take a web application and make it accessible for everyone on the internet. 
+
+We will:
+
+- Take the application that's already working locally
+- Containerize the application 
+- Switch from SQLite to Postgres
+- Add integration tests
+- Deploy to AWS
+- Set up CI/CD via GitHub Actions
+
+
+It's based on the second half of the full-day workshop I did for AI Shipping Labs:
+[Build and Deploy a Full-Stack App with AI Coding Assistants](https://aishippinglabs.com/workshops/full-stack-vibe-coding).
+
+
+## Recap
+
+In the [previous article](https://alexeyondata.substack.com/p/build-and-ship-a-full-stack-app-with),
+we started building an application for system-design interviews. An interviewer creates session and shares a link with a candidate. When the candidate updates something on the canvas, the interviewer sees the updates in real-time.
+
+- First, we created the frontend only with React
+- Then we created OpenAPI specification for defining the frontend-backend contract
+- Next, we created the backend from this contract
+- We added database support with SQLite and SQLAlchemy
 
 You can find the code in the
 [interview-canvas-share](https://github.com/alexeygrigorev/interview-canvas-share)
 repository.
 
-The application works locally, but other people can't use it yet. We'll first
-package the frontend and backend into one container. Then we'll switch to
-Postgres and add Docker Compose, integration tests, AWS deployment, and GitHub
-Actions.
-
-I'm adapting the deployment half of my AI Shipping Labs workshop,
-[Build and Deploy a Full-Stack App with AI Coding Assistants](https://aishippinglabs.com/workshops/full-stack-vibe-coding).
-In the workshop, I cover every step in more detail.
 
 ## Containerization
 
-Running the application locally requires two commands. We start Vite for the
-frontend and uvicorn for the backend. For deployment, I want one image that
-contains the FastAPI backend and the compiled frontend.
+When we run the application locally, we need to execute two commands: one for frontend and one for backend:
 
-We build the React application into static files during the first Docker stage.
-The second stage installs the Python dependencies, copies those static files
-into the backend, and starts uvicorn. FastAPI then serves both the API and the
-frontend on port 8000.
+```bash
+# TODO run vite
+# TODO run uvicorn
+```
+
+And they run in two separate processes. This is okay for development, but not convenient for production.
+
+In practice, we usually build the frontend and get a bunch of html, css and js files. These are static files (they don't change as long as we don't change the code). We can take these files and serve them with backend. 
+This way, we only need to deal with one container that serves both frontend and backend, not two separate ones.  
 
 Ask the coding assistant to create it:
 
 ```text
-Create a multi-stage Dockerfile at the repository root.
-
-Build the frontend with Node. Then create a Python image for the FastAPI
-backend, copy the compiled frontend into the backend's static directory, and
-serve both from uvicorn on port 8000.
-
-Use uv to install the backend dependencies. Add a .dockerignore.
-
-Build the image, run it, and verify the frontend, /docs, /health, and the
-WebSocket connection through the public port.
+Create a Dockerfile that builds the frontend with Node, then builds a Python image with backend with frontend static files. Backend should serve the frontend.
 ```
 
-The first image didn't work because it copied the wrong frontend output. The
-frontend tooling produced several build directories, and the assistant assumed
-the backend should serve the server bundle.
+As the result, we see a two-staged Docker build: 
 
-I asked it to look at the result of `npm run build`, which puts this
-application's browser files in `frontend/dist/client`. The final Dockerfile
-copies that directory into `app/static` in the Python image. You can see the
-finished [Dockerfile](https://github.com/alexeygrigorev/interview-canvas-share/blob/main/Dockerfile)
-in the application repository.
+- First, we have a nodejs-based image, we use it for compiling the frontend
+- Then in the second image, we build backend, and also copy the frontend from the first step (without all its nodejs dependencies)
 
-Coding assistants often get this boundary wrong. You don't need to know every
-frontend build tool in advance. You need to look at the build output and test
-the image through its exposed port.
+Here's the fininished [Dockerfile](https://github.com/alexeygrigorev/interview-canvas-share/blob/main/Dockerfile).
 
-Build the image from the repository root:
+Then we build and run the image. 
 
-```bash
-docker build -t interview-canvas .
-```
+In my case, I can see the result at [localhost:8000](http://localhost:8000).
 
-Run it with the SQLite database on a named volume:
+Let's test it:
 
-```bash
-docker run --rm \
-  -p 8000:8000 \
-  -e SDIP_DATABASE_URL="sqlite:////data/sdip.db" \
-  -e SDIP_JWT_SECRET="local-container-secret" \
-  -v interview-canvas-data:/data \
-  interview-canvas
-```
+- Create an interview session
+- Open the join link in a different browser window
+- Move an element in the candidate window
+- Check that the interviewer sees the change
 
-At [localhost:8000](http://localhost:8000), use the seeded interviewer and create
-an interview session. Then open the join link in a private browser window, move
-an element on the candidate canvas, and check that the interviewer sees the
-change.
-
-Stop the container and run it again. The named volume keeps `sdip.db`, so the
-interview session should still exist.
 
 ## Switch from SQLite to Postgres
 
-SQLite needs no separate server, so we use it while we develop locally. For
-deployment, we'll use Postgres. In Article 2, we put all database access behind SQLAlchemy and the
-`SDIP_DATABASE_URL` environment variable, so we don't need to rewrite the store.
-We only add a Postgres driver and test the same code against another database.
+SQLite is very convenient: all the data is in a single file, and it runs fast locally. 
 
-Start Postgres locally:
+But it's not suitable for production. For production, we typically use Postgres or similar databases. 
+
+When we set up the foundation in the previous article, we asked the coding agent to use SQLAlchemy. Because of that, our application can easily switch between different database engines. 
+
+Let's start Postgres locally:
 
 ```bash
 docker run -d \
@@ -107,300 +94,130 @@ docker run -d \
   postgres:16-alpine
 ```
 
-Use the `sdip` password only for local development, and don't use it for a
-public database.
-
-Now give the assistant a bounded task:
+Now ask the assistant to use it:
 
 ```text
 Add Postgres support to the backend.
-
-Keep SQLite support for local development and tests. Add psycopg so SQLAlchemy
-can connect to Postgres through SDIP_DATABASE_URL.
-
-Run the backend against the local Postgres container and run all backend tests.
 ```
 
-Point the backend at Postgres and start it:
+Once it finishes, repeat the two-browser test.
 
-```bash
-export SDIP_DATABASE_URL="postgresql+psycopg://sdip:sdip@localhost:5432/sdip"
-make run
-```
+## Docker Compose
 
-Repeat the two-browser test, then restart Postgres and check that the session
-and canvas are still there.
+Running two docker sessions is not convenient. Let's create a common Docker Compose file that we can use for local development.
 
-Inside the application container, `localhost` names that same container rather
-than the Postgres container. We could work around this with host networking,
-but Docker Compose gives both containers stable names on the same network.
-
-## Run the stack with Docker Compose
-
-Ask the assistant to describe both services in one file:
+Ask the assistant to implement it:
 
 ```text
-Create compose.yaml with two services:
-
-- postgres, using Postgres 16 and a named volume
-- app, built from the Dockerfile at the repository root
-
-Configure SDIP_DATABASE_URL so the app connects to the postgres service.
-Add a Postgres health check and wait for it before starting the app.
-Expose the app on port 8000.
-
-Keep passwords and SDIP_JWT_SECRET in environment variables. Add .env.example,
-but don't commit the real .env file.
+Create docker-compose.yaml with two services: postgres and the app
 ```
 
-We use the service name `postgres` as the database hostname:
+## Integration and end-to-end tests
 
-```yaml
-services:
-  postgres:
-    image: postgres:16-alpine
-    environment:
-      POSTGRES_USER: sdip
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      POSTGRES_DB: sdip
-    volumes:
-      - interview_canvas_pgdata:/var/lib/postgresql/data
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U sdip -d sdip"]
-      interval: 5s
-      timeout: 5s
-      retries: 5
+The agent might have created some tests. If it doesn't, we can ask it to create it:
 
-  app:
-    build: .
-    environment:
-      SDIP_DATABASE_URL: postgresql+psycopg://sdip:${POSTGRES_PASSWORD}@postgres:5432/sdip
-      SDIP_JWT_SECRET: ${SDIP_JWT_SECRET}
-    ports:
-      - "8000:8000"
-    depends_on:
-      postgres:
-        condition: service_healthy
-
-volumes:
-  interview_canvas_pgdata:
+```
+Create integration test that verify that frontend and backend work end-to-end.
+What scenario we should test?
 ```
 
-Inside the Compose network, the application reaches the database at the
-hostname `postgres`. The health check also stops the application from starting
-before Postgres accepts connections.
+Now let's add another one. We added two things that can break, so let's test them too. 
 
-Create your local `.env` from `.env.example`, set both secrets, and start the
-stack:
+We will verify that:
 
-```bash
-docker compose up --build
-```
+- Frontend compilation works correctly
+- The backend can communicate with Postgres
 
-Check the health endpoint from another terminal:
-
-```bash
-curl --fail http://localhost:8000/health
-```
-
-Then repeat the interview flow at [localhost:8000](http://localhost:8000). Stop
-the stack with `docker compose down`, start it again, and confirm that the named
-Postgres volume preserved the data.
-
-## Integration tests
-
-The backend already has tests for authentication, sessions, persistence, and
-WebSocket messages. They run through FastAPI's test client against SQLite.
-However, they don't prove that the compiled frontend and container work with
-Postgres. They also don't test browser cookies and WebSocket connections across
-the running stack.
-
-We add a second test suite for the containerized stack:
+Let's ask the agent to implement a test:
 
 ```text
-Add integration tests that run against the application started by compose.yaml.
+Add an end-to-end test that run against docker-compose.yaml
 
-Use only the public HTTP and WebSocket interfaces. Don't import backend code or
-mock the database, API client, or WebSocket connection.
+Use playwright to:
 
-Test this flow:
-1. Log in as the seeded interviewer.
-2. Create an interview session and a candidate join link.
-3. Join from a separate client with its own cookie jar.
-4. Connect both clients to the session WebSocket.
-5. Change the canvas as the candidate and verify the interviewer receives it.
-6. Read the canvas through the API and verify the change was persisted.
-
-Give each test isolated data and clean it up. Add a Makefile target named
-integration-test and document how to run it against Docker Compose.
+1. Log in as the interviewer (session 1).
+2. Create an interview session
+3. Share the join link
+4. Join from a separate client as the candidate (session 2)
+4. Change the canvas as the candidate (session 2)
+5. Verify that the interviewer sees the change (sessoin 1)
 ```
-
-Run the complete stack in the background and start the suite:
-
-```bash
-docker compose up -d --build
-make integration-test
-docker compose down
-```
-
-Test the green result by changing one important behavior on purpose. For
-example, stop broadcasting `document_update` messages or disable
-the database write. The integration test must fail. Revert the change and run
-the suite again.
-
-The frontend currently has lint and build commands but no separate unit-test
-suite. That's fine for this stage because the integration test exercises the
-main browser-to-backend flow. Add focused frontend tests when client-side logic
-grows beyond what the integration suite can cover clearly.
 
 ## Deploy to AWS
 
-You can take the Dockerfile to Render, Railway, Fly.io, or another managed
-container host. That's usually the quickest way to get a proof of concept
-online.
+We're now certain that the application works well. So we can deploy it. 
 
-The current frontend logs in with a seeded development account. Treat this
-deployment as a workshop proof of concept, and don't put sensitive interview
-data in it. Before real users arrive, remove the development credentials and
-add a proper registration or identity-provider flow.
+We have a lot of options. Our application is nicely containerized and only needs Postgres for running. We can deploy it to Render, Railway, Fly.io, or another managed container system. 
 
-In the workshop, I eventually used AWS because I wanted the infrastructure in
-the repository. We deploy the application container to one EC2 instance and use
-Aurora PostgreSQL for the database. AWS Secrets Manager stores the database
-credentials and JWT secret. CloudFront gives us an HTTPS URL in front of the
-instance.
+Last year, we deployed to Render. This year, I want to deploy to AWS. You don't have to do it with AWS and ask the coding assistant to recommend the best environment. 
 
-Ask the assistant to create the infrastructure:
+Let's do the deployment:
 
 ```text
-Create an AWS CloudFormation deployment for this application.
-
-- Use Aurora PostgreSQL Serverless v2 for the database.
-- Store the database credentials and SDIP_JWT_SECRET in Secrets Manager.
-- Run the application container on one EC2 instance.
-- Put CloudFront in front of the instance and return a public HTTPS URL.
-- Configure CloudFront to forward the headers required for WebSockets.
-- Don't cache API or WebSocket requests.
-- Use /health for the application health check.
-- Send application and deployment logs to CloudWatch.
-- Create a GitHub Actions OIDC role restricted to this repository and main.
-- Make repeated deployments idempotent. Don't rotate secrets on every deploy.
-
-Put the template in infra/cloudformation.yaml. Add scripts/aws-deploy.sh and
-document the required AWS CLI setup. Output AppUrl and GitHubDeployRoleArn.
+Deploy this application to AWS. Use AWS CloudFormation
 ```
 
-CloudFront supports WebSockets, but the distribution must forward the relevant
-headers to the origin. The [AWS WebSocket documentation](https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/distribution-working-with.websockets.html)
-lists the headers and origin-request settings.
-
-Before you run the script, authenticate the AWS CLI with an identity that can
-deploy the stack. Keep credentials outside the repository. Use a temporary
-identity for the initial setup, then remove its access when GitHub Actions can
-deploy through OIDC.
-
-Run the generated helper from the repository root:
-
-```bash
-./scripts/aws-deploy.sh
-```
-
-CloudFormation needs a few minutes to create the database and instance. When it
-finishes, the script prints the `AppUrl` stack output.
-
-A successful CloudFormation run only tells us that AWS created the resources.
-Open the URL and test the application again with two browser sessions. Create
-an interview, join it as a candidate, change the canvas, and confirm that the
-interviewer receives the WebSocket update. Also check `/health` and the
-CloudWatch logs.
-
-For this article, we keep the application's current startup table creation.
-FastAPI can create tables in a new proof-of-concept database, but it can't
-safely change an existing schema. Database migrations remain follow-up work
-before the schema starts changing.
+When I do it for the first time, I use a user with the Admin permissions. But after the agent figures the setup out, I take these permissions away. The further deployment will happend only via CI/CD.  
 
 ## CI/CD with GitHub Actions
 
-We ran the deployment script ourselves to get the first version online. Now we
-want every change to run the same checks, and we want deployment to happen only
-after those checks pass.
+Every time I make a change, I want the changes to apply automatically. For that, we use CI/CD via GitHub Actions. 
 
-Ask the assistant for the workflow:
+Every time we make a push to main, we want to:
+
+- run frontend and backend tests
+- build the containers 
+- run the integration tests
+- run the end-to-end tests
+- if all the tests pass, deploy the new version
+
+For the last step, the computer with GitHub actions needs access to our AWS account. We can't give the admin access permissions there - it's too dangerous. We need to give it the minimal set of permissions that are only enough to do the deployment and nothing else.
+
+This is done with OIDC (OpenID Connect). The GitHub actions runner gets assigned a role from AWS and can access all the resources it needs.
+
+Let's create the role and the workflow:
+
 
 ```text
-Create .github/workflows/ci-cd.yml.
+Create a CI/CD pipeline that:
 
-Run these jobs in order:
-1. Run backend tests and frontend lint/build in parallel.
-2. Build and start the Docker Compose stack, then run integration tests.
-3. On main only, deploy to AWS through the GitHub OIDC role.
-4. Run a smoke test against /health after deployment.
-
-The deploy job must depend on every test job. Use OIDC and short-lived AWS
-credentials. Don't store AWS access keys in GitHub.
+- runs backend and frontend tests in parallel
+- build the docker compose stack and runs integration and e2e tests against it
+- deploys to AWS using an GitHub OIDC role
+- validates that the deploy is successful by checking the health endpoind
 ```
 
-GitHub needs `id-token: write` permission to request an OIDC token. The AWS role
-trust policy should restrict the token to this repository and the `main`
-branch. AWS recommends this restriction because a broad trust policy could let
-another repository assume the role. See the [AWS OIDC guide](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_create_for-idp_oidc.html)
-and [GitHub's OIDC documentation](https://docs.github.com/en/actions/concepts/security/openid-connect)
-for the current setup.
+Now let's change something in our application, commit and push. Wait for a few minutes to see that the change is live.
 
-Add the `GitHubDeployRoleArn` stack output as `AWS_ROLE_TO_ASSUME` in the GitHub
-repository settings. Add the region and any other non-secret deployment values
-there too.
+## Clean up
 
-Commit and push the workflow:
-
-```bash
-git add .github/workflows/ci-cd.yml
-git commit -m "Add CI/CD pipeline"
-git push
-```
-
-On a pull request, GitHub Actions runs the checks and skips deployment. On a
-push to `main`, it runs the same checks and deploys only when all of them pass.
-The smoke test then calls `/health` on the public URL.
-
-CI/CD only runs the test suite consistently, so it can't make weak tests
-trustworthy. Keep the container-level integration test focused on the real
-interview flow, and break it deliberately whenever you aren't sure what it
-proves.
-
-## Delete the AWS resources
-
-The AWS database and instance cost money while they run. When you finish the
-exercise, delete the CloudFormation stack.
-
-Export any data you want to keep before you run this command:
+When we're done, we need to delete all the resources. Because we use the Infrastructure-as-Code approach, we can just delete the CloudFormation stack:
 
 ```bash
 aws cloudformation delete-stack --stack-name interview-canvas
 ```
 
-Wait for the stack deletion to finish, then check the AWS console for the EC2
-instance, Aurora cluster, and Secrets Manager entries. Remove the temporary
-deployment identity or access key if you created one for the first deployment.
+Wait for the stack deletion to finish.
 
-## The deployed application
+## Application deployed. What's next?
 
-We began Article 2 with a local React and FastAPI application backed by SQLite,
-and we now have:
+This is what we have done so far:
 
-- one container that serves the frontend, API, and WebSocket endpoint
-- Postgres for persistent data
-- Docker Compose for the local application and database
-- integration tests against the running stack
-- AWS infrastructure described with CloudFormation
-- a GitHub Actions workflow that tests every change and deploys `main`
+- We created the frontend application with React
+- Then we defined the frontend-backend contract with OpenAPI specs
+- Based on the specs, we created the backend
+- Next, we added database support with SQLite and SQLAlchemy to the backend
+- To make it easier to deploy the application, we put both frontend and backend inside one container. The backend serves the frontend.
+- To go to production, we replaced SQLite with Postgres.
+- Next, we simplified running everything locally with Docker Compose 
+- Once everything was in Compose, we created an end-to-end test
+- We took the application that worked locally and deployed it to AWS using CloudFormation
+- Finally, we created a CI/CD deployment pipeline, so every time we make a change, this change is automatically deployed.
 
-We still gave the coding assistant separate, bounded tasks. At every stage, we
-ran what it produced and checked the behavior that mattered. The commands can
-succeed even when the application doesn't work. Both browser sessions must
-be able to use the interview canvas together before we call the deployment
-ready.
+But there's a lot more we should do to make it possible for the app to run reliably. 
 
-In the next article, we'll move from deployment to DevOps and observability.
-We'll cover logs, metrics, and alerts, then see how coding agents help us
-respond to failures and operate the application.
+We will cover it in the next lesson:
+
+- Dev and prod environments
+- Observability: logs, mertrics, alerts
+- Using AI as the first responder when the application stops working
