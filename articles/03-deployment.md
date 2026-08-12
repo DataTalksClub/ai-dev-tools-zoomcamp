@@ -8,7 +8,7 @@ In this article, I want to take a web application and make it accessible for eve
 We'll:
 
 - Take the application that's already working locally
-- Containerize the application 
+- Containerize the application
 - Switch from SQLite to Postgres
 - Add integration tests
 - Deploy to AWS
@@ -37,7 +37,7 @@ repository.
 
 ## Containerization
 
-When we run the application locally, we need to execute two commands: one for frontend and one for backend.
+When we run the application locally, we need to execute two commands: one for the frontend and one for the backend.
 
 Let's run them in two separate terminals:
 
@@ -52,21 +52,21 @@ make run
 
 So, we have two services, and we need to deploy them to production. We may think that we need two containers: one for the frontend and one for the backend.
 
-During development, we run frontend as a separate service because we use Vite. Vite watches the frontend code and refreshes the page when we make changes. It's very convenient because we can see our changes immediately. 
+During development, we run the frontend as a separate service because we use Vite. Vite watches the frontend code and refreshes the page when we make changes. It's very convenient because we can see our changes immediately.
 
-In production, the frontend code doesn't change while the application is running. We build it once and get a set of static HTML, CSS, and JavaScript files. 
+In production, the frontend code doesn't change while the application is running. We build it once and get a set of static HTML, CSS, and JavaScript files.
 
-This means, we don't need a separate container for the frontend: the backend can serve these files. So, we need only one container.
+This means we don't need a separate container for the frontend: the backend can serve these files. So, we need only one container.
 
 Ask the coding assistant to create it:
 
 ```text
-Create a Dockerfile that builds the frontend with Node, then builds a Python image with backend with frontend static files.
+Create a Dockerfile that builds the frontend with Node, then builds a Python image with the backend and the frontend static files.
 
 Backend should serve the frontend.
 ```
 
-As the result, we get a two-stage Docker build:
+We get a two-stage Docker build:
 
 - First, we use a Node.js image to compile the frontend
 - Then we build the backend and copy only the frontend files without the Node.js dependencies
@@ -84,7 +84,7 @@ docker run --rm -p 8000:8000 \
   --name sdip sdip:latest
 ```
 
-Here we speficy a named docker volume `sdip-data` that will kepe the SQLite database between container runs.
+Here we specify a named Docker volume `sdip-data` that will keep the SQLite database between container runs.
 
 Open the application at [localhost:8000](http://localhost:8000) and test it:
 
@@ -134,8 +134,8 @@ When it's done, repeat the two-session test.
 
 ## Docker Compose
 
-Previously, I started a Postgres container with a separate command. 
-But now let's put all the services our application needs inside one Docker Compose file. 
+Previously, I started a Postgres container with a separate command.
+But now let's put all the services our application needs inside one Docker Compose file.
 
 With this file, we can run our entire application with a single command `docker compose up`.
 
@@ -145,7 +145,7 @@ Ask the assistant to implement it:
 Create docker-compose.yaml with two services: Postgres and the app.
 ```
 
-The defines the database, adds a health check, so our application waits till Postgres is ready to accept connections.
+The file defines the database and adds a health check, so our application waits until Postgres is ready to accept connections.
 
 Start it:
 
@@ -153,7 +153,7 @@ Start it:
 docker compose up --build
 ```
 
-In our case, it run the applicatin at [localhost:8100](http://localhost:8100).
+In our case, it runs the application at [localhost:8100](http://localhost:8100).
 
 ## Integration and end-to-end tests
 
@@ -197,7 +197,7 @@ make e2e
 
 ## Deploy to AWS
 
-We're now certain that the application works well. We can deploy it. 
+We're now certain that the application works well. We can deploy it.
 
 Our application runs in a container and only needs Postgres, so we have a lot of options for deploying it. We can use Render, Railway, Fly.io, or any other managed container system.
 
@@ -209,7 +209,7 @@ Ask your assistant to deploy it:
 Deploy this application to AWS. Use AWS CloudFormation.
 ```
 
-For that to work, you need to have an AWS user. I typically create a temporary user with Admin permissions, and watch every step of what the coding agents are doing.
+For that to work, you need to have an AWS user. I typically create a temporary user with admin permissions and watch every step of what the coding agents are doing.
 
 We use the [finished CloudFormation template](https://github.com/alexeygrigorev/interview-canvas-share/blob/main/deploy/aws/sdip-stack.yaml) to run the app and Postgres on one EC2 instance and set up HTTPS.
 
@@ -217,12 +217,12 @@ In my case, it deployed to EC2. It's fine for a proof-of-concept, but using mana
 
 ## CI/CD with GitHub Actions
 
-We used a user with admin permissions to deploy the application. It's okay for the first deployment, but only when we carefully watch it. The next step is to configure CI/CD and take the access away.
+We used a user with admin permissions to deploy the application. It's okay for the first deployment, but only when we carefully watch it. The next step is to configure CI/CD and remove that access.
 
-- Continius integration (CI) means that every time we make a change and push it to GitHub, we automatically run all the tests to make sure we didn't break anything.
+- Continuous integration (CI) means that every time we make a change and push it to GitHub, we automatically run all the tests to make sure we didn't break anything.
 - Continuous deployment (CD) is about deploying this change automatically.
 
-In GitHub we use GitHub Actions for that. 
+In GitHub, we use GitHub Actions for that.
 
 Let's configure it. Every time we make a push to main, we want to:
 
@@ -232,8 +232,8 @@ Let's configure it. Every time we make a push to main, we want to:
 - run the end-to-end tests
 - if all the tests pass, deploy the new version
 
-For the last step, the runner (the process that will deploy the application) will need to be able to access our AWS infrastructure. We will use 
-OpenID Connect (OIDC) for this: the runner will assume a role with necessary permissions and update the applicaiton.
+For the last step, the runner (the process that will deploy the application) will need to be able to access our AWS infrastructure. We will use
+OpenID Connect (OIDC) for this: the runner will assume a role with the necessary permissions and update the application.
 
 Create the role and the workflow:
 
