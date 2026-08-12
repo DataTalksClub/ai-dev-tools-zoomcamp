@@ -28,11 +28,23 @@ sources:
     title: interview-canvas-share repository
     type: repository
     locator: https://github.com/alexeygrigorev/interview-canvas-share
-    captured: 2026-08-09
+    captured: 2026-08-12
     published:
     authority: primary
-    summary: Confirms the current app structure, Docker build output, environment variables, test commands, and WebSocket flow at commit 80d78eb.
+    summary: Confirms the post-workshop Docker, Postgres, Compose, test, CloudFormation, and CI/CD implementation at commit e536482.
     page: wiki/sources/interview-canvas-repository.md
     raw:
+    relevance: 1.00
+    status: selected
+  - id: article-3-live-workshop
+    title: Deploy a Full-Stack App with AI Coding Assistants — live workshop
+    type: video
+    locator: https://www.youtube.com/watch?v=gxt5ZDVnBMM
+    captured: 2026-08-12
+    published:
+    authority: personal
+    summary: Records the August 10 Article 3 walkthrough, including the prompts, manual checks, AWS decisions, CI/CD failure, and cleanup stack name.
+    page: wiki/sources/article-3-live-workshop.md
+    raw: /home/alexey/.cache/youtube_transcripts/gxt5ZDVnBMM.txt
     relevance: 1.00
     status: selected

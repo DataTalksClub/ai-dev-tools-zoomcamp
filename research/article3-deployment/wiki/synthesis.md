@@ -7,9 +7,9 @@
 - [INFERENCE article-2-end-to-end,full-stack-workshop-deployment] Preserve the
   same incremental pattern used during development: make one operational change,
   test the resulting artifact, and only then add the next layer.
-- [INFERENCE full-stack-workshop-deployment,interview-canvas-repository] Use the
-  sequence integration tests → one container → Postgres → Compose → migrations →
-  AWS → GitHub Actions → cleanup.
+- [INFERENCE article-3-live-workshop,interview-canvas-repository] Use the live
+  sequence: one container → Postgres → Compose → integration and end-to-end
+  tests → AWS → GitHub Actions → cleanup.
 
 ## Required translations
 
@@ -19,8 +19,8 @@
   `frontend/dist/client` into `app/static` and serves the application on port
   8000.
 - [FACT interview-canvas-repository] Backend tests run with `make test`. The
-  frontend has lint and build commands but no test command at captured commit
-  `80d78eb`, so Article 3 must not imply that a frontend suite already exists.
+  post-workshop repository also contains frontend, integration, and Playwright
+  suites with Make targets.
 - [FACT interview-canvas-repository] The application's distinctive deployment
   seam is its authenticated WebSocket room, so a useful integration test must
   involve two clients and a propagated canvas change.
@@ -36,9 +36,9 @@
   named SQLite volume, then adds a Postgres driver and runs Postgres locally.
 - [FACT full-stack-workshop-deployment] Compose gives the database a stable
   service hostname and uses a health check before starting the app.
-- [FACT full-stack-workshop-deployment] The AWS path uses infrastructure as code,
-  a managed PostgreSQL database, one VM for the application container, HTTPS,
-  and a public URL.
+- [FACT article-3-live-workshop] The AWS proof of concept uses infrastructure
+  as code and runs both the app and Postgres on one EC2 instance. The author
+  recommends managed RDS and backups for serious use.
 - [FACT full-stack-workshop-deployment] The CI/CD path runs fast frontend and
   backend tests first, integration tests afterward, and deploys only from
   `main`; AWS authentication uses GitHub OIDC instead of a stored access key.
@@ -50,10 +50,8 @@
 - [FACT article-2-end-to-end] Article 2 promised integration tests, Postgres,
   Docker Compose, database migrations, public deployment, and continuous
   delivery.
-- [FACT full-stack-workshop-deployment] The workshop deferred database
-  migrations. Article 3 should include an Alembic step so the series fulfills
-  its stated promise and does not suggest that `create_all()` is a production
-  migration strategy.
+- [HUMAN] The author chose to defer database migrations to keep Article 3
+  aligned with the workshop.
 - [INFERENCE full-stack-workshop-deployment,interview-canvas-repository] The
   first Docker failure should be framed as a general lesson to inspect the
   generated frontend output. For this repository, the verified target is
@@ -64,10 +62,8 @@
 
 ## Ending and caveats
 
-- [FACT interview-canvas-repository] The current repository only contains work
-  through the single Docker image at commit `80d78eb`; later article sections
-  should present reproducible prompts and the intended output, not falsely imply
-  those deployment files already exist in the linked repository.
+- [FACT interview-canvas-repository] The post-workshop repository contains the
+  Compose, test, CloudFormation, and GitHub Actions files at commit `e536482`.
 - [FACT full-stack-workshop-deployment] A proof-of-concept deployment still
   needs hardening: restricted CORS, durable authentication, secret storage,
   migrations, health checks, logs, and a rollback path.

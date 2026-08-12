@@ -17,3 +17,6 @@
 2026-08-09T13:03:56+02:00 | state | distilled -> critiqued | Reflected on coverage, provenance, example translation, and unresolved editorial choices
 2026-08-09T13:46:50+02:00 | state | critiqued -> approved | Author approved the adapted Article 3 structure, skipping migrations and starting with containerization
 2026-08-09T13:53:07+02:00 | state | approved -> rendered | Completed and validated the approved Article 3 draft
+2026-08-12T15:24:51+02:00 | research | selected article-3-live-workshop | user-supplied post-workshop recording for Article 3
+2026-08-12T15:24:51+02:00 | research | refreshed interview-canvas-repository | captured completed deployment implementation at e536482
+2026-08-12T15:24:51+02:00 | revise | updated Article 3 after the live workshop | preserved the committed draft and corrected commands, AWS details, OIDC, and cleanup

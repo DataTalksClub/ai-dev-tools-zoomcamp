@@ -18,6 +18,7 @@ cloud resource to the interview-canvas application.
 - [FACT article-2-end-to-end] [Article 2](sources/article-2-end-to-end.md)
 - [FACT full-stack-workshop-deployment] [Full-stack workshop deployment chapters](sources/full-stack-workshop-deployment.md)
 - [FACT interview-canvas-repository] [Interview-canvas repository](sources/interview-canvas-repository.md)
+- [FACT article-3-live-workshop] [Article 3 live workshop](sources/article-3-live-workshop.md)
 
 See [synthesis.md](synthesis.md) for the recommended article shape and
 [open-questions.md](open-questions.md) for editorial choices.

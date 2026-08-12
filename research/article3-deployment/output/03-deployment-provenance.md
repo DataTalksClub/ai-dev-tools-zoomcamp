@@ -3,17 +3,17 @@
 Target: `articles/03-deployment.md`
 
 Rendered: 2026-08-09
+Post-live revision: 2026-08-12
 
 ## Claim map
 
 - The Article 2 recap, application behavior, SQLAlchemy boundary, and promised
   deployment topics come from `article-2-end-to-end`.
 - The container → Postgres → Compose → AWS → CI/CD → cleanup sequence comes from
-  `full-stack-workshop-deployment`.
-- `SDIP_DATABASE_URL`, `SDIP_JWT_SECRET`, port 8000, `dist/client`, `/health`,
-  seeded development login, JWT behavior, backend tests, and the absence of a
-  frontend test command come from `interview-canvas-repository` at commit
-  `80d78eb`.
+  `article-3-live-workshop` and is cross-checked against the final repository.
+- `SDIP_DATABASE_URL`, ports 8000 and 8100, Compose health checks, all four test
+  suites, the CloudFormation stack, and the finished workflow come from
+  `interview-canvas-repository` at commit `e536482`.
 - CloudFront WebSocket forwarding guidance comes from the official AWS CloudFront
   documentation retrieved on 2026-08-09.
 - GitHub Actions OIDC and repository/branch trust restrictions come from the
@@ -24,8 +24,7 @@ Rendered: 2026-08-09
 - The existing container section describes repository code that exists at the
   captured commit.
 - Postgres, Compose, integration-test, CloudFormation, and GitHub Actions files
-  do not exist at that commit. The article presents them as prompts and expected
-  checks, not as verified repository outputs.
+  exist in the post-workshop repository and are linked as verified outputs.
 - The article does not claim a live public URL.
 - AWS service behavior is supported by current official documentation, but a
   generated CloudFormation template will still require a code-level review and
@@ -43,8 +42,5 @@ Rendered: 2026-08-09
 
 ## Human edit reminders
 
-- Confirm the intended public URL for Article 2 before publication.
-- Replace future-tense deployment instructions if the repository later gains
-  verified Compose, CloudFormation, and workflow files.
 - Add screenshots or diagrams only after the actual deployed interview-canvas
   flow has been captured.

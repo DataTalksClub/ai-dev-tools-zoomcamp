@@ -48,17 +48,18 @@ not return to the workshop's Snake Royale example. [HUMAN]
    room, and persisted state survives an app restart. Include the
    deliberate-break test: remove or bypass an important behavior and verify the
    suite fails. [INFERENCE interview-canvas-repository]
-8. Present AWS as the demonstrated path, with a short managed-host detour. Ask
-   the assistant for CloudFormation that provisions managed PostgreSQL, secrets,
-   one VM for the app image, HTTPS, WebSocket support, health checks, logs, and a
-   public URL. Do not include time-sensitive cost estimates.
-   [FACT full-stack-workshop-deployment; INFERENCE interview-canvas-repository]
+8. Present AWS as the demonstrated path, with a short managed-host detour. The
+   live proof of concept uses CloudFormation, one EC2 instance, Docker Compose,
+   Postgres on the instance volume, and HTTPS through Caddy or CloudFront.
+   Recommend RDS and backups when the data matters. Do not include time-sensitive
+   cost estimates. [FACT article-3-live-workshop,interview-canvas-repository]
 9. Require the reader to test the public URL with two browser sessions, not just
     trust a successful stack deployment. Verify signup, joining, realtime canvas
     changes, persistence, health checks, and logs. [INFERENCE article-2-end-to-end]
 10. Add a GitHub Actions pipeline: frontend and backend tests in parallel,
-    integration tests next, deploy only from `main`, smoke-test after deploy, and
-    use GitHub OIDC for AWS. [FACT full-stack-workshop-deployment]
+    integration and end-to-end tests next, deploy only from `main`, smoke-test
+    after deploy, and use GitHub OIDC for AWS. [FACT
+    article-3-live-workshop,interview-canvas-repository]
 11. Remove the temporary admin access key once OIDC works and show how to delete
     the CloudFormation stack so it stops costing money.
     [FACT full-stack-workshop-deployment]
