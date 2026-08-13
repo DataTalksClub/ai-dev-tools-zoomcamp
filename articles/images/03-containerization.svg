@@ -1,0 +1,137 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1110" height="640" viewBox="0 0 1110 640" role="img" aria-labelledby="title desc">
+  <title id="title">Build the frontend once and serve it from the backend</title>
+  <desc id="desc">During development, Vite and FastAPI run as separate services. The production build turns the frontend into static files that are copied into one application container and served by FastAPI.</desc>
+  <defs>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="150%">
+      <feDropShadow dx="0" dy="4" stdDeviation="5" flood-color="#0f172a" flood-opacity="0.08"/>
+    </filter>
+    <marker id="arrow-purple" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto"><path d="M0 0 10 5 0 10Z" fill="#7c3aed"/></marker>
+    <marker id="arrow-blue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto"><path d="M0 0 10 5 0 10Z" fill="#2563eb"/></marker>
+    <marker id="arrow-amber" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto"><path d="M0 0 10 5 0 10Z" fill="#c2410c"/></marker>
+    <marker id="arrow-green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto"><path d="M0 0 10 5 0 10Z" fill="#15803d"/></marker>
+    <marker id="arrow-red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto"><path d="M0 0 10 5 0 10Z" fill="#dc2626"/></marker>
+    <marker id="arrow-gray" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto"><path d="M0 0 10 5 0 10Z" fill="#64748b"/></marker>
+    <symbol id="icon-api" viewBox="0 0 24 24">
+        <path d="m8 5-5 7 5 7M16 5l5 7-5 7M14 3l-4 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </symbol>
+    <symbol id="icon-browser" viewBox="0 0 32 22">
+        <rect x="1" y="1.5" width="30" height="19" rx="2.25" fill="none" stroke="currentColor" stroke-width="2.67"/>
+        <path d="M1.5 6.5h29" fill="none" stroke="currentColor" stroke-width="2.67"/>
+        <circle cx="4" cy="4" r=".48" fill="currentColor"/>
+        <circle cx="6.2" cy="4" r=".48" fill="currentColor"/>
+        <circle cx="8.4" cy="4" r=".48" fill="currentColor"/>
+        <rect x="12" y="3.3" width="15" height="1.5" rx=".75" fill="currentColor" opacity=".35"/>
+      </symbol>
+    <symbol id="icon-database" viewBox="0 0 24 24">
+        <ellipse cx="12" cy="5" rx="8" ry="3" fill="none" stroke="currentColor" stroke-width="2"/>
+        <path d="M4 5v7c0 1.66 3.58 3 8 3s8-1.34 8-3V5M4 12v7c0 1.66 3.58 3 8 3s8-1.34 8-3v-7" fill="none" stroke="currentColor" stroke-width="2"/>
+      </symbol>
+    <symbol id="icon-document" viewBox="0 0 24 24">
+        <path d="M6 2h8l4 4v16H6Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M14 2v5h4M9 12h6M9 16h6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </symbol>
+    <symbol id="icon-number-1" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M10 9.5 12.4 8v8M10.2 16h4.4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </symbol>
+    <symbol id="icon-number-2" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M9.4 9.6a2.6 2.6 0 1 1 5.2.4c0 2-5.2 3.6-5.2 6h5.4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </symbol>
+    <symbol id="icon-number-3" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M9.5 9a2.5 2.5 0 1 1 2.7 3h-.7.7a2.6 2.6 0 1 1-2.8 3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </symbol>
+    <symbol id="icon-settings" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9 7 7M17 17l2.1 2.1M19.1 4.9 17 7M7 17l-2.1 2.1" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </symbol>
+    <style>
+      text { font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #172033; }
+      symbol [stroke] { vector-effect: non-scaling-stroke; }
+      .node rect { stroke-width: 2; }
+      .node-boundary rect { stroke-width: 2; stroke-dasharray: 8 8; }
+      .boundary-title { font-size: 16px; font-weight: 750; text-anchor: start; }
+      .node-title { font-size: 20px; font-weight: 750; text-anchor: middle; }
+      .node-title.icon-copy { text-anchor: start; }
+      .node-subtitle { font-size: 16px; font-weight: 500; fill: #475569; text-anchor: middle; }
+      .eyebrow { font-size: 13px; font-weight: 750; letter-spacing: 1px; fill: #475569; text-anchor: middle; }
+      .mention-icon { font-size: 27px; font-weight: 750; text-anchor: middle; }
+      .standalone-mention { font-size: 52px; font-weight: 750; text-anchor: middle; }
+      .icon-node-title { font-size: 16px; font-weight: 750; text-anchor: middle; }
+      .edge { fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+      .edge-label rect { stroke-width: 2; }
+      .edge-label text { font-size: 14px; font-weight: 750; text-anchor: middle; dominant-baseline: central; }
+      .divider { stroke: #cbd5e1; stroke-width: 2; stroke-dasharray: 6 8; stroke-linecap: round; }
+      .center-annotation { fill: #f1f5f9; stroke: none; }
+      .center-title { font-weight: 800; letter-spacing: 0.08em; fill: #334155; text-anchor: middle; }
+      .center-detail { font-weight: 600; fill: #475569; text-anchor: middle; }
+    </style>
+  </defs>
+  <rect width="1110" height="640" fill="#ffffff"/>
+
+  <line class="divider" x1="26" y1="241" x2="1051.5" y2="241"/>
+
+  <path class="edge" d="M582 138L652 138" stroke="#7c3aed" marker-end="url(#arrow-purple)"/>
+  <path class="edge" d="M884 138L954 138" stroke="#15803d" marker-end="url(#arrow-green)"/>
+  <path class="edge" d="M582 320L652 320" stroke="#c2410c" marker-end="url(#arrow-amber)"/>
+  <path class="edge" d="M768 370L768 440" stroke="#7c3aed" marker-end="url(#arrow-purple)"/>
+  <path class="edge" d="M582 490L652 490" stroke="#7c3aed" marker-end="url(#arrow-purple)"/>
+  <path class="edge" d="M884 490L954 490" stroke="#15803d" marker-end="url(#arrow-green)"/>
+
+  <g class="node node-plain node-blue" transform="translate(50 88)">
+    <use href="#icon-number-1" x="18.12" y="20" width="34" height="34" color="#2563eb"/>
+    <text class="node-title icon-copy" x="62.7" y="44.2" font-size="20">Development</text>
+    <text class="node-subtitle" x="116" y="75" font-size="16">Two running services</text>
+  </g>
+  <g class="node node-purple" transform="translate(350 88)" filter="url(#shadow)">
+    <rect width="232" height="100" rx="18" fill="#f5f3ff" stroke="#7c3aed"/>
+    <use href="#icon-browser" x="41.44" y="9" width="34" height="34" color="#7c3aed"/>
+    <text class="node-title icon-copy" x="87.44" y="33.2" font-size="20">Frontend</text>
+    <text class="node-subtitle" x="116" y="64" font-size="16">Vite watches and</text>
+    <text class="node-subtitle" x="116" y="86" font-size="16">reloads</text>
+  </g>
+  <g class="node node-amber" transform="translate(652 88)" filter="url(#shadow)">
+    <rect width="232" height="100" rx="18" fill="#fff7ed" stroke="#c2410c"/>
+    <use href="#icon-api" x="45" y="20" width="34" height="34" color="#c2410c"/>
+    <text class="node-title icon-copy" x="88.18" y="44.2" font-size="20">Backend</text>
+    <text class="node-subtitle" x="116" y="75" font-size="16">FastAPI runs separately</text>
+  </g>
+  <g class="node-icon-only node-green" transform="translate(943.5 96)">
+    <use href="#icon-database" x="0" y="0" width="84" height="84" color="#15803d"/>
+    <text class="icon-node-title" x="42" y="109">SQLite database</text>
+  </g>
+  <g class="node node-plain node-amber" transform="translate(50 270)">
+    <use href="#icon-number-2" x="64.37" y="9" width="34" height="34" color="#c2410c"/>
+    <text class="node-title icon-copy" x="108.95" y="33.2" font-size="20">Build</text>
+    <text class="node-subtitle" x="116" y="64" font-size="16">Compile the frontend</text>
+    <text class="node-subtitle" x="116" y="86" font-size="16">once</text>
+  </g>
+  <g class="node node-amber" transform="translate(350 270)" filter="url(#shadow)">
+    <rect width="232" height="100" rx="18" fill="#fff7ed" stroke="#c2410c"/>
+    <use href="#icon-settings" x="32.22" y="20" width="34" height="34" color="#c2410c"/>
+    <text class="node-title icon-copy" x="76.79" y="44.2" font-size="20">Node build</text>
+    <text class="node-subtitle" x="116" y="75" font-size="16">Runs during image build</text>
+  </g>
+  <g class="node node-purple" transform="translate(652 270)" filter="url(#shadow)">
+    <rect width="232" height="100" rx="18" fill="#f5f3ff" stroke="#7c3aed"/>
+    <use href="#icon-document" x="33.72" y="20" width="34" height="34" color="#7c3aed"/>
+    <text class="node-title icon-copy" x="72.65" y="44.2" font-size="20">Static files</text>
+    <text class="node-subtitle" x="116" y="75" font-size="16">HTML, CSS, JavaScript</text>
+  </g>
+  <g class="node node-plain node-green" transform="translate(50 440)">
+    <use href="#icon-number-3" x="31.56" y="20" width="34" height="34" color="#15803d"/>
+    <text class="node-title icon-copy" x="76.13" y="44.2" font-size="20">Production</text>
+    <text class="node-subtitle" x="116" y="75" font-size="16">One running service</text>
+  </g>
+  <g class="node-icon-only node-purple" transform="translate(422 434)">
+    <use href="#icon-browser" x="0" y="0" width="160" height="112" color="#7c3aed"/>
+    <text class="icon-node-title" x="80" y="137">Browser</text>
+  </g>
+  <g class="node node-amber" transform="translate(652 440)" filter="url(#shadow)">
+    <rect width="232" height="100" rx="18" fill="#fff7ed" stroke="#c2410c"/>
+    <use href="#icon-api" x="13.84" y="9" width="34" height="34" color="#c2410c"/>
+    <text class="node-title icon-copy" x="57.02" y="33.2" font-size="20">App container</text>
+    <text class="node-subtitle" x="116" y="64" font-size="16">Static frontend +</text>
+    <text class="node-subtitle" x="116" y="86" font-size="16">FastAPI</text>
+  </g>
+  <g class="node-icon-only node-green" transform="translate(943.5 448)">
+    <use href="#icon-database" x="0" y="0" width="84" height="84" color="#15803d"/>
+    <text class="icon-node-title" x="42" y="109">SQLite database</text>
+  </g>
+</svg>

@@ -1,0 +1,110 @@
+{
+  "title": "Replace SQLite with Postgres in Docker Compose",
+  "description": "The application container stays the same while persistence moves from a SQLite file to a Postgres service with its own named volume. Docker Compose starts both services together.",
+  "canvas": {
+    "width": 1110,
+    "height": 440,
+    "background": "#ffffff"
+  },
+  "layout": {
+    "type": "grid",
+    "card_width": 215,
+    "card_height": 100,
+    "column_width": 215,
+    "row_height": 110,
+    "column_gap": 60,
+    "row_gap": 80
+  },
+  "nodes": [
+    {
+      "id": "sqlite_stage",
+      "title": "Before",
+      "subtitle": "SQLite on a volume",
+      "icon": "number-1",
+      "color": "blue",
+      "variant": "plain",
+      "row": 0,
+      "column": 0
+    },
+    {
+      "id": "sqlite_app",
+      "title": "App",
+      "subtitle": "Frontend + FastAPI container",
+      "icon": "api",
+      "color": "amber",
+      "row": 0,
+      "column": 1
+    },
+    {
+      "id": "sqlite",
+      "title": "SQLite",
+      "subtitle": "One local file",
+      "icon": "database",
+      "color": "green",
+      "row": 0,
+      "column": 2
+    },
+    {
+      "id": "compose_stage",
+      "title": "Compose",
+      "subtitle": "Two containers, one command",
+      "icon": "number-2",
+      "color": "green",
+      "variant": "plain",
+      "row": 1,
+      "column": 0
+    },
+    {
+      "id": "compose_app",
+      "title": "App",
+      "subtitle": "Frontend + FastAPI container",
+      "icon": "api",
+      "color": "amber",
+      "row": 1,
+      "column": 1
+    },
+    {
+      "id": "postgres",
+      "title": "Postgres",
+      "subtitle": "Production database container",
+      "icon": "container",
+      "color": "green",
+      "row": 1,
+      "column": 2
+    },
+    {
+      "id": "postgres_volume",
+      "title": "Data volume",
+      "subtitle": "Persists Postgres data",
+      "icon": "database",
+      "color": "green",
+      "row": 1,
+      "column": 3
+    }
+  ],
+  "edges": [
+    {
+      "from": "sqlite_app",
+      "to": "sqlite",
+      "color": "green",
+      "route": "straight"
+    },
+    {
+      "from": "compose_app",
+      "to": "postgres",
+      "color": "green",
+      "route": "straight"
+    },
+    {
+      "from": "postgres",
+      "to": "postgres_volume",
+      "color": "green",
+      "route": "straight"
+    }
+  ],
+  "dividers": [
+    {
+      "after_row": 0
+    }
+  ]
+}

@@ -1,0 +1,106 @@
+{
+  "title": "Deploy the production stack to one EC2 instance",
+  "description": "A public browser connects to Caddy over HTTPS and WebSockets. Caddy proxies traffic to the application container, which stores sessions and canvas state in Postgres. A pgdata volume persists the database, and CloudFormation manages the EC2 infrastructure.",
+  "canvas": {
+    "width": 1180,
+    "height": 510,
+    "background": "#ffffff"
+  },
+  "layout": {
+    "type": "manual",
+    "card_width": 220,
+    "card_height": 120
+  },
+  "nodes": [
+    {
+      "id": "browser",
+      "title": "Public browser",
+      "icon": "browser",
+      "variant": "icon",
+      "color": "purple",
+      "x": 25,
+      "y": 169
+    },
+    {
+      "id": "ec2",
+      "title": "AWS EC2 instance · CloudFormation-managed",
+      "variant": "boundary",
+      "color": "green",
+      "x": 260,
+      "y": 45,
+      "width": 890,
+      "height": 420
+    },
+    {
+      "id": "caddy",
+      "title": "Caddy",
+      "subtitle": "TLS + reverse proxy",
+      "eyebrow": "CONTAINER",
+      "icon": "shield",
+      "color": "blue",
+      "x": 350,
+      "y": 165,
+      "width": 210
+    },
+    {
+      "id": "app",
+      "title": "App",
+      "subtitle": "React + FastAPI",
+      "eyebrow": "CONTAINER",
+      "icon": "api",
+      "color": "amber",
+      "x": 600,
+      "y": 165,
+      "width": 210
+    },
+    {
+      "id": "postgres",
+      "title": "Postgres",
+      "subtitle": "Sessions + canvas",
+      "eyebrow": "CONTAINER",
+      "icon": "container",
+      "color": "green",
+      "x": 850,
+      "y": 165,
+      "width": 210
+    },
+    {
+      "id": "pgdata",
+      "title": "pgdata volume",
+      "icon": "database",
+      "variant": "icon",
+      "color": "green",
+      "x": 913,
+      "y": 330
+    }
+  ],
+  "edges": [
+    {
+      "from": "browser",
+      "to": "caddy",
+      "label": "HTTPS / WSS",
+      "color": "purple",
+      "route": "straight"
+    },
+    {
+      "from": "caddy",
+      "to": "app",
+      "color": "purple",
+      "route": "straight"
+    },
+    {
+      "from": "app",
+      "to": "postgres",
+      "color": "green",
+      "route": "straight"
+    },
+    {
+      "from": "postgres",
+      "to": "pgdata",
+      "color": "green",
+      "route": "straight",
+      "from_anchor": "bottom",
+      "to_anchor": "top"
+    }
+  ]
+}

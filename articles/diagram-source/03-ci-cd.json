@@ -1,0 +1,126 @@
+{
+  "title": "Test every change before deploying it",
+  "description": "A push to main triggers a GitHub Actions workflow. Frontend and backend tests run in parallel, then the workflow builds the Docker Compose stack, runs integration and end-to-end tests, and deploys to AWS through OIDC.",
+  "canvas": {
+    "width": 1440,
+    "height": 500,
+    "background": "#ffffff"
+  },
+  "layout": {
+    "type": "manual",
+    "card_width": 220,
+    "card_height": 100
+  },
+  "nodes": [
+    {
+      "id": "push",
+      "title": "Push",
+      "subtitle": "Commit reaches main",
+      "icon": "github",
+      "color": "blue",
+      "x": 20,
+      "y": 200
+    },
+    {
+      "id": "workflow",
+      "title": "GitHub Actions workflow",
+      "variant": "boundary",
+      "color": "purple",
+      "x": 250,
+      "y": 40,
+      "width": 1160,
+      "height": 420
+    },
+    {
+      "id": "frontend_tests",
+      "title": "Frontend",
+      "subtitle": "Tests run in parallel",
+      "icon": "check",
+      "color": "purple",
+      "x": 300,
+      "y": 90
+    },
+    {
+      "id": "backend_tests",
+      "title": "Backend",
+      "subtitle": "Tests run in parallel",
+      "icon": "check",
+      "color": "purple",
+      "x": 300,
+      "y": 310
+    },
+    {
+      "id": "build",
+      "title": "Build",
+      "subtitle": "Docker Compose stack",
+      "icon": "settings",
+      "color": "amber",
+      "x": 580,
+      "y": 200
+    },
+    {
+      "id": "full_stack_tests",
+      "title": "Run all tests",
+      "subtitle": "Integration + E2E",
+      "icon": "check",
+      "color": "purple",
+      "x": 860,
+      "y": 200
+    },
+    {
+      "id": "deploy",
+      "title": "Deploy",
+      "subtitle": "AWS via OIDC",
+      "icon": "aws",
+      "color": "green",
+      "x": 1140,
+      "y": 200
+    }
+  ],
+  "edges": [
+    {
+      "from": "push",
+      "to": "frontend_tests",
+      "color": "purple",
+      "route": "orthogonal",
+      "from_anchor": "right",
+      "to_anchor": "left"
+    },
+    {
+      "from": "push",
+      "to": "backend_tests",
+      "color": "purple",
+      "route": "orthogonal",
+      "from_anchor": "right",
+      "to_anchor": "left"
+    },
+    {
+      "from": "frontend_tests",
+      "to": "build",
+      "color": "purple",
+      "route": "orthogonal",
+      "from_anchor": "right",
+      "to_anchor": "left"
+    },
+    {
+      "from": "backend_tests",
+      "to": "build",
+      "color": "purple",
+      "route": "orthogonal",
+      "from_anchor": "right",
+      "to_anchor": "left"
+    },
+    {
+      "from": "build",
+      "to": "full_stack_tests",
+      "color": "amber",
+      "route": "straight"
+    },
+    {
+      "from": "full_stack_tests",
+      "to": "deploy",
+      "color": "green",
+      "route": "straight"
+    }
+  ]
+}

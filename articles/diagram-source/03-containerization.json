@@ -1,0 +1,185 @@
+{
+  "title": "Build the frontend once and serve it from the backend",
+  "description": "During development, Vite and FastAPI run as separate services. The production build turns the frontend into static files that are copied into one application container and served by FastAPI.",
+  "canvas": {
+    "width": 1110,
+    "height": 640,
+    "background": "#ffffff"
+  },
+  "layout": {
+    "type": "manual",
+    "card_width": 232,
+    "card_height": 100
+  },
+  "nodes": [
+    {
+      "id": "development_stage",
+      "title": "Development",
+      "subtitle": "Two running services",
+      "icon": "number-1",
+      "color": "blue",
+      "variant": "plain",
+      "x": 50,
+      "y": 88,
+      "row": 0,
+      "column": 0
+    },
+    {
+      "id": "vite",
+      "title": "Frontend",
+      "subtitle": "Vite watches and reloads",
+      "icon": "browser",
+      "color": "purple",
+      "x": 350,
+      "y": 88,
+      "row": 0,
+      "column": 1
+    },
+    {
+      "id": "development_backend",
+      "title": "Backend",
+      "subtitle": "FastAPI runs separately",
+      "icon": "api",
+      "color": "amber",
+      "x": 652,
+      "y": 88,
+      "row": 0,
+      "column": 2
+    },
+    {
+      "id": "development_sqlite",
+      "title": "SQLite database",
+      "icon": "database",
+      "variant": "icon",
+      "color": "green",
+      "x": 943.5,
+      "y": 96,
+      "row": 0,
+      "column": 3
+    },
+    {
+      "id": "build_stage",
+      "title": "Build",
+      "subtitle": "Compile the frontend once",
+      "icon": "number-2",
+      "color": "amber",
+      "variant": "plain",
+      "x": 50,
+      "y": 270,
+      "row": 1,
+      "column": 0
+    },
+    {
+      "id": "node_build",
+      "title": "Node build",
+      "subtitle": "Runs during image build",
+      "icon": "settings",
+      "color": "amber",
+      "x": 350,
+      "y": 270,
+      "row": 1,
+      "column": 1
+    },
+    {
+      "id": "static_files",
+      "title": "Static files",
+      "subtitle": "HTML, CSS, JavaScript",
+      "icon": "document",
+      "color": "purple",
+      "x": 652,
+      "y": 270,
+      "row": 1,
+      "column": 2
+    },
+    {
+      "id": "production_stage",
+      "title": "Production",
+      "subtitle": "One running service",
+      "icon": "number-3",
+      "color": "green",
+      "variant": "plain",
+      "x": 50,
+      "y": 440,
+      "row": 2,
+      "column": 0
+    },
+    {
+      "id": "browser",
+      "title": "Browser",
+      "icon": "browser",
+      "variant": "icon",
+      "color": "purple",
+      "x": 422,
+      "y": 434,
+      "row": 2,
+      "column": 1
+    },
+    {
+      "id": "app_container",
+      "title": "App container",
+      "subtitle": "Static frontend + FastAPI",
+      "icon": "api",
+      "color": "amber",
+      "x": 652,
+      "y": 440,
+      "row": 2,
+      "column": 2
+    },
+    {
+      "id": "production_sqlite",
+      "title": "SQLite database",
+      "icon": "database",
+      "variant": "icon",
+      "color": "green",
+      "x": 943.5,
+      "y": 448,
+      "row": 2,
+      "column": 3
+    }
+  ],
+  "edges": [
+    {
+      "from": "vite",
+      "to": "development_backend",
+      "color": "purple",
+      "route": "straight"
+    },
+    {
+      "from": "development_backend",
+      "to": "development_sqlite",
+      "color": "green",
+      "route": "straight"
+    },
+    {
+      "from": "node_build",
+      "to": "static_files",
+      "color": "amber",
+      "route": "straight"
+    },
+    {
+      "from": "static_files",
+      "to": "app_container",
+      "color": "purple",
+      "route": "straight",
+      "from_anchor": "bottom",
+      "to_anchor": "top"
+    },
+    {
+      "from": "browser",
+      "to": "app_container",
+      "color": "purple",
+      "route": "straight"
+    },
+    {
+      "from": "app_container",
+      "to": "production_sqlite",
+      "color": "green",
+      "route": "straight"
+    }
+  ],
+  "dividers": [
+    {
+      "after_row": 0
+    }
+  ]
+}

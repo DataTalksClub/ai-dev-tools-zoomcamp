@@ -1,0 +1,104 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1180" height="650" viewBox="0 0 1180 650" role="img" aria-labelledby="title desc">
+  <title id="title">The complete deployed application</title>
+  <desc id="desc">Interviewer and candidate browser sessions connect separately to Caddy. Caddy terminates HTTPS and proxies traffic to the application container, which serves React and FastAPI. The application stores sessions and canvas state in Postgres, and a pgdata volume persists the database. Caddy, the app, Postgres, and pgdata all run on one CloudFormation-managed EC2 instance.</desc>
+  <defs>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="150%">
+      <feDropShadow dx="0" dy="4" stdDeviation="5" flood-color="#0f172a" flood-opacity="0.08"/>
+    </filter>
+    <marker id="arrow-purple" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto"><path d="M0 0 10 5 0 10Z" fill="#7c3aed"/></marker>
+    <marker id="arrow-blue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto"><path d="M0 0 10 5 0 10Z" fill="#2563eb"/></marker>
+    <marker id="arrow-amber" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto"><path d="M0 0 10 5 0 10Z" fill="#c2410c"/></marker>
+    <marker id="arrow-green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto"><path d="M0 0 10 5 0 10Z" fill="#15803d"/></marker>
+    <marker id="arrow-red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto"><path d="M0 0 10 5 0 10Z" fill="#dc2626"/></marker>
+    <marker id="arrow-gray" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto"><path d="M0 0 10 5 0 10Z" fill="#64748b"/></marker>
+    <symbol id="icon-api" viewBox="0 0 24 24">
+        <path d="m8 5-5 7 5 7M16 5l5 7-5 7M14 3l-4 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </symbol>
+    <symbol id="icon-browser" viewBox="0 0 32 22">
+        <rect x="1" y="1.5" width="30" height="19" rx="2.25" fill="none" stroke="currentColor" stroke-width="2.67"/>
+        <path d="M1.5 6.5h29" fill="none" stroke="currentColor" stroke-width="2.67"/>
+        <circle cx="4" cy="4" r=".48" fill="currentColor"/>
+        <circle cx="6.2" cy="4" r=".48" fill="currentColor"/>
+        <circle cx="8.4" cy="4" r=".48" fill="currentColor"/>
+        <rect x="12" y="3.3" width="15" height="1.5" rx=".75" fill="currentColor" opacity=".35"/>
+      </symbol>
+    <symbol id="icon-container" viewBox="0 0 24 24">
+        <rect x="2" y="5" width="20" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="2"/>
+        <path d="M7 5v14M12 5v14M17 5v14" fill="none" stroke="currentColor" stroke-width="2"/>
+      </symbol>
+    <symbol id="icon-database" viewBox="0 0 24 24">
+        <ellipse cx="12" cy="5" rx="8" ry="3" fill="none" stroke="currentColor" stroke-width="2"/>
+        <path d="M4 5v7c0 1.66 3.58 3 8 3s8-1.34 8-3V5M4 12v7c0 1.66 3.58 3 8 3s8-1.34 8-3v-7" fill="none" stroke="currentColor" stroke-width="2"/>
+      </symbol>
+    <symbol id="icon-shield" viewBox="0 0 24 24">
+        <path d="M12 2.5 20 6v5.5c0 5-3.1 8.6-8 10-4.9-1.4-8-5-8-10V6Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+        <path d="m8.5 12 2.2 2.2 4.8-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </symbol>
+    <style>
+      text { font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #172033; }
+      symbol [stroke] { vector-effect: non-scaling-stroke; }
+      .node rect { stroke-width: 2; }
+      .node-boundary rect { stroke-width: 2; stroke-dasharray: 8 8; }
+      .boundary-title { font-size: 16px; font-weight: 750; text-anchor: start; }
+      .node-title { font-size: 20px; font-weight: 750; text-anchor: middle; }
+      .node-title.icon-copy { text-anchor: start; }
+      .node-subtitle { font-size: 16px; font-weight: 500; fill: #475569; text-anchor: middle; }
+      .eyebrow { font-size: 13px; font-weight: 750; letter-spacing: 1px; fill: #475569; text-anchor: middle; }
+      .mention-icon { font-size: 27px; font-weight: 750; text-anchor: middle; }
+      .standalone-mention { font-size: 52px; font-weight: 750; text-anchor: middle; }
+      .icon-node-title { font-size: 16px; font-weight: 750; text-anchor: middle; }
+      .edge { fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+      .edge-label rect { stroke-width: 2; }
+      .edge-label text { font-size: 14px; font-weight: 750; text-anchor: middle; dominant-baseline: central; }
+      .divider { stroke: #cbd5e1; stroke-width: 2; stroke-dasharray: 6 8; stroke-linecap: round; }
+      .center-annotation { fill: #f1f5f9; stroke: none; }
+      .center-title { font-weight: 800; letter-spacing: 0.08em; fill: #334155; text-anchor: middle; }
+      .center-detail { font-weight: 600; fill: #475569; text-anchor: middle; }
+    </style>
+  </defs>
+  <rect width="1180" height="650" fill="#ffffff"/>
+
+  <g class="node-boundary node-green" transform="translate(390 150)">
+    <rect width="750" height="420" rx="22" fill="none" stroke="#15803d"/>
+    <text class="boundary-title" x="20" y="31">AWS EC2 instance · CloudFormation-managed</text>
+  </g>
+  <path class="edge" d="M280 111H345V320H410" stroke="#7c3aed" marker-end="url(#arrow-purple)"/>
+  <path class="edge" d="M280 521H345V360H410" stroke="#7c3aed" marker-end="url(#arrow-purple)"/>
+  <path class="edge" d="M620 340L660 340" stroke="#7c3aed" marker-end="url(#arrow-purple)"/>
+  <path class="edge" d="M870 340L910 340" stroke="#15803d" marker-end="url(#arrow-green)"/>
+  <path class="edge" d="M1015 400L1015 433.5" stroke="#15803d" marker-end="url(#arrow-green)"/>
+
+  <g class="node-icon-only node-purple" transform="translate(120 55)">
+    <use href="#icon-browser" x="0" y="0" width="160" height="112" color="#7c3aed"/>
+    <text class="icon-node-title" x="80" y="137">Interviewer browser</text>
+  </g>
+  <g class="node-icon-only node-purple" transform="translate(120 465)">
+    <use href="#icon-browser" x="0" y="0" width="160" height="112" color="#7c3aed"/>
+    <text class="icon-node-title" x="80" y="137">Candidate browser</text>
+  </g>
+  <g class="node node-blue" transform="translate(410 280)" filter="url(#shadow)">
+    <rect width="210" height="120" rx="18" fill="#eff6ff" stroke="#2563eb"/>
+    <text class="eyebrow" x="105" y="30" font-size="13">CONTAINER</text>
+    <use href="#icon-shield" x="47" y="40" width="34" height="34" color="#2563eb"/>
+    <text class="node-title icon-copy" x="90.18" y="64.2" font-size="20">Caddy</text>
+    <text class="node-subtitle" x="105" y="95" font-size="16">TLS + reverse proxy</text>
+  </g>
+  <g class="node node-amber" transform="translate(660 280)" filter="url(#shadow)">
+    <rect width="210" height="120" rx="18" fill="#fff7ed" stroke="#c2410c"/>
+    <text class="eyebrow" x="105" y="30" font-size="13">CONTAINER</text>
+    <use href="#icon-api" x="59.94" y="40" width="34" height="34" color="#c2410c"/>
+    <text class="node-title icon-copy" x="103.11" y="64.2" font-size="20">App</text>
+    <text class="node-subtitle" x="105" y="95" font-size="16">React + FastAPI</text>
+  </g>
+  <g class="node node-green" transform="translate(910 280)" filter="url(#shadow)">
+    <rect width="210" height="120" rx="18" fill="#ecfdf5" stroke="#15803d"/>
+    <text class="eyebrow" x="105" y="30" font-size="13">CONTAINER</text>
+    <use href="#icon-container" x="32.31" y="40" width="34" height="34" color="#15803d"/>
+    <text class="node-title icon-copy" x="75.49" y="64.2" font-size="20">Postgres</text>
+    <text class="node-subtitle" x="105" y="95" font-size="16">Sessions + canvas</text>
+  </g>
+  <g class="node-icon-only node-green" transform="translate(973 430)">
+    <use href="#icon-database" x="0" y="0" width="84" height="84" color="#15803d"/>
+    <text class="icon-node-title" x="42" y="109">pgdata volume</text>
+  </g>
+</svg>

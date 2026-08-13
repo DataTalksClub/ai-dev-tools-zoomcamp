@@ -58,6 +58,11 @@ In production, the frontend code doesn't change while the application is running
 
 This means we don't need a separate container for the frontend: the backend can serve these files. So, we need only one container.
 
+<figure>
+  <img src="images/03-containerization.png" alt="Three stages show the Vite frontend and FastAPI backend running separately in development, the frontend compiling into static files, and one application container serving the frontend and backend in production">
+  <figcaption>In development, the frontend and backend run separately; in production, FastAPI serves the built frontend from one container</figcaption>
+</figure>
+
 Ask the coding assistant to create it:
 
 ```text
@@ -155,6 +160,11 @@ docker compose up --build
 
 In our case, it runs the application at [localhost:8100](http://localhost:8100).
 
+<figure>
+  <img src="images/03-compose-postgres.png" alt="The application moves from a container using a local SQLite file to Docker Compose with separate application and Postgres services backed by a data volume">
+  <figcaption>The application stays the same while Docker Compose replaces the SQLite file with Postgres and its volume</figcaption>
+</figure>
+
 ## Integration and end-to-end tests
 
 The AI assistant might have created some backend tests.
@@ -170,6 +180,11 @@ We added two things that can potentially break, so let's test them too. We'll ve
 
 - The frontend compiles correctly
 - The backend can communicate with Postgres
+
+<figure>
+  <img src="images/03-e2e-test-flow.png" alt="Playwright controls separate interviewer and candidate browser sessions connected through a shared WebSocket room to FastAPI and Postgres">
+  <figcaption>Playwright verifies the real-time flow through two independent browser sessions</figcaption>
+</figure>
 
 Ask the AI assistant to implement a test:
 
@@ -211,7 +226,12 @@ Deploy this application to AWS. Use AWS CloudFormation.
 
 For that to work, you need to have an AWS user. I typically create a temporary user with admin permissions and watch every step of what the coding agents are doing.
 
-We use the [finished CloudFormation template](https://github.com/alexeygrigorev/interview-canvas-share/blob/main/deploy/aws/sdip-stack.yaml) to run the app and Postgres on one EC2 instance and set up HTTPS.
+We use the [finished CloudFormation template](https://github.com/alexeygrigorev/interview-canvas-share/blob/main/deploy/aws/sdip-stack.yaml) to run the app, Postgres, and Caddy on one EC2 instance and set up HTTPS.
+
+<figure>
+  <img src="images/03-aws-deployment.png" alt="A public browser connects to Caddy over HTTPS and WebSockets; Caddy, the application, Postgres, and its pgdata volume run inside one EC2 boundary managed by CloudFormation">
+  <figcaption>One EC2 instance runs Caddy, the app, and Postgres; CloudFormation manages the instance, and pgdata persists the database</figcaption>
+</figure>
 
 In my case, it deployed to EC2. It's fine for a proof-of-concept, but using managed database services (such as RDS) is better.
 
@@ -234,6 +254,11 @@ Let's configure it. Every time we make a push to main, we want to:
 
 For the last step, the runner (the process that will deploy the application) will need to be able to access our AWS infrastructure. We will use
 OpenID Connect (OIDC) for this: the runner will assume a role with the necessary permissions and update the application.
+
+<figure>
+  <img src="images/03-ci-cd.png" alt="A push to main starts frontend and backend tests in parallel, then builds the Docker Compose stack, runs integration and end-to-end tests, and deploys to AWS through OIDC">
+  <figcaption>GitHub Actions runs frontend and backend tests in parallel, checks the full stack, and then deploys to AWS</figcaption>
+</figure>
 
 Create the role and the workflow:
 
@@ -276,6 +301,11 @@ Let's recap what we have done so far:
 - We took the application that worked locally and deployed it to AWS using CloudFormation
 - Finally, we created a CI/CD deployment pipeline to deploy every change automatically.
 
+<figure>
+  <img src="images/03-full-application.png" alt="Separate interviewer and candidate browser sessions connect through Caddy to the React and FastAPI application, which stores sessions and canvas state in Postgres and its pgdata volume inside one EC2 instance">
+  <figcaption>The end-state architecture: two browser sessions connect through Caddy to the app and persistent Postgres data</figcaption>
+</figure>
+
 But we still need to do a lot more for the app to run reliably.
 
 We'll cover it in the next lesson:
@@ -283,3 +313,8 @@ We'll cover it in the next lesson:
 - Dev and prod environments
 - Observability: logs, metrics, alerts
 - Using AI as the first responder when the application stops working
+
+<figure>
+  <img src="images/03-next-lesson.png" alt="A user pushes code to main and manually promotes a release from development to production; the Observe group collects telemetry and raises alerts, and the Respond group uses an AI agent to create a fix">
+  <figcaption>Next, the user promotes releases while separate observe and respond loops detect production problems and create fixes</figcaption>
+</figure>

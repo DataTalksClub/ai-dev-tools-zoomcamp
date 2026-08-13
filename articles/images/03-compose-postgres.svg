@@ -1,0 +1,105 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1110" height="440" viewBox="0 0 1110 440" role="img" aria-labelledby="title desc">
+  <title id="title">Replace SQLite with Postgres in Docker Compose</title>
+  <desc id="desc">The application container stays the same while persistence moves from a SQLite file to a Postgres service with its own named volume. Docker Compose starts both services together.</desc>
+  <defs>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="150%">
+      <feDropShadow dx="0" dy="4" stdDeviation="5" flood-color="#0f172a" flood-opacity="0.08"/>
+    </filter>
+    <marker id="arrow-purple" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto"><path d="M0 0 10 5 0 10Z" fill="#7c3aed"/></marker>
+    <marker id="arrow-blue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto"><path d="M0 0 10 5 0 10Z" fill="#2563eb"/></marker>
+    <marker id="arrow-amber" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto"><path d="M0 0 10 5 0 10Z" fill="#c2410c"/></marker>
+    <marker id="arrow-green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto"><path d="M0 0 10 5 0 10Z" fill="#15803d"/></marker>
+    <marker id="arrow-red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto"><path d="M0 0 10 5 0 10Z" fill="#dc2626"/></marker>
+    <marker id="arrow-gray" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto"><path d="M0 0 10 5 0 10Z" fill="#64748b"/></marker>
+    <symbol id="icon-api" viewBox="0 0 24 24">
+        <path d="m8 5-5 7 5 7M16 5l5 7-5 7M14 3l-4 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </symbol>
+    <symbol id="icon-container" viewBox="0 0 24 24">
+        <rect x="2" y="5" width="20" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="2"/>
+        <path d="M7 5v14M12 5v14M17 5v14" fill="none" stroke="currentColor" stroke-width="2"/>
+      </symbol>
+    <symbol id="icon-database" viewBox="0 0 24 24">
+        <ellipse cx="12" cy="5" rx="8" ry="3" fill="none" stroke="currentColor" stroke-width="2"/>
+        <path d="M4 5v7c0 1.66 3.58 3 8 3s8-1.34 8-3V5M4 12v7c0 1.66 3.58 3 8 3s8-1.34 8-3v-7" fill="none" stroke="currentColor" stroke-width="2"/>
+      </symbol>
+    <symbol id="icon-number-1" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M10 9.5 12.4 8v8M10.2 16h4.4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </symbol>
+    <symbol id="icon-number-2" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M9.4 9.6a2.6 2.6 0 1 1 5.2.4c0 2-5.2 3.6-5.2 6h5.4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </symbol>
+    <style>
+      text { font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #172033; }
+      symbol [stroke] { vector-effect: non-scaling-stroke; }
+      .node rect { stroke-width: 2; }
+      .node-boundary rect { stroke-width: 2; stroke-dasharray: 8 8; }
+      .boundary-title { font-size: 16px; font-weight: 750; text-anchor: start; }
+      .node-title { font-size: 20px; font-weight: 750; text-anchor: middle; }
+      .node-title.icon-copy { text-anchor: start; }
+      .node-subtitle { font-size: 16px; font-weight: 500; fill: #475569; text-anchor: middle; }
+      .eyebrow { font-size: 13px; font-weight: 750; letter-spacing: 1px; fill: #475569; text-anchor: middle; }
+      .mention-icon { font-size: 27px; font-weight: 750; text-anchor: middle; }
+      .standalone-mention { font-size: 52px; font-weight: 750; text-anchor: middle; }
+      .icon-node-title { font-size: 16px; font-weight: 750; text-anchor: middle; }
+      .edge { fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+      .edge-label rect { stroke-width: 2; }
+      .edge-label text { font-size: 14px; font-weight: 750; text-anchor: middle; dominant-baseline: central; }
+      .divider { stroke: #cbd5e1; stroke-width: 2; stroke-dasharray: 6 8; stroke-linecap: round; }
+      .center-annotation { fill: #f1f5f9; stroke: none; }
+      .center-title { font-weight: 800; letter-spacing: 0.08em; fill: #334155; text-anchor: middle; }
+      .center-detail { font-weight: 600; fill: #475569; text-anchor: middle; }
+    </style>
+  </defs>
+  <rect width="1110" height="440" fill="#ffffff"/>
+
+  <line class="divider" x1="11" y1="220" x2="1099" y2="220"/>
+
+  <path class="edge" d="M525 125L585 125" stroke="#15803d" marker-end="url(#arrow-green)"/>
+  <path class="edge" d="M525 315L585 315" stroke="#15803d" marker-end="url(#arrow-green)"/>
+  <path class="edge" d="M800 315L860 315" stroke="#15803d" marker-end="url(#arrow-green)"/>
+
+  <g class="node node-plain node-blue" transform="translate(35 75)">
+    <use href="#icon-number-1" x="47.5" y="20" width="34" height="34" color="#2563eb"/>
+    <text class="node-title icon-copy" x="92.07" y="44.2" font-size="20">Before</text>
+    <text class="node-subtitle" x="107.5" y="75" font-size="16">SQLite on a volume</text>
+  </g>
+  <g class="node node-amber" transform="translate(310 75)" filter="url(#shadow)">
+    <rect width="215" height="100" rx="18" fill="#fff7ed" stroke="#c2410c"/>
+    <use href="#icon-api" x="62.44" y="9" width="34" height="34" color="#c2410c"/>
+    <text class="node-title icon-copy" x="105.61" y="33.2" font-size="20">App</text>
+    <text class="node-subtitle" x="107.5" y="64" font-size="16">Frontend + FastAPI</text>
+    <text class="node-subtitle" x="107.5" y="86" font-size="16">container</text>
+  </g>
+  <g class="node node-green" transform="translate(585 75)" filter="url(#shadow)">
+    <rect width="215" height="100" rx="18" fill="#ecfdf5" stroke="#15803d"/>
+    <use href="#icon-database" x="48" y="20" width="34" height="34" color="#15803d"/>
+    <text class="node-title icon-copy" x="89.75" y="44.2" font-size="20">SQLite</text>
+    <text class="node-subtitle" x="107.5" y="75" font-size="16">One local file</text>
+  </g>
+  <g class="node node-plain node-green" transform="translate(35 265)">
+    <use href="#icon-number-2" x="33.12" y="9" width="34" height="34" color="#15803d"/>
+    <text class="node-title icon-copy" x="77.7" y="33.2" font-size="20">Compose</text>
+    <text class="node-subtitle" x="107.5" y="64" font-size="16">Two containers, one</text>
+    <text class="node-subtitle" x="107.5" y="86" font-size="16">command</text>
+  </g>
+  <g class="node node-amber" transform="translate(310 265)" filter="url(#shadow)">
+    <rect width="215" height="100" rx="18" fill="#fff7ed" stroke="#c2410c"/>
+    <use href="#icon-api" x="62.44" y="9" width="34" height="34" color="#c2410c"/>
+    <text class="node-title icon-copy" x="105.61" y="33.2" font-size="20">App</text>
+    <text class="node-subtitle" x="107.5" y="64" font-size="16">Frontend + FastAPI</text>
+    <text class="node-subtitle" x="107.5" y="86" font-size="16">container</text>
+  </g>
+  <g class="node node-green" transform="translate(585 265)" filter="url(#shadow)">
+    <rect width="215" height="100" rx="18" fill="#ecfdf5" stroke="#15803d"/>
+    <use href="#icon-container" x="34.81" y="9" width="34" height="34" color="#15803d"/>
+    <text class="node-title icon-copy" x="77.99" y="33.2" font-size="20">Postgres</text>
+    <text class="node-subtitle" x="107.5" y="64" font-size="16">Production database</text>
+    <text class="node-subtitle" x="107.5" y="86" font-size="16">container</text>
+  </g>
+  <g class="node node-green" transform="translate(860 265)" filter="url(#shadow)">
+    <rect width="215" height="100" rx="18" fill="#ecfdf5" stroke="#15803d"/>
+    <use href="#icon-database" x="13.41" y="20" width="34" height="34" color="#15803d"/>
+    <text class="node-title icon-copy" x="55.16" y="44.2" font-size="20">Data volume</text>
+    <text class="node-subtitle" x="107.5" y="75" font-size="16">Persists Postgres data</text>
+  </g>
+</svg>

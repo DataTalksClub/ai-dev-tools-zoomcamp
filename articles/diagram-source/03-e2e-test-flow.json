@@ -1,0 +1,123 @@
+{
+  "title": "Test two browser sessions with Playwright",
+  "description": "Playwright controls separate interviewer and candidate browser sessions. Both connect to the same interview room through FastAPI, and the test verifies that a candidate change reaches the interviewer and is persisted in Postgres.",
+  "canvas": {
+    "width": 1100,
+    "height": 650,
+    "background": "#ffffff"
+  },
+  "layout": {
+    "type": "manual",
+    "card_width": 220,
+    "card_height": 110
+  },
+  "nodes": [
+    {
+      "id": "playwright",
+      "title": "Playwright",
+      "subtitle": "Controls both browser sessions",
+      "icon": "settings",
+      "color": "blue",
+      "x": 25,
+      "y": 270
+    },
+    {
+      "id": "interviewer_browser",
+      "title": "Interviewer browser",
+      "icon": "browser",
+      "variant": "icon",
+      "color": "purple",
+      "x": 290,
+      "y": 55
+    },
+    {
+      "id": "candidate_browser",
+      "title": "Candidate browser",
+      "icon": "browser",
+      "variant": "icon",
+      "color": "purple",
+      "x": 290,
+      "y": 483
+    },
+    {
+      "id": "shared_room",
+      "title": "Shared room",
+      "subtitle": "Bidirectional WebSocket sync",
+      "icon": "websocket",
+      "color": "purple",
+      "x": 500,
+      "y": 270,
+      "width": 240
+    },
+    {
+      "id": "backend",
+      "title": "FastAPI",
+      "subtitle": "Sessions and canvas events",
+      "icon": "api",
+      "color": "amber",
+      "x": 790,
+      "y": 270,
+      "width": 240
+    },
+    {
+      "id": "postgres",
+      "title": "Postgres database",
+      "subtitle": "Persistent application state",
+      "icon": "database",
+      "variant": "icon",
+      "color": "green",
+      "x": 868,
+      "y": 485
+    }
+  ],
+  "edges": [
+    {
+      "from": "playwright",
+      "to": "interviewer_browser",
+      "color": "blue",
+      "route": "orthogonal",
+      "from_anchor": "top",
+      "to_anchor": "left",
+      "dashed": true
+    },
+    {
+      "from": "playwright",
+      "to": "candidate_browser",
+      "color": "blue",
+      "route": "orthogonal",
+      "from_anchor": "bottom",
+      "to_anchor": "left",
+      "dashed": true
+    },
+    {
+      "from": "interviewer_browser",
+      "to": "shared_room",
+      "color": "purple",
+      "route": "orthogonal",
+      "from_anchor": "right",
+      "to_anchor": "top"
+    },
+    {
+      "from": "candidate_browser",
+      "to": "shared_room",
+      "color": "purple",
+      "route": "orthogonal",
+      "from_anchor": "right",
+      "to_anchor": "bottom"
+    },
+    {
+      "from": "shared_room",
+      "to": "backend",
+      "color": "purple",
+      "route": "straight"
+    },
+    {
+      "from": "backend",
+      "to": "postgres",
+      "color": "green",
+      "route": "straight",
+      "from_anchor": "bottom",
+      "to_anchor": "top"
+    }
+  ]
+}

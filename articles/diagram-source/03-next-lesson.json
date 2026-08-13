@@ -1,0 +1,149 @@
+{
+  "title": "Operate the application after deployment",
+  "description": "A user pushes a code change to main, where CI/CD deploys it to the development environment. The user manually promotes the release to production. Production telemetry is collected in an observability platform, which triggers alerts. An AI agent investigates the alert and creates a fix that goes back through the same delivery path.",
+  "canvas": {
+    "width": 1520,
+    "height": 800,
+    "background": "#ffffff"
+  },
+  "layout": {
+    "type": "manual",
+    "card_width": 220,
+    "card_height": 100
+  },
+  "nodes": [
+    {
+      "id": "user",
+      "title": "User",
+      "icon": "user",
+      "variant": "icon",
+      "color": "blue",
+      "x": 872,
+      "y": 20
+    },
+    {
+      "id": "delivery",
+      "title": "Delivery environments",
+      "variant": "boundary",
+      "color": "blue",
+      "x": 20,
+      "y": 120,
+      "width": 1480,
+      "height": 230
+    },
+    {
+      "id": "code",
+      "title": "Code",
+      "subtitle": "Application change",
+      "icon": "api",
+      "color": "blue",
+      "x": 40,
+      "y": 180
+    },
+    {
+      "id": "push",
+      "title": "Push to main",
+      "subtitle": "Commit to GitHub",
+      "icon": "github",
+      "color": "blue",
+      "x": 340,
+      "y": 180
+    },
+    {
+      "id": "cicd",
+      "title": "CI/CD",
+      "subtitle": "Test and deploy",
+      "icon": "settings",
+      "color": "purple",
+      "x": 640,
+      "y": 180
+    },
+    {
+      "id": "dev",
+      "title": "Development",
+      "subtitle": "Validate the release",
+      "icon": "container",
+      "color": "blue",
+      "x": 940,
+      "y": 180
+    },
+    {
+      "id": "prod",
+      "title": "Production",
+      "subtitle": "Serve real users",
+      "icon": "aws",
+      "color": "green",
+      "x": 1240,
+      "y": 180
+    },
+    {
+      "id": "respond",
+      "title": "Respond",
+      "variant": "boundary",
+      "color": "green",
+      "x": 20,
+      "y": 500,
+      "width": 260,
+      "height": 250
+    },
+    {
+      "id": "agent",
+      "title": "AI agent",
+      "subtitle": "Investigate + create fix",
+      "icon": "sparkles",
+      "color": "green",
+      "x": 40,
+      "y": 585
+    },
+    {
+      "id": "observe",
+      "title": "Observe",
+      "variant": "boundary",
+      "color": "purple",
+      "x": 300,
+      "y": 500,
+      "width": 1200,
+      "height": 250
+    },
+    {
+      "id": "collector",
+      "title": "Collector",
+      "subtitle": "Logs + metrics",
+      "icon": "settings",
+      "color": "blue",
+      "x": 1240,
+      "y": 585
+    },
+    {
+      "id": "observability",
+      "title": "Observability",
+      "subtitle": "Store and visualize",
+      "icon": "database",
+      "color": "purple",
+      "x": 790,
+      "y": 585
+    },
+    {
+      "id": "alerting",
+      "title": "Alerting",
+      "subtitle": "Detect a problem",
+      "icon": "warning",
+      "color": "red",
+      "x": 340,
+      "y": 585
+    }
+  ],
+  "edges": [
+    {"from": "code", "to": "push", "color": "blue", "route": "straight"},
+    {"from": "push", "to": "cicd", "color": "purple", "route": "straight"},
+    {"from": "cicd", "to": "dev", "color": "purple", "route": "straight"},
+    {"from": "dev", "to": "prod", "color": "green", "route": "straight", "dashed": true, "directed": false},
+    {"from": "user", "to": "push", "label": "Push code", "color": "blue", "route": "orthogonal", "from_anchor": "left", "to_anchor": "top", "dashed": true},
+    {"from": "user", "to": "prod", "label": "Manual promotion", "color": "green", "route": "orthogonal", "from_anchor": "right", "to_anchor": "top", "dashed": true},
+    {"from": "prod", "to": "collector", "color": "blue", "route": "straight", "from_anchor": "bottom", "to_anchor": "top"},
+    {"from": "collector", "to": "observability", "color": "purple", "route": "straight"},
+    {"from": "observability", "to": "alerting", "color": "red", "route": "straight"},
+    {"from": "alerting", "to": "agent", "color": "green", "route": "straight"},
+    {"from": "agent", "to": "code", "label": "Fix", "color": "green", "route": "orthogonal", "from_anchor": "top", "to_anchor": "bottom", "dashed": true}
+  ]
+}
