@@ -1,583 +1,395 @@
 # DevOps and Observability for an AI-Built App
 
-In the [second article](https://github.com/DataTalksClub/ai-dev-tools-zoomcamp/blob/main/articles/02-end-to-end.md)
-in this series, I used a coding assistant to build and deploy a full-stack app.
-The app is [snake-royale](https://github.com/alexeygrigorev/snake-royale), a
-multi-user version of the classic Snake game. It has a React frontend and a
-FastAPI backend. We added Postgres, containers and a pipeline that deploys
-every change.
+This is the forth article in a series based on AI Dev Tools Zoomcamp, the free course we run at DataTalks.Club.
 
-That gets the app online, but it doesn't tell me whether the app still works.
+All articles in the series:
 
-If score submissions start returning `500`, I need to know that users are
-affected and find the failed requests. Then I need to connect them to the
-latest deployment and decide what to do. CI/CD can ship a bad release as
-efficiently as a good one.
+- Part 1: [AI-Native Development: Specifications, Loop and Graph Engineering](https://alexeyondata.substack.com/p/ai-native-development-specifications)
+- Part 2: [Build and Ship a Full-Stack App with AI Coding Assistants](https://alexeyondata.substack.com/p/ai-native-development-specifications)
+- Part 3: [Deploy a Full-Stack App with AI Coding Assistants](https://alexeyondata.substack.com/p/ai-native-development-specifications)
+- Part 4: DevOps and Observability for an AI-Built App (this article)
+- Part 5: TBA
 
-I also want an agent to become the first line of support. It can collect the
-same evidence I would collect, compare it with recent changes, and propose the
-next action. But I don't want a model with general cloud credentials deciding
-what to change in production.
+In part 2, we developed an end-to-end application for conducting system design interviews. In part 3, we deployed it to AWS.
 
-Here, I build the system around that agent:
+In this part, we will take the application we deployed previously, and make it more production-ready:
 
-- how the app produces evidence
-- which failures deserve an alert
-- what an agent investigates first
-- what it may fix without a person
-- when it must escalate
-- how we audit both the code and the agent
+- Define dev and prod environments
+- Introduce observability: logs, metrics, alerts
+- Use AI as the first responder when the application stops working
 
-OpenTelemetry sends data to Prometheus, Loki and Tempo in the concrete example,
-and Grafana displays it. We'll run the responder with Codex or Claude Code.
-The products are replaceable. I want to keep the boundaries between evidence,
-reasoning, permission and verification.
+
+**This article is a draft and will be updated after the workshop**
+
 
 ## Overview
 
-We start with one bad deployment. An important backend operation begins
-returning `500`, so the error rate rises. The alert sends a structured payload
-to a small responder. The responder gathers evidence before it starts an
-agent, and a separate policy checks the action the agent proposes.
+Right now, every push to `main` goes straight to the one environment we have,
+and nothing tells us the app is unhealthy until we notice by hand. We fix that
+in three steps: separate dev from prod so a bad change never reaches users
+directly, add the telemetry and alerting that would have caught last part's
+failure on its own, and give an agent a narrow, auditable way to respond.
 
-![A deployed app emits telemetry, raises an alert, and sends evidence to an
-agent. An external policy either escalates the incident or permits a known
-rollback, which the system verifies and records.](images/04-operate-app-overview.png)
+## Dev and prod environments
 
-The agent can reason about any action, but we expose only one action to it: a
-versioned rollback script that we approved before the incident. If the evidence
-doesn't match that case, the responder sends a human an incident report
-instead.
+So far, a push to `main` deploys straight to the only environment we have.
+That's fine for a demo, but it means every change - tested or not - reaches
+the same instance our users hit.
 
-A model supplies confidence, while the policy wrapper enforces permission.
+We want a place to deploy to first, and a
+deliberate, separate step to promote a change from there to production.
 
-## Instrument before choosing a dashboard
+We already have infrastructure as code for our deployment from the previous
+part, and it already parameterizes what differs between environments, such as
+the domain and the instance size. That means we don't design anything new -
+we ask for a second, independent copy of what we already have, and treat what
+we already have as dev from now on.
 
-We first instrument the app so it records what it's doing. I use
-[OpenTelemetry](https://opentelemetry.io/docs/) because it gives us a
-vendor-neutral format for traces, metrics, and logs.
+```text
+Create a second, independent copy of our deployment infrastructure for a
+production environment.
 
-Each kind of evidence answers a different question:
+It must be able to run alongside the existing one with its own database and compute. The existing becomes the dev environment.
+```
 
-- A metric tells us that the score-submission error rate increased.
-- A trace shows the path of one failed request through FastAPI and the
-  database call.
-- A log records the exception and the values we deliberately chose to keep.
+Once prod exists, split the deploy step in CI/CD so each environment gets its
+own path:
 
-We add the service name, environment and deployed commit to every record. We
-also put the trace ID in structured logs. We can now move from an error rate on
-a chart to one failed request. From there, we find its log entry and the code
-version that served it.
+```text
+Split our CI/CD deploy step into two:
 
-I ask the coding assistant to instrument one important operation first:
+Deploy to dev: on every push to main, after tests pass, deploy to the dev
+environment automatically (we already do it today)
+
+Deploy to prod: a manual workflow that promotes the version running in dev to prod.
+```
+
+The key property is that prod never builds from source on its own - it
+redeploys the exact commit that already proved itself in dev. Promotion is a
+deliberate, logged action, not a side effect of pushing code.
+
+
+
+## Instrumenting 
+
+Two environments buy us a safe place to promote from, but not visibility. A
+bad deploy can still sit in prod for hours before anyone notices, because
+nothing yet tells us the app is unhealthy. And even once we notice, "error
+rate went up" isn't enough - we need to get from that to one failed request,
+its log, and the commit that served it. A dashboard that only shows CPU and
+memory can look perfectly fine while the one thing users care about is
+silently failing. That's what we fix next.
+
+
+We use [OpenTelemetry](https://opentelemetry.io/docs/) for this: a
+vendor-neutral format for traces, metrics, and logs. A metric tells us the
+canvas-broadcast error rate went up; a trace shows one failed request's path
+through the backend; a log holds the exception. Tagging all three with the
+same service name, environment, and deployed commit is what lets us walk from
+a spike on a chart to the one request, and the one log line, behind it.
+
+We ask the coding assistant to instrument one important operation first:
 
 ```text
 Instrument the FastAPI backend with OpenTelemetry.
 
-Start with the endpoint that submits a game score.
-
-- export traces and metrics with OTLP
-- include service name, environment and deployed git commit as resource
-  attributes
-- keep application logs as structured JSON on stdout
-- inject the trace ID and service name into each log record
-- add one custom counter for score-submission results
-- do not record passwords, tokens, request bodies or user names
-
-Write a test that submits one score and verifies that the instrumentation does
-not change the response.
+Export traces and metrics with OTLP (no collector yet). Include service name, environment and deployed git commit
 ```
 
-I don't start with the browser. OpenTelemetry's current JavaScript
-documentation still labels [browser instrumentation as experimental](https://opentelemetry.io/docs/languages/js/).
-The backend gives us stable traces and metrics for the incident we want to
-teach. We can add browser tracing later when we need the path from a click to
-an API request.
+The app sends OTLP to an [OpenTelemetry Collector](https://opentelemetry.io/docs/collector/),
+which exports it to whichever backends we pick.
 
-## Put a collector between the app and storage
+Exporting straight
+from the app to each backend instead would mean an application change every
+time a backend changes, and a slow backend could stall the app's own
+exporters. The collector is one stable boundary that handles batching and
+retries outside the request path.
 
-The app sends OTLP to an [OpenTelemetry Collector](https://opentelemetry.io/docs/collector/).
-
-The collector receives and processes the telemetry, then exports it to our
-chosen backends:
-
-- Prometheus stores metrics.
-- Loki stores logs.
-- Tempo stores traces.
-- Grafana reads all three.
-
-We could export directly from the app to each backend. Then every backend
-change would require an application change, and a slow backend could affect
-the app's telemetry exporters. The collector gives us one stable boundary and
-handles work such as batching and retries outside the request path.
-
-I give the assistant the architecture rather than asking it to choose an
-observability stack:
 
 ```text
-Add an observability/ directory with Docker Compose configuration for:
+Add OTLP collector.
 
-- an upstream OpenTelemetry Collector
-- Prometheus for metrics
-- Loki for logs
-- Tempo for traces
-- Grafana for dashboards and alerting
-
-The app sends OTLP only to the collector. Configure Grafana so I can move from
-a trace to logs with the same trace ID and from a metric exemplar to its trace.
-
-Keep high-cardinality values such as trace IDs out of Loki labels. Store them
-as structured metadata instead.
-
-Add make targets to start the stack, generate sample traffic and stop it.
+Create the observability/ directory with Docker Compose for an OpenTelemetry
+Collector, Prometheus, Loki, Tempo, and Grafana.
 ```
 
-For a 90-minute session, I prepare most of the Compose and datasource
-configuration beforehand. We edit the instrumentation and use the telemetry
-during the session. Watching five containers download isn't an observability
-lesson.
+## Build the dashboard
+
+The collector is running, but nothing draws it yet. We ask for one panel - the
+one the rest of this article leans on:
+
+```text
+Add one Grafana panel: canvas-broadcast error rate, with exemplars enabled so
+a point links to its trace.
+```
+
+## Look at it locally first
+
+Before shipping anywhere, we run the stack next to the app on our own machine
+and generate one real trace, so we know the prompt above actually worked
+before going looking for it in dev or prod:
+
+```sh
+docker compose -f observability/docker-compose.yaml up -d
+```
+
+Then we hit the app a few times so there's something to see, and open Grafana
+at `http://localhost:3000` - no tunnel needed here, since nothing on a laptop
+is public in the first place. Once the panel we just asked for shows real
+numbers, it's safe to ship.
+
+## Run it in dev and prod, and reach it privately
+
+A demo dashboard on a laptop can't tell us about a real failure, so this stack
+needs to run next to the app in every environment. We deploy it the same way as
+everything else - push to main, dev picks it up automatically, then a
+promotion ships it to prod:
+
+```text
+Deploy the observability/ stack alongside the app, in every environment.
+```
 
 ## Follow one failed request
 
-Before adding an alert, I break the score-submission path and send a request.
+Let's break the app:
 
-Then I try to answer these questions in order:
+```text
+Introduce a bug that makes canvas broadcasts fail for a fraction of calls.
+```
 
-1. Did users receive errors?
-2. Which operation failed?
-3. Can I open one representative request?
-4. Which log belongs to that request?
-5. Which deployment served it?
+Same pipeline as before: main, then dev, then a promotion to prod. Then we use
+the app normally until one edit fails.
 
-If the dashboard shows CPU usage but can't answer those questions, I haven't
-instrumented the incident I care about.
+With that one failure in hand, we open the dashboard and answer these, in
+order, by moving between panels rather than guessing:
 
-This came up repeatedly when I looked through practitioner discussions. Teams
-can have an expensive observability stack and still debug from raw console
-logs. In one [discussion about alert fatigue](https://www.reddit.com/r/sre/comments/1nm7sbi/alert_fatigue_is_killing_me/),
-SREs kept returning to three actions. Measure customer impact, attach a runbook
-and remove alerts that nobody can act on.
+1. Did users receive errors? - the canvas-broadcast error-rate panel moved.
+2. Which operation failed? - that's the panel that moved; the metric is
+   already labeled by operation.
+3. Can we open one representative request? - click an exemplar on that panel
+   to jump straight to one trace.
+4. Which log belongs to that request? - the trace carries a trace ID; look it
+   up in Loki.
+5. Which deployment served it? - the trace and the log both carry the
+   deployed commit as an attribute.
 
-We use the dashboard to investigate, but it isn't the finished result.
+A dashboard that can't answer these - even a good-looking one - hasn't
+instrumented the incident we actually care about.
+
 
 ## Create one actionable alert
 
-I don't import a large alert pack. I create one alert for a sustained increase
-in failed score submissions.
-
-I require both of these conditions:
+We don't import a large alert pack - just one alert for a sustained increase in
+failed canvas broadcasts, requiring both:
 
 - enough requests failed to affect users
-- the failure lasted long enough that one brief error doesn't start an
-  incident
+- the failure lasted long enough that one brief blip doesn't page anyone
 
-This follows the [Prometheus alerting guidance](https://prometheus.io/docs/practices/alerting/).
-Keep alerts few, allow small blips and page on symptoms that require action.
-CPU, memory and database connections still belong on the dashboard because
-they help explain the incident. They don't all need to wake someone up.
+This follows the [Prometheus alerting guidance](https://prometheus.io/docs/practices/alerting/):
+keep alerts few, tolerate small blips, and page on symptoms that need action.
+CPU, memory and connection counts still belong on the dashboard - they help
+explain an incident, they just don't need to wake anyone up on their own.
 
-I ask the assistant for the rule and its test together:
-
-```text
-Create one Prometheus alert for a sustained user-visible error rate on score
-submission.
-
-Use the custom request/result metric from the FastAPI instrumentation. Choose a
-threshold that the load generator can cross during the demo, and require the
-condition to hold for two minutes.
-
-Include these labels and annotations:
-
-- affected service and environment
-- severity and owner
-- user-visible symptom
-- start time
-- Grafana dashboard link
-- active deployment version
-- runbook path
-
-Add a test for the alert expression and document why this is an alert rather
-than a dashboard-only metric.
-```
-
-In a larger setup, [Alertmanager](https://prometheus.io/docs/alerting/latest/alertmanager/)
-groups and deduplicates related alerts. It also routes, silences and inhibits
-them. For this example, Grafana sends one webhook to our responder. The webhook
-contains the symptom and links. It doesn't contain a model prompt or a command
-to run.
-
-## Collect evidence before starting the agent
-
-I keep the responder small enough that a shell or Python script can handle the
-first version.
-
-It receives the alert and collects a fixed evidence directory:
+We ask the assistant for the rule and its test together:
 
 ```text
-incidents/2026-08-02T10-30-00Z/
-  alert.json
-  health.json
-  metrics.json
-  traces.json
-  logs.jsonl
-  deployment.json
-  recent-commits.txt
+Create a Prometheus alert for a sustained canvas-broadcast error rate.
 ```
 
-The script uses read-only credentials and known queries. The model
-doesn't invent a `kubectl`, cloud, or database command and run it against the
-live system. It starts from the same bounded packet every time.
+## Wake the on-call engineer
 
-Then we give the agent a versioned task:
+Everything from here lives in one folder in the app repo, `on-call-engineer/`.
+Rather than stand up something to receive a webhook, we poll: a script checks
+Prometheus's alert API on an interval and starts the on-call agent the moment
+our alert shows up firing.
 
 ```text
-You are the first responder for one production alert.
-
-Read the files in the incident directory. Do not modify code or system state.
-
-Return:
-
-- observed facts, with the evidence file for each fact
-- up to three hypotheses, ordered by support
-- checks that would distinguish the hypotheses
-- one proposed action, or ESCALATE
-- uncertainty and missing evidence
-
-Do not call something the root cause unless the evidence rules out the main
-alternatives. A proposed action is not permission to run it.
+Add an on-call-engineer/ folder with a script that polls Prometheus's
+/api/v1/alerts every minute.
 ```
 
-We also require a JSON schema for the response. To share it between the two
-CLIs, we use their common JSON Schema subset and omit the optional `$schema`
-declaration. The schema catches a missing field, but it doesn't make the
-diagnosis true. We still need evidence and a policy decision.
+For this proof of concept, that script runs from a cron job on our own
+machine. Nothing needs to be reachable from the internet for this to work -
+the script reaches out to Prometheus, not the other way around.
 
-## Keep the responder tool-agnostic
+A cron job on a laptop only works while someone remembers to leave it
+running, though. The production version of the same idea is a scheduled
+serverless function - an AWS Lambda on an EventBridge schedule, a Cloud Run
+job on Cloud Scheduler, or your platform's equivalent - firing the identical
+poll script every minute. Nothing runs between checks: the platform starts
+the function, it polls, and if the alert isn't firing it exits and gets torn
+down immediately. That's a stronger version of "provisioned only when
+needed" than standing up a box on alert, since even the polling itself costs
+nothing while the app is healthy. We don't build that here, but the poll
+script doesn't change to get there - only what's calling it on a timer.
 
-The responder invokes a command with four inputs:
+## Let it investigate and fix
+
+The agent isn't handed a pre-built evidence bundle - it collects its own,
+with read access to exactly the systems it needs: Prometheus, Loki, Tempo,
+and `git log`. And it's allowed to do more than look: edit code in a fresh
+checkout, run the test suite, and push a fix if it has one.
 
 ```text
-task + evidence directory + output schema + resource limits
+You are the on-call agent for one production alert: {alert.json}
+
+You have read access to Prometheus, Loki, Tempo, and git log. Investigate
+first - write your evidence and reasoning to incidents/<timestamp>/, and
+don't call something the root cause unless the evidence rules out the main
+alternatives.
+
+If you find a fix you're confident in, make it on a fresh branch, run the
+test suite, and push only if it passes. If you're not confident, or nothing
+you tried passes, don't push - write an escalation instead (see below).
 ```
 
-It expects one structured response through an interface that doesn't mention a
-model vendor.
+## Keep it tool-agnostic
 
-The examples assume that the adapter has already written the task, the portable
-schema and the incident evidence files shown above.
+The wake script invokes a command with four inputs - task, read access to the
+evidence sources, an output schema, resource limits - and expects one
+structured response back, through an interface that doesn't mention a model
+vendor.
 
-With Codex, the adapter can call
+With Codex, the wake script can call
 [`codex exec`](https://learn.chatgpt.com/docs/non-interactive-mode.md):
 
 ```bash
 mkdir -p incidents/2026-08-02T10-30-00Z
 
-timeout 120s codex exec \
-  --sandbox read-only \
+timeout 20m codex exec \
+  --sandbox workspace-write \
   --ephemeral \
-  --output-schema incident-response/response.schema.json \
+  --output-schema on-call-engineer/response.schema.json \
   --output-last-message incidents/2026-08-02T10-30-00Z/response.json \
   -C . \
-  - < incident-response/responder-task.md
+  - < on-call-engineer/agent-task.md
 ```
 
-With Claude Code, the adapter uses [print mode](https://docs.anthropic.com/en/docs/claude-code/cli-usage)
-and exposes only file-reading tools:
+With Claude Code, it uses [print mode](https://docs.anthropic.com/en/docs/claude-code/cli-usage)
+with a fresh git worktree as its only writable path:
 
 ```bash
 mkdir -p incidents/2026-08-02T10-30-00Z
 
 set -o pipefail
-timeout 120s claude -p \
-  --permission-mode plan \
-  --tools "Read,Grep,Glob" \
+timeout 20m claude -p \
+  --permission-mode acceptEdits \
+  --add-dir ./worktree \
   --no-session-persistence \
   --output-format json \
-  --json-schema "$(jq -c . incident-response/response.schema.json)" \
-  < incident-response/responder-task.md \
+  --json-schema "$(jq -c . on-call-engineer/response.schema.json)" \
+  < on-call-engineer/agent-task.md \
   | jq -e '.structured_output' \
   > incidents/2026-08-02T10-30-00Z/response.json
 ```
 
-Claude's JSON output also contains timing, usage and session metadata, so the
-adapter extracts `structured_output` to give both commands the same response
-structure. The exact flags will change, but we keep the same adapter interface.
-It accepts one task and bounded evidence. It enforces permissions, structured
-output, a timeout and an audit record.
+Claude's JSON output carries extra timing and session metadata, so the wake
+script extracts `structured_output` to give both commands the same shape. The
+flags will change; the interface - one task, scoped access, a timeout, an
+audit record - doesn't have to.
 
-Projects such as [HolmesGPT](https://github.com/HolmesGPT/holmesgpt) connect an
-agent to live observability sources and investigate across them.
-[K8sGPT](https://github.com/k8sgpt-ai/k8sgpt) runs Kubernetes analyzers and can
-ask a model to explain the results. They solve versions of the same problem.
-Our small responder shows the same design without making Kubernetes or one
-agent platform a prerequisite.
+[HolmesGPT](https://github.com/HolmesGPT/holmesgpt) and
+[K8sGPT](https://github.com/k8sgpt-ai/k8sgpt) connect an agent to live
+observability sources at larger scale. Our on-call engineer shows the same
+design without making Kubernetes or one agent platform a prerequisite.
 
-## Confidence is not permission
+## Cap the blast radius instead of trusting the confidence
 
-An agent can be 95% confident and still be wrong. More importantly, it can be
-confident about an action we never wanted it to take.
+An agent can be 95% confident and still be wrong, so we don't rely on its
+confidence - we rely on where a fix can land. A pushed branch only reaches
+`main`, which only reaches dev automatically: the same pipeline from "Dev and
+prod environments." Prod still needs a person to promote it. That's what
+makes it safe to let the agent write code unsupervised at all - the worst a
+bad fix does on its own is fail CI or sit untouched in dev.
 
-The responder sends the proposed action to code outside the model.
+A few things stay off-limits regardless of confidence, and go to a person
+instead:
 
-That code checks an allowlist such as:
+- anything touching auth, secrets, or a database migration
+- more than one push attempt per incident
+- a failure it can't reproduce, or a fix its own tests don't confirm
+- conflicting evidence, or an outage broader than one operation
 
-```yaml
-actions:
-  rollback_last_release:
-    required_signature: error_rate_after_deployment
-    command: runbooks/rollback.sh
-    verify: runbooks/verify-recovery.sh
-    max_attempts: 1
-    timeout_seconds: 300
-```
-
-The rollback can run only when all of these conditions hold:
-
-- the evidence matches a known failure signature
-- we approved and versioned the runbook before the incident
-- the action affects one bounded target
-- we can reverse it or run it repeatedly without making the state worse
-- no security, authorization, sensitive-data, or data-integrity question is
-  unresolved
-- an independent check can tell us whether the service recovered
-- the responder hasn't exhausted its time or action budget
-
-Everything else goes to a person, including conflicting evidence, novel
-commands and broad outages. Database repairs, secret rotations, failed
-rollbacks and incidents we can't verify also require a person.
-
-This is close to what practitioners report in [discussions about AI on call](https://www.reddit.com/r/sre/comments/1t6wqux/anyone_using_ai_for_actual_sreoncall_operations/).
-In those discussions, operators use agents to collect logs and metrics, draft
-timelines and retrieve runbooks. Reliable root-cause analysis remains hard when
-context is missing. Write access also risks increasing the blast radius.
-
-[Google's SRE guidance](https://sre.google/sre-book/automation-at-google/)
-also treats automation as a force multiplier rather than a substitute for
-engineering judgment. We automate the case we can specify and test. We don't
-turn every incident into an open-ended production task.
+[SRE practitioners](https://www.reddit.com/r/sre/comments/1t6wqux/anyone_using_ai_for_actual_sreoncall_operations/)
+report the same split in practice: agents collect evidence and draft fixes
+well, but reliable root-cause analysis stays hard when context is missing,
+and write access raises the blast radius. [Google's SRE book](https://sre.google/sre-book/automation-at-google/)
+frames automation the same way - a force multiplier, not a substitute for
+judgment. We automate the case we can specify and test, not every incident.
 
 ## Escalate with a useful report
 
-"I couldn't fix it" isn't an escalation report.
+"I couldn't fix it" isn't an escalation report. When nothing it tried passes,
+the agent instead writes what users are experiencing, the evidence behind it,
+the active deployment and recent changes, the hypotheses already checked,
+what was attempted, the current state, what's still unknown, and the safest
+next action for a person.
 
-When the policy rejects an action, the responder writes:
-
-- what users are experiencing
-- facts and links to their evidence
-- the active deployment and recent changes
-- hypotheses already checked
-- commands or runbooks attempted
-- the current service state
-- what remains unknown
-- the safest next action for a person
-
-We can demonstrate both branches with one prepared incident. First, the
-evidence matches the known post-deployment error signature, so the rollback
-runs and the responder verifies that the error rate falls. Then we remove the
-deployment match or introduce evidence of a data-integrity problem. The same
-agent now has to escalate.
-
-The model didn't get less intelligent in the second run. We changed what the
-policy authorized it to do.
-
-## Audit the code with more than a model opinion
-
-Operational response covers failures we can observe. A recurring security
-audit looks for weaknesses before they become incidents.
-
-I split the audit into three parts:
-
-1. A deterministic scanner finds known code patterns and dependency issues.
-2. A model reviews context, abuse paths, authorization, and business logic.
-3. A person validates the evidence and decides what to fix.
-
-For example, run Semgrep and keep its machine-readable output:
-
-```bash
-semgrep scan \
-  --config auto \
-  --json \
-  --output security-audit/semgrep.json \
-  .
-```
-
-Then give the model the repository commit, threat context, and scanner result:
-
-```text
-Audit this repository for security weaknesses.
-
-Treat security-audit/semgrep.json as evidence, not as a verdict. Also inspect
-authorization, data flows, shell/file operations, CI/CD, observability data,
-and business-logic abuse cases that pattern rules may miss.
-
-For every finding include:
-
-- file and line evidence
-- the concrete abuse or failure path
-- impact and uncertainty
-- how a person can reproduce or disprove it
-- a proposed fix and regression test
-
-Do not change the code. Do not mark a finding resolved.
-```
-
-[Semgrep MCP](https://github.com/semgrep/semgrep/blob/develop/cli/src/semgrep/mcp/README.md)
-can expose the same scanner to an agent through MCP. A deterministic tool
-produces evidence, and the model explains or challenges it. MCP is one way to
-connect the two.
-
-[PR-Agent](https://github.com/The-PR-Agent/pr-agent) applies model review at
-the pull-request boundary. Claude Code includes
-[automated security reviews](https://support.anthropic.com/en/articles/11932705-automated-security-reviews-in-claude-code/),
-and Codex supports non-interactive review and structured output. These tools
-can help, but no single one should handle the entire lifecycle. We separate
-writing, reviewing, fixing and certifying the change.
-
-## Use two reviewers only when the audit needs them
-
-For every change, I would run deterministic checks and one focused review of
-the diff. For a release or scheduled deep audit, I would use two independent
-model families and keep their outputs separate until both finish.
-
-As of August 2026, two quality-first examples are:
-
-- OpenAI [`gpt-5.6-sol`](https://developers.openai.com/api/docs/models/gpt-5.6-sol)
-  with `max` reasoning effort
-- Anthropic [`claude-fable-5`](https://www.anthropic.com/claude/fable).
-
-The name "GPT-5.6 Sol Max" refers to `gpt-5.6-sol` with the reasoning effort
-set to `max`, not a separate model. OpenAI recommends reserving `max` for the
-hardest quality-first tasks and comparing it with lower settings on real
-examples.
-
-Fable 5 has two important constraints for this use case. Anthropic requires
-30-day retention for Fable traffic, and its cyber safeguards can route or
-block some security requests. We must decide whether the source code may go to
-that provider and handle a legitimate defensive audit that doesn't run as
-expected.
-
-ChatGPT can help a person investigate a finding interactively. If it uses the
-same GPT-5.6 family as the automated reviewer, it's another interface, not an
-independent third opinion.
-
-Agreement between two models raises the priority of a finding. It doesn't
-prove the finding. A reproduction, scanner result, test, or informed human
-review still decides.
-
-## Audit the agent too
-
-The responder now has instructions, CLI adapters and filesystem access. It
-also has model credentials and perhaps MCP servers. We need to audit all of
-them.
-
-Create a capability table:
-
-```text
-Capability | Source | Read | Write | Network | Secrets | Approval
------------|--------|------|-------|---------|---------|---------
-metrics    | local  | yes  | no    | local   | no      | no
-logs       | local  | yes  | no    | local   | no      | no
-git        | system | yes  | no    | no      | no      | no
-rollback   | repo   | no   | yes   | deploy  | scoped  | policy
-```
-
-Review where each capability came from and which version we trust. Record what
-input it processes and which credential enforces its limits. A sentence in the
-prompt that says "read only" isn't the same as a read-only token.
-
-[Snyk Agent Scan](https://github.com/snyk/agent-scan) is one tool for
-inventorying agents, skills, and MCP servers and looking for agent-specific
-risks. Its own setup also proves the point: scanning an MCP configuration may
-start server commands, and remote analysis sends component information to a
-provider. We need to understand the scanner's permissions and data path too.
-
-## Place the remaining tools
-
-Once we name the problems, we can place the rest of the original tool list:
-
-- HolmesGPT and K8sGPT collect operational evidence that a model can explain.
-- PR-Agent handles model review at the pull-request boundary. Semgrep MCP
-  connects deterministic scanning to an agent.
-- Agent Scan inventories the agent extension supply chain.
-- LiteLLM adds a gateway for model routing, keys, budgets, and logs when many
-  apps or providers need one policy.
-- Ollama runs models locally when data placement requires it.
-- garak tests LLM applications themselves, which isn't the problem in our
-  Snake Royale app.
-
-A local model doesn't automatically make the workflow private because the
-host, network and prompt history still matter. So do local logs, endpoint
-authentication and model quality. A gateway centralizes model access policy,
-but it doesn't make a weak incident process reliable.
-
-For this module, I would mention LiteLLM and Ollama after the adapter works. We
-can point the same interface at a gateway or local endpoint later without
-changing how we collect evidence, grant permission or verify recovery.
+One prepared incident can demonstrate both branches: when the evidence points
+to a small, well-tested fix, it pushes to dev and the wake script's next run
+confirms the error rate falls; make the failure ambiguous instead, or touch a
+data-integrity question, and the same agent has to escalate. It didn't get
+less capable in the second run - the evidence didn't clear the bar.
 
 ## Fit it into 90 minutes
 
-We can't teach the full observability and security landscape in one session.
-
-I would teach one complete path:
+One complete path, not the full landscape:
 
 - 0–10 minutes - break the deployed app and identify the questions we can't
   answer
-- 10–30 minutes - instrument one FastAPI request and follow its metric, trace,
+- 10–25 minutes - split CI/CD into dev and prod, and manually promote one
+  commit from dev to prod
+- 25–45 minutes - instrument one FastAPI request and follow its metric, trace,
   log and deployment version
-- 30–45 minutes - create and test one sustained error-rate alert
-- 45–70 minutes - run the read-only responder, check policy, roll back and
-  verify recovery
-- 70–87 minutes - run one deterministic scan and one model review, then
-  validate one finding
-- 87–90 minutes - reconstruct the incident from the audit record
+- 45–60 minutes - create and test one sustained error-rate alert
+- 60–85 minutes - wake the on-call agent, let it investigate, push a fix to
+  dev, and verify the error rate falls
+- 85–90 minutes - reconstruct the incident from the audit record
 
-If we extend the session to two hours, I would spend the extra time on the
-ambiguous incident and the capability table. A second live model review is
-less important than seeing why the first responder must stop.
+If we extend the session to two hours, we'd spend the extra time on a
+second, more ambiguous incident where the agent has to escalate instead of
+push.
 
 ## Next steps after this module
 
-After this module, we have a narrow operating baseline. We can observe one
-important user journey, respond to one known failure and audit one class of
-security finding. I wouldn't add every production practice in one batch. I
-would extend the system in four stages.
+After this module we have a narrow operating baseline: promote a change
+deliberately, observe one important user journey, respond to one known
+failure. We'd extend it in four stages rather than add every practice at once.
 
 ![After the first observable and auditable response, continue with reliability,
 safer delivery, deeper security and agent governance.](images/04-next-steps-roadmap.png)
 
-Start with reliability by defining a service-level indicator (SLI) for an
-important user journey such as score submission, then set a service-level
-objective (SLO). Replace the demo threshold with an error-budget burn-rate
-alert. Add an external synthetic check so we notice when the app or the
-monitoring path stops responding.
+Start with reliability: an SLI/SLO for an important journey like canvas sync,
+an error-budget burn-rate alert instead of the demo threshold, and an external
+synthetic check so we notice when the app or the monitoring path itself goes
+down.
 
-Next, make deployments safer with a canary or progressive rollout. Put risky
-changes behind feature flags, and keep the previous release ready for rollback.
-Test database backups by restoring one because a backup we have never restored
-is only a promise.
+Then make deployments safer - canaries or progressive rollout, risky changes
+behind feature flags, the previous release always ready for rollback - and
+actually restore a database backup once, since an untested backup is only a
+promise.
 
-Then broaden the security evidence by scanning dependencies, secrets,
-containers and infrastructure code. Generate an SBOM, record build provenance
-and add manual penetration testing for authorization and business-logic paths.
-Define how the team receives and handles vulnerability reports.
+Then broaden the security evidence: scan dependencies, secrets, containers and
+infrastructure code, generate an SBOM and build provenance, and add manual
+penetration testing plus a clear path for vulnerability reports.
 
-Raise agent autonomy last by keeping the capability table current, testing model
-upgrades against known incidents and measuring which audit findings people
-accept or reject. Add budgets, provider-retention rules and monitoring for the
-responder. Give the agent another automatic action only after incident records
-show that the action is repetitive, bounded and independently verifiable.
+Raise agent autonomy last. Keep a written record of what the on-call agent
+can read and write and what enforces each limit, test model upgrades against
+past incidents, and only widen its blast radius once incident records show
+the narrower version is repetitive, bounded and independently verifiable.
 
-If I could add only one thing after this module, I would start with the SLI and
-SLO for the app's most important user journey. They tell us which failures
-matter before we add more dashboards, alerts or agents.
+If we could add only one thing, it's the SLI/SLO for the app's most important
+journey - it tells us which failures matter before we add more dashboards,
+alerts or agents.
 
 ## Next in the series
 
-With these pieces, we can see a failure and investigate it. We respond within
-a fixed policy, then audit the code and the responder.
+With these pieces, we can promote a change deliberately, see a failure and
+investigate it, and let an agent fix it within a blast radius we already
+trust.
 
-In the final module, we apply this way of working to a project of your own. We
-take it from an empty folder to something running and maintained.
+In the final module, we apply this way of working to a project of your own -
+from an empty folder to something running and maintained.
 
 You can find the course materials and the next cohort in
 [AI Dev Tools Zoomcamp](https://github.com/DataTalksClub/ai-dev-tools-zoomcamp).
