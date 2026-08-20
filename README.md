@@ -243,7 +243,6 @@ Self-paced learners can use all materials for free, but certificate eligibility 
 
 - [Alexey Grigorev](https://linkedin.com/in/agrigorev)
 - [Bhavani Ravi](https://www.linkedin.com/in/bhavanicodes)
-- [Moein Foroughi](https://www.linkedin.com/in/moein-foroughi-ce/)
 
 ## Learner Stories
 
