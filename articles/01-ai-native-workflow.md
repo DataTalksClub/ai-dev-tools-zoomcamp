@@ -719,7 +719,7 @@ I've followed this approach on many projects, including the
 [AI Shipping Labs website](https://aishippinglabs.com/).
 
 I describe it in
-[I Built an AI Agent Team for Software Development](https://alexeyondata.substack.com/p/i-built-an-ai-agent-team-for-software).
+[I Built an AI Agent Team for Software Development](https://aishippingblog.com/p/i-built-an-ai-agent-team-for-software).
 Here, I distill that article into a tutorial.
 
 ## Next in the series

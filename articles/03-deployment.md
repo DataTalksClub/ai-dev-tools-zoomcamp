@@ -21,7 +21,7 @@ I based this article on the second half of my full-day AI Shipping Labs workshop
 
 ## Recap
 
-In the [previous article](https://alexeyondata.substack.com/p/build-and-ship-a-full-stack-app-with),
+In the [previous article](https://aishippingblog.com/p/build-and-ship-a-full-stack-app-with),
 we started building an application for system-design interviews. An interviewer creates a session and shares a link with a candidate.
 When the candidate updates something on the canvas, the interviewer sees the updates in real time.
 
@@ -105,7 +105,7 @@ SQLite is very convenient for local development. It keeps the data in a single f
 
 But for production, we typically use Postgres or a similar database.
 
-When we set up the foundation [in the previous article](https://alexeyondata.substack.com/p/build-and-ship-a-full-stack-app-with), we asked the coding agent to use SQLAlchemy.
+When we set up the foundation [in the previous article](https://aishippingblog.com/p/build-and-ship-a-full-stack-app-with), we asked the coding agent to use SQLAlchemy.
 
 I did this on purpose because I knew that later I'd switch to Postgres.
 

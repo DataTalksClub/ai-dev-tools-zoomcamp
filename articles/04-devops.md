@@ -4,10 +4,10 @@ This is the forth article in a series based on AI Dev Tools Zoomcamp, the free c
 
 All articles in the series:
 
-- Part 1: [AI-Native Development: Specifications, Loop and Graph Engineering](https://alexeyondata.substack.com/p/ai-native-development-specifications)
-- Part 2: [Build and Ship a Full-Stack App with AI Coding Assistants](https://alexeyondata.substack.com/p/ai-native-development-specifications)
-- Part 3: [Deploy a Full-Stack App with AI Coding Assistants](https://alexeyondata.substack.com/p/ai-native-development-specifications)
-- Part 4: DevOps and Observability for an AI-Built App (this article)
+- Part 1: [AI-Native Development: Specifications, Loop and Graph Engineering](https://aishippingblog.com/p/ai-native-development-specifications)
+- Part 2: [Build and Ship a Full-Stack App with AI Coding Assistants](https://aishippingblog.com/p/build-and-ship-a-full-stack-app-with)
+- Part 3: [Deploy a Full-Stack App with AI Coding Assistants](https://aishippingblog.com/p/deploy-a-full-stack-app-with-ai-coding)
+- Part 4: [DevOps and Observability for an AI-Built App](https://aishippingblog.com/p/devops-and-observability-for-an-ai)
 - Part 5: TBA
 
 In part 2, we developed an end-to-end application for conducting system design interviews. In part 3, we deployed it to AWS.

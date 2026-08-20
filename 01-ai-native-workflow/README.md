@@ -14,7 +14,7 @@ You learn:
 
 Use the article and recording to follow the same example:
 
-- [Article: AI-Native Development: Specifications, Loop and Graph Engineering](https://alexeyondata.substack.com/p/ai-native-development-specifications)
+- [Article: AI-Native Development: Specifications, Loop and Graph Engineering](https://aishippingblog.com/p/ai-native-development-specifications)
 - [Markdown source for the article](../articles/01-ai-native-workflow.md)
 - [Recording: AI-Native Developer Workflow](https://www.youtube.com/watch?v=VUJxJGpaDEs)
 

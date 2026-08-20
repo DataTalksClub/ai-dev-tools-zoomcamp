@@ -2,7 +2,7 @@
 
 This is the second article in a series for [AI Dev Tools Zoomcamp](https://github.com/DataTalksClub/ai-dev-tools-zoomcamp), the free course we run at DataTalks.Club.
 
-In the [first article](https://alexeyondata.substack.com/p/ai-native-development-specifications), I wrote about turning an idea into a specification. The specification is only the beginning. In this article, we will create an end-to-end application from scratch. We will cover both frontend and backend, add a database, and get the application working locally.
+In the [first article](https://aishippingblog.com/p/ai-native-development-specifications), I wrote about turning an idea into a specification. The specification is only the beginning. In this article, we will create an end-to-end application from scratch. We will cover both frontend and backend, add a database, and get the application working locally.
 
 We will create an application for system-design interviews.
 
@@ -26,7 +26,7 @@ It's based on my full-day workshop I did for AI Shipping Labs:
 
 ## Overview
 
-Like in the [previous article](https://alexeyondata.substack.com/p/ai-native-development-specifications), we start with an idea. As this is only
+Like in the [previous article](https://aishippingblog.com/p/ai-native-development-specifications), we start with an idea. As this is only
 an idea, we turn it into a specification using ChatGPT.
 
 From there, we start building:
@@ -63,7 +63,7 @@ For our application, we need to specify:
 - which components they can place on the canvas
 - how both people see changes in real time
 
-This is called "Specification-Driven Development". We don't spend a lot of time here because it was the focus of the previous article [AI-Native Development: Specifications, Loop and Graph Engineering](https://alexeyondata.substack.com/p/ai-native-development-specifications).
+This is called "Specification-Driven Development". We don't spend a lot of time here because it was the focus of the previous article [AI-Native Development: Specifications, Loop and Graph Engineering](https://aishippingblog.com/p/ai-native-development-specifications).
 
 For creating the specification, I always use ChatGPT in dictation mode. Give the assistant as much information as possible at this stage.
 
@@ -347,7 +347,7 @@ to produce a working version.
 
 But we did it one prompt at a time. After the first version is working,
 it's time to introduce the development process. 
-We talked about it in the [first article](https://alexeyondata.substack.com/p/ai-native-development-specifications). This process will help you application
+We talked about it in the [first article](https://aishippingblog.com/p/ai-native-development-specifications). This process will help you application
 continue working properly as it grows bigger.
 
 ## Next in the series
