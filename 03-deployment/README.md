@@ -21,6 +21,15 @@ Each step is something AI tools are good at drafting and bad at owning. A genera
 
 Continue with the app you built in Module 2.
 
+[Recording: Test, Containerize, and Deploy an AI-Assisted App](https://www.youtube.com/watch?v=gxt5ZDVnBMM)
+
+Module summary: The companion article takes the local application to a public deployment. It
+adds integration and end-to-end tests, packages the frontend and backend in a
+container, switches from SQLite to Postgres with Docker Compose, deploys to
+AWS, and automates delivery with GitHub Actions.
+
+[Read the article: Deploy a Full-Stack App with AI Coding Assistants](https://aishippingblog.com/p/deploy-a-full-stack-app-with-ai-coding)
+
 ## Lessons
 
 ### Lesson 3.1 — Integration Tests

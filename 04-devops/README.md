@@ -27,7 +27,14 @@ The concrete stack is OpenTelemetry into Prometheus, Loki, and Tempo, with Grafa
 
 Prerequisite: the deployed app from [Module 3](../03-deployment/).
 
-The long-form version of this module is the series article [DevOps and Observability for an AI-Built App](../articles/04-devops.md).
+[Recording: DevOps and Observability for AI-Built Apps](https://www.youtube.com/watch?v=YkxLo_FRoQw)
+
+Module summary: The companion article makes the deployed app more production-ready by
+separating dev and prod, collecting logs, metrics, and traces, and alerting on
+user impact. It then puts an agent in a narrow incident-response loop with
+bounded actions, escalation, recovery verification, and an audit trail.
+
+[Read the article: DevOps and Observability for an AI-Built App](https://aishippingblog.com/p/devops-and-observability-for-an-ai)
 
 ## Lessons
 

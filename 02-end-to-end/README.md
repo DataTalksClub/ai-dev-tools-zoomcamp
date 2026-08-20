@@ -22,6 +22,15 @@ Reference app from the previous version:
 
 - https://github.com/alexeygrigorev/snake-arena-online
 
+[Recording: Build and Ship an AI-Assisted Full-Stack App](https://www.youtube.com/watch?v=x9dq5nBpDg8)
+
+Module summary: The companion article builds a collaborative system-design interview app from
+scratch. It moves from a frontend prototype with mocked calls to an OpenAPI
+contract, a FastAPI backend, WebSocket collaboration, and SQLite persistence,
+while testing each stage before moving on.
+
+[Read the article: Build and Ship a Full-Stack App with AI Coding Assistants](https://aishippingblog.com/p/build-and-ship-a-full-stack-app-with)
+
 ## Lessons
 
 ### Lesson 2.1 — Product Spec and Acceptance Criteria

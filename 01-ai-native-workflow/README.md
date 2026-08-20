@@ -12,11 +12,14 @@ You learn:
 - Loop engineering
 - Graph engineering
 
-Use the article and recording to follow the same example:
+[Recording: AI-Native Developer Workflow](https://www.youtube.com/watch?v=VUJxJGpaDEs)
 
-- [Article: AI-Native Development: Specifications, Loop and Graph Engineering](https://aishippingblog.com/p/ai-native-development-specifications)
-- [Markdown source for the article](../articles/01-ai-native-workflow.md)
-- [Recording: AI-Native Developer Workflow](https://www.youtube.com/watch?v=VUJxJGpaDEs)
+Module summary: The companion article shows how to turn a vague idea into a useful specification,
+give an agent durable context, break the work into a backlog, and use separate
+product manager, software engineer, and QA roles to implement and verify the result.
+It uses a weekly-feedback project to explain spec-driven, loop, and graph engineering.
+
+[Read the article: AI-Native Development: Specifications, Loop and Graph Engineering](https://aishippingblog.com/p/ai-native-development-specifications)
 
 ## Example projects
 
