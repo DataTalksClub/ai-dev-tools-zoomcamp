@@ -2,7 +2,7 @@
   "title": "Run an agent only for the incident",
   "description": "An alert enters an AWS trigger path through SNS and Lambda. Lambda starts an isolated container job for an agent with access to code, logs, and metrics. The job writes a session log, which remains after the compute terminates.",
   "canvas": {
-    "width": 1270,
+    "width": 1080,
     "height": 500,
     "background": "#ffffff"
   },
@@ -26,7 +26,7 @@
       "variant": "icon",
       "icon": "alert",
       "color": "red",
-      "x": 260,
+      "x": 40,
       "y": 132
     },
     {
@@ -35,7 +35,7 @@
       "variant": "icon",
       "icon": "queue",
       "color": "amber",
-      "x": 400,
+      "x": 180,
       "y": 132
     },
     {
@@ -44,7 +44,7 @@
       "variant": "icon",
       "icon": "lambda",
       "color": "amber",
-      "x": 592,
+      "x": 372,
       "y": 132
     },
     {
@@ -53,7 +53,7 @@
       "subtitle": "Container job",
       "icon": "robot",
       "color": "purple",
-      "x": 750,
+      "x": 530,
       "y": 110
     },
     {
@@ -69,7 +69,7 @@
       "title": "Code",
       "icon": "github",
       "color": "blue",
-      "x": 595,
+      "x": 375,
       "y": 380,
       "width": 150,
       "height": 70
@@ -79,7 +79,7 @@
       "title": "Logs",
       "icon": "document",
       "color": "blue",
-      "x": 785,
+      "x": 565,
       "y": 380,
       "width": 150,
       "height": 70
@@ -89,7 +89,7 @@
       "title": "Metrics",
       "icon": "observability",
       "color": "blue",
-      "x": 975,
+      "x": 755,
       "y": 380,
       "width": 150,
       "height": 70
@@ -100,7 +100,7 @@
       "subtitle": "Saved after the run",
       "icon": "document",
       "color": "green",
-      "x": 1030,
+      "x": 810,
       "y": 110
     }
   ],

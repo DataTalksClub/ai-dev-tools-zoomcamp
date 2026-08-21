@@ -69,7 +69,7 @@ Now we take the application that's already deployed and make it follow productio
 
 ## Dev and prod environments
 
-When we push the code, we automatically deploy this code and the changes to live immediately. It's okay when we only start working on our project. But when we have real users, we want to be more careful, and check if our changes didn't introduce any problems.
+When we push the code, we automatically deploy the changes, and they go live immediately. It's okay when we are just starting to work on our project. But when we have real users, we want to be more careful and check that our changes didn't introduce any regressions.
 
 To avoid having this problem, we usually have two copies of the same environment:
 
@@ -82,7 +82,7 @@ To avoid having this problem, we usually have two copies of the same environment
 </figure>
 
 
-Because we previously defined our infrastructure as code, duplicating it is trivial. We most likely will need to change a few things, like the size of the machine where the application is running (production typically needs a more powerful machine), but the majority of the resources will stay the same.
+Because we previously defined our infrastructure as code, we can reuse most of it. We will most likely need to change a few things, like the size of the machine where the application is running, but the majority of the resources will stay the same.
 
 Let's ask our coding assistant to create a copy of the existing environment and call it "production":
 
@@ -90,7 +90,7 @@ Let's ask our coding assistant to create a copy of the existing environment and 
 Create a second, independent copy of our infrastructure. We will use the copy as production, and the existing infrastructure as a dev environment.
 ```
 
-Once we have the prod environment, let's update our CI/CD. We will only deploy to dev on every push. For production, we will have a manual action that will take whatever development has and _promote_ (apply) it to production.
+Once we have the prod environment, let's update our CI/CD. We will only deploy to dev on every push. For production, we will have a manual action that will take whatever development has and promote (apply) it to production.
 
 ```text
 Create a manual GitHub Actions workflow that promotes the dev version to production.
@@ -122,7 +122,7 @@ So we split the deploy step into two separate steps:
 
 When promoting to prod, we simply pull the same image to prod.
 
-For AWS, we can use [Amazon ECR](https://aws.amazon.com/ecr/) as the registry. You can also push your images to Docker if you're running outside of AWS and your cloud doesn't have a special service for that.
+For AWS, we can use [Amazon ECR](https://aws.amazon.com/ecr/) as the registry. You can also push your images to Docker Hub or another container registry if you're running outside of AWS and your cloud doesn't have a special service for that.
 
 <figure>
   <img src="images/04-build-once.svg" alt="A user pushes a change, then CI/CD runs separate Build and Deploy steps; the version tag goes to Deploy and a manually triggered Prod release, which updates Production">
@@ -141,35 +141,35 @@ Split it into two stages:
 
 The manual prod promotion CI/CD workflow pulls the currently deployed dev image to prod.
 
-Tag each image using the YYYY-MM-DD-gitsha1 pattern (e.g. "2026-08-18-a1b2c3d")
+Tag each image using the YYYYMMDD-HHMMSS-shortsha pattern (e.g. "20260818-163457-83242da")
 ```
 
-Now the build step produces a tagged image, and the deploy step pushes it to dev. We can test the application deployed to dev, and when we later promote it to production, we will be certain that it's exactly the same image.
+Now the build step produces a tagged image, and the deploy step deploys it to dev. We can test the dev application, and when we later promote it to production, we will be certain that it's exactly the same image.
 
 ## Observability
 
 Having two environments helps us avoid accidentally pushing buggy code to production. But accidents will still happen, and we need to make sure we detect them and react as fast as possible.
 
-For that we need to have observability. "Observability" means collecting information about the application so we can
+For that, we need to have observability. "Observability" means collecting information about the application so we can
 understand its behavior. With it, when something breaks, we can quickly find the problem.
 
 We achieve observability by adding monitoring to our applications. At the minimum, we need to collect basic performance metrics like CPU and memory utilization and requests per second (RPS).
 
-If we see that CPU and memory utilization are growing and RPS is dropping, something is definitely off.
+If we see that CPU and memory utilization are growing and RPS is dropping, something may be off.
 
-This information alone is not enough. It does't explain what happened inside that request and why it's causing errors or degradation in performance. For that, we need to collect more.
+This information alone is not enough. It doesn't explain what happened inside a request and why it's causing errors or degraded performance. For that, we need to collect more.
 
 ## OpenTelemetry
 
 [OpenTelemetry](https://opentelemetry.io/docs/) (often abbreviated as OTel) is the industry standard for telemetry.
 
-Telemetry is all the information that the application produce:
+Telemetry is all the information that the application produces:
 
-- Metrics - requests per second, response latency and number of errors
+- Metrics - requests per second, response latency, and number of errors
 - Logs - timestamped records of individual events, like an error message or a failed database query
-- Traces - all the steps (called "spans") that a single request makes throug the entire application
+- Traces - all the steps (called "spans") that a single request makes through the entire application
 
-Metrics give us concrete numbers, logs give details and traces show the path of a request with each single step.
+Metrics give us concrete numbers, logs give details, and traces show the path of a request with each step.
 
 
 <figure>
@@ -178,9 +178,9 @@ Metrics give us concrete numbers, logs give details and traces show the path of 
 </figure>
 
 
-OTLP is the protocol that applications use to save this telemetry.
+OTLP is the protocol that applications use to send this telemetry.
 
-For many popular libraries, we can start capturing telemetry with just a few lines of code. This process is called "instrumenting" - injecting extra logic into existing libraries (like FastAPI) without changing their code so they start saving the telemetry.
+For many popular libraries, we can start capturing telemetry with just a few lines of code. This process is called "instrumenting" - adding telemetry collection to an application. Auto-instrumentation can instrument libraries like FastAPI without changing their code.
 
 <figure>
   <img src="images/04-instrumenting-fast-api.png" alt="Python code configuring OpenTelemetry resource metadata, a tracer provider and an OTLP exporter for a FastAPI service">
@@ -204,11 +204,11 @@ to decide where to send and store it, and how to view it. Let's do that now.
 
 ## OTel Collectors
 
-We capture telemetry with OTLP, but it's not saved anywhere. For that, we define
+We export telemetry over OTLP, but it's not saved anywhere. For that, we define
 an [OpenTelemetry Collector](https://opentelemetry.io/docs/collector/)
 between the application and the storage systems.
 
-There are many services you can use for that. Ask your AI assitant and select the option that works best for your application.
+There are many services you can use for that. Ask your AI assistant and select the option that works best for your application.
 
 In our case, I'll use:
 
@@ -217,7 +217,7 @@ In our case, I'll use:
 - Tempo for traces
 - Grafana for dashboards
 
-Previously I never used Loki or Tempo, but when I was telling my coding agent that I wanted to use Prometheus and Grafana, it suggested to include Loki and Tempo too.
+I had never used Loki or Tempo before, but when I told my coding agent that I wanted to use Prometheus and Grafana, it suggested including Loki and Tempo too.
 
 So let's implement it:
 
@@ -236,17 +236,11 @@ Keep this as a separate Compose project from the application stack.
 ```
 
 
-<figure>
-  <img src="images/04-build-once-observability.svg" alt="The build-once deployment workflow extended with OTel attached to development and production; a collector sends metrics to Prometheus, logs to Loki and traces to Tempo for Grafana dashboards">
-  <figcaption>Development and production export telemetry through OTel. The collector sends metrics to Prometheus, logs to Loki and traces to Tempo, and Grafana reads all three.</figcaption>
-</figure>
-
-
-Now we have the infrastacture for observability, so we're ready to build a dashboard.
+Now we have the infrastructure for observability, so we're ready to build a dashboard.
 
 ## Metrics
 
-Metrics are the numberical ... (TODO finish)
+Metrics are numerical measurements collected over time. They can show a current value, such as the number of active participants, or count events during an interval, such as rooms created or errors in the last five minutes.
 
 For System Design Canvas, useful measurements may include:
 
@@ -269,14 +263,14 @@ Track these application metrics:
 Include the environment and deployed version.
 ```
 
-Now we have the data and can display on in a dashboard:
+Now we have the data and can display it in a dashboard:
 
 ```text
 Add a Grafana panel with these metrics.
 Make it possible to filter by environment and deployed version
 ```
 
-Run it locally, and test it by opening our application, creating a room, adding a canvas element, and checking that it appears in Grafana.
+Run it locally and test it by opening our application, creating a room, adding a canvas element, and checking that it appears in Grafana.
 
 <figure>
   <img src="images/04-grafana-dashboard.png" alt="A dark Grafana-style dashboard with five-minute event counts for interview rooms, canvas elements and component creation failures, plus active participants, filtered to production and a deployed version">
@@ -288,11 +282,9 @@ Run it locally, and test it by opening our application, creating a room, adding 
 
 If you use the same stack as me (Prometheus, Grafana and others), we need to deploy and manage them ourselves.
 
-If you use a managed OTel-compatible vendor, you can skip this step. You can also use a hosted
-service such as CloudWatch, Grafana Cloud, Datadog, or Sentry.
-TODO rephrase it.
+If you use a managed OTel-compatible service such as CloudWatch, Grafana Cloud, Datadog, or Sentry, you can skip this step.
 
-Let's deploy it:
+So if you're following my steps, let's deploy our stack:
 
 ```text
 Deploy the observability stack. It should be separate from the application stack.
@@ -301,11 +293,17 @@ Connect both development and production to it.
 
 After it finishes, you can open Grafana and perform the same test that we did locally.
 
-Note: here we deploy Grafana and other services openly on the Internet, so everyone can access it. In practice, you hide them behind a VPC to make sure only authorized users can access them. You do it with other sensitive resoureces too like databases.
+
+<figure>
+  <img src="images/04-build-once-observability.svg" alt="The build-once deployment workflow extended with OTel attached to development and production; a collector sends metrics to Prometheus, logs to Loki and traces to Tempo for Grafana dashboards">
+  <figcaption>Development and production export telemetry through OTel. The collector sends metrics to Prometheus, logs to Loki and traces to Tempo, and Grafana reads all three.</figcaption>
+</figure>
+
+Note: here we deploy Grafana and the other services openly on the Internet, so everyone can access them. In practice, you put sensitive resources like observability services and databases on private networks, restrict network access, and require authentication so only authorized users can access them.
 
 ## Alerting
 
-We have the dashboards but we can't watch them all the time to see if some metrics drop or grow too large. If this happens, we have a system that triggers an alert saying that something happened.
+We have the dashboards, but we can't watch them all the time to see if some metrics drop or grow too large. If this happens, we need a system that triggers an alert saying that something happened.
 
 
 
@@ -318,13 +316,13 @@ service, environment, deployed version, owner, and dashboard URL in the alert.
 
 ## On-Call Engineer
 
-Now that we have alerts, we need to react to them. In companies there's usually an on-call engineer. That's the engineer who receives the alert when something happens. When it happens, they need to figure out what's happening, and find a quick solution to this problem to stop the problem.
+Now that we have alerts, we need to react to them. In companies, there's usually an on-call engineer. That's the engineer who receives the alert when something happens. They need to figure out what's happening and find a quick solution to stop the problem.
 
-TODO illustration metric grows allert triggers on-call engineer receives is
+When a metric crosses its threshold for long enough, the alert fires and the on-call engineer receives it.
 
 Our AI assistant can be the on-call engineer, and if something happens, it can try to fix it. In real scenarios, AI on-call agents also need to understand if the issue is serious enough to escalate the alert to a human on-call engineer.
 
-In our case, we won't do it. We will implement a system that checks Prometheus and Grafana for alerts, and if something is happening, an agent session will start and fix the problem.
+In our case, we won't do it. We will implement a system that checks the observability system for alerts, and if something is happening, an agent session will start and try to fix the problem.
 
 
 ```text
@@ -338,7 +336,7 @@ As a result, we have a worker that polls for alerts and starts an agent session 
 
 In my case, the agent had this prompt:
 
-Note that for this agent you may want to limit the access to the bare minimum: logs and the repository. When it finds the fix, it pushes it to main, so the fix gets deployed. It can also trigger a manual deploy to prod if you trust your process.
+For this agent, you may want to limit access to the bare minimum: the code, logs, and metrics it needs for the investigation. When it finds a fix, it commits it to an isolated branch so the normal review and CI/CD process can handle it. You can also explicitly authorize it to trigger a manual deploy to prod if you trust your process.
 
 ```text
 You are the on-call engineer for this repository. An alert just fired.
@@ -349,17 +347,12 @@ and commit the fix with a clear message.
 If the alert is a false positive, explain why and do not change the code.
 ```
 
-<figure>
-  <img src="images/04-operate-app-overview.svg" alt="A user-visible alert becomes an evidence packet for a bounded investigation; a reproducible bug produces a tested fix for CI/CD, while an uncertain case stops for explanation or escalation">
-  <figcaption>A bounded agent commits only a reproducible, tested fix; otherwise it explains or escalates without changing code</figcaption>
-</figure>
-
 This is a small proof-of-concept script. In reality, you will probably have a system that looks like this:
 
 - An alert is triggered and sent via SNS or a similar service.
 - A Lambda reacts to that alert and starts a container job.
 - The job launches Codex or Claude in headless mode.
-- Once the session is over, the logs are saved and the machine is terminated.
+- Once the session is over, the logs are saved and the compute is terminated.
 
 <figure>
   <img src="images/04-production-responder.svg" alt="An alert passes through SNS and Lambda to an isolated agent container with access to code, logs and metrics; the session log is saved after the run">
@@ -382,7 +375,7 @@ an alert and the on-call response.
 
 Here, the goal is to debug the process and make sure our on-call engineer actually wakes up and solves the problem.
 
-After a few iterations, it will work. Now we have an on-call enginer that wakes up when there's an alert and tries to fix the problem.
+After a few iterations, we have an on-call engineer that wakes up when there's an alert and tries to fix the problem.
 
 
 ## Clean up
@@ -395,29 +388,35 @@ Ask your agent to clean the infra:
 Delete the CloudFormation stacks.
 ```
 
-Make sure yourself that everything is indeed gone. You may want to double-check everything in the AWS console or ask another agent to scan the running resources in your account.
+Check yourself that everything is indeed gone. You may want to double-check everything in the AWS console or ask another agent to scan the running resources in your account.
 
 
 ## Next steps after this module
 
-We started with an idea and now our setup is way closer to production. But in this workshop I could only briefly touch the most important concepts.
+We started with an idea, and now our setup is much closer to production. But here I could only briefly touch on the most important concepts.
 
-There's a lot more things that you should consider for a real production application:
+There are many more things that you should consider for a real production application:
 
-- Here I deploy to EC2 by running a shell script on the instance. It's okay for a proof of concept but very problematic for produciton. Use a container management system like ECS or an alternative.
-- Sometimes you will need to roll back a change you promoted to prod. Ask your agent to implement this.
+- Here I deploy to EC2 by running a shell script on the instance. It's okay for a proof of concept but very problematic for production. Use a container management system like ECS or an alternative.
+- Sometimes you will need to roll back a change you promoted to prod. Ask your agent to make it easy to do.
 - Use a managed database service.
-- Regularly back up your database. It's best if your backups live ourside of your infrastructure as code stack and you have multiple independent copies.
+- Regularly back up your database. It's best if your backups live outside of your infrastructure as code stack and you have multiple independent copies.
 - Test that you can actually use these backups on a completely recreated stack.
-- At some point your application will need to scale, so learn about that and load balancing. Container management systems make it easy to manage.
-- Ask Fable or GPT-5.6-Sol Max to audit your code for security vulnerabilities. Do it multiple times.
+- Put internal services and resources on private subnets inside a VPC, and restrict network access to them.
+- If your application needs handle a lot of traffic, learn about scaling and load balancing. Container management systems make this easier to manage.
+- Ask Fable or GPT-5.6-Sol Max (better both) to audit your code for security vulnerabilities. Do it multiple times.
 
-Also, define SLI and SLO (TODO expand)
+Define a service level indicator (SLI) and a service level objective (SLO) for your most important user journeys.
+
+- An SLI measures behavior that users experience, such as the success rate or latency of creating a canvas element.
+- An SLO sets the target for that measurement over a period of time.
+
+Compare the SLI with the SLO, and when the service misses its target, investigate the cause and prioritize the work needed to make it reliable again.
 
 
 ## Next in the series
 
-With this article, we finish developing our end-to-end application. We took it from a raw idea and turned it into a production-ready system.
+With this article, we finish developing our end-to-end application. We took it from a raw idea and turned it into a system that's much closer to production.
 
 In the last article, we look into coding agent capabilities:
 

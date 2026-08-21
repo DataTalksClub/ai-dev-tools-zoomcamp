@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1270" height="500" viewBox="0 0 1270 500" role="img" aria-labelledby="title desc">
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="500" viewBox="0 0 1080 500" role="img" aria-labelledby="title desc">
   <title id="title">Run an agent only for the incident</title>
   <desc id="desc">An alert enters an AWS trigger path through SNS and Lambda. Lambda starts an isolated container job for an agent with access to code, logs, and metrics. The job writes a session log, which remains after the compute terminates.</desc>
   <defs>
@@ -67,59 +67,59 @@
       .center-detail { font-weight: 600; fill: #475569; text-anchor: middle; }
     </style>
   </defs>
-  <rect width="1270" height="500" fill="#ffffff"/>
+  <rect width="1080" height="500" fill="#ffffff"/>
 
-  <g class="node-boundary node-amber" transform="translate(380 50)">
+  <g class="node-boundary node-amber" transform="translate(160 50)">
     <rect width="610" height="200" rx="22" fill="none" stroke="#c2410c"/>
     <text class="boundary-title" x="20" y="31">AWS trigger path</text>
   </g>
-  <g class="node-boundary node-blue" transform="translate(575 325)">
+  <g class="node-boundary node-blue" transform="translate(355 325)">
     <rect width="570" height="145" rx="22" fill="none" stroke="#2563eb"/>
     <text class="boundary-title" x="20" y="31">Agent access</text>
   </g>
-  <path class="edge-boundary-halo" d="M309 160L403.02 160" fill="none" stroke="#ffffff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
-  <path class="edge" d="M309 160L403.02 160" stroke="#dc2626" marker-end="url(#arrow-red)"/>
-  <path class="edge" d="M508.98 160L606 160" stroke="#c2410c" marker-end="url(#arrow-amber)"/>
-  <path class="edge" d="M634 160L750 160" stroke="#7c3aed" marker-end="url(#arrow-purple)"/>
-  <path class="edge-boundary-halo" d="M860 325L860 210" fill="none" stroke="#ffffff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
-  <path class="edge" d="M860 325L860 210" stroke="#2563eb" stroke-dasharray="8 8" marker-end="url(#arrow-blue)"/>
-  <path class="edge-boundary-halo" d="M970 160L1030 160" fill="none" stroke="#ffffff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
-  <path class="edge" d="M970 160L1030 160" stroke="#15803d" marker-end="url(#arrow-green)"/>
+  <path class="edge-boundary-halo" d="M89 160L183.02 160" fill="none" stroke="#ffffff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+  <path class="edge" d="M89 160L183.02 160" stroke="#dc2626" marker-end="url(#arrow-red)"/>
+  <path class="edge" d="M288.98 160L386 160" stroke="#c2410c" marker-end="url(#arrow-amber)"/>
+  <path class="edge" d="M414 160L530 160" stroke="#7c3aed" marker-end="url(#arrow-purple)"/>
+  <path class="edge-boundary-halo" d="M640 325L640 210" fill="none" stroke="#ffffff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+  <path class="edge" d="M640 325L640 210" stroke="#2563eb" stroke-dasharray="8 8" marker-end="url(#arrow-blue)"/>
+  <path class="edge-boundary-halo" d="M750 160L810 160" fill="none" stroke="#ffffff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+  <path class="edge" d="M750 160L810 160" stroke="#15803d" marker-end="url(#arrow-green)"/>
 
-  <g class="node-icon-only node-red" transform="translate(260 132)">
+  <g class="node-icon-only node-red" transform="translate(40 132)">
     <use href="#icon-alert" x="0" y="0" width="56" height="56" color="#dc2626"/>
     <text class="icon-node-title" x="28" y="81">Alert</text>
   </g>
-  <g class="node-icon-only node-amber" transform="translate(400 132)">
+  <g class="node-icon-only node-amber" transform="translate(180 132)">
     <use href="#icon-queue" x="0" y="0" width="112" height="56" color="#c2410c"/>
     <text class="icon-node-title" x="56" y="81">SNS topic</text>
   </g>
-  <g class="node-icon-only node-amber" transform="translate(592 132)">
+  <g class="node-icon-only node-amber" transform="translate(372 132)">
     <use href="#icon-lambda" x="0" y="0" width="56" height="56" color="#c2410c"/>
     <text class="icon-node-title" x="28" y="81">Lambda</text>
   </g>
-  <g class="node node-purple" transform="translate(750 110)" filter="url(#shadow)">
+  <g class="node node-purple" transform="translate(530 110)" filter="url(#shadow)">
     <rect width="220" height="100" rx="18" fill="#f5f3ff" stroke="#7c3aed"/>
     <use href="#icon-robot" x="16" y="20" width="34" height="34" color="#7c3aed"/>
     <text class="node-title icon-copy" x="62" y="43.12" font-size="17">Agent</text>
     <text class="node-subtitle" x="110" y="75" font-size="16">Container job</text>
   </g>
-  <g class="node node-blue" transform="translate(595 380)" filter="url(#shadow)">
+  <g class="node node-blue" transform="translate(375 380)" filter="url(#shadow)">
     <rect width="150" height="70" rx="16" fill="#eff6ff" stroke="#2563eb"/>
     <use href="#icon-github" x="16" y="19" width="34" height="34" color="#2563eb"/>
     <text class="node-title icon-copy" x="62" y="27" font-size="17">Code</text>
   </g>
-  <g class="node node-blue" transform="translate(785 380)" filter="url(#shadow)">
+  <g class="node node-blue" transform="translate(565 380)" filter="url(#shadow)">
     <rect width="150" height="70" rx="16" fill="#eff6ff" stroke="#2563eb"/>
     <use href="#icon-document" x="16" y="19" width="34" height="34" color="#2563eb"/>
     <text class="node-title icon-copy" x="62" y="27" font-size="17">Logs</text>
   </g>
-  <g class="node node-blue" transform="translate(975 380)" filter="url(#shadow)">
+  <g class="node node-blue" transform="translate(755 380)" filter="url(#shadow)">
     <rect width="150" height="70" rx="16" fill="#eff6ff" stroke="#2563eb"/>
     <use href="#icon-observability" x="16" y="19" width="34" height="34" color="#2563eb"/>
     <text class="node-title icon-copy" x="62" y="27" font-size="17">Metrics</text>
   </g>
-  <g class="node node-green" transform="translate(1030 110)" filter="url(#shadow)">
+  <g class="node node-green" transform="translate(810 110)" filter="url(#shadow)">
     <rect width="220" height="100" rx="18" fill="#ecfdf5" stroke="#15803d"/>
     <use href="#icon-document" x="16" y="20" width="34" height="34" color="#15803d"/>
     <text class="node-title icon-copy" x="62" y="43.12" font-size="17">Session log</text>
