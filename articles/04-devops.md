@@ -47,7 +47,7 @@ We started building the [Interview Canvas project](https://github.com/alexeygrig
 
 <figure>
   <img src="images/02-backend-sqlite.png" alt="A user interacts with the frontend, which calls the FastAPI backend backed by SQLite">
-  <figcaption>TODO update the caption</figcaption>
+  <figcaption>The React frontend calls the FastAPI backend, which stores application data in SQLite</figcaption>
 </figure>
 
 
@@ -77,7 +77,10 @@ To avoid having this problem, we usually have two copies of the same environment
 - Dev (development): the environment we use internally for checking that everything works. Typically we run the latest version of our project there, and every time we push, the changes are automatically deployed there.
 - Prod (production): this is what our users use. We don't want to deploy every single change there automatically and we want to have more control over the process.
 
-TODO: figure: take the dev/prod split from images/04-devops-overview.svg and keep only it
+<figure>
+  <img src="images/04-dev-prod-environments.svg" alt="A push automatically deploys to development, while a release owner manually promotes a tested release to production">
+  <figcaption>Development receives every tested push. Production receives only a manually promoted release</figcaption>
+</figure>
 
 
 Because we previously defined our infrastructure as code, duplicating it is trivial. We most likely will need to change a few things, like the size of the machine where the application is running (production typically needs a more powerful machine), but the majority of the resources will stay the same.
@@ -141,7 +144,10 @@ The manual prod promotion workflow pulls the currently deployed dev image to pro
 Tag each image using the YYYY-MM-DD-gitsha1 pattern (e.g. "2026-08-18-a1b2c3d")
 ```
 
-TODO finish
+After the change, each successful build produces one tagged image. The deploy
+workflow sends that tag to development, and the manual production workflow
+promotes the same tag. We can now test the exact artifact that will run in
+production instead of rebuilding it during deployment.
 
 
 ## Observability
@@ -190,7 +196,8 @@ Include:
 in the telemetry.
 ```
 
-OTel (OTLP) only describes what data we collect, but we don't specify how or where.  Let's do it now. (TODO check it - is it correct to say that?)
+The application now produces telemetry and exports it over OTLP. We still need
+to decide where to send and store it, and how to view it. Let's do that now.
 
 ## OTel Collectors
 
@@ -279,7 +286,10 @@ Make it possible to filter by environment and deployed version
 ```
 
 
-TODO picture of grafana
+<figure>
+  <img src="images/04-grafana-dashboard.png" alt="A dark Grafana-style dashboard with panels for interview rooms, active participants, canvas elements and component creation failures, filtered to production and a deployed version">
+  <figcaption>Application metrics in one dashboard, filtered by environment and deployed version</figcaption>
+</figure>
 
 Next, you can run it locally with:
 
@@ -366,7 +376,10 @@ This is a small proof-of-concept script. In reality, you will probably have a sy
 - The job launches Codex or Claude in headless mode.
 - Once the session is over, the logs are saved and the machine is terminated.
 
-TODO picture
+<figure>
+  <img src="images/04-production-responder.svg" alt="An alert passes through SNS and Lambda to a temporary container job, where a headless agent reads bounded evidence and the repository, saves its session log, and then terminates">
+  <figcaption>The alert starts an isolated agent job for the incident. Its log remains after the compute is terminated</figcaption>
+</figure>
 
 Let's test it by introducing a bug.
 
@@ -384,9 +397,10 @@ on-call response.
 
 Here, the goal is to debug the process and make sure our on-call engineer actually wakes up and solves the problem.
 
-After a few iterations, it will work.
-
-TODO screenshot
+After a few iterations, it will work, and a successful test should leave a
+concrete trail. The alert fires and the worker starts an agent session. The
+agent identifies the reproducible failure, its fix passes CI/CD, and the
+failure metric recovers.
 
 
 ## Summary

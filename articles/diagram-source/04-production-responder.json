@@ -1,0 +1,108 @@
+{
+  "title": "Run an agent only for the incident",
+  "description": "An alert enters an AWS trigger path through SNS and Lambda. Lambda starts a temporary container job containing a headless coding agent. The job reads bounded evidence and the repository, writes a session log, and then terminates.",
+  "canvas": {
+    "width": 1270,
+    "height": 500,
+    "background": "#ffffff"
+  },
+  "layout": {
+    "type": "manual",
+    "card_width": 220,
+    "card_height": 100,
+    "fixed_icon_axis": true
+  },
+  "nodes": [
+    {
+      "id": "aws_boundary",
+      "title": "AWS trigger path",
+      "variant": "boundary",
+      "color": "amber",
+      "x": 250,
+      "y": 30,
+      "width": 760,
+      "height": 250
+    },
+    {
+      "id": "job_boundary",
+      "title": "Temporary container job",
+      "variant": "boundary",
+      "color": "purple",
+      "x": 720,
+      "y": 70,
+      "width": 270,
+      "height": 180
+    },
+    {
+      "id": "alert",
+      "title": "Alert",
+      "subtitle": "User impact detected",
+      "icon": "warning",
+      "color": "red",
+      "x": 20,
+      "y": 110
+    },
+    {
+      "id": "sns",
+      "title": "SNS topic",
+      "subtitle": "Deliver the alert",
+      "icon": "aws",
+      "color": "amber",
+      "x": 270,
+      "y": 110
+    },
+    {
+      "id": "lambda",
+      "title": "Lambda",
+      "subtitle": "Start an isolated job",
+      "icon": "aws",
+      "color": "amber",
+      "x": 510,
+      "y": 110
+    },
+    {
+      "id": "agent",
+      "title": "Agent",
+      "subtitle": "Headless investigation",
+      "icon": "robot",
+      "color": "purple",
+      "x": 750,
+      "y": 110
+    },
+    {
+      "id": "bounded_inputs",
+      "title": "Inputs",
+      "subtitle": "Repository + incident evidence",
+      "icon": "shield",
+      "color": "blue",
+      "x": 750,
+      "y": 340
+    },
+    {
+      "id": "session_log",
+      "title": "Session log",
+      "subtitle": "Saved after the run",
+      "icon": "document",
+      "color": "green",
+      "x": 1030,
+      "y": 110
+    },
+    {
+      "id": "job_ends",
+      "title": "Job ends",
+      "subtitle": "Compute is terminated",
+      "icon": "close",
+      "color": "gray",
+      "x": 1030,
+      "y": 340
+    }
+  ],
+  "edges": [
+    {"from": "alert", "to": "sns", "color": "red", "route": "straight"},
+    {"from": "sns", "to": "lambda", "color": "amber", "route": "straight"},
+    {"from": "lambda", "to": "agent", "color": "purple", "route": "straight"},
+    {"from": "bounded_inputs", "to": "agent", "color": "blue", "route": "straight", "from_anchor": "top", "to_anchor": "bottom", "dashed": true},
+    {"from": "agent", "to": "session_log", "color": "green", "route": "straight"},
+    {"from": "session_log", "to": "job_ends", "color": "gray", "route": "straight", "from_anchor": "bottom", "to_anchor": "top"}
+  ]
+}

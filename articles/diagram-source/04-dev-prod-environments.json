@@ -1,0 +1,88 @@
+{
+  "title": "Two environments, two deployment paths",
+  "description": "A user push starts an automatic CI/CD deployment to Development. A release owner separately starts a manual production release that promotes the tested version to Production.",
+  "canvas": {
+    "width": 940,
+    "height": 440,
+    "background": "#ffffff"
+  },
+  "layout": {
+    "type": "manual",
+    "card_width": 220,
+    "card_height": 100,
+    "fixed_icon_axis": true
+  },
+  "nodes": [
+    {
+      "id": "cicd_boundary",
+      "title": "CI/CD",
+      "variant": "boundary",
+      "color": "purple",
+      "x": 330,
+      "y": 30,
+      "width": 280,
+      "height": 380
+    },
+    {
+      "id": "user",
+      "title": "User",
+      "variant": "icon",
+      "icon": "user",
+      "color": "blue",
+      "x": 102,
+      "y": 92
+    },
+    {
+      "id": "deploy",
+      "title": "Deploy",
+      "subtitle": "Automatic on push",
+      "icon": "workflow",
+      "color": "purple",
+      "x": 360,
+      "y": 70
+    },
+    {
+      "id": "development",
+      "title": "Development",
+      "subtitle": "Validate latest changes",
+      "icon": "environment",
+      "color": "blue",
+      "x": 700,
+      "y": 70
+    },
+    {
+      "id": "release_owner",
+      "title": "Release owner",
+      "variant": "icon",
+      "icon": "user",
+      "color": "blue",
+      "x": 102,
+      "y": 292
+    },
+    {
+      "id": "promotion",
+      "title": "Prod release",
+      "subtitle": "Promote tested version",
+      "icon": "workflow",
+      "color": "purple",
+      "x": 360,
+      "y": 270
+    },
+    {
+      "id": "production",
+      "title": "Production",
+      "subtitle": "Serve real users",
+      "icon": "environment",
+      "color": "green",
+      "x": 700,
+      "y": 270
+    }
+  ],
+  "edges": [
+    {"from": "user", "to": "deploy", "label": "Push", "color": "blue", "route": "straight"},
+    {"from": "deploy", "to": "development", "color": "purple", "route": "straight"},
+    {"from": "development", "to": "promotion", "color": "blue", "route": "orthogonal", "from_anchor": "bottom", "to_anchor": "top", "dashed": true},
+    {"from": "release_owner", "to": "promotion", "label": "Manual trigger", "color": "green", "route": "straight", "dashed": true},
+    {"from": "promotion", "to": "production", "color": "green", "route": "straight"}
+  ]
+}

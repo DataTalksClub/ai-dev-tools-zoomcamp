@@ -1,0 +1,126 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1270" height="500" viewBox="0 0 1270 500" role="img" aria-labelledby="title desc">
+  <title id="title">Run an agent only for the incident</title>
+  <desc id="desc">An alert enters an AWS trigger path through SNS and Lambda. Lambda starts a temporary container job containing a headless coding agent. The job reads bounded evidence and the repository, writes a session log, and then terminates.</desc>
+  <defs>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="150%">
+      <feDropShadow dx="0" dy="4" stdDeviation="5" flood-color="#0f172a" flood-opacity="0.08"/>
+    </filter>
+    <marker id="arrow-purple" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto"><path d="M0 0 10 5 0 10Z" fill="#7c3aed"/></marker>
+    <marker id="arrow-blue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto"><path d="M0 0 10 5 0 10Z" fill="#2563eb"/></marker>
+    <marker id="arrow-amber" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto"><path d="M0 0 10 5 0 10Z" fill="#c2410c"/></marker>
+    <marker id="arrow-green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto"><path d="M0 0 10 5 0 10Z" fill="#15803d"/></marker>
+    <marker id="arrow-red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto"><path d="M0 0 10 5 0 10Z" fill="#dc2626"/></marker>
+    <marker id="arrow-gray" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto"><path d="M0 0 10 5 0 10Z" fill="#64748b"/></marker>
+    <symbol id="icon-aws" viewBox="0 0 24 24">
+        <text x="12" y="14" text-anchor="middle" fill="currentColor" font-family="Arial, Helvetica, sans-serif" font-size="10" font-weight="800" letter-spacing=".15">AWS</text>
+        <path d="M3.3 17.2c4.6 2.4 10.3 2.6 17 .2M17.4 16.3l3.3 1-.9 3" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+      </symbol>
+    <symbol id="icon-close" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path d="m8 8 8 8M16 8l-8 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </symbol>
+    <symbol id="icon-document" viewBox="0 0 24 24">
+        <path d="M6 2h8l4 4v16H6Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M14 2v5h4M9 12h6M9 16h6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </symbol>
+    <symbol id="icon-robot" viewBox="0 0 24 24">
+        <path d="M12 5V2.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+        <circle cx="12" cy="2.5" r="1" fill="currentColor"/>
+        <rect x="4" y="5" width="16" height="15" rx="3" fill="none" stroke="currentColor" stroke-width="1.8"/>
+        <path d="M4 10H2.5v5H4M20 10h1.5v5H20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="9" cy="11" r="1.3" fill="currentColor"/>
+        <circle cx="15" cy="11" r="1.3" fill="currentColor"/>
+        <path d="M8.5 16h7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+      </symbol>
+    <symbol id="icon-shield" viewBox="0 0 24 24">
+        <path d="M12 2.5 20 6v5.5c0 5-3.1 8.6-8 10-4.9-1.4-8-5-8-10V6Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+        <path d="m8.5 12 2.2 2.2 4.8-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </symbol>
+    <symbol id="icon-warning" viewBox="0 0 24 24">
+        <path d="M12 3 2.5 21h19Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M12 9v5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="17.5" r="1.1" fill="currentColor"/>
+      </symbol>
+    <style>
+      text { font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #172033; }
+      symbol [stroke] { vector-effect: non-scaling-stroke; }
+      .node rect { stroke-width: 2; }
+      .node-boundary rect { stroke-width: 2; stroke-dasharray: 8 8; }
+      .boundary-title { font-size: 16px; font-weight: 750; text-anchor: start; }
+      .node-title { font-size: 20px; font-weight: 750; text-anchor: middle; }
+      .node-title.icon-copy { text-anchor: start; }
+      .node-subtitle { font-size: 16px; font-weight: 500; fill: #475569; text-anchor: middle; }
+      .eyebrow { font-size: 13px; font-weight: 750; letter-spacing: 1px; fill: #475569; text-anchor: middle; }
+      .mention-icon { font-size: 27px; font-weight: 750; text-anchor: middle; }
+      .standalone-mention { font-size: 52px; font-weight: 750; text-anchor: middle; }
+      .icon-node-title { font-size: 16px; font-weight: 750; text-anchor: middle; }
+      .edge { fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+      .edge-label rect { stroke-width: 2; }
+      .edge-label text { font-size: 14px; font-weight: 750; text-anchor: middle; dominant-baseline: central; }
+      .divider { stroke: #cbd5e1; stroke-width: 2; stroke-dasharray: 6 8; stroke-linecap: round; }
+      .center-annotation { fill: #f1f5f9; stroke: none; }
+      .center-title { font-weight: 800; letter-spacing: 0.08em; fill: #334155; text-anchor: middle; }
+      .center-detail { font-weight: 600; fill: #475569; text-anchor: middle; }
+    </style>
+  </defs>
+  <rect width="1270" height="500" fill="#ffffff"/>
+
+  <g class="node-boundary node-amber" transform="translate(250 30)">
+    <rect width="760" height="250" rx="22" fill="none" stroke="#c2410c"/>
+    <text class="boundary-title" x="20" y="31">AWS trigger path</text>
+  </g>
+  <g class="node-boundary node-purple" transform="translate(720 70)">
+    <rect width="270" height="180" rx="22" fill="none" stroke="#7c3aed"/>
+    <text class="boundary-title" x="20" y="31">Temporary container job</text>
+  </g>
+  <path class="edge-boundary-halo" d="M240 160L270 160" fill="none" stroke="#ffffff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+  <path class="edge" d="M240 160L270 160" stroke="#dc2626" marker-end="url(#arrow-red)"/>
+  <path class="edge" d="M490 160L510 160" stroke="#c2410c" marker-end="url(#arrow-amber)"/>
+  <path class="edge-boundary-halo" d="M730 160L750 160" fill="none" stroke="#ffffff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+  <path class="edge" d="M730 160L750 160" stroke="#7c3aed" marker-end="url(#arrow-purple)"/>
+  <path class="edge-boundary-halo" d="M860 340L860 210" fill="none" stroke="#ffffff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+  <path class="edge" d="M860 340L860 210" stroke="#2563eb" stroke-dasharray="8 8" marker-end="url(#arrow-blue)"/>
+  <path class="edge-boundary-halo" d="M970 160L1030 160" fill="none" stroke="#ffffff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+  <path class="edge" d="M970 160L1030 160" stroke="#15803d" marker-end="url(#arrow-green)"/>
+  <path class="edge" d="M1140 210L1140 340" stroke="#64748b" marker-end="url(#arrow-gray)"/>
+
+  <g class="node node-red" transform="translate(20 110)" filter="url(#shadow)">
+    <rect width="220" height="100" rx="18" fill="#fef2f2" stroke="#dc2626"/>
+    <use href="#icon-warning" x="16" y="20" width="34" height="34" color="#dc2626"/>
+    <text class="node-title icon-copy" x="62" y="44.2" font-size="20">Alert</text>
+    <text class="node-subtitle" x="110" y="75" font-size="16">User impact detected</text>
+  </g>
+  <g class="node node-amber" transform="translate(270 110)" filter="url(#shadow)">
+    <rect width="220" height="100" rx="18" fill="#fff7ed" stroke="#c2410c"/>
+    <use href="#icon-aws" x="16" y="20" width="34" height="34" color="#c2410c"/>
+    <text class="node-title icon-copy" x="62" y="44.2" font-size="20">SNS topic</text>
+    <text class="node-subtitle" x="110" y="75" font-size="16">Deliver the alert</text>
+  </g>
+  <g class="node node-amber" transform="translate(510 110)" filter="url(#shadow)">
+    <rect width="220" height="100" rx="18" fill="#fff7ed" stroke="#c2410c"/>
+    <use href="#icon-aws" x="16" y="20" width="34" height="34" color="#c2410c"/>
+    <text class="node-title icon-copy" x="62" y="44.2" font-size="20">Lambda</text>
+    <text class="node-subtitle" x="110" y="75" font-size="16">Start an isolated job</text>
+  </g>
+  <g class="node node-purple" transform="translate(750 110)" filter="url(#shadow)">
+    <rect width="220" height="100" rx="18" fill="#f5f3ff" stroke="#7c3aed"/>
+    <use href="#icon-robot" x="16" y="20" width="34" height="34" color="#7c3aed"/>
+    <text class="node-title icon-copy" x="62" y="44.2" font-size="20">Agent</text>
+    <text class="node-subtitle" x="110" y="75" font-size="16">Headless investigation</text>
+  </g>
+  <g class="node node-blue" transform="translate(750 340)" filter="url(#shadow)">
+    <rect width="220" height="100" rx="18" fill="#eff6ff" stroke="#2563eb"/>
+    <use href="#icon-shield" x="16" y="9" width="34" height="34" color="#2563eb"/>
+    <text class="node-title icon-copy" x="62" y="33.2" font-size="20">Inputs</text>
+    <text class="node-subtitle" x="110" y="64" font-size="16">Repository + incident</text>
+    <text class="node-subtitle" x="110" y="86" font-size="16">evidence</text>
+  </g>
+  <g class="node node-green" transform="translate(1030 110)" filter="url(#shadow)">
+    <rect width="220" height="100" rx="18" fill="#ecfdf5" stroke="#15803d"/>
+    <use href="#icon-document" x="16" y="20" width="34" height="34" color="#15803d"/>
+    <text class="node-title icon-copy" x="62" y="44.2" font-size="20">Session log</text>
+    <text class="node-subtitle" x="110" y="75" font-size="16">Saved after the run</text>
+  </g>
+  <g class="node node-gray" transform="translate(1030 340)" filter="url(#shadow)">
+    <rect width="220" height="100" rx="18" fill="#f8fafc" stroke="#64748b"/>
+    <use href="#icon-close" x="16" y="20" width="34" height="34" color="#64748b"/>
+    <text class="node-title icon-copy" x="62" y="44.2" font-size="20">Job ends</text>
+    <text class="node-subtitle" x="110" y="75" font-size="16">Compute is terminated</text>
+  </g>
+</svg>
