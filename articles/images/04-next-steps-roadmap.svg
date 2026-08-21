@@ -1,16 +1,16 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1360" height="420" viewBox="0 0 1360 420" role="img" aria-labelledby="title desc">
-  <title id="title">Where to go next</title>
-  <desc id="desc">Current module → Reliability → Safer delivery → Security depth → Agent governance</desc>
+<svg xmlns="http://www.w3.org/2000/svg" width="940" height="520" viewBox="0 0 940 520" role="img" aria-labelledby="title desc">
+  <title id="title">Operational foundations for agent authority</title>
+  <desc id="desc">The current baseline supports three operational foundations: reliability, safer delivery, and security evidence. Agent governance sits above them because wider authority should come only after those independent controls exist.</desc>
   <defs>
     <filter id="shadow" x="-20%" y="-20%" width="140%" height="150%">
       <feDropShadow dx="0" dy="4" stdDeviation="5" flood-color="#0f172a" flood-opacity="0.08"/>
     </filter>
-    <marker id="arrow-purple" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 10 5 0 10Z" fill="#7c3aed"/></marker>
-    <marker id="arrow-blue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 10 5 0 10Z" fill="#2563eb"/></marker>
-    <marker id="arrow-amber" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 10 5 0 10Z" fill="#c2410c"/></marker>
-    <marker id="arrow-green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 10 5 0 10Z" fill="#15803d"/></marker>
-    <marker id="arrow-red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 10 5 0 10Z" fill="#dc2626"/></marker>
-    <marker id="arrow-gray" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 10 5 0 10Z" fill="#64748b"/></marker>
+    <marker id="arrow-purple" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto"><path d="M0 0 10 5 0 10Z" fill="#7c3aed"/></marker>
+    <marker id="arrow-blue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto"><path d="M0 0 10 5 0 10Z" fill="#2563eb"/></marker>
+    <marker id="arrow-amber" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto"><path d="M0 0 10 5 0 10Z" fill="#c2410c"/></marker>
+    <marker id="arrow-green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto"><path d="M0 0 10 5 0 10Z" fill="#15803d"/></marker>
+    <marker id="arrow-red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto"><path d="M0 0 10 5 0 10Z" fill="#dc2626"/></marker>
+    <marker id="arrow-gray" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto"><path d="M0 0 10 5 0 10Z" fill="#64748b"/></marker>
     <symbol id="icon-check" viewBox="0 0 24 24">
         <circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path d="m7.5 12 3 3 6-7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
       </symbol>
@@ -24,60 +24,68 @@
     <symbol id="icon-settings" viewBox="0 0 24 24">
         <circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9 7 7M17 17l2.1 2.1M19.1 4.9 17 7M7 17l-2.1 2.1" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
       </symbol>
-    <symbol id="icon-warning" viewBox="0 0 24 24">
-        <path d="M12 3 2.5 21h19Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M12 9v5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="17.5" r="1.1" fill="currentColor"/>
+    <symbol id="icon-shield" viewBox="0 0 24 24">
+        <path d="M12 2.5 20 6v5.5c0 5-3.1 8.6-8 10-4.9-1.4-8-5-8-10V6Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+        <path d="m8.5 12 2.2 2.2 4.8-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
       </symbol>
     <style>
       text { font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #172033; }
+      symbol [stroke] { vector-effect: non-scaling-stroke; }
       .node rect { stroke-width: 2; }
-      .node-title { font-size: 16px; font-weight: 750; text-anchor: middle; }
+      .node-boundary rect { stroke-width: 2; stroke-dasharray: 8 8; }
+      .boundary-title { font-size: 16px; font-weight: 750; text-anchor: start; }
+      .node-title { font-size: 20px; font-weight: 750; text-anchor: middle; }
       .node-title.icon-copy { text-anchor: start; }
-      .node-subtitle { font-size: 14px; font-weight: 500; fill: #64748b; text-anchor: middle; }
-      .eyebrow { font-size: 12px; font-weight: 750; letter-spacing: 1px; fill: #64748b; text-anchor: middle; }
+      .node-subtitle { font-size: 16px; font-weight: 500; fill: #475569; text-anchor: middle; }
+      .eyebrow { font-size: 13px; font-weight: 750; letter-spacing: 1px; fill: #475569; text-anchor: middle; }
       .mention-icon { font-size: 27px; font-weight: 750; text-anchor: middle; }
+      .standalone-mention { font-size: 52px; font-weight: 750; text-anchor: middle; }
+      .icon-node-title { font-size: 16px; font-weight: 750; text-anchor: middle; }
       .edge { fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
       .edge-label rect { stroke-width: 2; }
       .edge-label text { font-size: 14px; font-weight: 750; text-anchor: middle; dominant-baseline: central; }
-      .center-annotation { fill: #f8fafc; stroke: #cbd5e1; stroke-width: 2; stroke-dasharray: 7 7; }
-      .center-title { font-size: 16px; font-weight: 800; letter-spacing: 1.3px; fill: #334155; text-anchor: middle; }
-      .center-detail { font-size: 13px; font-weight: 600; fill: #64748b; text-anchor: middle; }
+      .divider { stroke: #cbd5e1; stroke-width: 2; stroke-dasharray: 6 8; stroke-linecap: round; }
+      .center-annotation { fill: #f1f5f9; stroke: none; }
+      .center-title { font-weight: 800; letter-spacing: 0.08em; fill: #334155; text-anchor: middle; }
+      .center-detail { font-weight: 600; fill: #475569; text-anchor: middle; }
     </style>
   </defs>
-  <rect width="1360" height="420" fill="#ffffff"/>
+  <rect width="940" height="520" fill="#ffffff"/>
 
-  <path class="edge" d="M250 200L300 200" stroke="#64748b" marker-end="url(#arrow-gray)"/>
-  <path class="edge" d="M520 200L570 200" stroke="#64748b" marker-end="url(#arrow-gray)"/>
-  <path class="edge" d="M790 200L840 200" stroke="#64748b" marker-end="url(#arrow-gray)"/>
-  <path class="edge" d="M1060 200L1110 200" stroke="#64748b" marker-end="url(#arrow-gray)"/>
 
-  <g class="node node-blue" transform="translate(30 150)" filter="url(#shadow)">
-    <rect width="220" height="100" rx="18" fill="#eff6ff" stroke="#2563eb"/>
-    <use href="#icon-check" x="16" y="36" width="28" height="28" color="#2563eb"/>
-    <text class="node-title icon-copy" x="56" y="56">Current module</text>
-    <text class="node-subtitle" x="110" y="81">Observe, respond, audit</text>
+  <g class="node node-purple" transform="translate(220 40)" filter="url(#shadow)">
+    <rect width="500" height="110" rx="18" fill="#f5f3ff" stroke="#7c3aed"/>
+    <text class="eyebrow" x="250" y="25" font-size="13">LAST</text>
+    <use href="#icon-settings" x="16" y="35" width="34" height="34" color="#7c3aed"/>
+    <text class="node-title icon-copy" x="62" y="59.2" font-size="20">Agent governance</text>
+    <text class="node-subtitle" x="250" y="90" font-size="16">Expand authority last</text>
   </g>
-  <g class="node node-green" transform="translate(300 150)" filter="url(#shadow)">
-    <rect width="220" height="100" rx="18" fill="#ecfdf5" stroke="#15803d"/>
-    <use href="#icon-search" x="16" y="36" width="28" height="28" color="#15803d"/>
-    <text class="node-title icon-copy" x="56" y="56">Reliability</text>
-    <text class="node-subtitle" x="110" y="81">SLIs, SLOs, burn rates</text>
+  <g class="node node-green" transform="translate(40 180)" filter="url(#shadow)">
+    <rect width="240" height="150" rx="18" fill="#ecfdf5" stroke="#15803d"/>
+    <text class="eyebrow" x="120" y="34" font-size="13">START HERE</text>
+    <use href="#icon-search" x="16" y="44" width="34" height="34" color="#15803d"/>
+    <text class="node-title icon-copy" x="62" y="68.2" font-size="20">Reliability</text>
+    <text class="node-subtitle" x="120" y="99" font-size="16">SLIs, SLOs, burn-rate</text>
+    <text class="node-subtitle" x="120" y="121" font-size="16">alerts</text>
   </g>
-  <g class="node node-purple" transform="translate(570 150)" filter="url(#shadow)">
-    <rect width="220" height="100" rx="18" fill="#f5f3ff" stroke="#7c3aed"/>
-    <use href="#icon-pull-request" x="16" y="36" width="28" height="28" color="#7c3aed"/>
-    <text class="node-title icon-copy" x="56" y="56">Safer delivery</text>
-    <text class="node-subtitle" x="110" y="81">Canaries and restore drills</text>
+  <g class="node node-gray" transform="translate(350 180)" filter="url(#shadow)">
+    <rect width="240" height="150" rx="18" fill="#f8fafc" stroke="#64748b"/>
+    <use href="#icon-pull-request" x="16" y="34" width="34" height="34" color="#64748b"/>
+    <text class="node-title icon-copy" x="62" y="58.2" font-size="20">Safer delivery</text>
+    <text class="node-subtitle" x="120" y="89" font-size="16">Canaries, flags, restore</text>
+    <text class="node-subtitle" x="120" y="111" font-size="16">drills</text>
   </g>
-  <g class="node node-red" transform="translate(840 150)" filter="url(#shadow)">
-    <rect width="220" height="100" rx="18" fill="#fef2f2" stroke="#dc2626"/>
-    <use href="#icon-warning" x="16" y="36" width="28" height="28" color="#dc2626"/>
-    <text class="node-title icon-copy" x="56" y="56">Security depth</text>
-    <text class="node-subtitle" x="110" y="81">Supply chain and pentests</text>
+  <g class="node node-gray" transform="translate(660 180)" filter="url(#shadow)">
+    <rect width="240" height="150" rx="18" fill="#f8fafc" stroke="#64748b"/>
+    <use href="#icon-shield" x="16" y="34" width="34" height="34" color="#64748b"/>
+    <text class="node-title icon-copy" x="62" y="58.2" font-size="20">Security</text>
+    <text class="node-subtitle" x="120" y="89" font-size="16">Scans, SBOM,</text>
+    <text class="node-subtitle" x="120" y="111" font-size="16">provenance</text>
   </g>
-  <g class="node node-amber" transform="translate(1110 150)" filter="url(#shadow)">
-    <rect width="220" height="100" rx="18" fill="#fff7ed" stroke="#c2410c"/>
-    <use href="#icon-settings" x="16" y="36" width="28" height="28" color="#c2410c"/>
-    <text class="node-title icon-copy" x="56" y="56" textLength="148" lengthAdjust="spacingAndGlyphs">Agent governance</text>
-    <text class="node-subtitle" x="110" y="81">Capabilities, data, evals</text>
+  <g class="node node-blue" transform="translate(40 370)" filter="url(#shadow)">
+    <rect width="860" height="110" rx="18" fill="#eff6ff" stroke="#2563eb"/>
+    <use href="#icon-check" x="16" y="25" width="34" height="34" color="#2563eb"/>
+    <text class="node-title icon-copy" x="62" y="49.2" font-size="20">Current baseline</text>
+    <text class="node-subtitle" x="430" y="80" font-size="16">Manual promotion • observable journey • bounded response</text>
   </g>
 </svg>

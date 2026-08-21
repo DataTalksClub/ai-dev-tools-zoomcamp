@@ -1,113 +1,68 @@
 {
-  "title": "From deployment to safe response",
+  "title": "Bounded agent response",
+  "description": "A user-visible alert becomes a small evidence packet for a bounded investigation. If the agent reproduces a bug, it creates the smallest tested fix and sends it through normal CI/CD. If no safe fix is clear, it explains or escalates without changing code.",
   "canvas": {
-    "width": 1360,
-    "height": 690,
+    "width": 940,
+    "height": 500,
     "background": "#ffffff"
   },
   "layout": {
     "type": "manual",
     "card_width": 220,
-    "card_height": 100
+    "card_height": 100,
+    "fixed_icon_axis": true
   },
   "nodes": [
     {
-      "id": "app",
-      "title": "Deployed app",
-      "subtitle": "Module 2 release",
-      "icon": "api",
-      "color": "blue",
-      "x": 30,
-      "y": 250
-    },
-    {
-      "id": "observe",
-      "title": "Observe",
-      "subtitle": "Metrics, traces, logs",
-      "icon": "search",
-      "color": "blue",
-      "x": 300,
-      "y": 250
-    },
-    {
       "id": "alert",
       "title": "Alert",
-      "subtitle": "Sustained user impact",
+      "subtitle": "User-visible failure",
       "icon": "warning",
       "color": "red",
-      "x": 570,
-      "y": 250
-    },
-    {
-      "id": "agent",
-      "title": "Investigate",
-      "subtitle": "Read-only evidence packet",
-      "icon": "sparkles",
-      "color": "purple",
-      "x": 840,
-      "y": 250
-    },
-    {
-      "id": "policy",
-      "title": "Check policy",
-      "subtitle": "Authority stays outside AI",
-      "icon": "settings",
-      "color": "amber",
-      "x": 1110,
-      "y": 250
-    },
-    {
-      "id": "human",
-      "title": "Escalate",
-      "subtitle": "Unknown or high-risk",
-      "icon": "user",
-      "color": "red",
-      "x": 1110,
+      "x": 20,
       "y": 60
     },
     {
-      "id": "rollback",
-      "title": "Run rollback",
-      "subtitle": "Known reversible runbook",
-      "icon": "pull-request",
-      "color": "green",
-      "x": 1110,
-      "y": 440
-    },
-    {
-      "id": "verify",
-      "title": "Verify recovery",
-      "subtitle": "Health and error rate",
-      "icon": "check",
-      "color": "green",
-      "x": 840,
-      "y": 560
-    },
-    {
-      "id": "record",
-      "title": "Record the incident",
-      "subtitle": "Evidence, action, result",
+      "id": "evidence",
+      "title": "Evidence",
+      "subtitle": "Alert, telemetry, version",
       "icon": "document",
       "color": "gray",
-      "x": 570,
-      "y": 560
+      "x": 360,
+      "y": 60
+    },
+    {
+      "id": "investigate",
+      "title": "Investigate",
+      "subtitle": "Bounded agent session",
+      "icon": "robot",
+      "color": "purple",
+      "x": 700,
+      "y": 60
+    },
+    {
+      "id": "stop",
+      "title": "No safe fix",
+      "subtitle": "Explain or escalate",
+      "icon": "user",
+      "color": "gray",
+      "x": 360,
+      "y": 330
+    },
+    {
+      "id": "fix",
+      "title": "Tested fix",
+      "subtitle": "Small tested change via CI/CD",
+      "icon": "check",
+      "color": "green",
+      "x": 700,
+      "y": 330
     }
   ],
   "edges": [
-    {"from": "app", "to": "observe", "from_anchor": "right", "to_anchor": "left"},
-    {"from": "observe", "to": "alert", "from_anchor": "right", "to_anchor": "left"},
-    {"from": "alert", "to": "agent", "from_anchor": "right", "to_anchor": "left"},
-    {"from": "agent", "to": "policy", "from_anchor": "right", "to_anchor": "left"},
-    {"from": "policy", "to": "human", "from_anchor": "top", "to_anchor": "bottom"},
-    {"from": "policy", "to": "rollback", "from_anchor": "bottom", "to_anchor": "top"},
-    {
-      "from": "rollback",
-      "to": "verify",
-      "route": "curve",
-      "from_anchor": "left",
-      "to_anchor": "right",
-      "controls": [[1060, 585], [1060, 610]]
-    },
-    {"from": "verify", "to": "record", "from_anchor": "left", "to_anchor": "right"}
+    {"from": "alert", "to": "evidence", "color": "gray", "route": "straight"},
+    {"from": "evidence", "to": "investigate", "color": "gray", "route": "straight"},
+    {"from": "investigate", "to": "stop", "color": "gray", "route": "straight", "from_anchor": "bottom", "to_anchor": "top"},
+    {"from": "investigate", "to": "fix", "label": "Bug reproduced", "color": "green", "route": "straight", "from_anchor": "bottom", "to_anchor": "top"}
   ]
 }

@@ -26,7 +26,7 @@ In this part, we make the deployed application easier to operate:
 
 
 <figure>
-  <img src="images/03-next-lesson.svg" alt="A code change is deployed to development, manually promoted to production, and monitored so an AI agent can investigate alerts and create fixes">
+  <img src="images/04-devops-overview.svg" alt="A user pushes a change through CI/CD to development; a release owner promotes the tested release to production, where telemetry flows through observability and alerting to an AI agent">
   <figcaption>Deploy changes to development first, promote a tested release to production, and respond to observed failures</figcaption>
 </figure>
 
@@ -43,6 +43,13 @@ We started building the [Interview Canvas project](https://github.com/alexeygrig
 - Next, we defined the frontend-backend OpenAPI schema
 - Using the API contract we created the backend
 - We added database support with SQLite and SQLAlchemy
+
+
+<figure>
+  <img src="images/02-backend-sqlite.png" alt="A user interacts with the frontend, which calls the FastAPI backend backed by SQLite">
+  <figcaption>TODO update the caption</figcaption>
+</figure>
+
 
 The app was running locally, and then we deployed it in [Part 3: Deploy a Full-Stack App with AI Coding Assistants](https://aishippingblog.com/p/deploy-a-full-stack-app-with-ai-coding):
 
@@ -70,6 +77,8 @@ To avoid having this problem, we usually have two copies of the same environment
 - Dev (development): the environment we use internally for checking that everything works. Typically we run the latest version of our project there, and every time we push, the changes are automatically deployed there.
 - Prod (production): this is what our users use. We don't want to deploy every single change there automatically and we want to have more control over the process.
 
+TODO: figure: take the dev/prod split from images/04-devops-overview.svg and keep only it
+
 
 Because we previously defined our infrastructure as code, duplicating it is trivial. We most likely will need to change a few things, like the size of the machine where the application is running (production typically needs a more powerful machine), but the majority of the resources will stay the same.
 
@@ -92,16 +101,12 @@ Create a manual GitHub Actions workflow that promotes the dev version to product
 
 Now we have two environments.
 
-TODO: Image: users use prod, testers use dev
 
+## Container image repository
 
-## Docker image repository
+In the pipeline we have so far, the Docker image is built during the deploy stage. I deploy to EC2 by executing the build script on the machine and then running the image in Docker.
 
-In the pipeline we have so far, the image is built during the deploy stage.
-
-TODO: illustration
-
-This is an anti-pattern. In my setup, I deploy to EC2 by executing the build script on the machine and then running the image in Docker.
+It's an anti-pattern.
 
 There are multiple problems with this approach:
 
@@ -116,7 +121,10 @@ So we split the deploy step into two separate steps and then:
 
 For AWS, we can use [Amazon ECR](https://aws.amazon.com/ecr/) as the container registry. You can also push your images to Docker if you're running outside of AWS and your cloud doesn't have a special service for that.
 
-TODO: illustration
+<figure>
+  <img src="images/04-build-once.svg" alt="A user pushes a change, then CI/CD runs separate Build and Deploy steps; the version tag goes to Deploy and a manually triggered Prod release, which updates Production">
+  <figcaption>Inside CI/CD, Build and Deploy are separate steps. The version tag goes to development through Deploy and to the manually triggered production release.</figcaption>
+</figure>
 
 Let's implement that:
 
@@ -133,37 +141,31 @@ The manual prod promotion workflow pulls the currently deployed dev image to pro
 Tag each image using the YYYY-MM-DD-gitsha1 pattern (e.g. "2026-08-18-a1b2c3d")
 ```
 
-(TODO use this for illustration)
-With this setup, we follow this path to release:
-
-- push to main
-- run tests
-- build the image and tag it
-- push the image to the registry
-- deploy the image to development
-- manually promote that image to production
+TODO finish
 
 
 ## Observability
 
-Having two environments helps us avoid accidental pushes with buggy code to production. But accidents will still happen, and we need to make sure we detect them and can react in time.
+Having two environments helps us avoid accidental pushes with buggy code to production. But accidents will still happen, and we need to make sure we detect them and can react in time as fast as we can.
 
-For that, we usually add monitoring to our applications. At the minimum, we collect basic performance metrics like CPU and memory utilization and requests per second (RPS).
+For that we need to have observability. "Observability" means collecting information about the application so we can
+understand its behavior and investigate problems.
+
+We achieve observability by adding monitoring to our applications. At the minimum, we collect basic performance metrics like CPU and memory utilization and requests per second (RPS).
 
 If we see that CPU and memory utilization are growing and RPS is dropping, something is definitely off and we need to investigate.
 
-Observability means collecting information about the application so we can
-understand its behavior and investigate problems.
+TODO explain more about it so it links clearly to OTel (becaues we don't need otel for cpu and memory)
+
 
 ## OpenTelemetry
 
 To collect this information, we'll use [OpenTelemetry](https://opentelemetry.io/docs/) (often abbreviated as OTel).
 
-The OTel specification defines how applications produce and export telemetry.
-OTLP is the protocol applications use to send telemetry to a collector or backend.
+The OTel specification defines how applications produce and export telemetry. TODO: what exactly "telemetry" is?
+OTLP is the protocol applications use to send telemetry to a collector or backend.TODO is OTLP relevant here?
 
-
-For many popular libraries, we can start collecting metrics with just a few lines of code. This process is called "instrumenting" - injecting extra logic into existing libraries (like FastAPI) so we can collect logs and metrics from there.
+For many popular libraries, we can add telemetry with just a few lines of code. This process is called "instrumenting" - injecting extra logic for collecting telemetry into existing libraries (like FastAPI) without changing their code.
 
 Let's do it:
 
@@ -179,15 +181,18 @@ Include:
 in the telemetry.
 ```
 
-OTel (OTLP) only describes what data we collect, but we don't specify how or where.  Let's do it now.
-
-TODO pic
+OTel (OTLP) only describes what data we collect, but we don't specify how or where.  Let's do it now. (TODO check it - is it correct to say that?)
 
 ## OTel Collectors
 
 We capture telemetry with OTLP, but it doesn't go anywhere. Next, we need to define where exactly we send it. For that, we define
 an [OpenTelemetry Collector](https://opentelemetry.io/docs/collector/)
 between the application and the storage systems.
+
+<figure>
+  <img src="images/04-observability-pipeline.svg" alt="An application sends metrics, logs, and traces through an OpenTelemetry Collector into telemetry storage; dashboards support investigation while alert rules independently detect user impact">
+  <figcaption>The collector sends signals to telemetry storage; dashboards support investigation, while alert rules detect user impact</figcaption>
+</figure>
 
 There are many places where you can send this data to. You can talk to your AI assistant and figure out what's the best service for you for that.
 
@@ -215,8 +220,6 @@ Create an observability/ directory with Docker Compose for:
 
 Keep this as a separate Compose project from the application stack.
 ```
-
-TODO pic
 
 We don't have any dashboards yet, so let's build one.
 
@@ -342,9 +345,10 @@ and commit the fix with a clear message.
 If the alert is a false positive, explain why and do not change the code.
 ```
 
-
-TODO picture
-
+<figure>
+  <img src="images/04-operate-app-overview.svg" alt="A user-visible alert becomes an evidence packet for a bounded investigation; a reproducible bug produces a tested fix for CI/CD, while an uncertain case stops for explanation or escalation">
+  <figcaption>A bounded agent commits only a reproducible, tested fix; otherwise it explains or escalates without changing code</figcaption>
+</figure>
 
 This is a small proof-of-concept script. In reality, you will probably have a system that looks like this:
 
@@ -400,8 +404,7 @@ We now have a narrow operating baseline. We can promote a change deliberately,
 observe one important user journey, and prepare a response to a known failure.
 We can extend it in stages rather than add every practice in one go.
 
-![After the first observable and auditable response, continue with reliability,
-safer delivery, deeper security and agent governance.](images/04-next-steps-roadmap.png)
+![Reliability, safer delivery and security evidence rest on the current operating baseline and support agent governance, where authority expands last.](images/04-next-steps-roadmap.svg)
 
 Start with reliability by defining an SLI and SLO for an important journey such
 as canvas sync. Add an error-budget burn-rate alert and an external synthetic

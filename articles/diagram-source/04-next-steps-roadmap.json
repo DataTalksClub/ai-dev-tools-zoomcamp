@@ -1,66 +1,69 @@
 {
-  "title": "Where to go next",
+  "title": "Operational foundations for agent authority",
+  "description": "The current baseline supports three operational foundations: reliability, safer delivery, and security evidence. Agent governance sits above them because wider authority should come only after those independent controls exist.",
   "canvas": {
-    "width": 1360,
-    "height": 420,
+    "width": 940,
+    "height": 520,
     "background": "#ffffff"
   },
   "layout": {
     "type": "manual",
-    "card_width": 220,
-    "card_height": 100
+    "card_width": 240,
+    "card_height": 150,
+    "fixed_icon_axis": true
   },
   "nodes": [
     {
-      "id": "baseline",
-      "title": "Current module",
-      "subtitle": "Observe, respond, audit",
-      "icon": "check",
-      "color": "blue",
-      "x": 30,
-      "y": 150
+      "id": "governance",
+      "title": "Agent governance",
+      "subtitle": "Expand authority last",
+      "eyebrow": "LAST",
+      "icon": "settings",
+      "color": "purple",
+      "x": 220,
+      "y": 40,
+      "width": 500,
+      "height": 110
     },
     {
       "id": "reliability",
       "title": "Reliability",
-      "subtitle": "SLIs, SLOs, burn rates",
+      "subtitle": "SLIs, SLOs, burn-rate alerts",
+      "eyebrow": "START HERE",
       "icon": "search",
       "color": "green",
-      "x": 300,
-      "y": 150
+      "x": 40,
+      "y": 180
     },
     {
       "id": "delivery",
       "title": "Safer delivery",
-      "subtitle": "Canaries and restore drills",
+      "subtitle": "Canaries, flags, restore drills",
       "icon": "pull-request",
-      "color": "purple",
-      "x": 570,
-      "y": 150
+      "color": "gray",
+      "x": 350,
+      "y": 180
     },
     {
       "id": "security",
-      "title": "Security depth",
-      "subtitle": "Supply chain and pentests",
-      "icon": "warning",
-      "color": "red",
-      "x": 840,
-      "y": 150
+      "title": "Security",
+      "subtitle": "Scans, SBOM, provenance",
+      "icon": "shield",
+      "color": "gray",
+      "x": 660,
+      "y": 180
     },
     {
-      "id": "governance",
-      "title": "Agent governance",
-      "subtitle": "Capabilities, data, evals",
-      "icon": "settings",
-      "color": "amber",
-      "x": 1110,
-      "y": 150
+      "id": "baseline",
+      "title": "Current baseline",
+      "subtitle": "Manual promotion • observable journey • bounded response",
+      "icon": "check",
+      "color": "blue",
+      "x": 40,
+      "y": 370,
+      "width": 860,
+      "height": 110
     }
   ],
-  "edges": [
-    {"from": "baseline", "to": "reliability", "from_anchor": "right", "to_anchor": "left"},
-    {"from": "reliability", "to": "delivery", "from_anchor": "right", "to_anchor": "left"},
-    {"from": "delivery", "to": "security", "from_anchor": "right", "to_anchor": "left"},
-    {"from": "security", "to": "governance", "from_anchor": "right", "to_anchor": "left"}
-  ]
+  "edges": []
 }

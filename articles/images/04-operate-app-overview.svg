@@ -1,123 +1,101 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1360" height="690" viewBox="0 0 1360 690" role="img" aria-labelledby="title desc">
-  <title id="title">From deployment to safe response</title>
-  <desc id="desc">Deployed app → Observe → Alert → Investigate → Check policy → Escalate → Run rollback → Verify recovery → Record the incident</desc>
+<svg xmlns="http://www.w3.org/2000/svg" width="940" height="500" viewBox="0 0 940 500" role="img" aria-labelledby="title desc">
+  <title id="title">Bounded agent response</title>
+  <desc id="desc">A user-visible alert becomes a small evidence packet for a bounded investigation. If the agent reproduces a bug, it creates the smallest tested fix and sends it through normal CI/CD. If no safe fix is clear, it explains or escalates without changing code.</desc>
   <defs>
     <filter id="shadow" x="-20%" y="-20%" width="140%" height="150%">
       <feDropShadow dx="0" dy="4" stdDeviation="5" flood-color="#0f172a" flood-opacity="0.08"/>
     </filter>
-    <marker id="arrow-purple" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 10 5 0 10Z" fill="#7c3aed"/></marker>
-    <marker id="arrow-blue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 10 5 0 10Z" fill="#2563eb"/></marker>
-    <marker id="arrow-amber" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 10 5 0 10Z" fill="#c2410c"/></marker>
-    <marker id="arrow-green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 10 5 0 10Z" fill="#15803d"/></marker>
-    <marker id="arrow-red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 10 5 0 10Z" fill="#dc2626"/></marker>
-    <marker id="arrow-gray" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 10 5 0 10Z" fill="#64748b"/></marker>
-    <symbol id="icon-api" viewBox="0 0 24 24">
-        <path d="m8 5-5 7 5 7M16 5l5 7-5 7M14 3l-4 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-      </symbol>
+    <marker id="arrow-purple" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto"><path d="M0 0 10 5 0 10Z" fill="#7c3aed"/></marker>
+    <marker id="arrow-blue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto"><path d="M0 0 10 5 0 10Z" fill="#2563eb"/></marker>
+    <marker id="arrow-amber" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto"><path d="M0 0 10 5 0 10Z" fill="#c2410c"/></marker>
+    <marker id="arrow-green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto"><path d="M0 0 10 5 0 10Z" fill="#15803d"/></marker>
+    <marker id="arrow-red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto"><path d="M0 0 10 5 0 10Z" fill="#dc2626"/></marker>
+    <marker id="arrow-gray" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto"><path d="M0 0 10 5 0 10Z" fill="#64748b"/></marker>
     <symbol id="icon-check" viewBox="0 0 24 24">
         <circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path d="m7.5 12 3 3 6-7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
       </symbol>
     <symbol id="icon-document" viewBox="0 0 24 24">
         <path d="M6 2h8l4 4v16H6Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M14 2v5h4M9 12h6M9 16h6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
       </symbol>
-    <symbol id="icon-pull-request" viewBox="0 0 24 24">
-        <circle cx="6" cy="5" r="2.5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="6" cy="19" r="2.5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="18" cy="19" r="2.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M6 7.5v9M15 5h1a2 2 0 0 1 2 2v9.5M13 2l3 3-3 3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-      </symbol>
-    <symbol id="icon-search" viewBox="0 0 24 24">
-        <circle cx="11" cy="11" r="6.5" fill="none" stroke="currentColor" stroke-width="2"/>
-        <path d="m16 16 4.5 4.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-      </symbol>
-    <symbol id="icon-settings" viewBox="0 0 24 24">
-        <circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9 7 7M17 17l2.1 2.1M19.1 4.9 17 7M7 17l-2.1 2.1" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-      </symbol>
-    <symbol id="icon-sparkles" viewBox="0 0 24 24">
-        <path d="m12 2 1.4 4.6L18 8l-4.6 1.4L12 14l-1.4-4.6L6 8l4.6-1.4ZM19 14l.8 2.2L22 17l-2.2.8L19 20l-.8-2.2L16 17l2.2-.8ZM5 14l.8 2.2L8 17l-2.2.8L5 20l-.8-2.2L2 17l2.2-.8Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+    <symbol id="icon-robot" viewBox="0 0 24 24">
+        <path d="M12 5V2.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+        <circle cx="12" cy="2.5" r="1" fill="currentColor"/>
+        <rect x="4" y="5" width="16" height="15" rx="3" fill="none" stroke="currentColor" stroke-width="1.8"/>
+        <path d="M4 10H2.5v5H4M20 10h1.5v5H20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="9" cy="11" r="1.3" fill="currentColor"/>
+        <circle cx="15" cy="11" r="1.3" fill="currentColor"/>
+        <path d="M8.5 16h7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
       </symbol>
     <symbol id="icon-user" viewBox="0 0 24 24">
-        <circle cx="12" cy="8" r="4" fill="none" stroke="currentColor" stroke-width="2"/><path d="M4 22c.6-5 3.3-7 8-7s7.4 2 8 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        <circle cx="12" cy="8" r="4" fill="none" stroke="currentColor" stroke-width="2"/>
+        <path d="M4 22c.6-5 3.3-7 8-7s7.4 2 8 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
       </symbol>
     <symbol id="icon-warning" viewBox="0 0 24 24">
         <path d="M12 3 2.5 21h19Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M12 9v5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="17.5" r="1.1" fill="currentColor"/>
       </symbol>
     <style>
       text { font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #172033; }
+      symbol [stroke] { vector-effect: non-scaling-stroke; }
       .node rect { stroke-width: 2; }
-      .node-title { font-size: 16px; font-weight: 750; text-anchor: middle; }
+      .node-boundary rect { stroke-width: 2; stroke-dasharray: 8 8; }
+      .boundary-title { font-size: 16px; font-weight: 750; text-anchor: start; }
+      .node-title { font-size: 20px; font-weight: 750; text-anchor: middle; }
       .node-title.icon-copy { text-anchor: start; }
-      .node-subtitle { font-size: 14px; font-weight: 500; fill: #64748b; text-anchor: middle; }
-      .eyebrow { font-size: 12px; font-weight: 750; letter-spacing: 1px; fill: #64748b; text-anchor: middle; }
+      .node-subtitle { font-size: 16px; font-weight: 500; fill: #475569; text-anchor: middle; }
+      .eyebrow { font-size: 13px; font-weight: 750; letter-spacing: 1px; fill: #475569; text-anchor: middle; }
       .mention-icon { font-size: 27px; font-weight: 750; text-anchor: middle; }
+      .standalone-mention { font-size: 52px; font-weight: 750; text-anchor: middle; }
+      .icon-node-title { font-size: 16px; font-weight: 750; text-anchor: middle; }
       .edge { fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
       .edge-label rect { stroke-width: 2; }
       .edge-label text { font-size: 14px; font-weight: 750; text-anchor: middle; dominant-baseline: central; }
-      .center-annotation { fill: #f8fafc; stroke: #cbd5e1; stroke-width: 2; stroke-dasharray: 7 7; }
-      .center-title { font-size: 16px; font-weight: 800; letter-spacing: 1.3px; fill: #334155; text-anchor: middle; }
-      .center-detail { font-size: 13px; font-weight: 600; fill: #64748b; text-anchor: middle; }
+      .divider { stroke: #cbd5e1; stroke-width: 2; stroke-dasharray: 6 8; stroke-linecap: round; }
+      .center-annotation { fill: #f1f5f9; stroke: none; }
+      .center-title { font-weight: 800; letter-spacing: 0.08em; fill: #334155; text-anchor: middle; }
+      .center-detail { font-weight: 600; fill: #475569; text-anchor: middle; }
     </style>
   </defs>
-  <rect width="1360" height="690" fill="#ffffff"/>
+  <rect width="940" height="500" fill="#ffffff"/>
 
-  <path class="edge" d="M250 300L300 300" stroke="#64748b" marker-end="url(#arrow-gray)"/>
-  <path class="edge" d="M520 300L570 300" stroke="#64748b" marker-end="url(#arrow-gray)"/>
-  <path class="edge" d="M790 300L840 300" stroke="#64748b" marker-end="url(#arrow-gray)"/>
-  <path class="edge" d="M1060 300L1110 300" stroke="#64748b" marker-end="url(#arrow-gray)"/>
-  <path class="edge" d="M1220 250L1220 160" stroke="#64748b" marker-end="url(#arrow-gray)"/>
-  <path class="edge" d="M1220 350L1220 440" stroke="#64748b" marker-end="url(#arrow-gray)"/>
-  <path class="edge" d="M1110 490C1060 585 1060 610 1060 610" stroke="#64748b" marker-end="url(#arrow-gray)"/>
-  <path class="edge" d="M840 610L790 610" stroke="#64748b" marker-end="url(#arrow-gray)"/>
+  <path class="edge" d="M240 110L360 110" stroke="#64748b" marker-end="url(#arrow-gray)"/>
+  <path class="edge" d="M580 110L700 110" stroke="#64748b" marker-end="url(#arrow-gray)"/>
+  <path class="edge" d="M810 160L470 330" stroke="#64748b" marker-end="url(#arrow-gray)"/>
+  <path class="edge" d="M810 160L810 330" stroke="#15803d" marker-end="url(#arrow-green)"/>
+  <g class="edge-label" transform="translate(810 245)">
+    <rect x="-75.11" y="-16" width="150.23" height="32" rx="16.0" fill="#ffffff" stroke="#15803d"/>
+    <text fill="#15803d">Bug reproduced</text>
+  </g>
 
-  <g class="node node-blue" transform="translate(30 250)" filter="url(#shadow)">
-    <rect width="220" height="100" rx="18" fill="#eff6ff" stroke="#2563eb"/>
-    <use href="#icon-api" x="16" y="36" width="28" height="28" color="#2563eb"/>
-    <text class="node-title icon-copy" x="56" y="56">Deployed app</text>
-    <text class="node-subtitle" x="110" y="81">Module 2 release</text>
-  </g>
-  <g class="node node-blue" transform="translate(300 250)" filter="url(#shadow)">
-    <rect width="220" height="100" rx="18" fill="#eff6ff" stroke="#2563eb"/>
-    <use href="#icon-search" x="16" y="36" width="28" height="28" color="#2563eb"/>
-    <text class="node-title icon-copy" x="56" y="56">Observe</text>
-    <text class="node-subtitle" x="110" y="81">Metrics, traces, logs</text>
-  </g>
-  <g class="node node-red" transform="translate(570 250)" filter="url(#shadow)">
+  <g class="node node-red" transform="translate(20 60)" filter="url(#shadow)">
     <rect width="220" height="100" rx="18" fill="#fef2f2" stroke="#dc2626"/>
-    <use href="#icon-warning" x="16" y="36" width="28" height="28" color="#dc2626"/>
-    <text class="node-title icon-copy" x="56" y="56">Alert</text>
-    <text class="node-subtitle" x="110" y="81">Sustained user impact</text>
+    <use href="#icon-warning" x="16" y="20" width="34" height="34" color="#dc2626"/>
+    <text class="node-title icon-copy" x="62" y="44.2" font-size="20">Alert</text>
+    <text class="node-subtitle" x="110" y="75" font-size="16">User-visible failure</text>
   </g>
-  <g class="node node-purple" transform="translate(840 250)" filter="url(#shadow)">
-    <rect width="220" height="100" rx="18" fill="#f5f3ff" stroke="#7c3aed"/>
-    <use href="#icon-sparkles" x="16" y="36" width="28" height="28" color="#7c3aed"/>
-    <text class="node-title icon-copy" x="56" y="56">Investigate</text>
-    <text class="node-subtitle" x="110" y="81">Read-only evidence packet</text>
-  </g>
-  <g class="node node-amber" transform="translate(1110 250)" filter="url(#shadow)">
-    <rect width="220" height="100" rx="18" fill="#fff7ed" stroke="#c2410c"/>
-    <use href="#icon-settings" x="16" y="36" width="28" height="28" color="#c2410c"/>
-    <text class="node-title icon-copy" x="56" y="56">Check policy</text>
-    <text class="node-subtitle" x="110" y="81">Authority stays outside AI</text>
-  </g>
-  <g class="node node-red" transform="translate(1110 60)" filter="url(#shadow)">
-    <rect width="220" height="100" rx="18" fill="#fef2f2" stroke="#dc2626"/>
-    <use href="#icon-user" x="16" y="36" width="28" height="28" color="#dc2626"/>
-    <text class="node-title icon-copy" x="56" y="56">Escalate</text>
-    <text class="node-subtitle" x="110" y="81">Unknown or high-risk</text>
-  </g>
-  <g class="node node-green" transform="translate(1110 440)" filter="url(#shadow)">
-    <rect width="220" height="100" rx="18" fill="#ecfdf5" stroke="#15803d"/>
-    <use href="#icon-pull-request" x="16" y="36" width="28" height="28" color="#15803d"/>
-    <text class="node-title icon-copy" x="56" y="56">Run rollback</text>
-    <text class="node-subtitle" x="110" y="81">Known reversible runbook</text>
-  </g>
-  <g class="node node-green" transform="translate(840 560)" filter="url(#shadow)">
-    <rect width="220" height="100" rx="18" fill="#ecfdf5" stroke="#15803d"/>
-    <use href="#icon-check" x="16" y="36" width="28" height="28" color="#15803d"/>
-    <text class="node-title icon-copy" x="56" y="56">Verify recovery</text>
-    <text class="node-subtitle" x="110" y="81">Health and error rate</text>
-  </g>
-  <g class="node node-gray" transform="translate(570 560)" filter="url(#shadow)">
+  <g class="node node-gray" transform="translate(360 60)" filter="url(#shadow)">
     <rect width="220" height="100" rx="18" fill="#f8fafc" stroke="#64748b"/>
-    <use href="#icon-document" x="16" y="36" width="28" height="28" color="#64748b"/>
-    <text class="node-title icon-copy" x="56" y="56" textLength="148" lengthAdjust="spacingAndGlyphs">Record the incident</text>
-    <text class="node-subtitle" x="110" y="81">Evidence, action, result</text>
+    <use href="#icon-document" x="16" y="9" width="34" height="34" color="#64748b"/>
+    <text class="node-title icon-copy" x="62" y="33.2" font-size="20">Evidence</text>
+    <text class="node-subtitle" x="110" y="64" font-size="16">Alert, telemetry,</text>
+    <text class="node-subtitle" x="110" y="86" font-size="16">version</text>
+  </g>
+  <g class="node node-purple" transform="translate(700 60)" filter="url(#shadow)">
+    <rect width="220" height="100" rx="18" fill="#f5f3ff" stroke="#7c3aed"/>
+    <use href="#icon-robot" x="16" y="20" width="34" height="34" color="#7c3aed"/>
+    <text class="node-title icon-copy" x="62" y="44.2" font-size="20">Investigate</text>
+    <text class="node-subtitle" x="110" y="75" font-size="16">Bounded agent session</text>
+  </g>
+  <g class="node node-gray" transform="translate(360 330)" filter="url(#shadow)">
+    <rect width="220" height="100" rx="18" fill="#f8fafc" stroke="#64748b"/>
+    <use href="#icon-user" x="16" y="20" width="34" height="34" color="#64748b"/>
+    <text class="node-title icon-copy" x="62" y="44.2" font-size="20">No safe fix</text>
+    <text class="node-subtitle" x="110" y="75" font-size="16">Explain or escalate</text>
+  </g>
+  <g class="node node-green" transform="translate(700 330)" filter="url(#shadow)">
+    <rect width="220" height="100" rx="18" fill="#ecfdf5" stroke="#15803d"/>
+    <use href="#icon-check" x="16" y="9" width="34" height="34" color="#15803d"/>
+    <text class="node-title icon-copy" x="62" y="33.2" font-size="20">Tested fix</text>
+    <text class="node-subtitle" x="110" y="64" font-size="16">Small tested change</text>
+    <text class="node-subtitle" x="110" y="86" font-size="16">via CI/CD</text>
   </g>
 </svg>
