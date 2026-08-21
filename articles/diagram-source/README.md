@@ -19,7 +19,9 @@ follow-up fixes found during rendering. Reuse them for future article diagrams.
 ## Layout and connectors
 
 - Align peer cards to exact rows and columns. Use equal gutters and consistent
-  card sizes; avoid oversized summary nodes.
+  card sizes; peer cards never differ in size. A full-width baseline or cap
+  card that spans its peers (as in the next-steps stack) is deliberate
+  meaning and fine - but at most one per figure.
 - Prefer straight horizontal or vertical arrows. When a flow must turn, use a
   deliberate 90-degree elbow instead of an inclined segment. Use curves only
   when they make a relationship materially clearer.
