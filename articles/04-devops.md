@@ -403,15 +403,8 @@ There are many more things that you should consider for a real production applic
 - Regularly back up your database. It's best if your backups live outside of your infrastructure as code stack and you have multiple independent copies.
 - Test that you can actually use these backups on a completely recreated stack.
 - Put internal services and resources on private subnets inside a VPC, and restrict network access to them.
-- If your application needs handle a lot of traffic, learn about scaling and load balancing. Container management systems make this easier to manage.
+- If your application needs to handle a lot of traffic, learn about scaling and load balancing. Container management systems make this easier to manage.
 - Ask Fable or GPT-5.6-Sol Max (better both) to audit your code for security vulnerabilities. Do it multiple times.
-
-Define a service level indicator (SLI) and a service level objective (SLO) for your most important user journeys.
-
-- An SLI measures behavior that users experience, such as the success rate or latency of creating a canvas element.
-- An SLO sets the target for that measurement over a period of time.
-
-Compare the SLI with the SLO, and when the service misses its target, investigate the cause and prioritize the work needed to make it reliable again.
 
 
 ## Next in the series
