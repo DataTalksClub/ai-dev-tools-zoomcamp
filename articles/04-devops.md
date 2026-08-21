@@ -155,15 +155,24 @@ We achieve observability by adding monitoring to our applications. At the minimu
 
 If we see that CPU and memory utilization are growing and RPS is dropping, something is definitely off and we need to investigate.
 
-TODO explain more about it so it links clearly to OTel (becaues we don't need otel for cpu and memory)
+CPU and memory tell us what's happening to the machine, but they don't explain what happened inside a request. For that, we also collect information from the application.
 
 
 ## OpenTelemetry
 
 To collect this information, we'll use [OpenTelemetry](https://opentelemetry.io/docs/) (often abbreviated as OTel).
 
-The OTel specification defines how applications produce and export telemetry. TODO: what exactly "telemetry" is?
-OTLP is the protocol applications use to send telemetry to a collector or backend.TODO is OTLP relevant here?
+The OTel specification defines how applications produce and export telemetry.
+
+Telemetry is the information an application emits about what the application does:
+
+- Metrics are numerical measurements over time, such as requests per second, response latency and error counts.
+- Logs are timestamped records of individual events, such as an error message or a failed database query.
+- Traces follow one request through the operations and services that handle it. Each step is a span with its own duration and status.
+
+Metrics tell us that something changed. Logs give us details about individual events, while traces show the path a request took and where it became slow or failed.
+
+OTLP is the protocol applications use to send this telemetry to a collector or backend.
 
 For many popular libraries, we can add telemetry with just a few lines of code. This process is called "instrumenting" - injecting extra logic for collecting telemetry into existing libraries (like FastAPI) without changing their code.
 
