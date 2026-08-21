@@ -152,48 +152,48 @@ production instead of rebuilding it during deployment.
 
 ## Observability
 
-Having two environments helps us avoid accidental pushes with buggy code to production. But accidents will still happen, and we need to make sure we detect them and can react in time as fast as we can.
+Having two environments helps us avoid accidentally pushing buggy code to production. But accidents will still happen, and we need to make sure we detect them and react as fast as possible.
 
 For that we need to have observability. "Observability" means collecting information about the application so we can
-understand its behavior and investigate problems.
+understand its behavior, and when something breaks, we can quickly find the problem.
 
-We achieve observability by adding monitoring to our applications. At the minimum, we collect basic performance metrics like CPU and memory utilization and requests per second (RPS).
+We achieve observability by adding monitoring to our applications. At the minimum, we need to collect basic performance metrics like CPU and memory utilization and requests per second (RPS).
 
-If we see that CPU and memory utilization are growing and RPS is dropping, something is definitely off and we need to investigate.
+If we see that CPU and memory utilization are growing and RPS is dropping, something is definitely off.
 
-CPU and memory tell us what's happening to the machine, but they don't explain what happened inside a request. For that, we also collect information from the application.
-
+This information alone is not enough. They don't explain what happened inside that request and why it's causing errors or degradation in performance. For that, we need to collect  more information.
 
 ## OpenTelemetry
 
-To collect this information, we'll use [OpenTelemetry](https://opentelemetry.io/docs/) (often abbreviated as OTel).
+To collect this information, we use [OpenTelemetry](https://opentelemetry.io/docs/) (often abbreviated as OTel). This is the industry standard for telemetry.
 
-The OTel specification defines how applications produce and export telemetry.
+Telemetry is all the information that the application produce:
 
-Telemetry is the information an application emits about what the application does:
+- Metrics - requests per second, response latency and number of errors
+- Logs - timestamped records of individual events, like an error message or a failed database query
+- Traces - all the steps (called "spans") that a single request makes throug the entire application
 
-- Metrics are numerical measurements over time, such as requests per second, response latency and error counts.
-- Logs are timestamped records of individual events, such as an error message or a failed database query.
-- Traces follow one request through the operations and services that handle it. Each step is a span with its own duration and status.
+<figure>
+  <img src="images/04-build-once-observability.svg" alt="The build-once deployment workflow extended with OTel attached to development and production; a collector sends metrics to Prometheus, logs to Loki and traces to Tempo for Grafana dashboards">
+  <figcaption>Development and production export telemetry through OTel. The collector sends metrics to Prometheus, logs to Loki and traces to Tempo, and Grafana reads all three.</figcaption>
+</figure>
 
-Metrics tell us that something changed. Logs give us details about individual events, while traces show the path a request took and where it became slow or failed.
+Metrics gives us concrete numbers, logs give details and traces show the path of a request with each single step.
 
-OTLP is the protocol applications use to send this telemetry to a collector or backend.
+OTLP is the protocol that applications use to save this telemetry.
 
-For many popular libraries, we can add telemetry with just a few lines of code. This process is called "instrumenting" - injecting extra logic for collecting telemetry into existing libraries (like FastAPI) without changing their code.
+For many popular libraries, we can start capturing telemetry with just a few lines of code. This process is called "instrumenting" - injecting extra logic into existing libraries (like FastAPI) without changing their code so they start saving the telemetry.
 
-Let's do it:
+Let's do it. Ask the coding agent:
 
 ```text
 Instrument the backend with OpenTelemetry.
 
-Include:
+Include in the telemetry:
 
 - service name
 - environment
-- deployed Git commit
-
-in the telemetry.
+- deployed version
 ```
 
 The application now produces telemetry and exports it over OTLP. We still need
@@ -201,7 +201,7 @@ to decide where to send and store it, and how to view it. Let's do that now.
 
 ## OTel Collectors
 
-We capture telemetry with OTLP, but it doesn't go anywhere. Next, we need to define where exactly we send it. For that, we define
+We capture telemetry with OTLP, but it's not saved anywhere. For that, we define
 an [OpenTelemetry Collector](https://opentelemetry.io/docs/collector/)
 between the application and the storage systems.
 
@@ -210,23 +210,23 @@ between the application and the storage systems.
   <figcaption>The collector sends signals to telemetry storage; dashboards support investigation, while alert rules detect user impact</figcaption>
 </figure>
 
-There are many places where you can send this data to. You can talk to your AI assistant and figure out what's the best service for you for that.
+There are many services you can use for that. Ask your AI assitant and select the option that works best for your application.
 
 In our case, I'll use:
 
 - Prometheus for metrics
 - Loki for logs
 - Tempo for traces
-- Grafana for displaying the dashboards
+- Grafana for dashboards
 
-Previously I never used Loki or Tempo, but when I was telling my coding agent what I wanted to do, it suggested these technologies to me. I looked them up, read about them, and concluded that they work well for this application.
+Previously I never used Loki or Tempo, but when I was telling my coding agent that I wanted to use Prometheus and Grafana, it suggested to include Loki and Tempo too.
 
 So let's implement it:
 
 ```text
 Add an OpenTelemetry Collector.
 
-Create an observability/ directory with Docker Compose for:
+Create "observability/" directory with Docker Compose for:
 
 - OpenTelemetry Collector
 - Prometheus
@@ -237,15 +237,11 @@ Create an observability/ directory with Docker Compose for:
 Keep this as a separate Compose project from the application stack.
 ```
 
-We don't have any dashboards yet, so let's build one.
+Now we have the infrastacture for observability, so we're ready to build a dashboard.
 
 ## Metrics
 
-With OTel we can collect infrastructure metrics, but it's not enough to understand what is failing in the application.
-
-That's a good start, but it won't let us know what exactly is failing. We need to have more information about the health of our application.
-
-We also need to collect important metrics.
+Metrics are the numberical ... (TODO finish)
 
 For System Design Canvas, useful measurements may include:
 
@@ -255,8 +251,7 @@ For System Design Canvas, useful measurements may include:
 - Change propagation delay: when I add an element to the canvas, how long does it take for you to see it
 - Number of errors
 
-
-Let's start collecting them too:
+Let's start collecting some of them:
 
 ```text
 Track these application metrics:
@@ -264,61 +259,44 @@ Track these application metrics:
 - interview rooms created
 - active interview participants
 - canvas elements created
-
-Display these metrics in Grafana and include the environment and deployed
-version.
-```
-
-
-After that, we can ask the assistant to run Grafana for us and see the results.
-
-If the assistant didn't create the dashboards yet, we can ask for them explicitly.
-
-```text
-Add Grafana panels for
-
-- interview rooms created
-- active interview participants
-- canvas elements created
 - failures in component creation
 
+Include the environment and deployed version.
+```
+
+Now we have the data and can display on in a dashboard:
+
+```text
+Add a Grafana panel with these metrics.
 Make it possible to filter by environment and deployed version
 ```
 
+Run it locally, and test it by opening our application, creating a room, adding a canvas element, and checking that it appears in Grafana.
 
 <figure>
-  <img src="images/04-grafana-dashboard.png" alt="A dark Grafana-style dashboard with panels for interview rooms, active participants, canvas elements and component creation failures, filtered to production and a deployed version">
-  <figcaption>Application metrics in one dashboard, filtered by environment and deployed version</figcaption>
+  <img src="images/04-grafana-dashboard.png" alt="A dark Grafana-style dashboard with five-minute event counts for interview rooms, canvas elements and component creation failures, plus active participants, filtered to production and a deployed version">
+  <figcaption>Grafana dashboard with the metrics</figcaption>
 </figure>
-
-Next, you can run it locally with:
-
-```bash
-docker compose -f observability/docker-compose.yaml up -d
-```
-
-We can test it by opening our application, creating a room, adding a canvas element, and checking that it appears in Grafana.
 
 
 ## Deploy the observability stack
 
-We verified that it works locally, so let's now deploy it. If you use the same stack as me (Prometheus, Grafana and others), we need to deploy and manage them ourselves.
+If you use the same stack as me (Prometheus, Grafana and others), we need to deploy and manage them ourselves.
 
 If you use a managed OTel-compatible vendor, you can skip this step. You can also use a hosted
 service such as CloudWatch, Grafana Cloud, Datadog, or Sentry.
-
+TODO rephrase it.
 
 Let's deploy it:
 
 ```text
-Deploy the observability stack separately from the application stack.
+Deploy the observability stack. It should be separate from the application stack.
 Connect both development and production to it.
-Keep the environment and deployed version on every metric, trace, and log.
 ```
 
-After it finishes, you can open Grafana and perform the same test as you did locally.
+After it finishes, you can open Grafana and perform the same test that we did locally.
 
-In practice, you don't deploy Grafana and Prometheus openly on the Internet. Like databases, you typically hide them behind a VPC to make sure only authorized users can access them.
+Note: here we deploy Grafana and other services openly on the Internet, so everyone can access it. In practice, you hide them behind a VPC to make sure only authorized users can access them. You do it with other sensitive resoureces too like databases.
 
 ## Alerting
 
@@ -377,7 +355,7 @@ This is a small proof-of-concept script. In reality, you will probably have a sy
 - Once the session is over, the logs are saved and the machine is terminated.
 
 <figure>
-  <img src="images/04-production-responder.svg" alt="An alert passes through SNS and Lambda to a temporary container job, where a headless agent reads bounded evidence and the repository, saves its session log, and then terminates">
+  <img src="images/04-production-responder.svg" alt="An alert passes through SNS and Lambda to an isolated agent container with access to code, logs and metrics; the session log is saved after the run">
   <figcaption>The alert starts an isolated agent job for the incident. Its log remains after the compute is terminated</figcaption>
 </figure>
 

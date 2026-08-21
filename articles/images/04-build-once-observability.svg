@@ -1,0 +1,209 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1830" height="760" viewBox="0 0 1830 760" role="img" aria-labelledby="title desc">
+  <title id="title">Build once and export telemetry</title>
+  <desc id="desc">A user starts CI/CD. Build creates a version tag in the registry, and Deploy uses that tag for development. The same tag goes to a manually triggered production release. OTel sidecars attached to development and production export telemetry through a collector to Prometheus, Loki, and Tempo, which Grafana reads.</desc>
+  <defs>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="150%">
+      <feDropShadow dx="0" dy="4" stdDeviation="5" flood-color="#0f172a" flood-opacity="0.08"/>
+    </filter>
+    <marker id="arrow-purple" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto"><path d="M0 0 10 5 0 10Z" fill="#7c3aed"/></marker>
+    <marker id="arrow-blue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto"><path d="M0 0 10 5 0 10Z" fill="#2563eb"/></marker>
+    <marker id="arrow-amber" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto"><path d="M0 0 10 5 0 10Z" fill="#c2410c"/></marker>
+    <marker id="arrow-green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto"><path d="M0 0 10 5 0 10Z" fill="#15803d"/></marker>
+    <marker id="arrow-red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto"><path d="M0 0 10 5 0 10Z" fill="#dc2626"/></marker>
+    <marker id="arrow-gray" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto"><path d="M0 0 10 5 0 10Z" fill="#64748b"/></marker>
+    <symbol id="icon-collector" viewBox="0 0 24 24">
+        <path d="M3 6h5M3 12h5M3 18h5M16 6h5M16 12h5M16 18h5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+        <rect x="8" y="4" width="8" height="16" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.8"/>
+        <path d="M10.5 8h3M10.5 12h3M10.5 16h3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+      </symbol>
+    <symbol id="icon-database" viewBox="0 0 24 24">
+        <ellipse cx="12" cy="5" rx="8" ry="3" fill="none" stroke="currentColor" stroke-width="2"/>
+        <path d="M4 5v7c0 1.66 3.58 3 8 3s8-1.34 8-3V5M4 12v7c0 1.66 3.58 3 8 3s8-1.34 8-3v-7" fill="none" stroke="currentColor" stroke-width="2"/>
+      </symbol>
+    <symbol id="icon-environment" viewBox="0 0 24 24">
+        <rect x="3" y="3" width="18" height="8" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/>
+        <rect x="3" y="13" width="18" height="8" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/>
+        <path d="M7 7h7M7 17h7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+        <circle cx="17" cy="7" r="1" fill="currentColor"/><circle cx="17" cy="17" r="1" fill="currentColor"/>
+      </symbol>
+    <symbol id="icon-observability" viewBox="0 0 24 24">
+        <rect x="2" y="3" width="17" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/>
+        <path d="M6 13v-3M10 13V7M14 13V9M7 21h7M10.5 17v4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+        <circle cx="18" cy="15" r="4" fill="none" stroke="currentColor" stroke-width="1.8"/>
+        <circle cx="18" cy="15" r="1" fill="currentColor"/>
+        <path d="m21 18 2 2" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+      </symbol>
+    <symbol id="icon-registry" viewBox="0 0 24 24">
+        <rect x="2.5" y="2.5" width="8.5" height="8.5" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/>
+        <rect x="2.5" y="13" width="8.5" height="8.5" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/>
+        <rect x="13" y="13" width="8.5" height="8.5" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/>
+        <rect x="13.2" y="2" width="8.5" height="8.5" rx="2" transform="rotate(18 17.45 6.25)" fill="currentColor" fill-opacity=".16" stroke="currentColor" stroke-width="1.8"/>
+      </symbol>
+    <symbol id="icon-user" viewBox="0 0 24 24">
+        <circle cx="12" cy="8" r="4" fill="none" stroke="currentColor" stroke-width="2"/>
+        <path d="M4 22c.6-5 3.3-7 8-7s7.4 2 8 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </symbol>
+    <symbol id="icon-workflow" viewBox="0 0 24 24">
+        <path d="M4 11A8.5 8.5 0 0 1 19.5 8.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        <path d="M19.5 4.5v4h-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M20 13A8.5 8.5 0 0 1 4.5 15.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        <path d="M4.5 19.5v-4h4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </symbol>
+    <style>
+      text { font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #172033; }
+      symbol [stroke] { vector-effect: non-scaling-stroke; }
+      .node rect { stroke-width: 2; }
+      .node-boundary rect { stroke-width: 2; stroke-dasharray: 8 8; }
+      .boundary-title { font-size: 16px; font-weight: 750; text-anchor: start; }
+      .node-title { font-size: 20px; font-weight: 750; text-anchor: middle; }
+      .node-title.icon-copy { text-anchor: start; }
+      .node-subtitle { font-size: 16px; font-weight: 500; fill: #475569; text-anchor: middle; }
+      .eyebrow { font-size: 13px; font-weight: 750; letter-spacing: 1px; fill: #475569; text-anchor: middle; }
+      .mention-icon { font-size: 27px; font-weight: 750; text-anchor: middle; }
+      .standalone-mention { font-size: 52px; font-weight: 750; text-anchor: middle; }
+      .icon-node-title { font-size: 16px; font-weight: 750; text-anchor: middle; }
+      .edge { fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+      .edge-label rect { stroke-width: 2; }
+      .edge-label text { font-size: 14px; font-weight: 750; text-anchor: middle; dominant-baseline: central; }
+      .divider { stroke: #cbd5e1; stroke-width: 2; stroke-dasharray: 6 8; stroke-linecap: round; }
+      .center-annotation { fill: #f1f5f9; stroke: none; }
+      .center-title { font-weight: 800; letter-spacing: 0.08em; fill: #334155; text-anchor: middle; }
+      .center-detail { font-weight: 600; fill: #475569; text-anchor: middle; }
+    </style>
+  </defs>
+  <rect width="1830" height="760" fill="#ffffff"/>
+
+  <g class="node-boundary node-purple" transform="translate(275 40)">
+    <rect width="570" height="180" rx="22" fill="none" stroke="#7c3aed"/>
+    <text class="boundary-title" x="20" y="31">CI/CD</text>
+  </g>
+  <g class="node-boundary node-blue" transform="translate(1500 100)">
+    <rect width="290" height="500" rx="22" fill="none" stroke="#2563eb"/>
+    <text class="boundary-title" x="20" y="31">Telemetry storage</text>
+  </g>
+  <path class="edge-boundary-halo" d="M119 150L300 150" fill="none" stroke="#ffffff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+  <path class="edge" d="M119 150L300 150" stroke="#2563eb" marker-end="url(#arrow-blue)"/>
+  <g class="edge-label" transform="translate(209.5 150)">
+    <rect x="-31.21" y="-16" width="62.41" height="32" rx="16.0" fill="#ffffff" stroke="#2563eb"/>
+    <text fill="#2563eb">Push</text>
+  </g>
+  <path class="edge" d="M520 150L600 150" stroke="#7c3aed" marker-end="url(#arrow-purple)"/>
+  <path class="edge-boundary-halo" d="M410 200L410 350L600 350" fill="none" stroke="#ffffff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+  <path class="edge" d="M410 200L410 350L600 350" stroke="#c2410c" marker-end="url(#arrow-amber)"/>
+  <g class="edge-label" transform="translate(410 350)">
+    <rect x="-57.39" y="-16" width="114.78" height="32" rx="16.0" fill="#ffffff" stroke="#c2410c"/>
+    <text fill="#c2410c">Version tag</text>
+  </g>
+  <path class="edge-boundary-halo" d="M710 300L710 200" fill="none" stroke="#ffffff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+  <path class="edge" d="M710 300L710 200" stroke="#2563eb" marker-end="url(#arrow-blue)"/>
+  <g class="edge-label" transform="translate(710 250)">
+    <rect x="-57.39" y="-16" width="114.78" height="32" rx="16.0" fill="#ffffff" stroke="#2563eb"/>
+    <text fill="#2563eb">Version tag</text>
+  </g>
+  <path class="edge-boundary-halo" d="M820 150L880 150" fill="none" stroke="#ffffff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+  <path class="edge" d="M820 150L880 150" stroke="#7c3aed" marker-end="url(#arrow-purple)"/>
+  <path class="edge" d="M710 400L710 500" stroke="#15803d" marker-end="url(#arrow-green)"/>
+  <g class="edge-label" transform="translate(710 450)">
+    <rect x="-57.39" y="-16" width="114.78" height="32" rx="16.0" fill="#ffffff" stroke="#15803d"/>
+    <text fill="#15803d">Version tag</text>
+  </g>
+  <path class="edge" d="M119 550L600 550" stroke="#15803d" stroke-dasharray="8 8" marker-end="url(#arrow-green)"/>
+  <g class="edge-label" transform="translate(359.5 550)">
+    <rect x="-70.52" y="-16" width="141.04" height="32" rx="16.0" fill="#ffffff" stroke="#15803d"/>
+    <text fill="#15803d">Manual trigger</text>
+  </g>
+  <path class="edge" d="M820 550L880 550" stroke="#15803d" marker-end="url(#arrow-green)"/>
+  <path class="edge" d="M1172 150L1345 150L1345 300" stroke="#7c3aed" marker-end="url(#arrow-purple)"/>
+  <path class="edge" d="M1172 550L1345 550L1345 400" stroke="#7c3aed" marker-end="url(#arrow-purple)"/>
+  <path class="edge-boundary-halo" d="M1440 350L1525 205" fill="none" stroke="#ffffff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+  <path class="edge" d="M1440 350L1525 205" stroke="#2563eb" marker-end="url(#arrow-blue)"/>
+  <path class="edge-boundary-halo" d="M1440 350L1525 350" fill="none" stroke="#ffffff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+  <path class="edge" d="M1440 350L1525 350" stroke="#2563eb" marker-end="url(#arrow-blue)"/>
+  <path class="edge-boundary-halo" d="M1440 350L1525 495" fill="none" stroke="#ffffff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+  <path class="edge" d="M1440 350L1525 495" stroke="#2563eb" marker-end="url(#arrow-blue)"/>
+  <path class="edge-boundary-halo" d="M1645 600L1645 640" fill="none" stroke="#ffffff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+  <path class="edge" d="M1645 600L1645 640" stroke="#7c3aed" marker-end="url(#arrow-purple)"/>
+
+  <g class="node-icon-only node-blue" transform="translate(70 122)">
+    <use href="#icon-user" x="0" y="0" width="56" height="56" color="#2563eb"/>
+    <text class="icon-node-title" x="28" y="81">User</text>
+  </g>
+  <g class="node node-amber" transform="translate(300 100)" filter="url(#shadow)">
+    <rect width="220" height="100" rx="18" fill="#fff7ed" stroke="#c2410c"/>
+    <use href="#icon-workflow" x="16" y="20" width="34" height="34" color="#c2410c"/>
+    <text class="node-title icon-copy" x="62" y="43.48" font-size="18">Build</text>
+    <text class="node-subtitle" x="110" y="75" font-size="16">Create the image</text>
+  </g>
+  <g class="node node-purple" transform="translate(600 100)" filter="url(#shadow)">
+    <rect width="220" height="100" rx="18" fill="#f5f3ff" stroke="#7c3aed"/>
+    <use href="#icon-workflow" x="16" y="20" width="34" height="34" color="#7c3aed"/>
+    <text class="node-title icon-copy" x="62" y="43.48" font-size="18">Deploy</text>
+    <text class="node-subtitle" x="110" y="75" font-size="16">Use the version tag</text>
+  </g>
+  <g class="node node-blue" transform="translate(880 100)" filter="url(#shadow)">
+    <rect width="220" height="100" rx="18" fill="#eff6ff" stroke="#2563eb"/>
+    <use href="#icon-environment" x="16" y="20" width="34" height="34" color="#2563eb"/>
+    <text class="node-title icon-copy" x="62" y="43.48" font-size="18">Development</text>
+    <text class="node-subtitle" x="110" y="75" font-size="16">Validate the release</text>
+  </g>
+  <g class="node node-blue" transform="translate(600 300)" filter="url(#shadow)">
+    <rect width="220" height="100" rx="18" fill="#eff6ff" stroke="#2563eb"/>
+    <use href="#icon-registry" x="16" y="20" width="34" height="34" color="#2563eb"/>
+    <text class="node-title icon-copy" x="62" y="43.48" font-size="18">Registry</text>
+    <text class="node-subtitle" x="110" y="75" font-size="16">Store the image</text>
+  </g>
+  <g class="node-icon-only node-blue" transform="translate(70 522)">
+    <use href="#icon-user" x="0" y="0" width="56" height="56" color="#2563eb"/>
+    <text class="icon-node-title" x="28" y="81">Release owner</text>
+  </g>
+  <g class="node node-purple" transform="translate(600 500)" filter="url(#shadow)">
+    <rect width="220" height="100" rx="18" fill="#f5f3ff" stroke="#7c3aed"/>
+    <use href="#icon-workflow" x="16" y="20" width="34" height="34" color="#7c3aed"/>
+    <text class="node-title icon-copy" x="62" y="43.48" font-size="18">Prod release</text>
+    <text class="node-subtitle" x="110" y="75" font-size="16">CI/CD workflow</text>
+  </g>
+  <g class="node node-green" transform="translate(880 500)" filter="url(#shadow)">
+    <rect width="220" height="100" rx="18" fill="#ecfdf5" stroke="#15803d"/>
+    <use href="#icon-environment" x="16" y="20" width="34" height="34" color="#15803d"/>
+    <text class="node-title icon-copy" x="62" y="43.48" font-size="18">Production</text>
+    <text class="node-subtitle" x="110" y="75" font-size="16">Serve real users</text>
+  </g>
+  <g class="node node-purple" transform="translate(1250 300)" filter="url(#shadow)">
+    <rect width="190" height="100" rx="18" fill="#f5f3ff" stroke="#7c3aed"/>
+    <use href="#icon-collector" x="16" y="20" width="34" height="34" color="#7c3aed"/>
+    <text class="node-title icon-copy" x="62" y="43.48" font-size="18">Collector</text>
+    <text class="node-subtitle" x="95" y="75" font-size="16">Route telemetry</text>
+  </g>
+  <g class="node node-blue" transform="translate(1525 165)" filter="url(#shadow)">
+    <rect width="240" height="80" rx="18" fill="#eff6ff" stroke="#2563eb"/>
+    <use href="#icon-database" x="16" y="10" width="34" height="34" color="#2563eb"/>
+    <text class="node-title icon-copy" x="62" y="33.48" font-size="18">Prometheus</text>
+    <text class="node-subtitle" x="120" y="65" font-size="16">Metrics</text>
+  </g>
+  <g class="node node-blue" transform="translate(1525 310)" filter="url(#shadow)">
+    <rect width="240" height="80" rx="18" fill="#eff6ff" stroke="#2563eb"/>
+    <use href="#icon-database" x="16" y="10" width="34" height="34" color="#2563eb"/>
+    <text class="node-title icon-copy" x="62" y="33.48" font-size="18">Loki</text>
+    <text class="node-subtitle" x="120" y="65" font-size="16">Logs</text>
+  </g>
+  <g class="node node-blue" transform="translate(1525 455)" filter="url(#shadow)">
+    <rect width="240" height="80" rx="18" fill="#eff6ff" stroke="#2563eb"/>
+    <use href="#icon-database" x="16" y="10" width="34" height="34" color="#2563eb"/>
+    <text class="node-title icon-copy" x="62" y="33.48" font-size="18">Tempo</text>
+    <text class="node-subtitle" x="120" y="65" font-size="16">Traces</text>
+  </g>
+  <g class="node node-purple" transform="translate(1525 640)" filter="url(#shadow)">
+    <rect width="240" height="90" rx="18" fill="#f5f3ff" stroke="#7c3aed"/>
+    <use href="#icon-observability" x="16" y="15" width="34" height="34" color="#7c3aed"/>
+    <text class="node-title icon-copy" x="62" y="38.48" font-size="18">Grafana</text>
+    <text class="node-subtitle" x="120" y="70" font-size="16">Dashboards</text>
+  </g>
+  <g class="node-attached node-purple" transform="translate(1080 123)" filter="url(#shadow)">
+    <rect width="92" height="54" rx="14" fill="#f5f3ff" stroke="#7c3aed"/>
+    <text class="attached-title" x="46" y="32.76" font-size="16" font-weight="750" text-anchor="middle">OTel</text>
+  </g>
+  <g class="node-attached node-purple" transform="translate(1080 523)" filter="url(#shadow)">
+    <rect width="92" height="54" rx="14" fill="#f5f3ff" stroke="#7c3aed"/>
+    <text class="attached-title" x="46" y="32.76" font-size="16" font-weight="750" text-anchor="middle">OTel</text>
+  </g>
+</svg>

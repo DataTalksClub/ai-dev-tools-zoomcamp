@@ -100,7 +100,7 @@
     {
       "id": "agent",
       "title": "AI agent",
-      "subtitle": "Investigate + create fix",
+      "subtitle": "Investigate + fix",
       "icon": "robot",
       "color": "green",
       "x": 60,
@@ -118,7 +118,7 @@
     {
       "id": "observability",
       "title": "Observability",
-      "subtitle": "Collect and inspect telemetry",
+      "subtitle": "Collect telemetry",
       "icon": "observability",
       "color": "purple",
       "x": 800,
@@ -128,6 +128,7 @@
   "edges": [
     {"from": "user", "to": "deploy", "label": "Push", "color": "blue", "route": "straight"},
     {"from": "deploy", "to": "development", "color": "purple", "route": "straight"},
+    {"from": "development", "to": "promotion", "color": "blue", "route": "orthogonal", "from_anchor": "bottom", "to_anchor": "top", "dashed": true},
     {"from": "release_owner", "to": "promotion", "label": "Manual", "color": "green", "route": "straight", "dashed": true},
     {"from": "promotion", "to": "production", "color": "green", "route": "straight"},
     {"from": "production", "to": "observability", "color": "blue", "route": "straight", "from_anchor": "bottom", "to_anchor": "top"},

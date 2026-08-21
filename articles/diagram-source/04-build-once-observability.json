@@ -1,0 +1,194 @@
+{
+  "title": "Build once and export telemetry",
+  "description": "A user starts CI/CD. Build creates a version tag in the registry, and Deploy uses that tag for development. The same tag goes to a manually triggered production release. OTel sidecars attached to development and production export telemetry through a collector to Prometheus, Loki, and Tempo, which Grafana reads.",
+  "canvas": {
+    "width": 1830,
+    "height": 760,
+    "background": "#ffffff"
+  },
+  "layout": {
+    "type": "manual",
+    "card_width": 220,
+    "card_height": 100,
+    "fixed_icon_axis": true
+  },
+  "nodes": [
+    {
+      "id": "developer",
+      "title": "User",
+      "variant": "icon",
+      "icon": "user",
+      "color": "blue",
+      "x": 70,
+      "y": 122
+    },
+    {
+      "id": "cicd_boundary",
+      "title": "CI/CD",
+      "variant": "boundary",
+      "color": "purple",
+      "x": 275,
+      "y": 40,
+      "width": 570,
+      "height": 180
+    },
+    {
+      "id": "build",
+      "title": "Build",
+      "subtitle": "Create the image",
+      "icon": "workflow",
+      "color": "amber",
+      "x": 300,
+      "y": 100
+    },
+    {
+      "id": "deploy",
+      "title": "Deploy",
+      "subtitle": "Use the version tag",
+      "icon": "workflow",
+      "color": "purple",
+      "x": 600,
+      "y": 100
+    },
+    {
+      "id": "development",
+      "title": "Development",
+      "subtitle": "Validate the release",
+      "icon": "environment",
+      "color": "blue",
+      "x": 880,
+      "y": 100
+    },
+    {
+      "id": "dev_otel",
+      "title": "OTel",
+      "variant": "attached",
+      "attach_to": "development",
+      "color": "purple"
+    },
+    {
+      "id": "registry",
+      "title": "Registry",
+      "subtitle": "Store the image",
+      "icon": "registry",
+      "color": "blue",
+      "x": 600,
+      "y": 300
+    },
+    {
+      "id": "release_owner",
+      "title": "Release owner",
+      "variant": "icon",
+      "icon": "user",
+      "color": "blue",
+      "x": 70,
+      "y": 522
+    },
+    {
+      "id": "promotion",
+      "title": "Prod release",
+      "subtitle": "CI/CD workflow",
+      "icon": "workflow",
+      "color": "purple",
+      "x": 600,
+      "y": 500
+    },
+    {
+      "id": "production",
+      "title": "Production",
+      "subtitle": "Serve real users",
+      "icon": "environment",
+      "color": "green",
+      "x": 880,
+      "y": 500
+    },
+    {
+      "id": "prod_otel",
+      "title": "OTel",
+      "variant": "attached",
+      "attach_to": "production",
+      "color": "purple"
+    },
+    {
+      "id": "collector",
+      "title": "Collector",
+      "subtitle": "Route telemetry",
+      "icon": "collector",
+      "color": "purple",
+      "x": 1250,
+      "y": 300,
+      "width": 190,
+      "height": 100
+    },
+    {
+      "id": "telemetry_storage",
+      "title": "Telemetry storage",
+      "variant": "boundary",
+      "color": "blue",
+      "x": 1500,
+      "y": 100,
+      "width": 290,
+      "height": 500
+    },
+    {
+      "id": "prometheus",
+      "title": "Prometheus",
+      "subtitle": "Metrics",
+      "icon": "database",
+      "color": "blue",
+      "x": 1525,
+      "y": 165,
+      "width": 240,
+      "height": 80
+    },
+    {
+      "id": "loki",
+      "title": "Loki",
+      "subtitle": "Logs",
+      "icon": "database",
+      "color": "blue",
+      "x": 1525,
+      "y": 310,
+      "width": 240,
+      "height": 80
+    },
+    {
+      "id": "tempo",
+      "title": "Tempo",
+      "subtitle": "Traces",
+      "icon": "database",
+      "color": "blue",
+      "x": 1525,
+      "y": 455,
+      "width": 240,
+      "height": 80
+    },
+    {
+      "id": "grafana",
+      "title": "Grafana",
+      "subtitle": "Dashboards",
+      "icon": "observability",
+      "color": "purple",
+      "x": 1525,
+      "y": 640,
+      "width": 240,
+      "height": 90
+    }
+  ],
+  "edges": [
+    {"from": "developer", "to": "build", "label": "Push", "color": "blue", "route": "straight"},
+    {"from": "build", "to": "deploy", "color": "purple", "route": "straight"},
+    {"from": "build", "to": "registry", "label": "Version tag", "color": "amber", "route": "orthogonal", "from_anchor": "bottom", "to_anchor": "left"},
+    {"from": "registry", "to": "deploy", "label": "Version tag", "color": "blue", "route": "straight", "from_anchor": "top", "to_anchor": "bottom"},
+    {"from": "deploy", "to": "development", "color": "purple", "route": "straight"},
+    {"from": "registry", "to": "promotion", "label": "Version tag", "color": "green", "route": "straight", "from_anchor": "bottom", "to_anchor": "top"},
+    {"from": "release_owner", "to": "promotion", "label": "Manual trigger", "color": "green", "route": "straight", "dashed": true},
+    {"from": "promotion", "to": "production", "color": "green", "route": "straight"},
+    {"from": "dev_otel", "to": "collector", "color": "purple", "route": "orthogonal", "from_anchor": "right", "to_anchor": "top"},
+    {"from": "prod_otel", "to": "collector", "color": "purple", "route": "orthogonal", "from_anchor": "right", "to_anchor": "bottom"},
+    {"from": "collector", "to": "prometheus", "color": "blue", "route": "straight", "from_anchor": "right", "to_anchor": "left"},
+    {"from": "collector", "to": "loki", "color": "blue", "route": "straight", "from_anchor": "right", "to_anchor": "left"},
+    {"from": "collector", "to": "tempo", "color": "blue", "route": "straight", "from_anchor": "right", "to_anchor": "left"},
+    {"from": "telemetry_storage", "to": "grafana", "color": "purple", "route": "straight", "from_anchor": "bottom", "to_anchor": "top"}
+  ]
+}
