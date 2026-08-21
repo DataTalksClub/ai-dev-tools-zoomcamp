@@ -26,7 +26,7 @@ In this part, we make the deployed application easier to operate:
 
 
 <figure>
-  <img src="images/04-devops-overview.svg" alt="A user pushes a change through CI/CD to development; a release owner promotes the tested release to production, where telemetry flows through observability and alerting to an AI agent">
+  <img src="images/04-devops-overview.png" alt="A user pushes a change through CI/CD to development; a release owner promotes the tested release to production, where telemetry flows through observability and alerting to an AI agent">
   <figcaption>Deploy changes to development first, promote a tested release to production, and respond to observed failures</figcaption>
 </figure>
 
@@ -77,7 +77,7 @@ To avoid having this problem, we usually have two copies of the same environment
 - Prod (production): this is what our users use. We don't want to deploy every single change there automatically and we want to have more control over the process.
 
 <figure>
-  <img src="images/04-dev-prod-environments.svg" alt="A push automatically deploys to development, while a release owner manually promotes a tested release to production">
+  <img src="images/04-dev-prod-environments.png" alt="A push automatically deploys to development, while a release owner manually promotes a tested release to production">
   <figcaption>Development receives every tested push. Production receives only a manually promoted release</figcaption>
 </figure>
 
@@ -125,7 +125,7 @@ When promoting to prod, we simply pull the same image to prod.
 For AWS, we can use [Amazon ECR](https://aws.amazon.com/ecr/) as the registry. You can also push your images to Docker Hub or another container registry if you're running outside of AWS and your cloud doesn't have a special service for that.
 
 <figure>
-  <img src="images/04-build-once.svg" alt="A user pushes a change, then CI/CD runs separate Build and Deploy steps; the version tag goes to Deploy and a manually triggered Prod release, which updates Production">
+  <img src="images/04-build-once.png" alt="A user pushes a change, then CI/CD runs separate Build and Deploy steps; the version tag goes to Deploy and a manually triggered Prod release, which updates Production">
   <figcaption>Inside CI/CD, Build and Deploy are separate steps. The version tag goes to development through Deploy and to the manually triggered production release.</figcaption>
 </figure>
 
@@ -173,7 +173,7 @@ Metrics give us concrete numbers, logs give details, and traces show the path of
 
 
 <figure>
-  <img src="images/04-observability-pipeline.svg" alt="An application branches to three telemetry examples: a metrics time series, a timestamped log record and a trace waterfall">
+  <img src="images/04-observability-pipeline.png" alt="An application branches to three telemetry examples: a metrics time series, a timestamped log record and a trace waterfall">
   <figcaption>Metrics show measurements over time, logs record individual events, and traces show the spans of one request</figcaption>
 </figure>
 
@@ -295,7 +295,7 @@ After it finishes, you can open Grafana and perform the same test that we did lo
 
 
 <figure>
-  <img src="images/04-build-once-observability.svg" alt="The build-once deployment workflow extended with OTel attached to development and production; a collector sends metrics to Prometheus, logs to Loki and traces to Tempo for Grafana dashboards">
+  <img src="images/04-build-once-observability.png" alt="The build-once deployment workflow extended with OTel attached to development and production; a collector sends metrics to Prometheus, logs to Loki and traces to Tempo for Grafana dashboards">
   <figcaption>Development and production export telemetry through OTel. The collector sends metrics to Prometheus, logs to Loki and traces to Tempo, and Grafana reads all three.</figcaption>
 </figure>
 
@@ -355,7 +355,7 @@ This is a small proof-of-concept script. In reality, you will probably have a sy
 - Once the session is over, the logs are saved and the compute is terminated.
 
 <figure>
-  <img src="images/04-production-responder.svg" alt="An alert passes through SNS and Lambda to an isolated agent container with access to code, logs and metrics; the session log is saved after the run">
+  <img src="images/04-production-responder.png" alt="An alert passes through SNS and Lambda to an isolated agent container with access to code, logs and metrics; the session log is saved after the run">
   <figcaption>The alert starts an isolated agent job for the incident. Its log remains after the compute is terminated</figcaption>
 </figure>
 
