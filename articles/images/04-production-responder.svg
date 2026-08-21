@@ -69,28 +69,28 @@
   </defs>
   <rect width="1270" height="500" fill="#ffffff"/>
 
-  <g class="node-boundary node-amber" transform="translate(250 30)">
-    <rect width="760" height="250" rx="22" fill="none" stroke="#c2410c"/>
+  <g class="node-boundary node-amber" transform="translate(380 50)">
+    <rect width="610" height="200" rx="22" fill="none" stroke="#c2410c"/>
     <text class="boundary-title" x="20" y="31">AWS trigger path</text>
   </g>
-  <g class="node-boundary node-blue" transform="translate(555 320)">
-    <rect width="610" height="160" rx="22" fill="none" stroke="#2563eb"/>
+  <g class="node-boundary node-blue" transform="translate(575 325)">
+    <rect width="570" height="145" rx="22" fill="none" stroke="#2563eb"/>
     <text class="boundary-title" x="20" y="31">Agent access</text>
   </g>
-  <path class="edge-boundary-halo" d="M151 160L327.02 160" fill="none" stroke="#ffffff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
-  <path class="edge" d="M151 160L327.02 160" stroke="#dc2626" marker-end="url(#arrow-red)"/>
-  <path class="edge" d="M432.98 160L606 160" stroke="#c2410c" marker-end="url(#arrow-amber)"/>
+  <path class="edge-boundary-halo" d="M309 160L403.02 160" fill="none" stroke="#ffffff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+  <path class="edge" d="M309 160L403.02 160" stroke="#dc2626" marker-end="url(#arrow-red)"/>
+  <path class="edge" d="M508.98 160L606 160" stroke="#c2410c" marker-end="url(#arrow-amber)"/>
   <path class="edge" d="M634 160L750 160" stroke="#7c3aed" marker-end="url(#arrow-purple)"/>
-  <path class="edge-boundary-halo" d="M860 320L860 210" fill="none" stroke="#ffffff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
-  <path class="edge" d="M860 320L860 210" stroke="#2563eb" stroke-dasharray="8 8" marker-end="url(#arrow-blue)"/>
+  <path class="edge-boundary-halo" d="M860 325L860 210" fill="none" stroke="#ffffff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+  <path class="edge" d="M860 325L860 210" stroke="#2563eb" stroke-dasharray="8 8" marker-end="url(#arrow-blue)"/>
   <path class="edge-boundary-halo" d="M970 160L1030 160" fill="none" stroke="#ffffff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
   <path class="edge" d="M970 160L1030 160" stroke="#15803d" marker-end="url(#arrow-green)"/>
 
-  <g class="node-icon-only node-red" transform="translate(102 132)">
+  <g class="node-icon-only node-red" transform="translate(260 132)">
     <use href="#icon-alert" x="0" y="0" width="56" height="56" color="#dc2626"/>
     <text class="icon-node-title" x="28" y="81">Alert</text>
   </g>
-  <g class="node-icon-only node-amber" transform="translate(324 132)">
+  <g class="node-icon-only node-amber" transform="translate(400 132)">
     <use href="#icon-queue" x="0" y="0" width="112" height="56" color="#c2410c"/>
     <text class="icon-node-title" x="56" y="81">SNS topic</text>
   </g>
@@ -104,7 +104,7 @@
     <text class="node-title icon-copy" x="62" y="43.12" font-size="17">Agent</text>
     <text class="node-subtitle" x="110" y="75" font-size="16">Container job</text>
   </g>
-  <g class="node node-blue" transform="translate(570 380)" filter="url(#shadow)">
+  <g class="node node-blue" transform="translate(595 380)" filter="url(#shadow)">
     <rect width="150" height="70" rx="16" fill="#eff6ff" stroke="#2563eb"/>
     <use href="#icon-github" x="16" y="19" width="34" height="34" color="#2563eb"/>
     <text class="node-title icon-copy" x="62" y="27" font-size="17">Code</text>
@@ -114,7 +114,7 @@
     <use href="#icon-document" x="16" y="19" width="34" height="34" color="#2563eb"/>
     <text class="node-title icon-copy" x="62" y="27" font-size="17">Logs</text>
   </g>
-  <g class="node node-blue" transform="translate(1000 380)" filter="url(#shadow)">
+  <g class="node node-blue" transform="translate(975 380)" filter="url(#shadow)">
     <rect width="150" height="70" rx="16" fill="#eff6ff" stroke="#2563eb"/>
     <use href="#icon-observability" x="16" y="19" width="34" height="34" color="#2563eb"/>
     <text class="node-title icon-copy" x="62" y="27" font-size="17">Metrics</text>

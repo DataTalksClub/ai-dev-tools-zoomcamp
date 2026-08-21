@@ -35,7 +35,6 @@ We will continue using AWS and CloudFormation, but the principles we show in thi
 
 ## Recap
 
-
 We started building the [Interview Canvas project](https://github.com/alexeygrigorev/interview-canvas-share) in [Part 2: Build and Ship a Full-Stack App with AI Coding Assistants](https://aishippingblog.com/p/build-and-ship-a-full-stack-app-with):
 
 - We brainstormed with an AI assistant to come up with the specification
@@ -105,7 +104,7 @@ Create a manual GitHub Actions workflow that promotes the dev version to product
 Now we have two environments.
 
 
-## Container image repository
+## Container repository
 
 In the pipeline we have so far, the Docker image is built during the deploy stage. I deploy to EC2 by executing the build script on the machine and then running the image in Docker.
 
@@ -116,13 +115,14 @@ There are multiple problems with this approach:
 1. The deploy stage is actually two things: build and deploy. If build fails, there should be no deploy, so it's better to have these steps separately.
 2. When we promote the dev version to production, we have to build again. During this time, many things could have changed, so the build will not be identical to dev, and it can cause problems.
 
-So we split the deploy step into two separate steps and then:
+So we split the deploy step into two separate steps:
 
 - Build the image and upload it to a container registry
 - Pull this image from the registry during the deploy
-- When promoting to prod, we simply pull the same image to prod
 
-For AWS, we can use [Amazon ECR](https://aws.amazon.com/ecr/) as the container registry. You can also push your images to Docker if you're running outside of AWS and your cloud doesn't have a special service for that.
+When promoting to prod, we simply pull the same image to prod.
+
+For AWS, we can use [Amazon ECR](https://aws.amazon.com/ecr/) as the registry. You can also push your images to Docker if you're running outside of AWS and your cloud doesn't have a special service for that.
 
 <figure>
   <img src="images/04-build-once.svg" alt="A user pushes a change, then CI/CD runs separate Build and Deploy steps; the version tag goes to Deploy and a manually triggered Prod release, which updates Production">
@@ -139,33 +139,29 @@ Split it into two stages:
 - Build: build the image and push it to a container registry (ECR)
 - Deploy: pull the image from the registry and serve it
 
-The manual prod promotion workflow pulls the currently deployed dev image to prod.
+The manual prod promotion CI/CD workflow pulls the currently deployed dev image to prod.
 
 Tag each image using the YYYY-MM-DD-gitsha1 pattern (e.g. "2026-08-18-a1b2c3d")
 ```
 
-After the change, each successful build produces one tagged image. The deploy
-workflow sends that tag to development, and the manual production workflow
-promotes the same tag. We can now test the exact artifact that will run in
-production instead of rebuilding it during deployment.
-
+Now the build step produces a tagged image, and the deploy step pushes it to dev. We can test the application deployed to dev, and when we later promote it to production, we will be certain that it's exactly the same image.
 
 ## Observability
 
 Having two environments helps us avoid accidentally pushing buggy code to production. But accidents will still happen, and we need to make sure we detect them and react as fast as possible.
 
 For that we need to have observability. "Observability" means collecting information about the application so we can
-understand its behavior, and when something breaks, we can quickly find the problem.
+understand its behavior. With it, when something breaks, we can quickly find the problem.
 
 We achieve observability by adding monitoring to our applications. At the minimum, we need to collect basic performance metrics like CPU and memory utilization and requests per second (RPS).
 
 If we see that CPU and memory utilization are growing and RPS is dropping, something is definitely off.
 
-This information alone is not enough. They don't explain what happened inside that request and why it's causing errors or degradation in performance. For that, we need to collect  more information.
+This information alone is not enough. It does't explain what happened inside that request and why it's causing errors or degradation in performance. For that, we need to collect more.
 
 ## OpenTelemetry
 
-To collect this information, we use [OpenTelemetry](https://opentelemetry.io/docs/) (often abbreviated as OTel). This is the industry standard for telemetry.
+[OpenTelemetry](https://opentelemetry.io/docs/) (often abbreviated as OTel) is the industry standard for telemetry.
 
 Telemetry is all the information that the application produce:
 
@@ -173,16 +169,23 @@ Telemetry is all the information that the application produce:
 - Logs - timestamped records of individual events, like an error message or a failed database query
 - Traces - all the steps (called "spans") that a single request makes throug the entire application
 
+Metrics give us concrete numbers, logs give details and traces show the path of a request with each single step.
+
+
 <figure>
-  <img src="images/04-build-once-observability.svg" alt="The build-once deployment workflow extended with OTel attached to development and production; a collector sends metrics to Prometheus, logs to Loki and traces to Tempo for Grafana dashboards">
-  <figcaption>Development and production export telemetry through OTel. The collector sends metrics to Prometheus, logs to Loki and traces to Tempo, and Grafana reads all three.</figcaption>
+  <img src="images/04-observability-pipeline.svg" alt="An application branches to three telemetry examples: a metrics time series, a timestamped log record and a trace waterfall">
+  <figcaption>Metrics show measurements over time, logs record individual events, and traces show the spans of one request</figcaption>
 </figure>
 
-Metrics gives us concrete numbers, logs give details and traces show the path of a request with each single step.
 
 OTLP is the protocol that applications use to save this telemetry.
 
 For many popular libraries, we can start capturing telemetry with just a few lines of code. This process is called "instrumenting" - injecting extra logic into existing libraries (like FastAPI) without changing their code so they start saving the telemetry.
+
+<figure>
+  <img src="images/04-instrumenting-fast-api.png" alt="Python code configuring OpenTelemetry resource metadata, a tracer provider and an OTLP exporter for a FastAPI service">
+  <figcaption>FastAPI instrumentation configures the service metadata and exports traces over OTLP</figcaption>
+</figure>
 
 Let's do it. Ask the coding agent:
 
@@ -204,11 +207,6 @@ to decide where to send and store it, and how to view it. Let's do that now.
 We capture telemetry with OTLP, but it's not saved anywhere. For that, we define
 an [OpenTelemetry Collector](https://opentelemetry.io/docs/collector/)
 between the application and the storage systems.
-
-<figure>
-  <img src="images/04-observability-pipeline.svg" alt="An application sends metrics, logs, and traces through an OpenTelemetry Collector into telemetry storage; dashboards support investigation while alert rules independently detect user impact">
-  <figcaption>The collector sends signals to telemetry storage; dashboards support investigation, while alert rules detect user impact</figcaption>
-</figure>
 
 There are many services you can use for that. Ask your AI assitant and select the option that works best for your application.
 
@@ -236,6 +234,13 @@ Create "observability/" directory with Docker Compose for:
 
 Keep this as a separate Compose project from the application stack.
 ```
+
+
+<figure>
+  <img src="images/04-build-once-observability.svg" alt="The build-once deployment workflow extended with OTel attached to development and production; a collector sends metrics to Prometheus, logs to Loki and traces to Tempo for Grafana dashboards">
+  <figcaption>Development and production export telemetry through OTel. The collector sends metrics to Prometheus, logs to Loki and traces to Tempo, and Grafana reads all three.</figcaption>
+</figure>
+
 
 Now we have the infrastacture for observability, so we're ready to build a dashboard.
 
@@ -315,6 +320,8 @@ service, environment, deployed version, owner, and dashboard URL in the alert.
 
 Now that we have alerts, we need to react to them. In companies there's usually an on-call engineer. That's the engineer who receives the alert when something happens. When it happens, they need to figure out what's happening, and find a quick solution to this problem to stop the problem.
 
+TODO illustration metric grows allert triggers on-call engineer receives is
+
 Our AI assistant can be the on-call engineer, and if something happens, it can try to fix it. In real scenarios, AI on-call agents also need to understand if the issue is serious enough to escalate the alert to a human on-call engineer.
 
 In our case, we won't do it. We will implement a system that checks Prometheus and Grafana for alerts, and if something is happening, an agent session will start and fix the problem.
@@ -359,30 +366,23 @@ This is a small proof-of-concept script. In reality, you will probably have a sy
   <figcaption>The alert starts an isolated agent job for the incident. Its log remains after the compute is terminated</figcaption>
 </figure>
 
-Let's test it by introducing a bug.
+Let's test our idea by introducing a bug.
 
 ## Introducing a bug
 
-We want to test that this system works, so let's start a coding agent to introduce a bug or find an existing one.
+We want to test that this system works, so let's start a coding agent and ask it to add a bug or find an existing one.
 
 ```text
 Introduce a realistic bug in canvas component creation.
 
 For some requests, creating a component should fail even though the existing
-tests pass. Keep the failure reproducible so we can test the alert and the
-on-call response.
+tests pass. Keep the failure reproducible so we can test that the bug causes
+an alert and the on-call response.
 ```
 
 Here, the goal is to debug the process and make sure our on-call engineer actually wakes up and solves the problem.
 
-After a few iterations, it will work, and a successful test should leave a
-concrete trail. The alert fires and the worker starts an agent session. The
-agent identifies the reproducible failure, its fix passes CI/CD, and the
-failure metric recovers.
-
-
-## Summary
-
+After a few iterations, it will work. Now we have an on-call enginer that wakes up when there's an alert and tries to fix the problem.
 
 
 ## Clean up
@@ -395,55 +395,37 @@ Ask your agent to clean the infra:
 Delete the CloudFormation stacks.
 ```
 
-After it finishes, make sure everything is indeed gone. You may want to double-check everything in the AWS console or ask another agent to scan the running resources in your account.
-
+Make sure yourself that everything is indeed gone. You may want to double-check everything in the AWS console or ask another agent to scan the running resources in your account.
 
 
 ## Next steps after this module
 
-We now have a narrow operating baseline. We can promote a change deliberately,
-observe one important user journey, and prepare a response to a known failure.
-We can extend it in stages rather than add every practice in one go.
+We started with an idea and now our setup is way closer to production. But in this workshop I could only briefly touch the most important concepts.
 
-![Reliability, safer delivery and security evidence rest on the current operating baseline and support agent governance, where authority expands last.](images/04-next-steps-roadmap.svg)
+There's a lot more things that you should consider for a real production application:
 
-Start with reliability by defining an SLI and SLO for an important journey such
-as canvas sync. Add an error-budget burn-rate alert and an external synthetic
-check so we notice when the app or the monitoring path fails.
+- Here I deploy to EC2 by running a shell script on the instance. It's okay for a proof of concept but very problematic for produciton. Use a container management system like ECS or an alternative.
+- Sometimes you will need to roll back a change you promoted to prod. Ask your agent to implement this.
+- Use a managed database service.
+- Regularly back up your database. It's best if your backups live ourside of your infrastructure as code stack and you have multiple independent copies.
+- Test that you can actually use these backups on a completely recreated stack.
+- At some point your application will need to scale, so learn about that and load balancing. Container management systems make it easy to manage.
+- Ask Fable or GPT-5.6-Sol Max to audit your code for security vulnerabilities. Do it multiple times.
 
-Then make deployments safer with canaries or progressive rollouts, feature
-flags for risky changes, and the previous release ready for rollback. Restore
-a database backup because an untested backup is only a promise.
-
-Then broaden the security evidence by scanning dependencies, secrets,
-containers, and infrastructure code. Generate an SBOM and build provenance.
-Add manual penetration testing and a clear path for vulnerability reports.
-
-Raise agent autonomy last by recording what the on-call agent can read and
-write and what enforces each limit. Test model upgrades against past incidents.
-Widen the blast radius only when incident records show that the narrower
-version is repetitive, bounded, and independently verifiable.
-
-If we add one thing, start with an SLI and SLO for the app's most important
-journey. That tells us which failures matter before we add more dashboards,
-alerts, or agents.
+Also, define SLI and SLO (TODO expand)
 
 
 ## Next in the series
 
-With these pieces, we can promote a change deliberately, see a failure, and
-investigate it within a bounded workflow.
+With this article, we finish developing our end-to-end application. We took it from a raw idea and turned it into a production-ready system.
 
-In the next module, we cover these coding-agent capabilities:
+In the last article, we look into coding agent capabilities:
 
 - MCP
 - skills
 - commands
 - plugins
 - specialized agents
-
-We apply the same boundaries there too. Every new capability should have a
-clear owner, permissions, data path, and review process.
 
 You can find the course materials and the next cohort in
 [AI Dev Tools Zoomcamp](https://github.com/DataTalksClub/ai-dev-tools-zoomcamp).

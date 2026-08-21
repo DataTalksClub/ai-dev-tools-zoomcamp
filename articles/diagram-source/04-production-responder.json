@@ -18,10 +18,7 @@
       "title": "AWS trigger path",
       "variant": "boundary",
       "color": "amber",
-      "x": 250,
-      "y": 30,
-      "width": 760,
-      "height": 250
+      "contains": ["sns", "lambda", "agent"]
     },
     {
       "id": "alert",
@@ -29,7 +26,7 @@
       "variant": "icon",
       "icon": "alert",
       "color": "red",
-      "x": 102,
+      "x": 260,
       "y": 132
     },
     {
@@ -38,7 +35,7 @@
       "variant": "icon",
       "icon": "queue",
       "color": "amber",
-      "x": 324,
+      "x": 400,
       "y": 132
     },
     {
@@ -64,17 +61,15 @@
       "title": "Agent access",
       "variant": "boundary",
       "color": "blue",
-      "x": 555,
-      "y": 320,
-      "width": 610,
-      "height": 160
+      "contains": ["code", "logs", "metrics"],
+      "margin": {"top": 55, "right": 20, "bottom": 20, "left": 20}
     },
     {
       "id": "code",
       "title": "Code",
       "icon": "github",
       "color": "blue",
-      "x": 570,
+      "x": 595,
       "y": 380,
       "width": 150,
       "height": 70
@@ -94,7 +89,7 @@
       "title": "Metrics",
       "icon": "observability",
       "color": "blue",
-      "x": 1000,
+      "x": 975,
       "y": 380,
       "width": 150,
       "height": 70

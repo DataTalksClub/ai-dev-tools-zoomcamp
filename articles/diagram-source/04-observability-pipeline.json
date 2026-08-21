@@ -1,107 +1,106 @@
 {
-  "title": "Observability is a layered system",
-  "description": "An application emits metrics, logs, and traces through an OpenTelemetry Collector. The collector sends all three signals to telemetry storage with shared service, environment, and version context. Dashboards support investigation, while alert rules independently detect user impact.",
+  "title": "Metrics, logs, and traces",
+  "description": "An application produces three kinds of telemetry. Metrics appear as time-series measurements, logs as timestamped event records, and traces as a waterfall of spans for one request.",
   "canvas": {
-    "width": 940,
-    "height": 720,
+    "width": 780,
+    "height": 620,
     "background": "#ffffff"
   },
   "layout": {
     "type": "manual",
     "card_width": 220,
     "card_height": 100,
+    "font_scale": 1.25,
     "fixed_icon_axis": true
   },
   "nodes": [
     {
       "id": "application",
       "title": "Application",
-      "subtitle": "Emit metrics, logs, traces",
       "icon": "api",
       "color": "blue",
-      "x": 360,
-      "y": 40
-    },
-    {
-      "id": "collector",
-      "title": "OTel Collector",
-      "subtitle": "Receive OTLP",
-      "icon": "collector",
-      "color": "purple",
-      "x": 360,
-      "y": 180
-    },
-    {
-      "id": "telemetry",
-      "title": "Telemetry",
-      "variant": "boundary",
-      "color": "purple",
       "x": 40,
-      "y": 330,
-      "width": 860,
-      "height": 220
+      "y": 260
     },
     {
       "id": "metrics",
       "title": "Metrics",
-      "subtitle": "Rates and counts",
+      "variant": "specimen",
       "color": "purple",
-      "x": 80,
-      "y": 380,
-      "height": 80
+      "x": 340,
+      "y": 40,
+      "width": 400,
+      "height": 150,
+      "specimen": {
+        "mode": "series",
+        "items": [
+          "42 requests/s",
+          "180 ms latency",
+          "3 errors/min"
+        ]
+      }
     },
     {
       "id": "logs",
       "title": "Logs",
-      "subtitle": "Events and detail",
+      "variant": "specimen",
       "color": "purple",
-      "x": 360,
-      "y": 380,
-      "height": 80
+      "x": 340,
+      "y": 235,
+      "width": 400,
+      "height": 150,
+      "specimen": {
+        "mode": "record",
+        "items": [
+          "12:04:07 ERROR",
+          "Database query failed",
+          "room_id=184"
+        ]
+      }
     },
     {
       "id": "traces",
       "title": "Traces",
-      "subtitle": "Request paths",
+      "variant": "specimen",
       "color": "purple",
-      "x": 640,
-      "y": 380,
-      "height": 80
-    },
-    {
-      "id": "context",
-      "title": "Shared context",
-      "subtitle": "Service • environment • deployed version",
-      "variant": "plain",
-      "color": "gray",
-      "x": 250,
-      "y": 470,
-      "width": 440,
-      "height": 60
-    },
-    {
-      "id": "dashboards",
-      "title": "Dashboards",
-      "subtitle": "Investigate what happened",
-      "icon": "search",
-      "color": "blue",
-      "x": 180,
-      "y": 600
-    },
-    {
-      "id": "alert_rules",
-      "title": "Alert rules",
-      "subtitle": "Detect user impact",
-      "icon": "warning",
-      "color": "red",
-      "x": 540,
-      "y": 600
+      "x": 340,
+      "y": 430,
+      "width": 400,
+      "height": 150,
+      "specimen": {
+        "mode": "waterfall",
+        "items": [
+          "POST /rooms",
+          "validate input",
+          "database query"
+        ]
+      }
     }
   ],
   "edges": [
-    {"from": "application", "to": "collector", "color": "purple", "route": "straight", "from_anchor": "bottom", "to_anchor": "top"},
-    {"from": "collector", "to": "telemetry", "color": "purple", "route": "straight", "from_anchor": "bottom", "to_anchor": "top"},
-    {"from": "telemetry", "to": "dashboards", "color": "blue", "route": "straight", "from_anchor": "bottom", "to_anchor": "top"},
-    {"from": "telemetry", "to": "alert_rules", "color": "red", "route": "straight", "from_anchor": "bottom", "to_anchor": "top"}
+    {
+      "from": "application",
+      "to": "metrics",
+      "color": "purple",
+      "route": "straight",
+      "from_anchor": "right_top",
+      "to_anchor": "left"
+    },
+    {
+      "from": "application",
+      "to": "logs",
+      "color": "purple",
+      "route": "straight",
+      "from_anchor": "right",
+      "to_anchor": "left"
+    },
+    {
+      "from": "application",
+      "to": "traces",
+      "color": "purple",
+      "route": "straight",
+      "from_anchor": "right_bottom",
+      "to_anchor": "left"
+    }
   ]
 }

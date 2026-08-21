@@ -113,8 +113,8 @@
     <text fill="#15803d">Manual trigger</text>
   </g>
   <path class="edge" d="M820 550L880 550" stroke="#15803d" marker-end="url(#arrow-green)"/>
-  <path class="edge" d="M1172 150L1345 150L1345 300" stroke="#7c3aed" marker-end="url(#arrow-purple)"/>
-  <path class="edge" d="M1172 550L1345 550L1345 400" stroke="#7c3aed" marker-end="url(#arrow-purple)"/>
+  <path class="edge" d="M1172 200L1345 200L1345 300" stroke="#7c3aed" marker-end="url(#arrow-purple)"/>
+  <path class="edge" d="M1172 600L1345 600L1345 400" stroke="#7c3aed" marker-end="url(#arrow-purple)"/>
   <path class="edge-boundary-halo" d="M1440 350L1525 205" fill="none" stroke="#ffffff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
   <path class="edge" d="M1440 350L1525 205" stroke="#2563eb" marker-end="url(#arrow-blue)"/>
   <path class="edge-boundary-halo" d="M1440 350L1525 350" fill="none" stroke="#ffffff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
@@ -198,11 +198,11 @@
     <text class="node-title icon-copy" x="62" y="38.48" font-size="18">Grafana</text>
     <text class="node-subtitle" x="120" y="70" font-size="16">Dashboards</text>
   </g>
-  <g class="node-attached node-purple" transform="translate(1080 123)" filter="url(#shadow)">
+  <g class="node-attached node-purple" transform="translate(1080 173)" filter="url(#shadow)">
     <rect width="92" height="54" rx="14" fill="#f5f3ff" stroke="#7c3aed"/>
     <text class="attached-title" x="46" y="32.76" font-size="16" font-weight="750" text-anchor="middle">OTel</text>
   </g>
-  <g class="node-attached node-purple" transform="translate(1080 523)" filter="url(#shadow)">
+  <g class="node-attached node-purple" transform="translate(1080 573)" filter="url(#shadow)">
     <rect width="92" height="54" rx="14" fill="#f5f3ff" stroke="#7c3aed"/>
     <text class="attached-title" x="46" y="32.76" font-size="16" font-weight="750" text-anchor="middle">OTel</text>
   </g>

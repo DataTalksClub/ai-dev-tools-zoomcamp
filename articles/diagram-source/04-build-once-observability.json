@@ -64,6 +64,7 @@
       "title": "OTel",
       "variant": "attached",
       "attach_to": "development",
+      "attach_align": "end",
       "color": "purple"
     },
     {
@@ -107,6 +108,7 @@
       "title": "OTel",
       "variant": "attached",
       "attach_to": "production",
+      "attach_align": "end",
       "color": "purple"
     },
     {
