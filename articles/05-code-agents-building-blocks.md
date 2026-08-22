@@ -1,14 +1,19 @@
----
-title: "Coding Agent Building Blocks: Reusable Skills and Specialized Subagents"
-created: 2026-02-17
-updated: 2026-02-18
-tags: [code-agents, skills, subagents, claude-code, ai-dev-tools-zoomcamp]
-status: draft
----
-
 # Coding Agent Building Blocks: Reusable Skills and Specialized Subagents
 
-This is Article 5 in the [AI Dev Tools Zoomcamp](https://github.com/DataTalksClub/ai-dev-tools-zoomcamp) series. It focuses on two capabilities from Module 5 that make coding agents more reliable: reusable skills and specialized subagents.
+This is the fifth article in a series based on
+[AI Dev Tools Zoomcamp](https://github.com/DataTalksClub/ai-dev-tools-zoomcamp),
+the free course we run at DataTalks.Club.
+
+All articles in the series:
+
+- Part 1: [AI-Native Development: Specifications, Loop and Graph Engineering](https://aishippingblog.com/p/ai-native-development-specifications)
+- Part 2: [Build and Ship a Full-Stack App with AI Coding Assistants](https://aishippingblog.com/p/build-and-ship-a-full-stack-app-with)
+- Part 3: [Deploy a Full-Stack App with AI Coding Assistants](https://aishippingblog.com/p/deploy-a-full-stack-app-with-ai-coding)
+- Part 4: [DevOps and Observability for an AI-Built App](https://aishippingblog.com/p/devops-and-observability-for-an-ai)
+- Part 5: Coding Agent Building Blocks: Reusable Skills and Specialized Subagents (this article)
+
+This article focuses on two capabilities from Module 5 that make coding agents
+more reliable: reusable skills and specialized subagents.
 
 The product around the agent can be an IDE, a terminal, or a hosted environment. That interface matters less than the workflow inside it. Skills make a good procedure repeatable. Subagents isolate focused work in fresh context and, when useful, run it in parallel.
 
