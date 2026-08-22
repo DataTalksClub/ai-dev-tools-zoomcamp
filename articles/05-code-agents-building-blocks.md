@@ -20,7 +20,7 @@ The product around the agent can be an IDE, a terminal, or a hosted environment.
 ## Running Example: The Telegram Writing Assistant
 
 <figure>
-  <img src="../../assets/images/code-agents-building-blocks/twa-github.png" alt="GitHub page of the Telegram Writing Assistant showing the README with logo and description">
+  <img src="images/05-twa-github.png" alt="GitHub page of the Telegram Writing Assistant showing the README with logo and description">
   <figcaption>The Telegram Writing Assistant on GitHub: from scattered thoughts to publishable articles</figcaption>
 </figure>
 
@@ -34,7 +34,7 @@ This system uses both building blocks:
 - Subagents: three specialized subagents handle URL research, resource descriptions, and content verification
 
 <figure>
-  <img src="../../assets/images/code-agents-building-blocks/telegram-process-command.png" alt="Telegram chat showing the /process command running: Read 35 files, Edited 16 files, Found 3 items, Launched 1 agents">
+  <img src="images/05-telegram-process-command.png" alt="Telegram chat showing the /process command running: Read 35 files, Edited 16 files, Found 3 items, Launched 1 agents">
   <figcaption>The /process command reads 35 files, edits 16 articles, and launches research subagents</figcaption>
 </figure>
 
@@ -75,7 +75,7 @@ Skills are loaded automatically through a tool call. When an agent starts, it ge
 In the [agent-skills workshop](https://github.com/alexeygrigorev/workshops/tree/main/agent-skills), I built a coding agent with this exact mechanism. The `SkillsTool` class wraps a `SkillLoader` and exposes skill loading as a tool the agent can call:
 
 <figure>
-  <img src="../../assets/images/code-agents-building-blocks/skill-implementation.png" alt="Python code showing SkillsTool class that wraps SkillLoader and exposes skill() as a tool call returning name, description, and content">
+  <img src="images/05-skill-implementation.png" alt="Python code showing SkillsTool class that wraps SkillLoader and exposes skill() as a tool call returning name, description, and content">
   <figcaption>Skills implementation: a simple tool call that loads skill content on demand</figcaption>
 </figure>
 
@@ -115,7 +115,7 @@ It was created by analyzing all my existing libraries ([minsearch](https://githu
 [fetch-youtube](https://github.com/alexeygrigorev/.claude/tree/main/skills/fetch-youtube) - a skill (not a command) that fetches YouTube video transcripts. The agent discovers it when a user asks to process a YouTube link. Uses [youtube-transcript-api](https://pypi.org/project/youtube-transcript-api/) to download timestamped subtitles.
 
 <figure>
-  <img src="../../assets/images/code-agents-building-blocks/command-process.png" alt="The /process command markdown file showing description and instructions for processing Telegram inbox">
+  <img src="images/05-command-process.png" alt="The /process command markdown file showing description and instructions for processing Telegram inbox">
   <figcaption>The /process command: a markdown file with step-by-step instructions for the agent</figcaption>
 </figure>
 
@@ -155,7 +155,7 @@ There is also the problem of context rot. When an agent has a long session with 
 The most common subagent pattern. First, the planner creates a detailed implementation plan. Then, for each step in the plan, a fresh executor agent handles the implementation.
 
 <figure>
-  <img src="../../assets/images/ai-engineer-my-vision/claude-code-backend-progress.jpg" alt="Claude Code showing a task list with checkmarks: restructure monorepo, initialize backend, implement database, implement API, implement AI service, update frontend">
+  <img src="images/05-claude-code-backend-progress.jpg" alt="Claude Code showing a task list with checkmarks: restructure monorepo, initialize backend, implement database, implement API, implement AI service, update frontend">
   <figcaption>Planner-executor in action: Claude Code created a plan, then executes each step with progress tracking</figcaption>
 </figure>
 
@@ -171,7 +171,7 @@ Why this works:
 The Telegram writing assistant uses three subagents, each defined as a markdown file in [.claude/agents/](https://github.com/alexeygrigorev/telegram-writing-assistant/tree/main/.claude/agents):
 
 <figure>
-  <img src="../../assets/images/code-agents-building-blocks/subagent-article-summarizer.png" alt="The article-summarizer agent markdown file showing YAML frontmatter with name, description, tools, model fields and detailed instructions">
+  <img src="images/05-subagent-article-summarizer.png" alt="The article-summarizer agent markdown file showing YAML frontmatter with name, description, tools, model fields and detailed instructions">
   <figcaption>The article-summarizer subagent: a markdown file with YAML frontmatter defining the agent's role, tools, and instructions</figcaption>
 </figure>
 
@@ -214,7 +214,7 @@ graph LR
 For [reviewing 2,500+ scholarship applications](https://aishippingblog.com/p/how-i-reviewed-2500-ai-bootcamp-scholarship) for the AI Bootcamp, I used Claude Code with multiple commands running in parallel via subagents. Each subagent handled a batch of applications with consistent evaluation criteria defined in a markdown command file. The AI did preliminary screening, then I manually reviewed the top 50. This reduced the work from approximately two full days to 4-5 hours.
 
 <figure>
-  <img src="../../assets/images/code-agents-building-blocks/parallel-subagents-batches.png" alt="7 Task agents finished: Evaluate batches 1-6, 7-12, 38-42, 43-48, 49-54, 55-60, 65-69 - all Done with 11-20 tool uses each">
+  <img src="images/05-parallel-subagents-batches.png" alt="7 Task agents finished: Evaluate batches 1-6, 7-12, 38-42, 43-48, 49-54, 55-60, 65-69 - all Done with 11-20 tool uses each">
   <figcaption>7 parallel subagents evaluating scholarship application batches - each handles a batch independently</figcaption>
 </figure>
 
