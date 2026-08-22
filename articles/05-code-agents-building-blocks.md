@@ -110,19 +110,11 @@ You may still see older repositories and documentation use the word "command"
 or store these workflows in a `commands/` directory. In this article, we use
 "skill" for both forms.
 
-## Lazy Loading
-
-Skills are loaded through a tool call. When an agent starts, it gets a list of all skill names and short descriptions. When a task matches a skill, or the user invokes one directly, the agent calls a `load_skill(name)` tool to get the full content. This is lazy loading - the agent only loads what it needs, keeping the context clean.
-
-In the [agent-skills workshop](https://github.com/alexeygrigorev/workshops/tree/main/agent-skills), I built a coding agent with this exact mechanism. The `SkillsTool` class wraps a `SkillLoader` and exposes skill loading as a tool the agent can call:
-
-<figure>
-  <img src="images/05-skill-implementation.png" alt="Python code showing SkillsTool class that wraps SkillLoader and exposes skill() as a tool call returning name, description, and content">
-  <figcaption>Skills implementation: a simple tool call that loads skill content on demand</figcaption>
-</figure>
-
-Most coding agents now support reusable skills in some form. Claude Code,
-GitHub Copilot, Codex CLI, and OpenCode all use this simple mechanism.
+The AI Shipping Labs workshop
+[Build a Coding Agent with Tools, Skills and PydanticAI](https://aishippinglabs.com/workshops/coding-agent-v2)
+shows how to build a coding agent with skill support.
+It starts with tool calls and an agent loop, adds reusable skills, and then
+ports the agent to PydanticAI.
 
 ## Examples from Practice
 
@@ -296,8 +288,7 @@ This way skills evolve through real usage. Each correction makes the next run be
 ## Resources
 
 - [AI Dev Tools Zoomcamp](https://github.com/DataTalksClub/ai-dev-tools-zoomcamp) (free course)
-- [Agent Skills Workshop](https://github.com/alexeygrigorev/workshops/tree/main/agent-skills)
-- [Coding Agent Workshop](https://github.com/alexeygrigorev/workshops/tree/main/coding-agent)
+- [Build a Coding Agent with Tools, Skills and PydanticAI](https://aishippinglabs.com/workshops/coding-agent-v2)
 - [My Claude Code config](https://github.com/alexeygrigorev/.claude) (public repo with all my skills)
 - [Telegram Writing Assistant](https://github.com/alexeygrigorev/telegram-writing-assistant) (the running example)
 
