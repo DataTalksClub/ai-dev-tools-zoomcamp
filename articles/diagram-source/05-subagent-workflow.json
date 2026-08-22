@@ -1,0 +1,82 @@
+{
+  "title": "Fresh roles with an independent QA loop",
+  "description": "Product manager, engineer, and QA roles run sequentially in separate fresh contexts; QA failure returns work to the engineer while QA pass closes the issue.",
+  "canvas": {
+    "width": 1040,
+    "height": 440,
+    "background": "#ffffff"
+  },
+  "layout": {
+    "type": "manual",
+    "card_width": 200,
+    "card_height": 100,
+    "fixed_icon_axis": false
+  },
+  "nodes": [
+    {
+      "id": "pm",
+      "eyebrow": "FRESH CONTEXT",
+      "title": "PM agent",
+      "subtitle": "Grooms the issue",
+      "icon": "issue",
+      "color": "blue",
+      "x": 30,
+      "y": 100
+    },
+    {
+      "id": "engineer",
+      "eyebrow": "FRESH CONTEXT",
+      "title": "Engineer",
+      "subtitle": "Implements the issue",
+      "icon": "settings",
+      "color": "amber",
+      "x": 280,
+      "y": 100
+    },
+    {
+      "id": "qa",
+      "eyebrow": "FRESH CONTEXT",
+      "title": "QA agent",
+      "subtitle": "Checks the result",
+      "icon": "shield",
+      "color": "purple",
+      "x": 530,
+      "y": 100
+    },
+    {
+      "id": "closed",
+      "title": "Close issue",
+      "subtitle": "All checks passed",
+      "icon": "check",
+      "color": "green",
+      "x": 810,
+      "y": 100
+    }
+  ],
+  "edges": [
+    {
+      "from": "pm",
+      "to": "engineer"
+    },
+    {
+      "from": "engineer",
+      "to": "qa"
+    },
+    {
+      "from": "qa",
+      "to": "engineer",
+      "route": "below",
+      "from_anchor": "bottom",
+      "to_anchor": "bottom",
+      "label": "FAIL",
+      "color": "amber"
+    },
+    {
+      "from": "qa",
+      "to": "closed",
+      "color": "green",
+      "from_anchor": "right",
+      "to_anchor": "left"
+    }
+  ]
+}

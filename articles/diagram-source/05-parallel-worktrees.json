@@ -1,0 +1,113 @@
+{
+  "title": "Parallel agents in isolated worktrees",
+  "description": "The orchestrator assigns independent issues to as many as five isolated worktrees, then merges approved branches into main one at a time.",
+  "canvas": {
+    "width": 970,
+    "height": 600,
+    "background": "#ffffff"
+  },
+  "layout": {
+    "type": "manual",
+    "card_width": 220,
+    "card_height": 100,
+    "fixed_icon_axis": false
+  },
+  "nodes": [
+    {
+      "id": "orchestrator",
+      "title": "Orchestrator",
+      "subtitle": "Assigns independent issues",
+      "icon": "robot",
+      "color": "purple",
+      "x": 30,
+      "y": 250
+    },
+    {
+      "id": "worker_a",
+      "eyebrow": "ISOLATED WORKTREE",
+      "title": "Issue A agent",
+      "subtitle": "Worktree issue-a",
+      "icon": "number-1",
+      "color": "blue",
+      "x": 350,
+      "y": 70
+    },
+    {
+      "id": "worker_b",
+      "eyebrow": "ISOLATED WORKTREE",
+      "title": "Issue B agent",
+      "subtitle": "Worktree issue-b",
+      "icon": "number-2",
+      "color": "blue",
+      "x": 350,
+      "y": 250
+    },
+    {
+      "id": "workers_more",
+      "eyebrow": "ISOLATED WORKTREES",
+      "title": "Agents 3–5",
+      "subtitle": "Three more tracks",
+      "icon": "robot",
+      "color": "blue",
+      "x": 350,
+      "y": 430
+    },
+    {
+      "id": "merge",
+      "title": "Merge queue",
+      "subtitle": "Only approved branches",
+      "icon": "pull-request",
+      "color": "amber",
+      "x": 720,
+      "y": 160
+    },
+    {
+      "id": "main",
+      "title": "Main branch",
+      "subtitle": "Merge one issue at a time",
+      "icon": "github",
+      "color": "green",
+      "x": 720,
+      "y": 340
+    }
+  ],
+  "edges": [
+    {
+      "from": "orchestrator",
+      "to": "worker_a",
+      "route": "orthogonal"
+    },
+    {
+      "from": "orchestrator",
+      "to": "worker_b"
+    },
+    {
+      "from": "orchestrator",
+      "to": "workers_more",
+      "route": "orthogonal"
+    },
+    {
+      "from": "worker_a",
+      "to": "merge",
+      "route": "orthogonal",
+      "to_anchor": "left_top"
+    },
+    {
+      "from": "worker_b",
+      "to": "merge",
+      "route": "orthogonal",
+      "to_anchor": "left"
+    },
+    {
+      "from": "workers_more",
+      "to": "merge",
+      "route": "orthogonal",
+      "to_anchor": "left_bottom"
+    },
+    {
+      "from": "merge",
+      "to": "main",
+      "color": "green"
+    }
+  ]
+}

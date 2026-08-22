@@ -1,0 +1,69 @@
+{
+  "title": "One skill, two ways to invoke it",
+  "description": "A regular request and a direct slash invocation both select the same reusable skill, which the current agent follows.",
+  "canvas": {
+    "width": 980,
+    "height": 380,
+    "background": "#ffffff"
+  },
+  "layout": {
+    "type": "manual",
+    "card_width": 240,
+    "card_height": 100,
+    "fixed_icon_axis": false
+  },
+  "nodes": [
+    {
+      "id": "request",
+      "title": "User request",
+      "subtitle": "Agent discovers the skill",
+      "icon": "message",
+      "color": "blue",
+      "x": 40,
+      "y": 60
+    },
+    {
+      "id": "direct",
+      "title": "/release",
+      "subtitle": "You invoke the skill",
+      "icon": "mention",
+      "color": "blue",
+      "x": 40,
+      "y": 220
+    },
+    {
+      "id": "skill",
+      "title": "One skill",
+      "subtitle": "One set of instructions",
+      "icon": "document",
+      "color": "purple",
+      "x": 370,
+      "y": 140
+    },
+    {
+      "id": "agent",
+      "title": "Current agent",
+      "subtitle": "Follows the same skill",
+      "icon": "robot",
+      "color": "amber",
+      "x": 700,
+      "y": 140
+    }
+  ],
+  "edges": [
+    {
+      "from": "request",
+      "to": "skill",
+      "route": "orthogonal"
+    },
+    {
+      "from": "direct",
+      "to": "skill",
+      "route": "orthogonal"
+    },
+    {
+      "from": "skill",
+      "to": "agent"
+    }
+  ]
+}

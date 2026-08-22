@@ -50,36 +50,6 @@ in a skill because the current agent can follow it from start to finish. QA is
 often better as a separate agent because a fresh reviewer is less likely to
 accept the implementer's assumptions.
 
-## Running Example: The Telegram Writing Assistant
-
-<figure>
-  <img src="images/05-twa-github.png" alt="GitHub page of the Telegram Writing Assistant showing the README with logo and description">
-  <figcaption>The Telegram Writing Assistant on GitHub: from scattered thoughts to publishable articles</figcaption>
-</figure>
-
-I use the Telegram writing assistant as the running example.
-
-I described its evolution in two articles:
-
-- [How I Built a Telegram Assistant That Turns Brain Dumps into Structured Markdown](https://aishippingblog.com/p/telegram-assistant)
-  covers the original bot and its processing flow.
-- [I Turned My Telegram Bot into a Multi-Agent Writing System](https://aishippingblog.com/p/i-turned-my-telegram-bot-into-a-multi)
-  covers the move to reusable skills and specialized subagents.
-
-It's a personal knowledge management system. I send voice messages, photos, links, and text to a Telegram bot throughout the day. The bot transcribes voice messages and stores everything in an inbox. When I type `/process`, a Claude Code agent reads the inbox and routes content to the correct article. It also fetches external URLs, verifies nothing was lost, and commits the result to Git.
-
-This system uses both building blocks:
-
-- Skills: the [/process skill](https://github.com/alexeygrigorev/telegram-writing-assistant/blob/main/.claude/commands/process.md) defines the full workflow for processing inbox materials
-- Subagents: three specialized subagents handle URL research, resource descriptions, and content verification
-
-<figure>
-  <img src="images/05-telegram-process-command.png" alt="Telegram chat showing the /process skill running: Read 35 files, Edited 16 files, Found 3 items, Launched 1 agents">
-  <figcaption>The /process skill reads 35 files, edits 16 articles, and launches research subagents</figcaption>
-</figure>
-
-Claude Code built the bot.
-
 ## Building Block 1: Skills
 
 Skills are reusable, step-by-step workflows that encode best practices into repeatable procedures.
@@ -98,13 +68,10 @@ Previously, skills and commands were two separate concepts:
 They're now unified as skills. The agent can discover a skill from a regular
 request, or the user can invoke the same skill directly with `/name`.
 
-```mermaid
-graph LR
-    U1["User request"] --> A["Agent discovers a skill"]
-    U2["User types /release"] --> A
-    A --> L["Agent loads the skill instructions"]
-    L --> E["Agent follows the workflow"]
-```
+<figure>
+  <img src="images/05-skill-invocation.png" alt="A regular request and a direct slash invocation both select the same reusable skill, which the current agent follows">
+  <figcaption>A regular request and a direct invocation select the same skill for the current agent</figcaption>
+</figure>
 
 You may still see older repositories and documentation use the word "command"
 or store these workflows in a `commands/` directory. In this article, we use
@@ -116,184 +83,205 @@ shows how to build a coding agent with skill support.
 It starts with tool calls and an agent loop, adds reusable skills, and then
 ports the agent to PydanticAI.
 
-## Examples from Practice
+## Shared Skills from `.agents`
 
-All my skills are in a public GitHub repo: [github.com/alexeygrigorev/.claude](https://github.com/alexeygrigorev/.claude). Here are the ones I use most:
+I keep my cross-project skills in the public
+[`.agents` repository](https://github.com/alexeygrigorev/.agents). It configures
+the same collection for Claude Code, Codex, and OpenCode.
 
-[/release](https://github.com/alexeygrigorev/.claude/blob/main/commands/release.md) - a skill that automates the full Python library release process:
+These are some of the skills I use regularly:
 
-- Run all tests to make sure nothing is broken
-- Bump the version number using semantic versioning
-- Build the package with [hatch](https://hatch.pypa.io/)
-- Publish to [TestPyPI](https://test.pypi.org/) first
-- Verify the package installs correctly from TestPyPI
-- Publish to [PyPI](https://pypi.org/)
-- Create a GitHub release with notes generated from the git log
-- Group release notes by category: features, bug fixes, breaking changes
-- Clean up build artifacts
+- [`release`](https://github.com/alexeygrigorev/.agents/tree/main/skills/release)
+  bumps the version, pushes a tag, and lets CI publish the package.
+- [`init-library`](https://github.com/alexeygrigorev/.agents/tree/main/skills/init-library)
+  creates a Python library with packaging, tests, linting, and optional CLI
+  support.
+- [`create-github-repo`](https://github.com/alexeygrigorev/.agents/tree/main/skills/create-github-repo)
+  creates a GitHub repository and pushes the current project.
+- [`fetch-youtube`](https://github.com/alexeygrigorev/.agents/tree/main/skills/fetch-youtube),
+  [`fetch-loom`](https://github.com/alexeygrigorev/.agents/tree/main/skills/fetch-loom),
+  and [`fetch-zoom`](https://github.com/alexeygrigorev/.agents/tree/main/skills/fetch-zoom)
+  fetch recordings or transcripts for the agent to analyze.
+- [`diagram-creator`](https://github.com/alexeygrigorev/.agents/tree/main/skills/diagram-creator)
+  turns a JSON specification into consistent SVG and PNG diagrams.
+- [`setup-pypi-ci`](https://github.com/alexeygrigorev/.agents/tree/main/skills/setup-pypi-ci)
+  moves Python package publishing into a tag-triggered CI workflow.
+- [`regular-ping`](https://github.com/alexeygrigorev/.agents/tree/main/skills/regular-ping)
+  manages recurring reminders for long-running terminal sessions.
 
-Previously, I did this manually with some automation. Now the agent follows the playbook and handles everything.
+## Project-Specific Skills
 
-[/init-library](https://github.com/alexeygrigorev/.claude/blob/main/commands/init-library.md) - a skill that creates new Python libraries with a consistent structure:
+I use shared skills across projects. Project-specific skills stay next to the
+code and capture local commands, constraints, and operational knowledge.
 
-- Ask for library name, description, dependencies, and CLI preference
-- Create the full file structure: `src/`, `tests/`, `pyproject.toml`, `Makefile`
-- Set up [pytest](https://pytest.org/) for testing and [ruff](https://docs.astral.sh/ruff/) for linting
-- Configure [hatch](https://hatch.pypa.io/) for building
-- Add GitHub Actions CI/CD for Python 3.10-3.13
-- Install dev dependencies with [uv](https://docs.astral.sh/uv/)
+For example:
 
-It was created by analyzing all my existing libraries ([minsearch](https://github.com/alexeygrigorev/minsearch), [toyaikit](https://github.com/alexeygrigorev/toyaikit)) to find common patterns. Libraries initialized this way follow the expected format for automated releases with `/release`.
-
-[/create-github-repo](https://github.com/alexeygrigorev/.claude/blob/main/commands/create-github-repo.md) - a skill that handles creating GitHub repositories via the [GitHub CLI](https://cli.github.com/). Previously required going to the website, creating the repo, googling git commands. Now it asks for the name and handles everything.
-
-[fetch-youtube](https://github.com/alexeygrigorev/.claude/tree/main/skills/fetch-youtube) - a skill that fetches YouTube video transcripts. The agent discovers it when a user asks to process a YouTube link. Uses [youtube-transcript-api](https://pypi.org/project/youtube-transcript-api/) to download timestamped subtitles.
-
-<figure>
-  <img src="images/05-command-process.png" alt="The /process skill markdown file showing description and instructions for processing Telegram inbox">
-  <figcaption>The /process skill: a markdown file with step-by-step instructions for the agent</figcaption>
-</figure>
-
-[/process](https://github.com/alexeygrigorev/telegram-writing-assistant/blob/main/.claude/commands/process.md) - the Telegram writing assistant's main skill.
-
-This is the most complex skill I have:
-
-- Pull latest changes from git
-- Read all files from the inbox
-- Categorize messages by theme and timing
-- Route content to the correct article (or create a new one)
-- Handle different content types: text, transcripts, URLs, images, videos
-- For URLs: launch subagents to fetch and summarize content
-- For GitHub URLs: use `gh` CLI instead of web fetching
-- Preserve all voice message content verbatim (never summarize)
-- Run a verification subagent to check nothing was missed
-- Generate a summary of what was processed
-- Move processed files from inbox/raw to inbox/used
-- Create a git commit
-
-The collection keeps growing. Each time I find myself repeating a workflow, it becomes a candidate for a new skill.
+- [PocketShell](https://github.com/alexeygrigorev/pocketshell/tree/main/.claude/skills)
+  has skills for connecting to the physical Android device and turning a
+  screenshot into a GitHub issue.
+- [Course Management Platform](https://github.com/DataTalksClub/course-management-platform/tree/main/.claude/skills)
+  has an incident-response skill and a skill for verifying the Django app with
+  a throwaway database.
+- [AI Engineering Buildcamp](https://github.com/alexeygrigorev/ai-bootcamp/tree/main/.claude/skills)
+  has skills for curriculum reorganization and synchronizing lessons after a
+  video recording.
+- [DataTalks.Club FAQ](https://github.com/DataTalksClub/faq/tree/main/.claude/skills)
+  has skills for fetching course questions from Slack and turning recurring
+  questions into durable FAQ entries.
 
 ## Building Block 2: Subagents
 
-When you start a Claude Code session, you interact with an agent. The agent is what takes your input and executes tasks - it can be a planner, an executor, a reviewer. The important thing to keep in mind is that agents have a context window. It is long but finite, and there is also context rot: the more context the agent uses, the worse it performs.
+A coding agent has a long but finite context window. In one session, it may
+plan, implement, and review a task. As that context fills, the agent can lose
+important details or give too much weight to its earlier decisions.
 
-Consider the Telegram writing assistant. One of its tasks is to analyze an article or a YouTube transcript. These can be large - they go into the context window and occupy a significant portion of it. Once the agent finishes that one task and moves to the next, its memory is already overflowing. At some point it needs to run compaction, which essentially destroys the entire memory. The agent becomes less capable and needs to re-learn the context from a compressed summary.
+Consider a coding agent that researches an issue, implements it, and then
+reviews its own work. Research and implementation fill the context with
+different details, while self-review encourages the agent to accept assumptions
+it made earlier. A fresh agent can focus on one role without all that history.
 
-This is where subagents help. A subagent is a separate agent that starts with a fresh context window. It does not occupy the main agent's context. I can tell it: "look at this article, summarize it, write the result to this file, and tell me when you're done." The main agent only sees "done" - none of the article content pollutes its context. The main agent stays focused on orchestrating the overall workflow, putting things in the right place, while the context-heavy work happens in isolation.
+A subagent starts with a fresh context window outside the main agent's context.
+The main agent gives it a bounded task and receives a result, while the detailed
+work happens in isolation.
 
-Subagents also enable parallelism. When you need to process multiple items (URLs, applications, batches) subagents can run in parallel while the main agent continues with other work.
+Because subagents are separate, independent tasks can run at the same time
+while the main agent continues coordinating the work.
 
-There is also the problem of context rot. When an agent has a long session with many tasks, it starts forgetting things or accidentally skipping steps. This is why running a verifier as a separate subagent at the end of a flow is so helpful. When the main agent verifies itself, it tends to say "everything looks fine." But a fresh agent that starts with a clean context window is much better at catching what was missed or accidentally omitted.
+Long sessions can also make an agent forget details or skip steps. A separate
+verifier starts without the implementer's assumptions, so it's more likely to
+catch missing work than the agent reviewing its own output.
 
-## The Planner-Executor Pattern
+## Sequential Roles in Article 1
 
-The most common subagent pattern. First, the planner creates a detailed implementation plan. Then, for each step in the plan, a fresh executor agent handles the implementation.
+In Article 1, the product manager, software engineer, and QA engineer worked
+one after another. The product manager refined an issue, the engineer
+implemented it, and QA checked the result in a fresh context. If QA returned
+`FAIL`, we sent the findings back to a new engineer session.
+
+We didn't run these roles in parallel because each one depended on the previous
+result. The benefit came from role separation and fresh context, not speed.
 
 <figure>
-  <img src="images/05-claude-code-backend-progress.jpg" alt="Claude Code showing a task list with checkmarks: restructure monorepo, initialize backend, implement database, implement API, implement AI service, update frontend">
-  <figcaption>Planner-executor in action: Claude Code created a plan, then executes each step with progress tracking</figcaption>
+  <img src="images/05-subagent-workflow.png" alt="Product manager, engineer, and QA roles run sequentially in separate fresh contexts, with QA failure returning work to the engineer and QA pass closing the issue">
+  <figcaption>Article 1 used fresh role agents sequentially, with QA failures returning to engineering</figcaption>
 </figure>
 
-Why this works:
+## Parallel Work in Worktrees
 
-- A good plan from a strong model means even a weaker model can execute reliably
-- Each execution step gets a clean context window
-- Failed steps do not pollute the context of subsequent steps
-- Progress is atomic - completed steps are committed, so failures do not lose work
-
-## Subagents in the Telegram Writing Assistant
-
-The Telegram writing assistant uses three subagents, each defined as a markdown file in [.claude/agents/](https://github.com/alexeygrigorev/telegram-writing-assistant/tree/main/.claude/agents):
+For independent coding tasks, I run several agents at the same time. Each agent
+gets its own git worktree, so it can edit, test, and commit without overwriting
+another agent's files. The main session becomes the orchestrator and stays out
+of feature implementation.
 
 <figure>
-  <img src="images/05-subagent-article-summarizer.png" alt="The article-summarizer agent markdown file showing YAML frontmatter with name, description, tools, model fields and detailed instructions">
-  <figcaption>The article-summarizer subagent: a markdown file with YAML frontmatter defining the agent's role, tools, and instructions</figcaption>
+  <img src="images/05-parallel-worktrees.png" alt="The orchestrator assigns independent issues to as many as five isolated worktrees, then merges approved branches into main one at a time">
+  <figcaption>Agents work concurrently in isolated worktrees while the orchestrator controls review and merge order</figcaption>
 </figure>
 
-[article-summarizer](https://github.com/alexeygrigorev/telegram-writing-assistant/blob/main/.claude/agents/article-summarizer.md) - deep analysis of URLs:
+I use a prompt like this:
 
-- Fetches content via [Jina Reader](https://jina.ai/reader/)
-- Extracts key ideas, actionable patterns, code snippets, quotes
-- Creates structured summaries with sections: overview, key insights, technical details
-- Adds summaries to the correct research article
-- Can run in parallel for multiple URLs
+```text
+Work in isolated git worktrees and run up to five agents in parallel.
 
-[resource-describer](https://github.com/alexeygrigorev/telegram-writing-assistant/blob/main/.claude/agents/resource-describer.md) - short descriptions for the [interesting resources](https://github.com/alexeygrigorev/telegram-writing-assistant/blob/main/articles/_interesting-resources.md) collection:
+You are the orchestrator. Your job is to:
 
-- Fetches content via Jina Reader
-- Writes 2-4 sentence descriptions
-- Inserts alphabetically into the resources article
-- Can run in parallel for multiple resources
-
-[verify-content](https://github.com/alexeygrigorev/telegram-writing-assistant/blob/main/.claude/agents/verify-content.md) - ensures nothing was lost during processing:
-
-- Checks changed files via git diff
-- Verifies all key ideas from text/transcript sources are present
-- Confirms images exist and are placed correctly
-- Flags any content that was improperly summarized
-- Provides a verification report with issues found
-
-```mermaid
-graph LR
-    M["Main agent: /process"] --> A["Article summarizer"]
-    M --> R["Resource describer"]
-    M --> V["Content verifier"]
-    A --> C["Curated article changes"]
-    R --> C
-    V --> C
-    C --> G["Reviewed Git commit"]
+- Split the backlog into independent issue tracks.
+- Give each agent a separate worktree and clear file ownership.
+- Keep the agent slots full while eligible work remains.
+- Send completed work to a fresh reviewer.
+- Return review findings to the correct implementer.
+- Merge approved work into the main branch one issue at a time.
+- Coordinate the work; do not implement the issues yourself.
 ```
 
-## Subagents for Batch Processing
+Worktrees prevent filesystem collisions, but they don't prevent logical
+conflicts. Two agents should run in parallel only when they own different files
+or independent parts of the system. The orchestrator tracks dependencies,
+relays review feedback, and controls the merge order.
 
-For [reviewing 2,500+ scholarship applications](https://aishippingblog.com/p/how-i-reviewed-2500-ai-bootcamp-scholarship) for the AI Bootcamp, I used Claude Code with multiple skills running in parallel via subagents. Each subagent handled a batch of applications with consistent evaluation criteria defined in a markdown skill file. The AI did preliminary screening, then I manually reviewed the top 50. This reduced the work from approximately two full days to 4-5 hours.
+I use this approach in larger projects. The
+[PocketShell workflow](https://github.com/alexeygrigorev/pocketshell/blob/main/process.md)
+allows up to five high-effort background agents. The
+[AI Shipping Labs workflow](https://github.com/AI-Shipping-Labs/website/blob/main/_docs/PROCESS.md)
+runs independent issue tracks in worktrees with a smaller default concurrency
+limit. The
+[Raised workflow](https://github.com/alexeygrigorev/raised/blob/main/process.md)
+also assigns each issue its own implementer and reviewer loop, with up to five
+agents running in parallel.
+
+## Parallel Batch Processing
+
+Not every parallel task changes code. For
+[reviewing 2,500+ scholarship applications](https://aishippingblog.com/p/how-i-reviewed-2500-ai-bootcamp-scholarship),
+I split the applications into batches and gave every subagent the same
+evaluation skill. The agents screened their batches in parallel, and I
+manually reviewed the top 50. This reduced the work from approximately two
+full days to four or five hours.
 
 <figure>
   <img src="images/05-parallel-subagents-batches.png" alt="7 Task agents finished: Evaluate batches 1-6, 7-12, 38-42, 43-48, 49-54, 55-60, 65-69 - all Done with 11-20 tool uses each">
   <figcaption>7 parallel subagents evaluating scholarship application batches - each handles a batch independently</figcaption>
 </figure>
 
-## How to Create and Iterate on Skills
+## Creating and Iterating on Skills
 
 ## Creating a New Skill
 
-1. Interact with the agent and let it do the task
-2. Observe how it behaves and correct it when it goes wrong
-3. Go back and forth until the result is right
-4. Tell the agent: "summarize all our discussion and all the corrections, and write them as a skill"
-5. If the agent does not know the format, show it an example of an existing skill
+I don't start by designing a skill. I first do the real task with the agent as
+usual. When it takes a wrong turn, I correct it and continue until both the
+result and the way we produced it are right.
 
-If the project already has skills, the agent automatically follows the same format.
+At the end of the session, I say:
+
+```text
+Save this as a skill. Include the workflow we followed and all the corrections
+I made, so the next agent can do the task correctly from the start.
+```
+
+The completed session records what worked and every correction I made. The
+agent can turn that history into a practical skill instead of inventing a
+workflow in advance.
+
+I then review the generated `SKILL.md` and remove details that only mattered in
+that session. I also make sure its description says when an agent should load
+it. If the project already has skills, the agent can follow their structure.
 
 ## Improving an Existing Skill
 
-With the Telegram writing assistant, the `/process` skill keeps getting better through use:
+I improve the first version through the same cycle:
 
 1. Trigger the skill and let it run
 2. When it does something wrong, correct it in the session
-3. After fixing the issue, say: "analyze your actions and my corrections, and figure out what we should change in the process to avoid this in the future"
+3. After fixing the issue, ask the agent to analyze its actions and your
+   corrections
 4. The agent analyzes everything and updates the skill file
 
-This way skills evolve through real usage. Each correction makes the next run better.
+Skills improve through real usage because each correction improves the next
+run.
 
 ## Practical Takeaways
 
+The distinction leads to a few practical rules:
+
 - Start with skills: identify repetitive workflows and encode them as markdown playbooks
 - Add subagents when context is a problem: if tasks are too large for a single agent session, break them into roles
-- Keep skills simple: one clear workflow per skill. If it branches, split it
-- Fresh context is the key insight: the biggest improvement from subagents comes from giving each role a clean context window
+- Keep skills simple: one workflow per skill. If it branches, split it
+- Give each subagent a fresh context window so details from another role don't interfere
 - Build incrementally: start with one skill and one subagent. Add more as you discover what your workflow needs
 - Always verify: even the best models take shortcuts. Skills encode the "right way" and subagent reviewers catch what the implementer missed
 
 ## Resources
 
+These resources cover the course, workshop, and shared skills:
+
 - [AI Dev Tools Zoomcamp](https://github.com/DataTalksClub/ai-dev-tools-zoomcamp) (free course)
 - [Build a Coding Agent with Tools, Skills and PydanticAI](https://aishippinglabs.com/workshops/coding-agent-v2)
-- [My Claude Code config](https://github.com/alexeygrigorev/.claude) (public repo with all my skills)
-- [Telegram Writing Assistant](https://github.com/alexeygrigorev/telegram-writing-assistant) (the running example)
+- [My agent configuration](https://github.com/alexeygrigorev/.agents) (shared skills for Claude Code, Codex, and OpenCode)
 
 ## Related Substack Articles
 
+These articles provide more detail on the examples:
+
 - [My Experiments with Claude Code](https://aishippingblog.com/p/my-experiments-with-claude-code)
-- [Telegram Assistant](https://aishippingblog.com/p/telegram-assistant)
+- [AI-Native Development: Specifications, Loop and Graph Engineering](https://aishippingblog.com/p/ai-native-development-specifications)
 - [How I Reviewed 2,500 AI Bootcamp Scholarship Applications](https://aishippingblog.com/p/how-i-reviewed-2500-ai-bootcamp-scholarship)
