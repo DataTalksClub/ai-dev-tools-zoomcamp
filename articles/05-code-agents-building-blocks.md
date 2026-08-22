@@ -209,20 +209,6 @@ limit. The
 also assigns each issue its own implementer and reviewer loop, with up to five
 agents running in parallel.
 
-## Parallel Batch Processing
-
-Not every parallel task changes code. For
-[reviewing 2,500+ scholarship applications](https://aishippingblog.com/p/how-i-reviewed-2500-ai-bootcamp-scholarship),
-I split the applications into batches and gave every subagent the same
-evaluation skill. The agents screened their batches in parallel, and I
-manually reviewed the top 50. This reduced the work from approximately two
-full days to four or five hours.
-
-<figure>
-  <img src="images/05-parallel-subagents-batches.png" alt="7 Task agents finished: Evaluate batches 1-6, 7-12, 38-42, 43-48, 49-54, 55-60, 65-69 - all Done with 11-20 tool uses each">
-  <figcaption>7 parallel subagents evaluating scholarship application batches - each handles a batch independently</figcaption>
-</figure>
-
 ## Creating and Iterating on Skills
 
 ## Creating a New Skill
@@ -284,4 +270,3 @@ These articles provide more detail on the examples:
 
 - [My Experiments with Claude Code](https://aishippingblog.com/p/my-experiments-with-claude-code)
 - [AI-Native Development: Specifications, Loop and Graph Engineering](https://aishippingblog.com/p/ai-native-development-specifications)
-- [How I Reviewed 2,500 AI Bootcamp Scholarship Applications](https://aishippingblog.com/p/how-i-reviewed-2500-ai-bootcamp-scholarship)
