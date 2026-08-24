@@ -13,7 +13,13 @@ application with AI coding agents end to end:
 
 This article gives you the whole thing as one ready-to-copy prompt set. When you're working on your own project, whether it's a course project or something of your own, follow these steps in order and you'll end up with an application that works end to end. The steps are ordered by complexity on purpose: stop at any point and you still have something that works, then add the next layer only when you actually need it.
 
-It comes in three parts, matching the three articles above: Build, Deploy, and Operate. That's also how you should think about building your own application, step by step. Not every project needs to reach the Operate stage. A weekend project or a course submission is often done once it's built and deployed, and that's fine too.
+It comes in three parts, matching the three articles above:
+
+- Build
+- Deploy
+- Operate
+
+That's also how you should think about building your own application, step by step. Not every project needs to reach the Operate stage. A weekend project or a course submission is often done once it's built and deployed, and that's fine too.
 
 Each step gives one goal and one prompt, not a tour of every generated file. The prompts stay tool-agnostic: no assumed language, framework, database, host, CI product, or observability vendor. Where a real choice is needed, the walkthrough asks the agent to propose options and waits for your approval rather than assuming one.
 
