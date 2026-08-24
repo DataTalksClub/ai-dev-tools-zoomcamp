@@ -28,7 +28,14 @@ numbered continuously across the whole file.
 - Prompts stay tool-agnostic: no assumed language, framework, database, host, CI product, or observability vendor.
 - Where a real choice is needed, the walkthrough asks the agent to propose options and waits for approval, rather than assuming one.
 
-One example carries the whole walkthrough end to end.
+One example carries the whole walkthrough end to end: Study Relay.
+
+A student starts a study group for one leg of a course — a module, a cohort,
+a few weeks. Other students request to join, and the host approves people up
+to capacity. Everyone confirms the group actually kicked off. When the leg
+ends, the host can hand the group's notes and momentum to a new host for the
+next cohort, who registers their leg as a continuation of the last one — a
+relay, not a one-off.
 
 ## Build
 
@@ -516,12 +523,13 @@ this exercise" or keep CloudFormation as the example's concrete choice.
 
 That's the credible minimum loop. Real products keep going from here.
 
-## What's Next
+## Going Further
 
+- None of this is covered in the walkthrough above — it's what's still missing once the minimum loop works.
 - A single hand-deployed instance and a hand-run backup are both fine for learning, but neither holds up under real usage or a real incident.
-- Each of these extends a decision already made earlier in the walkthrough — the platform, the database, the deployment pipeline — rather than starting something new.
+- Each prompt below extends a decision already made earlier in the walkthrough — the platform, the database, the deployment pipeline — rather than starting something new.
 
-None of these are required to call the loop complete — they're where to go once it is.
+These prompts are what it takes to make the loop production-grade, not just working.
 
 ### 31. Managed runtime
 
