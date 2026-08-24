@@ -1,12 +1,21 @@
 # From Zero to Production with AI Coding Agents
 
-This is the introductory article in a series based on
+This is a bonus article in the series based on
 [AI Dev Tools Zoomcamp](https://github.com/DataTalksClub/ai-dev-tools-zoomcamp),
-the free course we run at DataTalks.Club.
+the free course we run at DataTalks.Club. Across the series we build an
+application with AI coding agents end to end:
+[Part 2](https://aishippingblog.com/p/build-and-ship-a-full-stack-app-with)
+builds it,
+[Part 3](https://aishippingblog.com/p/deploy-a-full-stack-app-with-ai-coding)
+deploys it, and
+[Part 4](https://aishippingblog.com/p/devops-and-observability-for-an-ai)
+makes it operable.
 
 ## Intro
 
-This article compresses a full build, deploy, and operate arc into one walkthrough. Each step gives one goal and one prompt, not a tour of every generated file. The prompts stay tool-agnostic: no assumed language, framework, database, host, CI product, or observability vendor. Where a real choice is needed, the walkthrough asks the agent to propose options and waits for your approval rather than assuming one.
+This article gives you the whole thing as one ready-to-copy prompt set. When you're working on your own project, whether it's a course project or something of your own, follow these steps in order and you'll end up with an application that works end to end. The steps are ordered by complexity on purpose: stop at any point and you still have something that works, then add the next layer only when you actually need it.
+
+Each step gives one goal and one prompt, not a tour of every generated file. The prompts stay tool-agnostic: no assumed language, framework, database, host, CI product, or observability vendor. Where a real choice is needed, the walkthrough asks the agent to propose options and waits for your approval rather than assuming one.
 
 One example carries the whole walkthrough end to end: Study Relay.
 
