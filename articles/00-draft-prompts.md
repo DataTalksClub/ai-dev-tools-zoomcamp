@@ -1,4 +1,8 @@
-DRAFT — exact prompts copied verbatim from articles 1, 2, 3, and 4 (Retroloop
+DRAFT — staging area for Article 0. The article: build an app in three
+stages — build, deploy, productionize — giving a condensed summary at each
+stage.
+
+Every prompt below is copied verbatim from the source material (Retroloop
 for the spec step; Interview Canvas / system-design-interview app for the
 rest), PLUS a few newly-written "choose the tool" prompts inserted wherever
 a downstream copied prompt hardcodes a specific technology. Staged for merge
@@ -6,18 +10,27 @@ into 00-from-zero-to-production.md — Sonnet 4.6 will turn this into full
 article prose next.
 
 Nothing inside a copied ```text block is paraphrased. Mid-sentence line
-wraps (an artifact of the source articles' line width) have been joined so
-prompts read as normal paragraphs on Substack; sentence/directive boundaries
-are kept as separate lines exactly where the source had them. Non-prompt
+wraps (an artifact of the source's line width) have been joined so prompts
+read as normal paragraphs on Substack; sentence/directive boundaries are
+kept as separate lines exactly where the source had them. Non-prompt
 reference blocks (file trees, raw file contents) were dropped — only actual
 instructions given to an agent are listed.
 
 Structure: each `##` and `###` section has 2-4 bullet points before its
-content (grounded in what the source article actually said, not invented)
-and a one-line transition at the end leading into what's next. `###` items
-are numbered continuously across the whole file.
+content (grounded in what the source actually said, not invented) and a
+one-line transition at the end leading into what's next. `###` items are
+numbered continuously across the whole file.
 
-## Build (from Article 2, spec step from Article 1)
+## Intro
+
+- This article compresses a full build, deploy, and operate arc into one walkthrough.
+- Each step gives one goal and one prompt, not a tour of every generated file.
+- Prompts stay tool-agnostic: no assumed language, framework, database, host, CI product, or observability vendor.
+- Where a real choice is needed, the walkthrough asks the agent to propose options and waits for approval, rather than assuming one.
+
+One example carries the whole walkthrough end to end.
+
+## Build
 
 - A specification turns a vague idea into decisions before any code exists.
 - Build the visible workflow first, behind a mocked backend, to test the idea cheaply before investing in a server.
@@ -27,11 +40,6 @@ are numbered continuously across the whole file.
 With frontend, backend, and a database talking to each other locally, the application is ready to leave your machine.
 
 ### 1. Specification
-
-Article 2's spec step is done via ChatGPT dictation with no discrete prompt
-block (just prose: "For creating the specification, I always use ChatGPT in
-dictation mode."). Article 1 has an actual verbatim prompt for this step, so
-that's what's copied here.
 
 - A vague idea gets filled in with the agent's own assumptions if you don't specify it first.
 - Brainstorm scope conversationally before touching a coding agent — one question at a time keeps it a dialogue, not a wall of text.
@@ -153,7 +161,7 @@ item 4 uses. Keep as illustrative example or genericize to "an ORM".
 
 The application works locally end-to-end. Making it survive contact with the real world — deployment — is next.
 
-## Deploy (from Article 3)
+## Deploy
 
 - Local success and production success are different problems: real networking, real databases, and real infrastructure introduce new failure modes.
 - One container image, not two — a compiled frontend is static files the backend can serve directly.
@@ -283,7 +291,7 @@ provider".
 
 The application deploys itself now. Keeping it running safely in front of real users is the next problem.
 
-## Operate (from Article 4)
+## Operate
 
 - Deploying every push straight to what users see is fine early on, but real users need a buffer: a development environment that absorbs risk before production does.
 - Building the image once and promoting that same artifact to production removes an entire class of "worked in dev, broke in prod" bugs.
@@ -508,7 +516,7 @@ this exercise" or keep CloudFormation as the example's concrete choice.
 
 That's the credible minimum loop. Real products keep going from here.
 
-## What's Next (no source in articles 2-4 — newly written, same terse style)
+## What's Next
 
 - A single hand-deployed instance and a hand-run backup are both fine for learning, but neither holds up under real usage or a real incident.
 - Each of these extends a decision already made earlier in the walkthrough — the platform, the database, the deployment pipeline — rather than starting something new.
