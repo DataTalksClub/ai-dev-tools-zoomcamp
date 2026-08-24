@@ -1,9 +1,10 @@
 # From Zero to Production with AI Coding Agents
 
-This is a bonus article in the series based on
-[AI Dev Tools Zoomcamp](https://github.com/DataTalksClub/ai-dev-tools-zoomcamp),
-the free course we run at DataTalks.Club. Across the series we build an
-application with AI coding agents end to end:
+[AI Dev Tools Zoomcamp](https://github.com/DataTalksClub/ai-dev-tools-zoomcamp)
+is the free course we run at DataTalks.Club, and this bonus article belongs
+to that series.
+
+Across the series we build an application with AI coding agents end to end:
 
 - [Build and Ship a Full-Stack App with AI Coding Assistants](https://aishippingblog.com/p/build-and-ship-a-full-stack-app-with) builds it
 - [Deploy a Full-Stack App with AI Coding Assistants](https://aishippingblog.com/p/deploy-a-full-stack-app-with-ai-coding) deploys it
@@ -11,7 +12,7 @@ application with AI coding agents end to end:
 
 ## Intro
 
-This article gives you the whole thing as one ready-to-copy prompt set. When you're working on your own project, whether it's a course project or something of your own, follow these steps in order and you'll end up with an application that works end to end. The steps are ordered by complexity on purpose: stop at any point and you still have something that works, then add the next layer only when you actually need it.
+Use it as one ready-to-copy prompt set on your own project, course submission or otherwise. Follow the steps in order and you'll end up with an application that works end to end. The steps are ordered by complexity on purpose, so stop at any point and you still have something that works. Add the next layer only when you actually need it.
 
 It comes in three parts, matching the three articles above:
 
@@ -21,21 +22,29 @@ It comes in three parts, matching the three articles above:
 
 That's also how you should think about building your own application, step by step. Not every project needs to reach the Operate stage. A weekend project or a course submission is often done once it's built and deployed, and that's fine too.
 
-Each step gives one goal and one prompt, not a tour of every generated file. The prompts stay tool-agnostic: no assumed language, framework, database, host, CI product, or observability vendor. Where a real choice is needed, the walkthrough asks the agent to propose options and waits for your approval rather than assuming one.
+Each step gives one goal and one prompt, not a tour of every generated file.
 
-One example carries the whole walkthrough end to end: Study Relay.
+The prompts stay tool-agnostic:
 
-A student starts a study group for one leg of a course: a module, a cohort, a few weeks. Other students request to join, and the host approves people up to capacity. Everyone confirms the group actually kicked off. When the leg ends, the host can hand the group's notes and momentum to a new host for the next cohort, who registers their leg as a continuation of the last one, a relay, not a one-off.
+- no assumed language or framework
+- no assumed database or host
+- no assumed CI product or observability vendor
+
+Where a real choice is needed, the walkthrough asks the agent to propose options and waits for your approval rather than assuming one.
+
+One example runs through the whole walkthrough end to end: Study Relay.
+
+A student starts a study group for one leg of a course: a module, a cohort, a few weeks. Other students request to join, and the host approves people up to capacity. Everyone confirms the group actually kicked off. When the leg ends, the host passes the group's notes and momentum to a new host for the next cohort. The new host registers their leg as a continuation of the last one, a relay, not a one-off.
 
 ## Build
 
-Build follows a deliberate sequence. Write the specification before touching a coding agent, so the idea is explicit rather than assumed. Build the frontend first, behind a mocked backend, to test the idea cheaply. Once the spec is validated against a clickable UI, define the OpenAPI contract, then implement the backend against it. Persistence comes last, once the whole flow is already working.
+Build follows a deliberate sequence. Write the specification before touching a coding agent, so the scope is explicit rather than assumed. Build the frontend first, behind a mocked backend, to test the idea cheaply. Once the spec is validated against a clickable UI, define the OpenAPI schema, then implement the backend against it. Persistence comes last, once the whole flow is already working.
 
 With frontend, backend, and a database talking to each other locally, the application is ready to leave your machine.
 
 ### 1. Specification
 
-If you give a coding agent a vague idea, it fills in the gaps with its own assumptions. Better to brainstorm scope with a reasoning model first, one question at a time so it stays a dialogue rather than a wall of text, then save the result to a file the coding agent can read later.
+If you give a coding agent a vague idea, it fills in the gaps with its own assumptions. Better to brainstorm scope with a reasoning model first, one question at a time so it stays a dialogue rather than a wall of text. Then save the result to a file the coding agent can read later.
 
 ```text
 I want to build a tool for weekly feedback for projects.
@@ -45,11 +54,11 @@ Help me set the scope for this project precisely. I want to brainstorm with you 
 Ask me one question at a time and keep your output short.
 ```
 
-With scope decided, hand the idea to a coding agent to make it real.
+With scope decided, pass the idea to a coding agent to make it real.
 
 ### 2. Frontend first, mocked
 
-We build the frontend before the backend so we can test the idea and the spec while the cost of changing either is still low. The key is centralizing every backend call in one services layer: the mock sits there, and when we swap in a real client later, it's one change in one place. A tool like Lovable, v0, or Bolt can generate a whole frontend from a single prompt, or use a coding agent directly.
+We build the frontend before the backend so we can test the idea and the spec while the cost of changing either is still low. The key is centralizing every backend call in one services layer. The mock sits there, and when we swap in a real client later, it's one change in one place. A tool like Lovable, v0, or Bolt can generate a whole frontend from a single prompt, or use a coding agent directly.
 
 ```text
 Create a system design interview application.
@@ -63,9 +72,9 @@ Add tests.
 
 Once the frontend is real and clickable, move it into the project structure the rest of the build will use.
 
-### 3. OpenAPI contract
+### 3. OpenAPI schema
 
-The OpenAPI contract is the explicit agreement between frontend and backend: every endpoint, request body, response body, and auth rule. Skipping it is possible, but then the backend has to infer its own behavior from the frontend code, and that's a worse target. Reading the frontend's own mocked client to generate the spec means the contract reflects what the UI actually calls, not a guess.
+The OpenAPI schema spells out the explicit agreement between frontend and backend. It covers every endpoint, request body, response body, and auth rule. You can skip it, but then the backend has to infer its own behavior from the frontend code, and that's a worse target. Reading the frontend's own mocked client to generate the spec means the schema reflects what the UI actually calls, not a guess.
 
 ```text
 Read the frontend's API client in frontend/
@@ -75,7 +84,7 @@ Create openapi.yaml at the repository root.
 Specify the backend this frontend expects: every endpoint, method, path, request body, response body, and which endpoints need authentication.
 ```
 
-With the contract defined, the backend has a precise target to build against. But first, we need to decide what it's built with.
+With the schema defined, the backend has a precise target to build against. But first, we need to decide what it's built with.
 
 ### 4. Choose the backend stack
 
@@ -85,7 +94,7 @@ The coding agent can propose stacks, but we make the call, informed by real trad
 Propose two backend stacks for this application, with the tradeoffs for each. Recommend one and wait for my approval before writing code.
 ```
 
-With a stack approved, implement the backend against the contract.
+With a stack approved, implement the backend against the schema.
 
 ### 5. Backend
 
@@ -135,9 +144,11 @@ The application works locally end-to-end. Making it survive contact with the rea
 
 ## Deploy
 
-Local success and production success are different problems. Real networking, real databases, and real infrastructure introduce failure modes that a local run never hits. The goal here is one container image, not two: a compiled frontend is just static files the backend can serve directly, so it doesn't need its own container. SQLite was right for development; Postgres is the production-grade swap the ORM already prepared for. Deployment only earns real trust once it's exercised by automated tests and repeated through CI, not run once by hand.
+Local success and production success are different problems. Real networking, real databases, and real infrastructure introduce failure modes that a local run never hits. We ship one container image, not two: a compiled frontend is just static files the backend can serve directly. It doesn't need its own container.
 
-Deployed and tested, the application still needs someone watching it. That's where the operate stage picks up.
+SQLite was right for development. Postgres is the production-grade swap the ORM already prepared for. Deployment only earns real trust once it's exercised by automated tests and repeated through CI, not run once by hand.
+
+Once it's deployed and tested, the application still needs someone watching it. That's where the operate stage picks up.
 
 ### 9. Dockerfile
 
@@ -173,7 +184,7 @@ With the full stack running together, it's time to test it as a whole, not just 
 
 ### 12. Integration tests
 
-The backend may already have tests from earlier steps. If it doesn't, this is the point to add ones that exercise it against a real database.
+The backend may already have tests from earlier steps. If it doesn't, now is the moment to add ones that exercise it against a real database.
 
 ```text
 Create integration tests that run against docker-compose.yaml.
@@ -201,7 +212,7 @@ Use Playwright to:
 Put the tests in the e2e/ folder in the repository root.
 ```
 
-With the whole stack tested, the application is ready to leave our machine for good. But the target platform is still an open question.
+With the whole stack tested, the application is ready to leave our machine. But the target platform is still an open question.
 
 ### 14. Choose the deployment and CI/CD approach
 
@@ -215,13 +226,13 @@ With a platform approved, deploy the tested artifact to it.
 
 ### 15. Deploy to AWS
 
-A temporary admin-level identity is fine for a first deploy, as long as every step is watched closely. A managed database service is a safer choice than colocating the database on the same instance as the app, once you move past a proof of concept.
+A temporary admin-level identity is fine for a first deploy, as long as every step is watched closely. A managed database service is a safer choice than colocating the database on the same instance as the app. That becomes important once you move past a proof of concept.
 
 ```text
 Deploy this application to AWS. Use AWS CloudFormation.
 ```
 
-One successful manual deploy is not a repeatable process. CI/CD is what makes it one.
+One successful manual deploy isn't a repeatable process, but CI/CD makes it one.
 
 ### 16. CI/CD pipeline
 
@@ -236,11 +247,11 @@ Create a CI/CD pipeline that:
 - validates that the deploy is successful by checking the health endpoint
 ```
 
-The application deploys itself now. Keeping it running safely in front of real users is the next problem.
+The application deploys automatically now. Keeping it running safely in front of real users is the next problem.
 
 ## Operate
 
-Two environments replace one. Development absorbs risk before production does, and we explicitly promote a passing build rather than pushing every commit straight to users. Building the image once and reusing that artifact in production removes an entire class of "worked in dev, broke in prod" problems. Metrics, logs, and traces turn "something broke" into "here's exactly what broke and why." An agent can investigate and propose a fix; a human decides whether it ships.
+Two environments replace one: development absorbs risk before production does, and we explicitly promote a passing build rather than pushing every commit straight to users. Building the image once and reusing that artifact in production removes an entire class of "worked in dev, broke in prod" problems. Metrics, logs, and traces turn "something broke" into "here's exactly what broke and why". An agent can investigate and propose a fix. A human decides whether it ships.
 
 Rehearsing a real failure, end to end, is the only way to know whether this loop actually works.
 
@@ -256,7 +267,7 @@ With two environments, CI/CD needs to know the difference between shipping to on
 
 ### 18. Manual promotion workflow
 
-Development still deploys automatically on every push. Production only moves when a person explicitly approves it.
+Development still deploys automatically on every push, but production only moves when a person explicitly approves it.
 
 ```text
 Create a manual GitHub Actions workflow that promotes the dev version to production.
@@ -266,7 +277,7 @@ Before that promotion can be trusted, building and deploying need to stop happen
 
 ### 19. Split build/deploy, tag images
 
-Building during deploy means a failed build can still trigger a broken deploy, and promoting to production rebuilds the image instead of reusing what was already tested in dev. Tagging every image with a timestamp and commit SHA makes "this exact build" an unambiguous, promotable artifact.
+Building during deploy means a failed build can still trigger a broken deploy. Promoting to production also rebuilds the image instead of reusing what was already tested in dev. Tagging every image with a timestamp and commit SHA makes "this exact build" an unambiguous, promotable artifact.
 
 ```text
 Currently we build the image during the deploy stage.
@@ -301,17 +312,24 @@ Telemetry is only useful once it's actually collected and stored somewhere we ca
 
 ### 21. Choose the observability backend
 
-Where telemetry ends up, which metrics store, log store, trace store, and dashboard, is a real decision with many valid answers, worth asking about explicitly.
+Where telemetry ends up is a real decision with many valid answers, so ask about it explicitly instead of assuming:
+
+- which metrics store
+- which log store
+- which trace store
+- which dashboard
+
+Ask the agent to make that case for you:
 
 ```text
 Propose two options for storing and viewing this telemetry — metrics, logs, and traces. Recommend one and wait for my approval.
 ```
 
-With a backend approved, wire up the collector and the dashboards that use it.
+With a backend approved, connect the collector and the dashboards that use it.
 
 ### 22. OTel Collector stack
 
-An OpenTelemetry Collector sits between the app and storage, so the app doesn't need to know where telemetry ultimately lands. Running the observability stack as its own Compose project keeps it decoupled from the application stack.
+An OpenTelemetry Collector sits between the app and storage, so the app doesn't need to know where telemetry ultimately ends up. Running the observability stack as its own Compose project keeps it decoupled from the application stack.
 
 ```text
 Add an OpenTelemetry Collector.
@@ -327,11 +345,11 @@ Create "observability/" directory with Docker Compose for:
 Keep this as a separate Compose project from the application stack.
 ```
 
-Raw telemetry only becomes useful once it's turned into metrics worth looking at.
+Raw telemetry only becomes useful once it's turned into metrics people actually look at.
 
 ### 23. Application metrics
 
-Generic infrastructure metrics don't tell you if the product itself is working. Track what users are actually doing instead. Tagging every metric with environment and version is what makes a regression visible by release.
+Generic infrastructure metrics don't tell you if the product is working. Track what users are actually doing instead. Tagging every metric with environment and version is what makes a regression visible by release.
 
 ```text
 Track these application metrics:
@@ -348,14 +366,14 @@ Metrics only help if there's somewhere to actually see them.
 
 ### 24. Grafana panel
 
-A dashboard that can't be filtered by environment and version can't answer "did the last release cause this."
+A dashboard that can't be filtered by environment and version can't answer "did the last release cause this".
 
 ```text
 Add a Grafana panel with these metrics.
 Make it possible to filter by environment and deployed version
 ```
 
-The dashboard works locally. Now the observability stack itself needs to be deployed.
+The dashboard works locally, but now the observability stack needs to be deployed.
 
 ### 25. Deploy observability stack
 
@@ -366,7 +384,7 @@ Deploy the observability stack. It should be separate from the application stack
 Connect both development and production to it.
 ```
 
-Dashboards need a human watching them. Alerts don't.
+Dashboards need a human watching them, but alerts don't.
 
 ### 26. Alert
 
@@ -382,7 +400,7 @@ Once an alert can fire, something has to actually respond to it.
 
 ### 27. On-call worker
 
-Polling the alert API and handing the details to a headless coding agent is the entire on-call loop in miniature.
+Polling the alert API and passing the details to a headless coding agent is the entire on-call loop in miniature.
 
 ```text
 Add an on-call-engineer/ directory with a script that polls the observability alert API every minute.
@@ -394,7 +412,13 @@ What that agent is allowed to do with an alert needs to be spelled out explicitl
 
 ### 28. On-call agent system prompt
 
-The agent should investigate first, reproduce the failure, and only patch if the fix is small, tested, and committed to an isolated branch. It never deploys directly. A false positive gets explained, not "fixed" by changing code that wasn't actually broken.
+The agent should:
+
+- investigate first
+- reproduce the failure
+- only patch if the fix is small, tested, and committed to an isolated branch
+
+It never deploys directly, and a false positive gets explained, not "fixed" by changing code that wasn't actually broken.
 
 ```text
 You are the on-call engineer for this repository. An alert just fired.
@@ -420,23 +444,23 @@ After the on-call agent proves it can wake up and respond, the exercise and its 
 
 ### 30. Clean up
 
-Resources created for learning cost money if left running. Tear them down as deliberately as they were created.
+Resources created for learning cost money if left running, so tear them down as deliberately as they were created.
 
 ```text
 Delete the CloudFormation stacks.
 ```
 
-That's the credible minimum loop. Real products keep going from here.
+That's the credible minimum loop, and real products keep going from here.
 
 ## Going Further
 
-None of the topics below are covered in the walkthrough above. They're what's still missing once the minimum loop works. A single hand-deployed instance and a hand-run backup are both fine for learning, but neither holds up under real usage or a real incident. Each prompt builds on a decision already made earlier in the walkthrough: the platform, the database, the deployment pipeline. None start from scratch.
+None of this is covered in the walkthrough above, and it's what's still missing once the minimum loop works. A single manually deployed instance and a manually run backup are both fine for learning. Neither holds up under real usage or a real incident. Each prompt builds on a decision already made earlier in the walkthrough: the platform, the database, the deployment pipeline. None start from scratch.
 
 These prompts are what it takes to make the loop production-grade, not just working.
 
 ### 31. Managed runtime
 
-A hand-run container is fine for learning. A managed platform handles restarts, placement, and scaling without anyone watching it.
+A manually run container is fine for learning. A managed platform handles restarts, placement, and scaling without anyone watching it.
 
 ```text
 Evaluate managed runtimes for this container and recommend the simplest one that fits our scaling and budget needs.
@@ -476,7 +500,7 @@ Once we know where the limits are, releases can start rolling out more carefully
 
 ### 35. Progressive delivery
 
-Promoting a build to 100% of users at once means a bad release affects everyone at once. A canary limits the blast radius.
+Promoting a build to 100% of users in one go means a bad release affects everyone. A canary limits the blast radius.
 
 ```text
 Add canary deployment: route a small percentage of traffic to the new version and roll back automatically on errors.
