@@ -1,6 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="720" viewBox="0 0 1080 720" role="img" aria-labelledby="title desc">
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="920" viewBox="0 0 1400 920" role="img" aria-labelledby="title desc">
   <title id="title">Study Relay, end to end</title>
-  <desc id="desc">A developer pushes a change through CI/CD, which deploys it to Development. A release owner manually promotes the tested release to Production, where hosts and students use the app. Telemetry flows through the observability path to alerting, and an AI agent investigates and can prepare a fix.</desc>
+  <desc id="desc">Hosts and students use the deployed app, which is backed by a database inside Production. A developer pushes a change through CI/CD, which deploys it to Development; a release owner manually promotes the tested release into Production. Telemetry flows from Production through observability to alerting, and an AI agent investigates and can prepare a fix.</desc>
   <defs>
     <filter id="shadow" x="-20%" y="-20%" width="140%" height="150%">
       <feDropShadow dx="0" dy="4" stdDeviation="5" flood-color="#0f172a" flood-opacity="0.08"/>
@@ -11,6 +11,25 @@
     <marker id="arrow-green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto"><path d="M0 0 10 5 0 10Z" fill="#15803d"/></marker>
     <marker id="arrow-red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto"><path d="M0 0 10 5 0 10Z" fill="#dc2626"/></marker>
     <marker id="arrow-gray" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto"><path d="M0 0 10 5 0 10Z" fill="#64748b"/></marker>
+    <symbol id="icon-api" viewBox="0 0 24 24">
+        <path d="m8 5-5 7 5 7M16 5l5 7-5 7M14 3l-4 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </symbol>
+    <symbol id="icon-browser" viewBox="0 0 32 22">
+        <rect x="1" y="1.5" width="30" height="19" rx="2.25" fill="none" stroke="currentColor" stroke-width="2.67"/>
+        <path d="M1.5 6.5h29" fill="none" stroke="currentColor" stroke-width="2.67"/>
+        <circle cx="4" cy="4" r=".48" fill="currentColor"/>
+        <circle cx="6.2" cy="4" r=".48" fill="currentColor"/>
+        <circle cx="8.4" cy="4" r=".48" fill="currentColor"/>
+        <rect x="12" y="3.3" width="15" height="1.5" rx=".75" fill="currentColor" opacity=".35"/>
+      </symbol>
+    <symbol id="icon-container" viewBox="0 0 24 24">
+        <rect x="2" y="5" width="20" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="2"/>
+        <path d="M7 5v14M12 5v14M17 5v14" fill="none" stroke="currentColor" stroke-width="2"/>
+      </symbol>
+    <symbol id="icon-database" viewBox="0 0 24 24">
+        <ellipse cx="12" cy="5" rx="8" ry="3" fill="none" stroke="currentColor" stroke-width="2"/>
+        <path d="M4 5v7c0 1.66 3.58 3 8 3s8-1.34 8-3V5M4 12v7c0 1.66 3.58 3 8 3s8-1.34 8-3v-7" fill="none" stroke="currentColor" stroke-width="2"/>
+      </symbol>
     <symbol id="icon-environment" viewBox="0 0 24 24">
         <rect x="3" y="3" width="18" height="8" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/>
         <rect x="3" y="13" width="18" height="8" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/>
@@ -68,92 +87,122 @@
       .center-detail { font-weight: 600; fill: #475569; text-anchor: middle; }
     </style>
   </defs>
-  <rect width="1080" height="720" fill="#ffffff"/>
+  <rect width="1400" height="920" fill="#ffffff"/>
 
-  <g class="node-boundary node-purple" transform="translate(390 60)">
-    <rect width="300" height="380" rx="22" fill="none" stroke="#7c3aed"/>
+  <g class="node-boundary node-purple" transform="translate(340 30)">
+    <rect width="300" height="330" rx="22" fill="none" stroke="#7c3aed"/>
     <text class="boundary-title" x="20" y="31">CI/CD</text>
   </g>
-  <g class="node-boundary node-green" transform="translate(20 500)">
+  <g class="node-boundary node-green" transform="translate(750 330)">
+    <rect width="520" height="280" rx="22" fill="none" stroke="#15803d"/>
+    <text class="boundary-title" x="20" y="31">Production</text>
+  </g>
+  <g class="node-boundary node-green" transform="translate(20 680)">
     <rect width="300" height="200" rx="22" fill="none" stroke="#15803d"/>
     <text class="boundary-title" x="20" y="31">Respond</text>
   </g>
-  <g class="node-boundary node-purple" transform="translate(390 500)">
-    <rect width="670" height="200" rx="22" fill="none" stroke="#7c3aed"/>
+  <g class="node-boundary node-purple" transform="translate(750 680)">
+    <rect width="580" height="200" rx="22" fill="none" stroke="#7c3aed"/>
     <text class="boundary-title" x="20" y="31">Observe</text>
   </g>
-  <path class="edge-boundary-halo" d="M191 150L430 150" fill="none" stroke="#ffffff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
-  <path class="edge" d="M191 150L430 150" stroke="#2563eb" marker-end="url(#arrow-blue)"/>
-  <g class="edge-label" transform="translate(310.5 150)">
+  <path class="edge-boundary-halo" d="M109 118L380 120" fill="none" stroke="#ffffff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+  <path class="edge" d="M109 118L380 120" stroke="#2563eb" marker-end="url(#arrow-blue)"/>
+  <g class="edge-label" transform="translate(244.5 119)">
     <rect x="-31.21" y="-16" width="62.41" height="32" rx="16.0" fill="#ffffff" stroke="#2563eb"/>
     <text fill="#2563eb">Push</text>
   </g>
-  <path class="edge-boundary-halo" d="M650 150L800 150" fill="none" stroke="#ffffff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
-  <path class="edge" d="M650 150L800 150" stroke="#7c3aed" marker-end="url(#arrow-purple)"/>
-  <path class="edge-boundary-halo" d="M910 200V250H540V300" fill="none" stroke="#ffffff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
-  <path class="edge" d="M910 200V250H540V300" stroke="#2563eb" stroke-dasharray="8 8" marker-end="url(#arrow-blue)"/>
-  <path class="edge-boundary-halo" d="M191 350L430 350" fill="none" stroke="#ffffff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
-  <path class="edge" d="M191 350L430 350" stroke="#15803d" stroke-dasharray="8 8" marker-end="url(#arrow-green)"/>
-  <g class="edge-label" transform="translate(310.5 350)">
+  <path class="edge-boundary-halo" d="M600 120L750 120" fill="none" stroke="#ffffff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+  <path class="edge" d="M600 120L750 120" stroke="#7c3aed" marker-end="url(#arrow-purple)"/>
+  <path class="edge-boundary-halo" d="M860 170V210H490V250" fill="none" stroke="#ffffff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+  <path class="edge" d="M860 170V210H490V250" stroke="#2563eb" stroke-dasharray="8 8" marker-end="url(#arrow-blue)"/>
+  <path class="edge-boundary-halo" d="M109 258L380 300" fill="none" stroke="#ffffff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+  <path class="edge" d="M109 258L380 300" stroke="#15803d" stroke-dasharray="8 8" marker-end="url(#arrow-green)"/>
+  <g class="edge-label" transform="translate(244.5 279)">
     <rect x="-40.7" y="-16" width="81.4" height="32" rx="16.0" fill="#ffffff" stroke="#15803d"/>
     <text fill="#15803d">Manual</text>
   </g>
-  <path class="edge-boundary-halo" d="M650 350L800 350" fill="none" stroke="#ffffff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
-  <path class="edge" d="M650 350L800 350" stroke="#15803d" marker-end="url(#arrow-green)"/>
-  <path class="edge-boundary-halo" d="M910 400L910 560" fill="none" stroke="#ffffff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
-  <path class="edge" d="M910 400L910 560" stroke="#2563eb" marker-end="url(#arrow-blue)"/>
-  <path class="edge" d="M800 610L650 610" stroke="#dc2626" marker-end="url(#arrow-red)"/>
-  <path class="edge-boundary-halo" d="M430 610L280 610" fill="none" stroke="#ffffff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
-  <path class="edge" d="M430 610L280 610" stroke="#15803d" marker-end="url(#arrow-green)"/>
+  <path class="edge-boundary-halo" d="M600 300L895 300L895 400" fill="none" stroke="#ffffff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+  <path class="edge" d="M600 300L895 300L895 400" stroke="#15803d" marker-end="url(#arrow-green)"/>
+  <path class="edge-boundary-halo" d="M180 426H485V433.33H790" fill="none" stroke="#ffffff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+  <path class="edge" d="M180 426H485V433.33H790" stroke="#7c3aed" marker-end="url(#arrow-purple)"/>
+  <path class="edge-boundary-halo" d="M180 576H485V466.67H790" fill="none" stroke="#ffffff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+  <path class="edge" d="M180 576H485V466.67H790" stroke="#7c3aed" marker-end="url(#arrow-purple)"/>
+  <path class="edge" d="M1000 450L1030 450" stroke="#15803d" marker-end="url(#arrow-green)"/>
+  <path class="edge-boundary-halo" d="M895 500V620H1200V740" fill="none" stroke="#ffffff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+  <path class="edge" d="M895 500V620H1200V740" stroke="#2563eb" marker-end="url(#arrow-blue)"/>
+  <path class="edge" d="M1090 790L1010 790" stroke="#dc2626" marker-end="url(#arrow-red)"/>
+  <path class="edge-boundary-halo" d="M790 790L280 790" fill="none" stroke="#ffffff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+  <path class="edge" d="M790 790L280 790" stroke="#15803d" marker-end="url(#arrow-green)"/>
 
-  <g class="node-icon-only node-blue" transform="translate(142 122)">
+  <g class="node-icon-only node-blue" transform="translate(60 90)">
     <use href="#icon-user" x="0" y="0" width="56" height="56" color="#2563eb"/>
     <text class="icon-node-title" x="28" y="81">You</text>
   </g>
-  <g class="node node-purple" transform="translate(430 100)" filter="url(#shadow)">
+  <g class="node node-purple" transform="translate(380 70)" filter="url(#shadow)">
     <rect width="220" height="100" rx="18" fill="#f5f3ff" stroke="#7c3aed"/>
     <use href="#icon-workflow" x="16" y="20" width="34" height="34" color="#7c3aed"/>
-    <text class="node-title icon-copy" x="62" y="43.48" font-size="18">Deploy</text>
+    <text class="node-title icon-copy" x="62" y="39.88" font-size="8">Deploy</text>
     <text class="node-subtitle" x="110" y="75" font-size="16">Ship the change</text>
   </g>
-  <g class="node node-blue" transform="translate(800 100)" filter="url(#shadow)">
+  <g class="node node-blue" transform="translate(750 70)" filter="url(#shadow)">
     <rect width="220" height="100" rx="18" fill="#eff6ff" stroke="#2563eb"/>
     <use href="#icon-environment" x="16" y="20" width="34" height="34" color="#2563eb"/>
-    <text class="node-title icon-copy" x="62" y="43.48" font-size="18">Development</text>
+    <text class="node-title icon-copy" x="62" y="39.88" font-size="8">Development</text>
     <text class="node-subtitle" x="110" y="75" font-size="16">Validate the release</text>
   </g>
-  <g class="node-icon-only node-blue" transform="translate(142 322)">
+  <g class="node-icon-only node-blue" transform="translate(60 230)">
     <use href="#icon-user" x="0" y="0" width="56" height="56" color="#2563eb"/>
     <text class="icon-node-title" x="28" y="81">Release owner</text>
   </g>
-  <g class="node node-purple" transform="translate(430 300)" filter="url(#shadow)">
+  <g class="node node-purple" transform="translate(380 250)" filter="url(#shadow)">
     <rect width="220" height="100" rx="18" fill="#f5f3ff" stroke="#7c3aed"/>
     <use href="#icon-workflow" x="16" y="20" width="34" height="34" color="#7c3aed"/>
-    <text class="node-title icon-copy" x="62" y="43.48" font-size="18">Prod release</text>
+    <text class="node-title icon-copy" x="62" y="39.88" font-size="8">Prod release</text>
     <text class="node-subtitle" x="110" y="75" font-size="16">Promote tested release</text>
   </g>
-  <g class="node node-green" transform="translate(800 300)" filter="url(#shadow)">
-    <rect width="220" height="100" rx="18" fill="#ecfdf5" stroke="#15803d"/>
-    <use href="#icon-environment" x="16" y="20" width="34" height="34" color="#15803d"/>
-    <text class="node-title icon-copy" x="62" y="43.48" font-size="18">Production</text>
-    <text class="node-subtitle" x="110" y="75" font-size="16">Hosts and students</text>
+  <g class="node-icon-only node-blue" transform="translate(20 370)">
+    <use href="#icon-browser" x="0" y="0" width="160" height="112" color="#2563eb"/>
+    <text class="icon-node-title" x="80" y="137">Host browser</text>
   </g>
-  <g class="node node-green" transform="translate(60 560)" filter="url(#shadow)">
+  <g class="node-icon-only node-blue" transform="translate(20 520)">
+    <use href="#icon-browser" x="0" y="0" width="160" height="112" color="#2563eb"/>
+    <text class="icon-node-title" x="80" y="137">Student browser</text>
+  </g>
+  <g class="node node-amber" transform="translate(790 400)" filter="url(#shadow)">
+    <rect width="210" height="100" rx="18" fill="#fff7ed" stroke="#c2410c"/>
+    <text class="eyebrow" x="105" y="20" font-size="13">CONTAINER</text>
+    <use href="#icon-api" x="16" y="30" width="34" height="34" color="#c2410c"/>
+    <text class="node-title icon-copy" x="62" y="49.88" font-size="8">Study Relay app</text>
+    <text class="node-subtitle" x="105" y="85" font-size="16">Frontend + backend</text>
+  </g>
+  <g class="node node-green" transform="translate(1030 400)" filter="url(#shadow)">
+    <rect width="210" height="100" rx="18" fill="#ecfdf5" stroke="#15803d"/>
+    <text class="eyebrow" x="105" y="9" font-size="13">CONTAINER</text>
+    <use href="#icon-container" x="16" y="19" width="34" height="34" color="#15803d"/>
+    <text class="node-title icon-copy" x="62" y="38.88" font-size="8">Postgres</text>
+    <text class="node-subtitle" x="105" y="74" font-size="16">Groups, requests,</text>
+    <text class="node-subtitle" x="105" y="96" font-size="16">relay links</text>
+  </g>
+  <g class="node node-green" transform="translate(60 740)" filter="url(#shadow)">
     <rect width="220" height="100" rx="18" fill="#ecfdf5" stroke="#15803d"/>
     <use href="#icon-robot" x="16" y="20" width="34" height="34" color="#15803d"/>
-    <text class="node-title icon-copy" x="62" y="43.48" font-size="18">AI agent</text>
+    <text class="node-title icon-copy" x="62" y="39.88" font-size="8">AI agent</text>
     <text class="node-subtitle" x="110" y="75" font-size="16">Investigate + patch</text>
   </g>
-  <g class="node node-red" transform="translate(430 560)" filter="url(#shadow)">
+  <g class="node node-red" transform="translate(790 740)" filter="url(#shadow)">
     <rect width="220" height="100" rx="18" fill="#fef2f2" stroke="#dc2626"/>
     <use href="#icon-warning" x="16" y="20" width="34" height="34" color="#dc2626"/>
-    <text class="node-title icon-copy" x="62" y="43.48" font-size="18">Alerting</text>
+    <text class="node-title icon-copy" x="62" y="39.88" font-size="8">Alerting</text>
     <text class="node-subtitle" x="110" y="75" font-size="16">Failed joins or kickoffs</text>
   </g>
-  <g class="node node-purple" transform="translate(800 560)" filter="url(#shadow)">
+  <g class="node node-purple" transform="translate(1090 740)" filter="url(#shadow)">
     <rect width="220" height="100" rx="18" fill="#f5f3ff" stroke="#7c3aed"/>
     <use href="#icon-observability" x="16" y="20" width="34" height="34" color="#7c3aed"/>
-    <text class="node-title icon-copy" x="62" y="43.48" font-size="18">Observability</text>
+    <text class="node-title icon-copy" x="62" y="39.88" font-size="8">Observability</text>
     <text class="node-subtitle" x="110" y="75" font-size="16">Collect telemetry</text>
+  </g>
+  <g class="node-attached node-green" transform="translate(1194 480)" filter="url(#shadow)">
+    <rect width="92" height="54" rx="14" fill="#ecfdf5" stroke="#15803d"/>
+    <text class="attached-title" x="46" y="32.76" font-size="16" font-weight="750" text-anchor="middle">pgdata</text>
   </g>
 </svg>
