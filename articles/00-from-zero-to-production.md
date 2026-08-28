@@ -1,64 +1,62 @@
 # From Zero to Production with AI Coding Agents
 
 [AI Dev Tools Zoomcamp](https://github.com/DataTalksClub/ai-dev-tools-zoomcamp)
-is the free course we run at DataTalks.Club, and this bonus article belongs
-to that series.
+is the free course we run at DataTalks.Club. 
 
-Across the series we build an application with AI coding agents end to end:
+Across the series we build an application with AI coding agents from the idea to making it production-ready.
 
-- [Build and Ship a Full-Stack App with AI Coding Assistants](https://aishippingblog.com/p/build-and-ship-a-full-stack-app-with) builds it
-- [Deploy a Full-Stack App with AI Coding Assistants](https://aishippingblog.com/p/deploy-a-full-stack-app-with-ai-coding) deploys it
-- [DevOps and Observability for an AI-Built App](https://aishippingblog.com/p/devops-and-observability-for-an-ai) makes it operable
+I showed how to do it in 3 stages:
 
-## Intro
+- [Stage 1: Build](https://aishippingblog.com/p/build-and-ship-a-full-stack-app-with) - coming up with an idea, creating frontend and backend and running it locally
+- [Stage 2: Deploy](https://aishippingblog.com/p/deploy-a-full-stack-app-with-ai-coding) - making the application testable, deployable and setting up CI/CD 
+- [Stage 3: Operate](https://aishippingblog.com/p/devops-and-observability-for-an-ai) - adding dev/prod environments, collectings metrics, logs, and traces and having AI agents react to incidents 
 
-Use it as one ready-to-copy prompt set on your own project, course submission or otherwise. Follow the steps in order and you'll end up with an application that works end to end. The steps are ordered by complexity on purpose, so stop at any point and you still have something that works. Add the next layer only when you actually need it.
+In this article I'll put everything together in one place, so you can use it as a reference for developing your projects. I will not go into the details of each step, but I'll give you the prompts that you can use to build a production-ready project end-to-end just by following this article. 
 
-It comes in three parts, matching the three articles above:
+In the previous articles, I tried to keep it tool-agnostic, but I used FastAPI, AWS, CloudFormation and other technologies in the prompts. Here, I don't assume any programming language, framework, database, cloud, or observability tool. Instead, I'll show you how to use AI to make these decisions. 
 
-- Build
-- Deploy
-- Operate
+Each step here is a prompt that you put into your coding assitant. You can choose any assistant, it doesn't matter. In most cases, it helps to start a new session for each step. Then only the important things are in your agent's context and it can finish the work faster and better. 
 
-That's also how you should think about building your own application, step by step. Not every project needs to reach the Operate stage. A weekend project or a course submission is often done once it's built and deployed, and that's fine too.
-
-Each step gives one goal and one prompt, not a tour of every generated file.
-
-The prompts stay tool-agnostic:
-
-- no assumed language or framework
-- no assumed database or host
-- no assumed CI product or observability vendor
-
-Where a real choice is needed, the walkthrough asks the agent to propose options and waits for your approval rather than assuming one.
-
-One example runs through the whole walkthrough end to end: Study Relay.
-
-A student starts a study group for one leg of a course: a module, a cohort, a few weeks. Other students request to join, and the host approves people up to capacity. Everyone confirms the group actually kicked off. When the leg ends, the host passes the group's notes and momentum to a new host for the next cohort. The new host registers their leg as a continuation of the last one, a relay, not a one-off.
 
 ## Build
 
-Build follows a deliberate sequence. Write the specification before touching a coding agent, so the scope is explicit rather than assumed. Build the frontend first, behind a mocked backend, to test the idea cheaply. Once the spec is validated against a clickable UI, define the OpenAPI schema, then implement the backend against it. Persistence comes last, once the whole flow is already working.
+In the build stage, we:
 
-With frontend, backend, and a database talking to each other locally, the application is ready to leave your machine.
+- turn the raw idea into a specification
+- create frontend
+- create backend
+- connect them
+
 
 ### 1. Specification
 
-If you give a coding agent a vague idea, it fills in the gaps with its own assumptions. Better to brainstorm scope with a reasoning model first, one question at a time so it stays a dialogue rather than a wall of text. Then save the result to a file the coding agent can read later.
+If you give a coding agent a vague idea, it'll fill in the gaps with its own assumptions, and you'll get an app you didn't wan.t 
+
+It's better to be very clear what you want and capture this in a document called "speficiation". 
+
+I usually use ChatGPT for that: I open it in dictation mode and do a brain dump with my idea, and then we iterate until it's clear how it can look like.
+
+You can start you dicussion with your AI assistant using this prompt:
 
 ```text
-I want to build a tool for weekly feedback for projects.
+I want to build a tool for forming study groups.
 
 Help me set the scope for this project precisely. I want to brainstorm with you and understand how the tool should work. Give me options.
 
 Ask me one question at a time and keep your output short.
 ```
 
-With scope decided, pass the idea to a coding agent to make it real.
+At the end, ask the assistant to summarize the discussion into a markdown document. 
+
+Create an empty folder for your project, and save the specs into `_docs/specs.md`
+
+Use this document to build the frontend.
 
 ### 2. Frontend first, mocked
 
-We build the frontend before the backend so we can test the idea and the spec while the cost of changing either is still low. The key is centralizing every backend call in one services layer. The mock sits there, and when we swap in a real client later, it's one change in one place. A tool like Lovable, v0, or Bolt can generate a whole frontend from a single prompt, or use a coding agent directly.
+I build frontend before backend so I can test the idea quickly. It's the least expensive way: you create a clickable interface and you test it with some mock data. If it looks the way you want, you can continue.
+
+Put this into your coding assistant (or tools like Lovable, v0 or Bolt.new):
 
 ```text
 Create a system design interview application.
@@ -70,221 +68,322 @@ Centralize every backend call in one services layer, and create a mock implement
 Add tests.
 ```
 
-Once the frontend is real and clickable, move it into the project structure the rest of the build will use.
+Save the frontend code in the `frontend/` directory. 
+
+After you iterated on frontend and you like it, time to define how it will interact with backend.
+
+### 3. Manual test
+
+Come up with a test that you can use for validating that your application works. This should be a sequence of actions that you perfmorn to validate that the app works the way you want
+
+For an app that helps you find study partners, it could be something like
+
+1. Open the home page, sign up
+2. Create a group for styding
+3. Create an event there
+4. Share the event
+5. Sign up to the event from another browser session
+6. Verify that the sign up is visible in the first session  
+
+You can use AI to compe up with this scenario, but remember it - and maybe save it to `_docs` too.
+
+
+### 3. AGENTS.md
+
+AGENTS.md is loaded into the agent's context every time you start a new session. You can add anything that you think is important for your app. For now let's add one line there:
+
+```
+make focused regular commit and explain your decisions in the commit messages so we can use it as logs
+```
+
+TODO: update the numers 
+
 
 ### 3. OpenAPI schema
 
-The OpenAPI schema spells out the explicit agreement between frontend and backend. It covers every endpoint, request body, response body, and auth rule. You can skip it, but then the backend has to infer its own behavior from the frontend code, and that's a worse target. Reading the frontend's own mocked client to generate the spec means the schema reflects what the UI actually calls, not a guess.
+Our frontend uses mock data, but it works the way we want. We previously asked the assistnat to centralize all the future backend calls in one place. Now let's use this to create the API specification. We will use this specification to define frontend-backend interaction:
 
 ```text
 Read the frontend's API client in frontend/
 
-Create openapi.yaml at the repository root.
-
-Specify the backend this frontend expects: every endpoint, method, path, request body, response body, and which endpoints need authentication.
+Create openapi.yaml at the repository root that defines every endpoint, method, path, request body, response body, and which endpoints need authentication.
 ```
 
-With the schema defined, the backend has a precise target to build against. But first, we need to decide what it's built with.
+Now we have the speficiation for our backend so we can build it.
 
 ### 4. Choose the backend stack
 
-The coding agent can propose stacks, but we make the call, informed by real tradeoffs. Naming the framework explicitly, rather than letting the agent default to whatever it knows best, keeps the decision intentional.
+Before we actually build it, you need to decide which technology you want to use for this application. 
+
+Ask the coding assistant to help:
 
 ```text
-Propose two backend stacks for this application, with the tradeoffs for each. Recommend one and wait for my approval before writing code.
+Based on openapi.yaml, propose 2-3 backend stacks options. Describe pros and cons for each. Recommend one.
 ```
 
-With a stack approved, implement the backend against the schema.
+You can challenge your AI assistnat and ask it some questions, or just accept the option it suggests. 
+
+At the end, save the results to `_docs/stack.md`
 
 ### 5. Backend
 
-Start with an in-memory store so we can verify the frontend-backend connection before persistence is even in the picture. Authentication and authorization belong in this step, not bolted on later. Split routing, models, storage, and auth into separate modules from the start.
+We have selected the technology so let's use it to build the backend.
+
+Just like we created frontend with a mocked backend calls, we can create backend with a mocked database. You first focus on making sure the frontend-backend integration works, and then you can connect a proper database.
+
 
 ```text
-Build a FastAPI backend in backend/ that implements the openapi.yaml spec.
+Build backend in backend/ based on `_docs/stack.md` that implements the openapi.yaml spec.
+
 Use an in-memory store and seed it with data so the frontend has something to show.
+
 Add authentication with hashed passwords and bearer tokens for the endpoints that need it.
-Split the code into modules - routers, models, store, auth
+
 Write tests
 ```
 
-A Makefile makes the running commands easy to remember and repeat.
-
 ### 6. Makefile
 
-Remembering the right run command for every service adds friction that's easy to automate away.
+I always have problems remembering how to start the backend, how to run the frontent, install the dependendencyes and do other things. For that I usualy use makefiles, so I can just type
 
-```text
-Create a Makefile so I can easily run it.
+```
+make backend
 ```
 
-With the backend running, connect it to the frontend that's been running on mocks.
+And the backend runs. Let's define a Makefile for us:
+
+
+```text
+Create a Makefile so I can easily run the applicaiton
+```
+
+
 
 ### 7. Connect frontend and backend
 
-Because every backend call was already centralized in one services layer, switching from mock to real is a single, low-risk change.
+We created a backend but the frontend still serves the mock data. Let's connect them:
 
 ```text
 Switch the frontend to use the real backend client.
 ```
 
-The app now works end-to-end, but a restart still erases everything. That's next.
+Use the test scenario from before to make sure it works. 
+
+You may do a few iterations here. Test the application and ask the agent to fix the problems you dicosver until it works correctly. 
+
 
 ### 8. Database
 
-Data has to survive a restart, so we replace the in-memory store with something durable. SQLite is a good first stop: no separate server to run, all state in a single file. Using an ORM and staying database-agnostic sets up a low-friction switch to Postgres later.
+We don't have a real database yet. let's add it. I usually use SQLite for local development, so I'll use it here, but feel free to replace it with something else.
 
 ```text
-Replace the in-memory store with a database. Use SQLite and SQLAlchemy
-Use an environment variable to configure which DB the server should connect to
-Make it database-agnostic - later we will add support for other databases (e.g. postgres)
+Replace the in-memory store with a database. Use SQLite with ORM, so later we can easily switch to a different database. 
 ```
 
-The application works locally end-to-end. Making it survive contact with the real world is next.
+Instead of SQLite your application may need something else, so you can chat with your coding assistatnt about it before you implement it. 
+
+After it's done, use the test scenario it and iterate until it fully works.
+
 
 ## Deploy
 
-Local success and production success are different problems. Real networking, real databases, and real infrastructure introduce failure modes that a local run never hits. We ship one container image, not two: a compiled frontend is just static files the backend can serve directly. It doesn't need its own container.
+Our app works locally. Great. Let's deploy it - make it available for others to use:
 
-SQLite was right for development. Postgres is the production-grade swap the ORM already prepared for. Deployment only earns real trust once it's exercised by automated tests and repeated through CI, not run once by hand.
+- Containerize it
+- Deploy it to the cloud 
+- Automate the deployment with CI/CD
 
-Once it's deployed and tested, the application still needs someone watching it. That's where the operate stage picks up.
+### 9. Containerization 
 
-### 9. Dockerfile
+We need to put our application in a container, so we can later use any container management system for deployint it. 
 
-In development, the frontend runs as its own watched process. In production it's just static files, so it doesn't need its own container. A two-stage build compiles the frontend, then copies only the built files into the backend image.
+In our local environment, we have two processes: one for frontend, one for backend. We need to run them separately. In practice, you usually compile frontned into static files and serve them with backend. 
+
+So, instead of creating separate containers for fronent and backend, we'll create one that serves both:
 
 ```text
-Create a Dockerfile that builds the frontend with Node, then builds a Python image with the backend and the frontend static files.
-
+Create a Dockerfile that builds the frontend with Node, then builds backend.
 Backend should serve the frontend.
 ```
 
-Build and run the image, then verify the real two-user flow works inside the container.
+Build and run the image, then verify the flow with the test scenario and iterate until it works. 
 
-### 10. Postgres
+### 10. Production database
 
-SQLite didn't need a database server, which kept local development simple. Production needs Postgres's durability and concurrency. Because the backend already used an ORM without SQLite-specific features, the switch is a small, contained change.
+In the previous stage (build) I used SQLite. It helps with keeping the local setup lightweight, but it's not a database we can use in production. Typically we use something like Postgres. 
+
+You can ask your agent to select the best database for your case, but it's very likely it'll be Postres. 
+
+So let's add it:
 
 ```text
 Add Postgres support to the backend.
 ```
 
-Running Postgres by hand works for one command, but the app needs every service defined together.
+Use the test scenario to make sure the app works.
+
 
 ### 11. Docker Compose
 
-One file that starts the app and its database together beats juggling separate `docker run` commands. A health check makes sure the app waits for Postgres to actually be ready before it starts.
+To make it easier to manage the dev environment with all the services locally we use docker compose. 
+
+Let's ask the agent to define it:
 
 ```text
-Create docker-compose.yaml with two services: Postgres and the app.
+Create docker-compose.yaml with two services: database and the app.
 ```
 
-With the full stack running together, it's time to test it as a whole, not just its parts.
+Run it with `docker compose up` and test it.
 
-### 12. Integration tests
 
-The backend may already have tests from earlier steps. If it doesn't, now is the moment to add ones that exercise it against a real database.
+### 12. Integration
+
+It's possible that by now you already have tests. AI coding assistants are instructed to create them. But maybe in your project there are still none. 
+
+Let's make it explicit and ask the asistant to create thme
+
+We also want to have a specific category of tests - integration tests. These tests are used to make sure the interaction between backend and the database is correct.  
+
+You can also ask the asisstnat to help you with findign the right test scenarios to include in the test suite:
 
 ```text
 Create integration tests that run against docker-compose.yaml.
 What scenarios should we test?
 ```
 
-Integration tests catch backend and database problems. An end-to-end test catches problems in the full user flow.
 
 ### 13. End-to-end test
 
-Containerizing and switching to Postgres are both changes that can silently break the real user flow. Test that flow directly, running against the same stack that will actually ship.
+Integration tests verify that the backend can connect to the datbase. End-to-end tests verify the entire user-backend flow: from the browser to the frontend, from the gfrontend to backend, and from the backedn to the database. 
+
+So far we were doing these tests oursevles manually. Let's now automate it.
 
 ```text
 Add an end-to-end test that runs against docker-compose.yaml.
 
 Use Playwright to:
 
-1. Log in as the interviewer (session 1).
-2. Create an interview session.
-3. Share the join link.
-4. Join from a separate client as the candidate (session 2).
-5. Change the canvas as the candidate (session 2).
-6. Verify that the interviewer sees the change (session 1).
+1. <Describe the first step>
+2. <Describe the second step>
+3. ...
 
 Put the tests in the e2e/ folder in the repository root.
 ```
 
-With the whole stack tested, the application is ready to leave our machine. But the target platform is still an open question.
+Now we don't need to repeast this test manually every time we make a change. 
 
-### 14. Choose the deployment and CI/CD approach
 
-The cloud provider and CI product are a decision, not a default. Ask for tradeoffs before creating any infrastructure.
 
-```text
-Propose two ways to deploy and continuously deliver this application, comparing cost, complexity, and portability. Recommend one and wait for my approval before creating any infrastructure.
-```
+### 14. Deployment stack
 
-With a platform approved, deploy the tested artifact to it.
+Now the application works locally and properly tested. It's time to deploy it. But where? There are many options. Let's choose what works best for us.
 
-### 15. Deploy to AWS
-
-A temporary admin-level identity is fine for a first deploy, as long as every step is watched closely. A managed database service is a safer choice than colocating the database on the same instance as the app. That becomes important once you move past a proof of concept.
+Ask the coding agent: 
 
 ```text
-Deploy this application to AWS. Use AWS CloudFormation.
+Propose 2-3 ways to deploy the application. Compare cost, complexity and other factors.
+
+<List any other contraints that you have>
 ```
 
-One successful manual deploy isn't a repeatable process, but CI/CD makes it one.
+It's also helpful to use an infrastructure as code (IaC) tool to manage your cloud resources. 
+
+```
+I want to use an infrastructure-as-code tool for managing my infra. What are my options?
+```
+
+It's possible that for the deployment option you chose there are no infrastructure-as-code options. In this case, just move on.
+
+### 15. Deployment
+
+Now we selected the stack, so let's deploy. 
+
+Ask the agent:
+
+```text
+Deploy this application to <Selected option>.
+```
+
+If applicable, add
+
+```
+use <IaC tool> for managing the infrastructure
+```
+
 
 ### 16. CI/CD pipeline
 
-Continuous integration catches breakage on every push. Continuous deployment is what turns a passing check into a live release. A short-lived role assumed through OIDC replaces the standing admin credentials used for the first manual deploy.
+We can deploy a few times manually, but we want to automate it. It's done with CI/CD:
+
+- CI is continuous integration - running tests every time you push to git
+- CD is continuous deployment - automatically deploying when the tests pass
 
 ```text
 Create a CI/CD pipeline that:
 
 - runs backend and frontend tests in parallel
 - builds the Docker Compose stack and runs integration and end-to-end tests against it
-- deploys to AWS using a GitHub OIDC role
+- deploys the application
 - validates that the deploy is successful by checking the health endpoint
 ```
 
-The application deploys automatically now. Keeping it running safely in front of real users is the next problem.
+You probably use GitHub for hosting code, so it's likely that you'll use GitHub Actions. If you don't like it, chat with AI to select a different option.
+
+We successfully deployed our application, but we're not done yet. We need to make it more production-ready.
 
 ## Operate
 
-Two environments replace one: development absorbs risk before production does, and we explicitly promote a passing build rather than pushing every commit straight to users. Building the image once and reusing that artifact in production removes an entire class of "worked in dev, broke in prod" problems. Metrics, logs, and traces turn "something broke" into "here's exactly what broke and why". An agent can investigate and propose a fix. A human decides whether it ships.
+To make it more production-ready, we need to add a few things:
 
-Rehearsing a real failure, end to end, is the only way to know whether this loop actually works.
+- create dev/prod environments
+- capture metrics, logs, and traces
+- set up alerts 
+- have an AI agent taking care of the alerts 
+
+Let's do that
 
 ### 17. Second environment
 
-Reusing the existing infrastructure-as-code for a second copy means most of the setup transfers directly.
+Now each push brings the updates directly to the deployment. But what if it has a bug that we missed? 
+
+To avoid that, we have two environments:
+
+- Dev: environment for testing. We deploy here on every push
+- Prod: envrionent that real users use. We promote a release from dev to prod only when we confirm that it works correctly
+
+If we use infrastructure as code, it's trivial to set up. If not, let the agent handle it.
+
+Ask:
 
 ```text
 Create a second, independent copy of our infrastructure. We will use the copy as production, and the existing infrastructure as a dev environment.
 ```
 
-With two environments, CI/CD needs to know the difference between shipping to one and promoting to the other.
-
 ### 18. Manual promotion workflow
 
-Development still deploys automatically on every push, but production only moves when a person explicitly approves it.
+Now we automatically release the code to development on every push. Let's set manual release pormotiion from dev to prod:
+
 
 ```text
 Create a manual GitHub Actions workflow that promotes the dev version to production.
 ```
 
-Before that promotion can be trusted, building and deploying need to stop happening as one combined step.
+### 19. Split build/deploy
 
-### 19. Split build/deploy, tag images
+It's possible that in your CI/CD the build and deploy happens in one step (it happened to me when I was deploying to AWS EC2). 
 
-Building during deploy means a failed build can still trigger a broken deploy. Promoting to production also rebuilds the image instead of reusing what was already tested in dev. Tagging every image with a timestamp and commit SHA makes "this exact build" an unambiguous, promotable artifact.
+It's an anti-pattern. We want to build the image only once, and first deploy it to development, and if it works fine, we use it for production too.
+
+If for you these steps are not separate (you can ask AI if you're not sure), let's split them. 
+
+Ask:
 
 ```text
 Currently we build the image during the deploy stage.
 
 Split it into two stages:
 
-- Build: build the image and push it to a container registry (ECR)
+- Build: build the image and push it to a container registry
 - Deploy: pull the image from the registry and serve it
 
 The manual prod promotion CI/CD workflow pulls the currently deployed dev image to prod.
@@ -292,11 +391,13 @@ The manual prod promotion CI/CD workflow pulls the currently deployed dev image 
 Tag each image using the YYYYMMDD-HHMMSS-shortsha pattern (e.g. "20260818-163457-83242da")
 ```
 
-With a reliable release process in place, the next problem is knowing when something inside it breaks.
+Depending on where you deploy your application, you may have to use different options for the container registry. talk to AI if you're not sure what to select and how to do it.
 
-### 20. Instrument with OpenTelemetry
+### 20. Observability. Instrument with OpenTelemetry
 
-Basic infrastructure metrics like CPU and memory hint that something's wrong, but they don't explain what happened inside a request. OpenTelemetry is a vendor-neutral standard, so instrumenting against it doesn't lock us into a specific observability backend.
+Our application is deployed and serving real users in production. But we don't know how reliable it is.
+
+We need data for that. that's called telemetry and we will colllect metrics, logs and traces. The intrustru standard is OpenTelementy so you'll probably use it. 
 
 ```text
 Instrument the backend with OpenTelemetry.
@@ -308,109 +409,110 @@ Include in the telemetry:
 - deployed version
 ```
 
-Telemetry is only useful once it's actually collected and stored somewhere we can look at it.
+To "instrument" backend means to include the code for capturing the telemetry in our application. But we also need to save it somehwere.
+
 
 ### 21. Choose the observability backend
 
-Where telemetry ends up is a real decision with many valid answers, so ask about it explicitly instead of assuming:
+There are many options for storing the telemetry and displaying the dashbords. Some are open-source but you need to self-host it. Some are fully managed, but you'll need to pay for them. Some of the self-hosted options give a generous free tier. 
 
-- which metrics store
-- which log store
-- which trace store
-- which dashboard
-
-Ask the agent to make that case for you:
+Ask the agent to help us select:
 
 ```text
-Propose two options for storing and viewing this telemetry — metrics, logs, and traces. Recommend one and wait for my approval.
+Propose 2-3 options for storing the telemetry (metrics, logs, traces) via OTel and for displaying them on a dashboard.
+
+<If you have any preferences add them here>
 ```
 
-With a backend approved, connect the collector and the dashboards that use it.
 
 ### 22. OTel Collector stack
 
-An OpenTelemetry Collector sits between the app and storage, so the app doesn't need to know where telemetry ultimately ends up. Running the observability stack as its own Compose project keeps it decoupled from the application stack.
+How we've selected the stack. If you decided to go with open-source and self-hosting, you can also deploy it locally:
 
 ```text
 Add an OpenTelemetry Collector.
 
-Create "observability/" directory with Docker Compose for:
-
-- OpenTelemetry Collector
-- Prometheus
-- Loki
-- Tempo
-- Grafana
+Create "observability/" directory with Docker Compose for: <list selected technologies>
 
 Keep this as a separate Compose project from the application stack.
 ```
 
-Raw telemetry only becomes useful once it's turned into metrics people actually look at.
-
-### 23. Application metrics
-
-Generic infrastructure metrics don't tell you if the product is working. Track what users are actually doing instead. Tagging every metric with environment and version is what makes a regression visible by release.
-
-```text
-Track these application metrics:
-
-- interview rooms created
-- active interview participants
-- canvas elements created
-- failures in component creation
-
-Include the environment and deployed version.
-```
-
-Metrics only help if there's somewhere to actually see them.
-
-### 24. Grafana panel
-
-A dashboard that can't be filtered by environment and version can't answer "did the last release cause this".
-
-```text
-Add a Grafana panel with these metrics.
-Make it possible to filter by environment and deployed version
-```
-
-The dashboard works locally, but now the observability stack needs to be deployed.
-
-### 25. Deploy observability stack
-
-Observability infrastructure gets deployed like anything else: separately from the app, but reachable by both environments.
+Then deploy it:
 
 ```text
 Deploy the observability stack. It should be separate from the application stack.
 Connect both development and production to it.
 ```
 
-Dashboards need a human watching them, but alerts don't.
+
+If you decided to go with a managed service, connect it:
+
+```
+Add an OpenTelemetry Collector for <selected technology>. Help me configure it
+```
+
+
+
+### 23. Application metrics
+
+We configured OTel. Let's collect important metrics. 
+
+They are application-dependent and depends on what's importnat for your product. 
+
+You can also ask the agent to come up with the most important metrics:
+
+```
+What are the most important product metrics I need to track in my application? Give me top 5
+```
+
+Start tracking them: 
+
+```
+Track the following metrics with OTel
+
+- <List them>
+```
+
+
+
+### 24. Dashboards
+
+We're tracking the metrics but not displaying them yet.
+
+Let's fix that:
+
+```text
+Display the metrics we export in a dashboard.
+Make it possible to filter by environment and deployed version
+```
+
+
 
 ### 26. Alert
 
-A metric can silently degrade for hours if nobody's watching the dashboard. An alert is what forces attention. A threshold tuned for real user impact, with an owner and a dashboard link attached, is what makes an alert actionable rather than noise.
+We can't babysit the metrics in a dasbboard. Instead, we can configure an alert that will fire every time the metrics goes too low or too high. 
 
 ```text
-Add an actionable alert for repeated canvas component-creation failures.
-
-Use a threshold and duration that represent real user impact. Include the service, environment, deployed version, owner, and dashboard URL in the alert.
+Add an actionable alert for <most important metric> 
+Include the service, environment, deployed version, owner, and dashboard URL in the alert.
 ```
 
-Once an alert can fire, something has to actually respond to it.
+It's also useful to track 5xx error codes and for each error send an alert (or configure a threshold that makes sense for your application). Talk to your AI assistant to set it up.
+
 
 ### 27. On-call worker
 
-Polling the alert API and passing the details to a headless coding agent is the entire on-call loop in miniature.
+Now alerts land in our email or slack. But we still need to act on them.
+
+We can have AI watch the alerts and fix the errors when they happen. 
+
+Let's configure it
 
 ```text
-Add an on-call-engineer/ directory with a script that polls the observability alert API every minute.
+Add an on-call-engineer/ directory with a script that connects to the observability alerts API.
 
-When an alert fires, pass the alert details to a headless coding agent.
+When an alert fires, wake up an on-call agent that you run in jeadless mode, pass all the alert details. The on-call agent should be able to resolve the issue autonomously and commit the fix.
 ```
-
-What that agent is allowed to do with an alert needs to be spelled out explicitly.
-
-### 28. On-call agent system prompt
 
 The agent should:
 
@@ -418,101 +520,31 @@ The agent should:
 - reproduce the failure
 - only patch if the fix is small, tested, and committed to an isolated branch
 
-It never deploys directly, and a false positive gets explained, not "fixed" by changing code that wasn't actually broken.
+You give the on-call engineer these instructions:
 
-```text
+```
 You are the on-call engineer for this repository. An alert just fired.
 
 Investigate the root cause. Read the code and reproduce the failure.
-If you find a real bug, make the smallest correction, run the backend tests, and commit the fix with a clear message.
+If you find a real bug, make the smallest correction, run the backend tests,
+and commit the fix with a clear message.
 If the alert is a false positive, explain why and do not change the code.
 ```
 
-The only way to know this actually works is to break something on purpose.
-
-### 29. Introduce a bug
-
-We need a bug that's reproducible but still passes the existing test suite. That's exactly the kind of regression this whole loop exists to catch.
-
-```text
-Introduce a realistic bug in canvas component creation.
-
-For some requests, creating a component should fail even though the existing tests pass. Keep the failure reproducible so we can test that the bug causes an alert and the on-call response.
-```
-
-After the on-call agent proves it can wake up and respond, the exercise and its temporary resources should be cleaned up.
-
-### 30. Clean up
-
-Resources created for learning cost money if left running, so tear them down as deliberately as they were created.
-
-```text
-Delete the CloudFormation stacks.
-```
-
-That's the credible minimum loop, and real products keep going from here.
-
 ## Going Further
 
-None of this is covered in the walkthrough above, and it's what's still missing once the minimum loop works. A single manually deployed instance and a manually run backup are both fine for learning. Neither holds up under real usage or a real incident. Each prompt builds on a decision already made earlier in the walkthrough: the platform, the database, the deployment pipeline. None start from scratch.
+This setup brings our application closer to production. But there are still many things you need to think about:
 
-These prompts are what it takes to make the loop production-grade, not just working.
+- Do you use a container manager? if not, consider using it
+- Do you use a managed database service? If not, consider usint it.
+- Regularly back up your database and test that the backups actually work.
+- Learn about VPCs and see if you need one. 
+- When you start getting traffic, learn about scaling and load balancing. 
 
-### 31. Managed runtime
+Also, periodically ask Fable or GPT-5.6-Sol Max (better both) to audit your code for security vulnerabilities.
 
-A manually run container is fine for learning. A managed platform handles restarts, placement, and scaling without anyone watching it.
+I'm only sctaching the surface of a "real production system" in this article, but the stages and steps in this tutorial are more than enough to get started. 
 
-```text
-Evaluate managed runtimes for this container and recommend the simplest one that fits our scaling and budget needs.
-```
+With this setup, you can use AI to build a product that runs reliably. The rest you can learn when you actually need it. 
 
-The runtime can scale the app, but the data still needs a plan for disaster.
-
-### 32. Backups and restore
-
-A backup nobody has restored is a guess, not a safety net.
-
-```text
-Add scheduled database backups. Restore the latest one into a fresh environment and confirm the data matches.
-```
-
-Even a perfectly backed-up app is only as safe as the network it's exposed on.
-
-### 33. Reduce public exposure
-
-The database and observability stack don't need to be reachable from the public internet. Only the application does.
-
-```text
-Put the database and observability stack on a private network. Only the application should be publicly reachable.
-```
-
-A safely exposed app still needs to prove it holds up under real load.
-
-### 34. Load testing
-
-Correctness under one user says nothing about correctness under a thousand. Measure it before real traffic finds the limit.
-
-```text
-Load test the busiest endpoint and report throughput, latency, and error rate as concurrency increases.
-```
-
-Once we know where the limits are, releases can start rolling out more carefully too.
-
-### 35. Progressive delivery
-
-Promoting a build to 100% of users in one go means a bad release affects everyone. A canary limits the blast radius.
-
-```text
-Add canary deployment: route a small percentage of traffic to the new version and roll back automatically on errors.
-```
-
-None of this replaces vigilance. It has to be revisited on a schedule, not set up once and forgotten.
-
-### 36. Recurring assurance review
-
-Dependencies, unused resources, and open findings all drift over time. A one-time audit doesn't stay true.
-
-```text
-Set up a monthly agent review of dependencies, unused cloud resources, and open security findings.
-```
-
+Have fun building! And check our AI Dev Tools Zoomcamp if you want to learn more about using AI for increasing your development productivity. 
