@@ -12,173 +12,197 @@ All articles in the series:
 - Part 4: [DevOps and Observability for an AI-Built App](https://aishippingblog.com/p/devops-and-observability-for-an-ai)
 - Part 5: Coding Agent Building Blocks: Reusable Skills and Specialized Subagents (this article)
 
-In this article, we focus on two capabilities from Module 5 that make coding agents
-more reliable: reusable skills and specialized subagents.
+In this article, I want to cover the two most important aspects of
+working with coding assistants: skills and subagents.
+Getting these two right is enough to work with agents productively, and you most likely won't need anything else.
 
-The product around the agent can be an IDE, a terminal, or a hosted environment. That interface matters less than the workflow inside it. Skills make a good procedure repeatable. Subagents isolate focused work in fresh context and, when useful, run it in parallel.
+I already have an article about [Setting up a coding agent](https://aishippingblog.com/p/how-to-set-up-your-coding-agent-a), where I talk about skills and subagents. This article is complimentary and I [preach] the same idea there: using skills and subagents is enough to get started ... 
 
-## From Article 1 to Explicit Building Blocks
 
-In [Article 1](https://aishippingblog.com/p/ai-native-development-specifications),
-we already used both ideas, but we hadn't packaged them as first-class
-capabilities:
 
-- `AGENTS.md`, `_docs/process.md`, and the other project documents contained
-  reusable instructions.
+## From Article 1 to Explicit Building Blocks (differnt name)
+
+In Part 1 of the course, [AI-Native Development: Specifications, Loop and Graph Engineering](https://aishippingblog.com/p/ai-native-development-specifications), we touched both concepts but didn't define them exlicitly. 
+
+Specifically, we created a few documents:
+
+- `_docs/process.md`, and the other project documents contained
+  reusable instructions (see [here](https://github.com/alexeygrigorev/retroloop/tree/main/_docs))
 - `_docs/team/pm.md`, `_docs/team/software-engineer.md`, and
   `_docs/team/qa-engineer.md` described specialized roles that we ran in fresh
-  sessions or launched as subagents.
+  sessions or launched as subagents (see [here](https://github.com/alexeygrigorev/retroloop/tree/main/_docs/team)).
 
-This worked because agent harnesses such as Claude Code, Codex, OpenCode, and
-Grok Build can read any Markdown file you point them to. A well-written
-`qa-engineer.md` can guide a QA run whether the harness calls it a skill, an
-agent definition, a rule, or simply a document. The label and directory matter
-less than whether the agent can find and read the instructions.
+In that article, I wanted to keep the discussion high-level and not focus on ...
 
-Formalizing the file still changes how the harness uses it:
+And we actually didn't need to explicitly define them. Coding agents can read any markdown document when you ask them and follow the intsructions from there. 
 
-- Define a skill when you want the current agent to follow a repeatable
-  procedure that the harness can advertise by name, load only when relevant,
-  and let you invoke directly.
-- Define a separate agent when the task benefits from a fresh context window,
-  a focused role, different tool permissions, an independent review, or
-  parallel execution.
+So that's enoh so I can tell a coding assitant 
 
-A skill defines how to do a task. A separate agent defines who owns the task
-and gives that worker its own context. For example, a release checklist belongs
-in a skill because the current agent can follow it from start to finish. QA is
-often better as a separate agent because a fresh reviewer is less likely to
-accept the implementer's assumptions.
+```
+You're a QA engineer. Your role is defined in `_docs/team/qa-engineer.md`. Review work for task #101.
+```
+
+And that's enough to work.
+
+Now I want to address that and explain what is what, ...
+
+in this article I want to go from juggling with md files to using these build-in primitives. 
 
 ## Building Block 1: Skills
 
-Skills are reusable, step-by-step workflows that encode best practices into repeatable procedures.
+A skill is a structured set of instructions for a repeatable procedure.
 
-## Skills as Reusable Workflows
+I use skills for rpocesses that require following a spefic sequence of action. 
 
-A skill is a structured set of instructions that tells the agent exactly what to do for a specific type of task. Instead of giving the agent a vague instruction like "release this library", you give it a detailed playbook with every step spelled out.
 
-## Unified Discovery and Direct Invocation
+I maintain a lot of Python libraries that I need to regularly update and publish.
 
-Previously, skills and commands were two separate concepts:
+I describe the process here: https://aishippingblog.com/p/my-pypi-release-pipeline-for-python
 
-- Skills were agent-discovered workflows. The agent saw a list of available skills and decided when to load one.
-- Commands were user-triggered shortcuts. A user typed something like `/release` to run a predefined workflow.
+It's a rpocess with multiple steps:
 
-They're now unified as skills. The agent can discover a skill from a regular
-request, or the user can invoke the same skill directly with `/name`.
+- step 1
+...
+- step n
 
-<figure>
-  <img src="images/05-skill-invocation.png" alt="A regular request and a direct slash invocation both select the same reusable skill, which the current agent follows">
-  <figcaption>A regular request and a direct invocation select the same skill for the current agent</figcaption>
-</figure>
+When I want to publish a new library or update the version of a library I'm maintaining, I don't want to describe the process over and over again. 
 
-You may still see older repositories and documentation use the word "command"
-or store these workflows in a `commands/` directory. In this article, we use
-"skill" for both forms.
+With skills, I can describe these processes in [markdown file](https://github.com/alexeygrigorev/.agents/blob/main/skills/release/SKILL.md) and just say:
 
-The AI Shipping Labs workshop
-[Build a Coding Agent with Tools, Skills and PydanticAI](https://aishippinglabs.com/workshops/coding-agent-v2)
-shows how to build a coding agent with skill support.
-It starts with tool calls and an agent loop, adds reusable skills, and then
-ports the agent to PydanticAI.
+```
+release a new versoin
+```
 
-## Shared Skills from `.agents`
+The agent undestsand my intent, sees the available skill, loads it and follows the process in this skill. 
 
-I keep my cross-project skills in the public
-[`.agents` repository](https://github.com/alexeygrigorev/.agents). It configures
-the same collection for Claude Code, Codex, and OpenCode.
+Inside, a skill is a markdown file that looks like that:
 
-These are some of the skills I use regularly:
+```
+TODO
+```
 
-- [`release`](https://github.com/alexeygrigorev/.agents/tree/main/skills/release)
-  bumps the version, pushes a tag, and lets CI publish the package.
-- [`init-library`](https://github.com/alexeygrigorev/.agents/tree/main/skills/init-library)
-  creates a Python library with packaging, tests, linting, and optional CLI
-  support.
-- [`create-github-repo`](https://github.com/alexeygrigorev/.agents/tree/main/skills/create-github-repo)
-  creates a GitHub repository and pushes the current project.
-- [`fetch-youtube`](https://github.com/alexeygrigorev/.agents/tree/main/skills/fetch-youtube),
+https://agentskills.io/specification - more about specs 
+
+The best way to understand how skills work is to build a small coding agent with skills. 
+In the AI Shipping Labs workshop
+[Build a Coding Agent with Tools, Skills and PydanticAI](https://aishippinglabs.com/workshops/coding-agent-v2),
+we build a coding agent with skill support. We start with tool calls and an
+agent loop, add reusable skills, and then port the agent to PydanticAI.
+
+
+
+
+### Global Skills
+
+There are some skills that all your projects need. But some are only needed for local work. 
+
+Example of global skills:
+
+- With [`release`](https://github.com/alexeygrigorev/.agents/tree/main/skills/release),
+  I bump the version, push a tag, and let CI publish the package. With [`init-library`](https://github.com/alexeygrigorev/.agents/tree/main/skills/init-library),
+  I create a Python library with packaging, tests, linting, and optional CLI
+  support. With [`create-github-repo`](https://github.com/alexeygrigorev/.agents/tree/main/skills/create-github-repo),
+  I create a GitHub repository and push the current project. (todo compress)
+- With [`fetch-youtube`](https://github.com/alexeygrigorev/.agents/tree/main/skills/fetch-youtube),
   [`fetch-loom`](https://github.com/alexeygrigorev/.agents/tree/main/skills/fetch-loom),
-  and [`fetch-zoom`](https://github.com/alexeygrigorev/.agents/tree/main/skills/fetch-zoom)
-  fetch recordings or transcripts for the agent to analyze.
-- [`diagram-creator`](https://github.com/alexeygrigorev/.agents/tree/main/skills/diagram-creator)
-  turns a JSON specification into consistent SVG and PNG diagrams.
-- [`setup-pypi-ci`](https://github.com/alexeygrigorev/.agents/tree/main/skills/setup-pypi-ci)
-  moves Python package publishing into a tag-triggered CI workflow.
-- [`regular-ping`](https://github.com/alexeygrigorev/.agents/tree/main/skills/regular-ping)
-  manages recurring reminders for long-running terminal sessions.
+  and [`fetch-zoom`](https://github.com/alexeygrigorev/.agents/tree/main/skills/fetch-zoom),
+  I fetch recordings or transcripts for the agent to analyze.
+- With [`diagram-creator`](https://github.com/alexeygrigorev/.agents/tree/main/skills/diagram-creator),
+  I turn a JSON specification into consistent SVG and PNG diagrams.
 
-## Project-Specific Skills
+I need these skills in many projects so I make them global, and I can load them from any project. 
 
-I use shared skills across projects. Project-specific skills stay next to the
-code and capture local commands, constraints, and operational knowledge.
+To make a skill globally available, put it in ~/.codex/skills or ~/.agents skills. In my case, I keep my global skills in one signle place ([.agents](https://github.com/alexeygrigorev/.agents)) and add symlinks to the skills folder to ~/.codex/skills, ~/.agents skills and all other agents I use. 
 
-For example:
 
-- [PocketShell](https://github.com/alexeygrigorev/pocketshell/tree/main/.claude/skills)
-  has skills for connecting to the physical Android device and turning a
-  screenshot into a GitHub issue.
-- [Course Management Platform](https://github.com/DataTalksClub/course-management-platform/tree/main/.claude/skills)
-  has an incident-response skill and a skill for verifying the Django app with
-  a throwaway database.
-- [AI Engineering Buildcamp](https://github.com/alexeygrigorev/ai-bootcamp/tree/main/.claude/skills)
-  has skills for curriculum reorganization and synchronizing lessons after a
-  video recording.
-- [DataTalks.Club FAQ](https://github.com/DataTalksClub/faq/tree/main/.claude/skills)
+
+### Project-Specific Skills
+
+There are a a few skills that are useful for many projects, but most skills are project-specific. So we don't need to put them globally. 
+
+For example, in my projects 
+
+- [Course Management Platform](https://github.com/DataTalksClub/course-management-platform/tree/main/.agents/skills)
+  has an [incident-response](https://github.com/DataTalksClub/course-management-platform/tree/main/.agents/skills/cmp-incident-response) skill. every time there's an alert, it knows how to investigate and fix the problem (simiarl to what we covered in article 4 (todo link))
+- [DataTalks.Club FAQ](https://github.com/DataTalksClub/faq/tree/main/.agents/skills)
   has skills for fetching course questions from Slack and turning recurring
-  questions into durable FAQ entries.
+  questions into FAQ entries.
+
+They work in the same way, but discoverable only for coding assisntats running for this specific project. 
+
+You place these skills in `.agents/skills` or in `.agents/skills`.
+
+It's annoying that Claude Code doesn't follow the standard convention, so I put my skills in `.agents/skills` and create a symlink `.agents/skills` to `.agents/skills`.
+
+
+### Creating skills
+
+TODO from the workshop video
+
 
 ## Building Block 2: Subagents
 
-A coding agent has a long but finite context window. In one session, it may
-plan, implement, and review a task. As that context fills, the agent can lose
-important details or give too much weight to its earlier decisions.
+A coding agent has a finite context window. In one session, it
+plans, implements, and reviews a task. As that context fills, the agent can lose some important details. This is called "context rot".
 
-Consider a coding agent that researches an issue, implements it, and then
-reviews its own work. Research and implementation fill the context with
-different details, while self-review encourages the agent to accept assumptions
-it made earlier. A fresh agent can focus on one role without all that history.
+That's why I often start each new task in a new session. And this is what I recommended to do in https://aishippingblog.com/p/from-idea-to-production - for each of the 28 prompts I recommend to start a new session.
 
-A subagent starts with a fresh context window outside the main agent's context.
-The main agent gives it a bounded task and receives a result, while the detailed
-work happens in isolation.
+Also, the actions that the agents has done so far inflience its future actions. If we have an agent that imlmeneted a feature, we don't want to ask it to test it. TODO explain why using terms and wors from article 1. 
 
-Because subagents are separate, independent tasks can run at the same time
-while the main agent continues coordinating the work.
+In article 1 I dscribed the process:
 
-Long sessions can also make an agent forget details or skip steps. A separate
-verifier starts without the implementer's assumptions, so it's more likely to
-catch missing work than the agent reviewing its own output.
+- PM grooms an issue
+- SWE implements it
+- QA tests it, and outputs PASS if everything is fine, FAIL if the task is not done
+- If it's FAIL, SWE needs to fix it
 
-## Sequential Roles in Article 1
+If I have an issue #101 that's arelady groomed, and want to implement it I can start a new session and say:
 
-In Article 1, the product manager, software engineer, and QA engineer worked
-one after another. The product manager refined an issue, the engineer
-implemented it, and QA checked the result in a fresh context. If QA returned
-`FAIL`, we sent the findings back to a new engineer session.
+```
+You're a software engineer agent. Your role is described in `_docs/team/swe.md`. Work on issue #101
+```
 
-We didn't run these roles in parallel because each one depended on the previous
-result. The benefit came from role separation and fresh context, not speed.
+But instead, I can have one main coding session that I'll treat as the orchestrator, and ask it to launch the agent: 
 
-<figure>
-  <img src="images/05-subagent-workflow.png" alt="Product manager, engineer, and QA roles run sequentially in separate fresh contexts, with QA failure returning work to the engineer and QA pass closing the issue">
-  <figcaption>Article 1 used fresh role agents sequentially, with QA failures returning to engineering</figcaption>
-</figure>
+```
+Launch a subagent to implement #101. Follow the process
+```
 
-## Parallel Work in Worktrees
+It will create a new agent with an empty context, and it will automatically prompt it. Some coding assistnants also let you peek inside the sessions of subagents, and for some you only know that they are doing something but you don't know what exactly.
 
-For independent coding tasks, I run several agents at the same time. Each agent
-gets its own git worktree, so it can edit, test, and commit without overwriting
-another agent's files. The main session becomes the orchestrator and stays out
-of feature implementation.
+I usually describe this in my process.md document that you always run subagents to do it, so your ask to the orchestrator could be 
+
+```
+Implement #101
+``` 
+
+And it will automatically run #101 though the PM->SWE->QA sequence, and each step will run in its own fresh context.
+
+
+## TOOD
+
+In the first article, we run this sequentially. For one task, we can't do it in any other way: we have to keep the sequence from PM to SWE and from SWE to QA.
+
+But we can take care of multile independent issues in parallel. 
+
+FOr taht we need two concepts:
+
+- Git Worktrees
+- The main session is hte orchestrator 
+
+We need worktrees so agnens  can edit, test, and commit without
+overwriting each other chagnes
+
+The main session orhcestrates eveyrthing: it keep track of the status for each task, schedules the agents, creates and merges workrees. It also prevents logical conflicts: it can notice that two issues need updating the same files, so it's better not to run them in parallel, because merging the changes will be difficult. 
+
+
 
 <figure>
   <img src="images/05-parallel-worktrees.png" alt="The orchestrator assigns independent issues to as many as five isolated worktrees, then merges approved branches into main one at a time">
   <figcaption>Agents work concurrently in isolated worktrees while the orchestrator controls review and merge order</figcaption>
 </figure>
 
-I use a prompt like this:
+To set it up, i put something like this in the process.md file
 
 ```text
 Work in isolated git worktrees and run up to five agents in parallel.
@@ -194,24 +218,10 @@ You are the orchestrator. Your job is to:
 - Coordinate the work; do not implement the issues yourself.
 ```
 
-Worktrees prevent filesystem collisions, but they don't prevent logical
-conflicts. Two agents should run in parallel only when they own different files
-or independent parts of the system. The orchestrator tracks dependencies,
-relays review feedback, and controls the merge order.
+I use this approach for most of my projects.
 
-I use this approach in larger projects. The
-[PocketShell workflow](https://github.com/alexeygrigorev/pocketshell/blob/main/process.md)
-allows up to five high-effort background agents. The
-[AI Shipping Labs workflow](https://github.com/AI-Shipping-Labs/website/blob/main/_docs/PROCESS.md)
-runs independent issue tracks in worktrees with a smaller default concurrency
-limit. The
-[Raised workflow](https://github.com/alexeygrigorev/raised/blob/main/process.md)
-also assigns each issue its own implementer and reviewer loop, with up to five
-agents running in parallel.
 
 ## Creating and Iterating on Skills
-
-## Creating a New Skill
 
 I don't start by designing a skill. I first do the real task with the agent as
 usual. When it takes a wrong turn, I correct it and continue until both the
@@ -224,9 +234,9 @@ Save this as a skill. Include the workflow we followed and all the corrections
 I made, so the next agent can do the task correctly from the start.
 ```
 
-The completed session records what worked and every correction I made. The
-agent can turn that history into a practical skill instead of inventing a
-workflow in advance.
+From the session, I can see what worked and every correction I made. I can
+ask the agent to turn that history into a practical skill instead of
+inventing a workflow in advance.
 
 I then review the generated `SKILL.md` and remove details that only mattered in
 that session. I also make sure its description says when an agent should load
@@ -242,31 +252,56 @@ I improve the first version through the same cycle:
    corrections
 4. The agent analyzes everything and updates the skill file
 
-Skills improve through real usage because each correction improves the next
-run.
+I improve skills through real usage: each correction makes the next run
+better.
+
+## Analysis and Implementation Models
+
+I use skills and subagents to structure the work, and I choose models with the
+same split in mind.
+
+I pick models by role:
+
+- For analysis, I use Fable or Sol. They read a spec, look at the current
+  code, and produce a concrete plan before implementation starts.
+- For implementation, I use Sonnet or Luna Max. Once the plan is clear, they
+  write the code, run the checks, and fix what breaks.
+
+These model names may change, but I keep the same split: analysis first,
+implementation second. I can repeat both passes with skills. I run analysis
+and verification passes in subagents so they don't inherit the implementer's
+assumptions.
+
 
 ## Practical Takeaways
 
-The distinction leads to a few practical rules:
+Keep these rules in mind when you structure your agent setup:
 
-- Start with skills: identify repetitive workflows and encode them as markdown playbooks
-- Add subagents when context is a problem: if tasks are too large for a single agent session, break them into roles
-- Keep skills simple: one workflow per skill. If it branches, split it
-- Give each subagent a fresh context window so details from another role don't interfere
-- Build incrementally: start with one skill and one subagent. Add more as you discover what your workflow needs
-- Always verify: even the best models take shortcuts. Skills encode the "right way" and subagent reviewers catch what the implementer missed
+- Start with skills: identify repeated flows and encode them as Markdown
+  playbooks
+- Add subagents when context is a problem: if tasks are too large for a single
+  agent session, break them into roles
+- Keep skills simple: one flow per skill. If it branches, split it
+- Give each subagent a fresh context window so details from another role don't
+  interfere
+- Build incrementally: start with one skill and one subagent. Add more as you
+  discover what your flow needs
+- Always verify: even the best models take shortcuts. I encode the "right way"
+  in skills, and reviewer subagents catch what the implementer missed
 
 ## Resources
 
-These resources cover the course, workshop, and shared skills:
+I use these resources for the course, workshop, and shared skills:
 
 - [AI Dev Tools Zoomcamp](https://github.com/DataTalksClub/ai-dev-tools-zoomcamp) (free course)
+- [Workshop 5: Coding Agent Capabilities](https://www.youtube.com/watch?v=t8OrAjNO2Zs)
 - [Build a Coding Agent with Tools, Skills and PydanticAI](https://aishippinglabs.com/workshops/coding-agent-v2)
 - [My agent configuration](https://github.com/alexeygrigorev/.agents) (shared skills for Claude Code, Codex, and OpenCode)
 
 ## Related Substack Articles
 
-These articles provide more detail on the examples:
+Read these for more detail on the examples:
 
-- [My Experiments with Claude Code](https://aishippingblog.com/p/my-experiments-with-claude-code)
+- [How to Set Up Your Coding Agent](https://aishippingblog.com/p/how-to-set-up-your-coding-agent-a)
+- [My Experiments with Claude Code](https://aishippingblog.com/p/my-experiments-with-agents-code)
 - [AI-Native Development: Specifications, Loop and Graph Engineering](https://aishippingblog.com/p/ai-native-development-specifications)
