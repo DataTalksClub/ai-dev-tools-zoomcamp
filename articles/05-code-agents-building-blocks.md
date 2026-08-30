@@ -22,14 +22,14 @@ In addition, I'll cover my process for creating skills and show how to run multi
 
 Getting these concepts is enough to work with coding agents productively, and you most likely won't need anything else.
 
-This article is loosely based on a live workshop I did for the course. In the workshop, I had to improvise a lot, so the content doesn't directly map to this article. But it's still going to be useful, so check it out.
+This article is loosely based on a live workshop I did for the course. In the workshop, I had to improvise, so the content doesn't directly map to this article. But it's still going to be useful, so check it out.
 
 https://www.youtube.com/watch?v=t8OrAjNO2Zs
 
 
-## XXX
+## From Markdown Files to Skills and Subagents
 
-In Part 1 of the course, [AI-Native Development: Specifications, Loop and Graph Engineering](https://aishippingblog.com/p/ai-native-development-specifications), we touched on both skills and subagents but, I didn't define them explicitly.
+In Part 1 of the course, [AI-Native Development: Specifications, Loop and Graph Engineering](https://aishippingblog.com/p/ai-native-development-specifications), we touched on both skills and subagents, but I didn't define them explicitly.
 
 Specifically, we created a few documents:
 
@@ -38,7 +38,7 @@ Specifically, we created a few documents:
 - `_docs/team/pm.md`, `_docs/team/software-engineer.md`, and
   `_docs/team/qa-engineer.md` described specialized roles for subagents (see [here](https://github.com/alexeygrigorev/retroloop/tree/main/_docs/team)).
 
-I wanted to keep the discussion high-level and not focus on the mechanics of any specific implementation. But these concepts are quite important, so I wanted to come back to them and devote them a separate article.
+I wanted to keep the discussion high-level and not focus on the mechanics of any specific implementation.
 
 We didn't explicitly define them because we can tell a coding assistant:
 
@@ -60,7 +60,7 @@ Even better, you can ask it to start a subagent with this role:
 Start a QA engineer subagent. The role is defined in `_docs/team/qa-engineer.md`. Review work for task #101.
 ```
 
-That's enough to work. The coding assistant can just go read the file and do the task.
+It will work. The coding assistant can just go read the file and do the task.
 
 But if you define these things as skills and subagents explicitly, you'll be more effective in using them. In this article, I'll show you how.
 
@@ -72,7 +72,9 @@ A skill is a structured set of instructions for a repeatable procedure.
 
 If you need to follow a specific sequence of actions for completing a task, you can document the steps in a skill. Then later you can ask the agent to use this skill to perform a task. It will read the file and follow the steps from there.
 
-For example, I maintain a lot of Python libraries that I need to regularly update and publish. I describe how I do it in [My PyPI Release Pipeline for Python Libraries](https://aishippingblog.com/p/my-pypi-release-pipeline-for-python).
+I use skills a lot.
+
+For example, one of my skills is for releasing a new vesion of a Python package. I maintain a lot of Python libraries that I need to regularly update and publish. I describe how I do it in [My PyPI Release Pipeline for Python Libraries](https://aishippingblog.com/p/my-pypi-release-pipeline-for-python).
 
 It's a process with multiple steps:
 
@@ -81,13 +83,13 @@ It's a process with multiple steps:
 - Push the code to GitHib as a tag
 - Verify that CI publishes the package
 
-If I want to release a new version of minsearch, I don't want to describe this step to the agent each time I do it. Instead, I document this in a [markdown file](https://github.com/alexeygrigorev/.agents/blob/main/skills/release/SKILL.md) and just say:
+If I want to release a new version of [minsearch](https://aishippingblog.com/p/minsearch-the-small-search-library), I don't want to describe these steps each time I do it. Instead, I document this in a [release skill](https://github.com/alexeygrigorev/.agents/blob/main/skills/release/SKILL.md) and just say:
 
 ```text
 release a new version
 ```
 
-The agent understands what I need, sees an available skill that's suitable for this task, loads it, and follows the steps there.
+The agent understands what I need, read the skill, and follows the steps there.
 
 <figure>
   <img src="images/05-release-skill.png" alt="A request to release minsearch prompts the coding agent to load the release skill and prepare version 0.2.0">
@@ -99,7 +101,7 @@ Internally, a skill is a markdown file that looks like that:
 ```markdown
 ---
 name: release
-description: Release the current project by bumping the version, pushing a tag, and letting CI publish it.
+description: Release a new version of the current project
 ---
 
 # Release
@@ -111,50 +113,61 @@ description: Release the current project by bumping the version, pushing a tag, 
 5. Verify that the CI publishing job succeeds.
 ```
 
-I use the name to invoke the skill directly. The agent uses the description to
-discover the skill from a regular request. I put the procedure in the rest of
-the file and can add helper scripts or reference files. The agent can then reuse
-a command that already works instead of deriving it again.
+The main difference between a plain markdown file that we used previously and a skill is that the skill is automatically discoverable.
 
-https://agentskills.io/specification - more about specs 
+I can say:
 
-The best way to understand how skills work is to build a small coding agent with skills. In the AI Shipping Labs workshop
-[Build a Coding Agent with Tools, Skills and PydanticAI](https://aishippinglabs.com/workshops/coding-agent-v2),
-we build a coding agent with skill support. We first learn about agents and function calls, and then see how to implement a special function for loading skills.
+```
+Make a release. The process is described in _docs/release.md
+```
+
+And that will absolutely work. The agent will read the file, and follow the steps there.
+
+However, with skills I don't need to say which file to use. The coding agent loads the list of skills into its context on the start time. When I need to release a library, it can see that there's a skill for that, so it goes ahead and uses it.
+
+A skill is a markdown document, but in order to make it discoverable, we need to follow a convention:
+
+- It must have a frontmatter section with name and description 
+- It's saved in `.agents/skills/<NAME>/SKILL.md` 
+
+And that's it - the rest is up to you. You can also add other markdown documents or scripts together with the `SKILL.md` file in the same directory and descride how the agent should use them. 
+
+The [Agent Skills specification](https://agentskills.io/specification) describes
+this structure and the format in more detail.
+
+If you want to better understand how skills work, the best way is to build a small coding agent with skills. In the AI Shipping Labs workshop
+[Build a Coding Agent with Tools, Skills and PydanticAI](https://aishippinglabs.com/workshops/coding-agent-v2) I show you how. We first learn about agents and function calls, and then see how to implement a special function for loading skills.
 
 
-
-### Global Skills
+## Global Skills
 
 There are some skills that all your projects need. But some are only needed for local work. 
 
 Example of global skills:
 
-- With [`release`](https://github.com/alexeygrigorev/.agents/tree/main/skills/release),
-  I bump the version, push a tag, and let CI publish the package. With [`init-library`](https://github.com/alexeygrigorev/.agents/tree/main/skills/init-library),
-  I create a Python library with packaging, tests, linting, and optional CLI
-  support. With [`create-github-repo`](https://github.com/alexeygrigorev/.agents/tree/main/skills/create-github-repo),
-  I create a GitHub repository and push the current project.
-- With [`fetch-youtube`](https://github.com/alexeygrigorev/.agents/tree/main/skills/fetch-youtube),
+- I use [`release`](https://github.com/alexeygrigorev/.agents/tree/main/skills/release) for releasing a new version of a library, [`init-library`](https://github.com/alexeygrigorev/.agents/tree/main/skills/init-library) to scaffold a new library or [`create-github-repo`](https://github.com/alexeygrigorev/.agents/tree/main/skills/create-github-repo) to create a GitHub repository
+- I also [`fetch-youtube`](https://github.com/alexeygrigorev/.agents/tree/main/skills/fetch-youtube),
   [`fetch-loom`](https://github.com/alexeygrigorev/.agents/tree/main/skills/fetch-loom),
   and [`fetch-zoom`](https://github.com/alexeygrigorev/.agents/tree/main/skills/fetch-zoom),
-  I fetch recordings or transcripts for the agent to analyze.
-- With [`diagram-creator`](https://github.com/alexeygrigorev/.agents/tree/main/skills/diagram-creator),
-  I turn a JSON specification into consistent SVG and PNG diagrams.
+  to fetch recordings or transcripts for the agent to analyze.
+- For creating diagrams, I have a [`diagram-creator`](https://github.com/alexeygrigorev/.agents/tree/main/skills/diagram-creator) skills.
 
-I need these skills in many projects, so I make them global and load them from
-any project. Different coding agents look for global skills in different
-directories. I keep one canonical copy in my
-[`agents` repository](https://github.com/alexeygrigorev/.agents) and link that
-collection into directories such as `~/.codex/skills` and `~/.claude/skills`.
-This gives Codex, Claude Code, and my other agents the same instructions on
-every computer I use.
+I use these skills across multiple projects, so it's better to make them global, so any agent on my computer can see and use them.
+
+To create global skills, you need to put them in 
+
+- `~/.codex/skills` for Codex
+- `~/.claude/skills` for Claude
+- other coding assistants have a similar structure
+
+I use multiple assistants, so I want all of them to use the same skills. For that, I maintain one canonical copy of the skills in my
+[`agents` repository](https://github.com/alexeygrigorev/.agents), and then create symlinks from there to `~/.codex/skills`, `~/.claude/skills` and other places. 
 
 
 
 ### Project-Specific Skills
 
-There are a few skills that are useful for many projects, but most skills are project-specific. So we don't need to put them globally.
+Most skills are not useful globally though - they are project-specific.
 
 For example, in my projects:
 
@@ -164,46 +177,35 @@ For example, in my projects:
   has skills for fetching course questions from Slack and turning recurring
   questions into FAQ entries.
 
-They work in the same way, but coding assistants discover them only while
-working in that project.
+They work in the same way as global skills, but you place them in your project root:
 
-Not every coding agent searches the same project directory. I keep one copy of
-each skill in the repository. I then add a symlink for an agent-specific
-directory or use `AGENTS.md` and `CLAUDE.md` to tell the agent where to find the
-skills and subagent definitions. Because the underlying files are Markdown,
-the same definitions can work across agent harnesses.
+- `./.agents/skills/` for all the assistants except Claude
+- `./.claude/skills/` for Claude Code
+
+It's annoying that Claude needs to have their own format - just like with `CLAUDE.md`. 
+
+I solve this problem by creating a symlink from `.claude/skills/` to `.agents/skills/`.
+
+I hope Anthropic starts listenining to their users and adopts the `.agents` convention too, so I can finally delete all these symlinks.
 
 
 ### Creating skills
 
-I don't usually start by designing a skill in the abstract. I do the task with
-the agent first. It tries an approach, I correct it, and we continue until we
-get the right result in the right way.
+You don't need to create these skills manually. Coding assistants know the format, so you can ask them to create these skills.
 
-Then I say:
+However, I don't just start a session and say "create a skill for releasing a new version of this library". Usually, I do the task with the agent first, and see where I need to correct it.
+
+We work together until the task is done, and then at the end I say:
 
 ```text
-Save this as a skill. Include the workflow we followed and the corrections I
-made, so the next agent can do the task correctly from the start.
+Save this as a skill. Cover the workflow we followed and keep all the corrections I made in mind, so the next agent can do the task correctly from the start.
+
+This skill is specific to this project, so don't create a global skill.
 ```
 
-This is how I created my recording skills. The first time I needed to download
-a recording and get its transcript, the agent explored several approaches.
-Once one worked, I asked it to save that procedure and the working script. The
-next time, it could fetch the recording immediately.
+If I don't include the last line, Codex will create a global skill, so I always have to add it. I didn't observe this behavior from other agents.
 
-I improve an existing skill in the same way:
-
-1. Trigger the skill on a real task.
-2. Correct the agent when the procedure is incomplete or wrong.
-3. Finish and verify the task.
-4. Ask the agent to update the skill from the successful session.
-
-This gives me instructions grounded in real work, including mistakes we already
-found and fixed. I still review the generated `SKILL.md` and remove details that
-only mattered in that session. I also make sure the description clearly says
-when the agent should load the skill.
-
+Improving an existing skill works in the same way. I trigger a skill, and if I see that something requires my intervention, I correct the agent. At the end of the session, I ask to update the process in the skill, so I don't have to do it next time.
 
 ## Building Block 2: Subagents
 
