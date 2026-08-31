@@ -128,11 +128,6 @@ And that will absolutely work. The agent will read the file and follow the steps
 
 However, with skills I don't need to say which file to use. The coding agent loads the list of skills into its context at startup. When I need to release a library, it can see that there's a skill for that, so it goes ahead and uses it.
 
-<figure>
-  <img src="images/05-skill-invocation.png" alt="A coding agent can discover a skill from the user's request or load the same skill when the user invokes it explicitly">
-  <figcaption>The agent can discover the right skill from the request, while an explicit command remains available when you want direct control</figcaption>
-</figure>
-
 A skill is a markdown document, but in order to make it discoverable, we need to follow a convention:
 
 - It must have a frontmatter section with a name and description
@@ -153,12 +148,12 @@ There are some skills that all your projects need. But some are only needed for 
 
 Examples of global skills:
 
-- I use [`release`](https://github.com/alexeygrigorev/.agents/tree/main/skills/release) for releasing a new version of a library, [`init-library`](https://github.com/alexeygrigorev/.agents/tree/main/skills/init-library) to scaffold a new library or [`create-github-repo`](https://github.com/alexeygrigorev/.agents/tree/main/skills/create-github-repo) to create a GitHub repository
-- I also [`fetch-youtube`](https://github.com/alexeygrigorev/.agents/tree/main/skills/fetch-youtube),
-  [`fetch-loom`](https://github.com/alexeygrigorev/.agents/tree/main/skills/fetch-loom),
-  and [`fetch-zoom`](https://github.com/alexeygrigorev/.agents/tree/main/skills/fetch-zoom),
+- I use [release](https://github.com/alexeygrigorev/.agents/tree/main/skills/release) for releasing a new version of a library, [init-library](https://github.com/alexeygrigorev/.agents/tree/main/skills/init-library) to scaffold a new library or [create-github-repo](https://github.com/alexeygrigorev/.agents/tree/main/skills/create-github-repo) to create a GitHub repository
+- I also [fetch-youtube](https://github.com/alexeygrigorev/.agents/tree/main/skills/fetch-youtube),
+  [fetch-loom](https://github.com/alexeygrigorev/.agents/tree/main/skills/fetch-loom),
+  and [fetch-zoom](https://github.com/alexeygrigorev/.agents/tree/main/skills/fetch-zoom),
   to fetch recordings or transcripts for the agent to analyze.
-- For creating diagrams, I have a [`diagram-creator`](https://github.com/alexeygrigorev/.agents/tree/main/skills/diagram-creator) skill.
+- For creating diagrams, I have a [diagram-creator](https://github.com/alexeygrigorev/.agents/tree/main/skills/diagram-creator) skill.
 
 I use these skills across multiple projects, so it's better to make them global, so any agent on my computer can see and use them.
 
