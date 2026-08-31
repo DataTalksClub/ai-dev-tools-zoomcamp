@@ -30,6 +30,7 @@ Use these links to join the course and find the materials:
 - [Open the course platform](https://courses.datatalks.club/ai-dev-tools-2026/) to see deadlines, submit homework and projects.
 - [Star the course repository](https://github.com/DataTalksClub/ai-dev-tools-zoomcamp). It contains the module materials, recordings, homework, and final-project requirements.
 - [Read the course documentation](https://datatalks.club/docs/courses/ai-dev-tools-zoomcamp/) for prerequisites, setup, logistics, and detailed guidance.
+- [Search the course FAQ](https://datatalks.club/faq/ai-dev-tools-zoomcamp.html) for technical and module-specific questions from previous cohorts.
 - [Join the DataTalks.Club Slack](https://datatalks.club/slack.html) for talking to your peer course participants and join the `#course-ai-dev-tools-zoomcamp` channel.
 - [Join the Telegram channel](https://t.me/aidevtoolszoomcamp) for announcements and deadline updates.
 
@@ -117,6 +118,7 @@ You finish by packaging reusable instructions and a repeatable way to review cha
 * [Companion article](https://github.com/DataTalksClub/ai-dev-tools-zoomcamp/blob/main/articles/05-code-agents-building-blocks.md)
 * [Recording](https://www.youtube.com/watch?v=t8OrAjNO2Zs)
 * [Module 5 materials](https://github.com/DataTalksClub/ai-dev-tools-zoomcamp/tree/main/05-agent-capabilities)
+* No homework
 
 ## Cohort format
 
@@ -157,6 +159,14 @@ After publishing a post, submit its link through the course platform with your h
 
 For more information, read the [learning-in-public guide](https://datatalks.club/docs/courses/zoomcamp-logistics/learning-in-public/) for the submission process, post ideas, and examples.
 
+## FAQ and questions
+
+Start with the [AI Dev Tools Zoomcamp FAQ](https://datatalks.club/faq/ai-dev-tools-zoomcamp.html) when you run into a course-specific or technical problem. It collects answers from previous cohorts, so you may find the exact error or question already covered.
+
+If the FAQ doesn't answer your question, ask in the `#course-ai-dev-tools-zoomcamp` Slack channel. Include what you tried, the result you expected, the result you got, and enough context for someone else to reproduce the problem. When you find a useful answer that is missing from the FAQ, send it through the [FAQ proposal form](https://github.com/DataTalksClub/faq/issues/new?template=faq-proposal.yml). Accepted FAQ contributions earn leaderboard points.
+
+For more information, read the [guide to asking questions](https://datatalks.club/docs/courses/zoomcamp-logistics/asking-questions/) for examples and troubleshooting guidance.
+
 ## Final project and certificate
 
 For the [final project](https://github.com/DataTalksClub/ai-dev-tools-zoomcamp/tree/main/project), you choose your own idea and build a complete application with AI assistance.
@@ -193,6 +203,7 @@ You don't need to remember every link, but it helps to know where to go for each
 - Use the [course platform](https://courses.datatalks.club/ai-dev-tools-2026/) for the schedule, deadlines, submission forms, scores, project, and certificate.
 - Use the [GitHub repository](https://github.com/DataTalksClub/ai-dev-tools-zoomcamp) for module materials, recordings, code, homework, and project requirements.
 - Use the [course docs](https://datatalks.club/docs/courses/ai-dev-tools-zoomcamp/) for setup and detailed guidance, and the [Zoomcamp logistics docs](https://datatalks.club/docs/courses/zoomcamp-logistics/) for the shared rules.
+- Search the [AI Dev Tools Zoomcamp FAQ](https://datatalks.club/faq/ai-dev-tools-zoomcamp.html) for technical and module-specific questions.
 - Use the [course Slack channel](https://app.slack.com/client/T01ATQK62F8/C09HWT76L95) for questions and discussion.
 - Use [Telegram](https://t.me/aidevtoolszoomcamp) for announcements.
 - Use the [YouTube playlist](https://www.youtube.com/playlist?list=PL3MmuxUbc_hLuyafXPyhTdbF4s_uNhc43) for recordings.
