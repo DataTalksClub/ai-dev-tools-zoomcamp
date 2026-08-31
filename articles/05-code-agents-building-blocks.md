@@ -266,7 +266,7 @@ Launch a subagent to implement #101. Follow the process.
 
 
 <figure>
-  <img src="images/05-subagent-general.jpg" alt="A coding assistant shows a main session with a backgrounded general-purpose subagent grooming issue 69">
+  <img src="images/05-subagent-general.png" alt="A coding assistant shows a main session with a backgrounded general-purpose subagent implementing issue 101">
   <figcaption>The main session can keep working while a subagent handles a focused task in the background</figcaption>
 </figure>
 
@@ -327,8 +327,8 @@ And it will start the software engineer agent.
 
 
 <figure>
-  <img src="images/05-subagent-pm.jpg" alt="A coding assistant starts a PM agent to groom issue 69 in the background">
-  <figcaption>A subagent can take on a specialized role, such as product-management work</figcaption>
+  <img src="images/05-subagent-pm.png" alt="A coding assistant starts a software-engineer agent to implement issue 101 in the background">
+  <figcaption>A subagent can take on a specialized role, such as software engineering</figcaption>
 </figure>
 
 
