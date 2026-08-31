@@ -17,7 +17,8 @@ You learn:
 Module summary: The companion article shows how to turn a vague idea into a useful specification,
 give an agent durable context, break the work into a backlog, and use separate
 product manager, software engineer, and QA roles to implement and verify the result.
-It uses a weekly-feedback project to explain spec-driven, loop, and graph engineering.
+It uses weekly-feedback as the cautionary example of building without a spec, then
+walks through retroloop to show spec-driven, loop, and graph engineering end to end.
 
 [Read the article: AI-Native Development: Specifications, Loop and Graph Engineering](https://aishippingblog.com/p/ai-native-development-specifications)
 

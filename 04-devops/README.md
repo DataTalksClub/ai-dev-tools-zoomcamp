@@ -31,8 +31,11 @@ Prerequisite: the deployed app from [Module 3](../03-deployment/).
 
 Module summary: The companion article makes the deployed app more production-ready by
 separating dev and prod, collecting logs, metrics, and traces, and alerting on
-user impact. It then puts an agent in a narrow incident-response loop with
-bounded actions, escalation, recovery verification, and an audit trail.
+user impact. It then runs a small proof-of-concept agent as on-call responder:
+given an alert, it investigates the root cause, reproduces the failure, and
+commits a fix, without the allowlists, escalation, or recovery verification a
+production setup would need — the module's own lessons add those guardrails
+on top.
 
 [Read the article: DevOps and Observability for an AI-Built App](https://aishippingblog.com/p/devops-and-observability-for-an-ai)
 
