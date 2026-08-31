@@ -25,6 +25,15 @@ audit trail
 
 Different products use different names for these capabilities. For example, one tool may call a reusable workflow a skill, another may call it a command, prompt, rule, recipe, or extension. The course should teach the capability first and the product-specific syntax second.
 
+Module summary: The companion article covers two building blocks for working with coding
+agents: reusable skills for procedures you keep repeating, and specialized
+subagents that run in their own isolated context instead of polluting the main
+session. It shows how to combine both with git worktrees so several agents can
+work on separate tasks in parallel, with the main session acting as an
+orchestrator that follows a defined process.
+
+[Read the article: Coding Agent Building Blocks: Reusable Skills and Specialized Subagents](https://aishippingblog.com/p/coding-agent-building-blocks-reusable)
+
 ## Lessons
 
 ### Lesson 5.1 — How Coding Agents Work
@@ -328,6 +337,11 @@ Demo script:
 4. The agent calls an MCP tool.
 5. A hook or guardrail prevents, formats, checks, or logs an action.
 6. The student reviews the final diff.
+
+## Homework
+
+> [!IMPORTANT]
+> Module 5 has no graded homework. Complete the [Agent Extension Pack](#module-deliverable-agent-extension-pack) above and carry it into your [final project](../project/) instead.
 
 ## Previous Cohort Materials
 

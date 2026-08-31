@@ -55,9 +55,9 @@ The sessions are optional, but useful if you want to see the workflows in action
 | Workshop 2: Build and Ship an AI-Assisted Full-Stack App | Mon, August 3, 15:00 CEST | How to move from product spec to frontend, backend, OpenAPI contract, tests, Docker, deployment, and CI/CD. | [Recording](https://www.youtube.com/watch?v=x9dq5nBpDg8) | [Article](https://aishippingblog.com/p/build-and-ship-a-full-stack-app-with) |
 | Workshop 3: Test, Containerize, and Deploy an AI-Assisted App | Mon, August 10, 14:00 CEST | How to add integration tests, move from SQLite to Postgres in containers, set up CI, deploy the app, and ship every merge automatically. | [Recording](https://www.youtube.com/watch?v=gxt5ZDVnBMM) | [Article](https://aishippingblog.com/p/deploy-a-full-stack-app-with-ai-coding) |
 | Workshop 4: DevOps and Observability for AI-Built Apps | Tue, August 18, 14:00 CEST | How to observe a deployed app, alert on user impact, put an agent in the incident loop, and run recurring security audits. | [Recording](https://www.youtube.com/watch?v=YkxLo_FRoQw) | [Article](https://aishippingblog.com/p/devops-and-observability-for-an-ai) |
-| Workshop 5: Coding Agent Capabilities | Mon, August 24, 14:00 CEST | How MCP, skills, plugins, hooks, subagents, and custom agents fit into practical coding-agent workflows. | [RSVP](https://luma.com/ap4l3qlj) | |
+| Workshop 5: Coding Agent Capabilities | Mon, August 24, 14:00 CEST | How MCP, skills, plugins, hooks, subagents, and custom agents fit into practical coding-agent workflows. | [RSVP](https://luma.com/ap4l3qlj) | [Article](https://aishippingblog.com/p/coding-agent-building-blocks-reusable) |
 | Pre-Course Live Q&A | Mon, August 24, 17:00 CEST | Bring questions about prerequisites, tools, homework, deadlines, projects, peer review, and certificates. | [RSVP](https://luma.com/a8qa5s2s) | |
-| Course Launch | Mon, August 31, 17:00 CEST | Start the cohort with the course overview, first-week workflow, community links, and live questions. | [RSVP](https://luma.com/tsiusx8s) | |
+| Course Launch | Mon, August 31, 17:00 CEST | Start the cohort with the course overview, first-week workflow, community links, and live questions. | [RSVP](https://luma.com/tsiusx8s) | [Article](https://aishippingblog.com/p/ai-dev-tools-zoomcamp-2026-starts) |
 
 
 ## About the Course
@@ -151,6 +151,8 @@ In this module, you'll:
 
 After this module, you can specify, delegate, and independently verify AI-assisted development work.
 
+Article: [AI-Native Development: Specifications, Loop and Graph Engineering](https://aishippingblog.com/p/ai-native-development-specifications) — turns a vague idea into a specification, gives an agent durable context, and works it through PM, engineer, and QA roles.
+
 ### [Module 2: Build and Ship an AI-Assisted Full-Stack App](02-end-to-end/)
 
 Use AI tools to build an end-to-end application while keeping the engineering workflow explicit.
@@ -166,6 +168,8 @@ You will:
 
 Outcome: a working full-stack application with an OpenAPI contract, tests, and reproducible development instructions.
 
+Article: [Build and Ship a Full-Stack App with AI Coding Assistants](https://aishippingblog.com/p/build-and-ship-a-full-stack-app-with) — builds a collaborative interview app from a mocked frontend prototype to an OpenAPI contract, a FastAPI backend, and SQLite persistence.
+
 ### [Module 3: Test, Containerize, and Deploy an AI-Assisted App](03-deployment/)
 
 Take the app from your machine to a public URL, with the checks that make shipping safe.
@@ -179,6 +183,8 @@ You will:
 - Wire up CI/CD so merging to the main branch ships the change.
 
 Outcome: a deployed, containerized application that redeploys automatically when tests pass.
+
+Article: [Deploy a Full-Stack App with AI Coding Assistants](https://aishippingblog.com/p/deploy-a-full-stack-app-with-ai-coding) — adds integration tests, containers, a switch from SQLite to Postgres, CI, and automated deployment.
 
 ### [Module 4: DevOps and Observability for AI-Built Apps](04-devops/)
 
@@ -198,6 +204,8 @@ Example tools include OpenTelemetry, Grafana, Prometheus, Semgrep, PR-Agent, Sny
 
 Outcome: an operations and security package that lets you reconstruct any incident from alert to recovery.
 
+Article: [DevOps and Observability for an AI-Built App](https://aishippingblog.com/p/devops-and-observability-for-an-ai) — wires up logs, metrics, and traces, alerts on user impact, and puts an agent in a bounded incident-response loop.
+
 ### [Module 5: Coding Agent Capabilities: MCP, Skills, Plugins, and Custom Agents](05-agent-capabilities/)
 
 Learn how modern coding agents are extended, customized, and connected to external tools.
@@ -212,6 +220,11 @@ You will:
 - Discuss local vs. remote tools, permissions, and security risks.
 
 Outcome: project-specific agent capabilities that make AI tools more useful and safer inside your development workflow.
+
+Article: [Coding Agent Building Blocks: Reusable Skills and Specialized Subagents](https://aishippingblog.com/p/coding-agent-building-blocks-reusable) — covers reusable skills and specialized subagents, and combines them with git worktrees to run tasks in parallel under an orchestrator.
+
+> [!NOTE]
+> Module 5 has no graded homework. It is assessed through the [module deliverable](05-agent-capabilities/#module-deliverable-agent-extension-pack) instead.
 
 ## Final Project
 
