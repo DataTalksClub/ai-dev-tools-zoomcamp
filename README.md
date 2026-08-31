@@ -119,68 +119,94 @@ Self-paced steps:
 
 ### [Module 1: AI-Native Developer Workflow](01-ai-native-workflow/)
 
-Take a software idea from a spec to verified code — you decide, review, and stay accountable.
+Learn how to turn a vague product idea into specified, implemented, and independently verified software with coding agents. You define the requirements, make the key decisions, and review the results.
 
 In this module, you'll:
 
-- Compare AI coding tools and pick one for the course.
-- Turn an idea into a spec and a backlog, give agents durable context, and work through it with PM/engineer/QA roles and agent loops.
+* Refine a vague idea into a product specification and choose a technology stack you can review.
+* Break the specification into a backlog of focused tasks with clear goals, acceptance criteria, constraints, and boundaries.
+* Give coding agents durable context through `AGENTS.md` and supporting project documents.
+* Define product manager, software engineer, and QA roles that separate task grooming, implementation, and independent verification.
+* Use loop engineering to continue work until a checkable condition is met.
+* Use graph engineering to orchestrate specialized agents across the backlog and return failed tasks to implementation.
 
-Outcome: specify, delegate, and independently verify AI-assisted work.
+After this module, you can design and run an AI-native development workflow that takes a product from an initial idea through implementation and independent QA while keeping human decisions and review central.
+
+> Article: [AI-Native Development: Specifications, Loop and Graph Engineering](https://aishippingblog.com/p/ai-native-development-specifications)
 
 ### [Module 2: Build and Ship an AI-Assisted Full-Stack App](02-development/)
 
-Use AI tools to build an end-to-end application while keeping the workflow explicit.
+Build a full-stack application with AI coding assistants, replacing mocked components one at a time and verifying that the system works after each stage.
 
 You will:
 
-- Write a spec, then build a frontend prototype and an OpenAPI contract.
-- Implement a FastAPI or Django backend on SQLite, with tests for the spec'd behavior.
+* Turn an application idea into a product specification with user stories, acceptance criteria, non-goals, and technical constraints.
+* Build and validate an interactive frontend prototype with backend calls centralized in a mocked service layer.
+* Define the expected backend behavior through an OpenAPI contract shared by the frontend and backend.
+* Implement a modular FastAPI backend from the contract, initially using an in-memory store.
+* Connect the frontend and backend, add authentication and real-time collaboration with WebSockets, and test the complete application flow.
+* Replace temporary storage with SQLite and SQLAlchemy while keeping the database configuration portable.
+* Add tests and reproducible commands for running the application locally.
 
-Outcome: a working full-stack app with an OpenAPI contract, tests, and reproducible dev instructions.
+After this module, you will have a working local full-stack application with a connected frontend and backend, real-time updates, persistent data, tests, and a clear API contract. In Module 3, you will containerize, test, and deploy it.
 
-Article: [Build and Ship a Full-Stack App with AI Coding Assistants](https://aishippingblog.com/p/build-and-ship-a-full-stack-app-with) — builds a collaborative interview app from a mocked frontend prototype to an OpenAPI contract, a FastAPI backend, and SQLite persistence.
+> Article: [Build and Ship a Full-Stack App with AI Coding Assistants](https://aishippingblog.com/p/build-and-ship-a-full-stack-app-with)
 
 ### [Module 3: Test, Containerize, and Deploy an AI-Assisted App](03-deployment/)
 
-Take the app from your machine to a public URL, with the checks that make shipping safe.
+Take the application from your local machine to a public deployment, with automated tests and delivery checks that verify the complete system.
 
 You will:
 
-- Add integration tests, containerize the app, and move from SQLite to Postgres.
-- Set up CI, deploy to a platform such as Render or Fly.io, and wire up CI/CD.
+* Package the frontend and backend in a multi-stage Docker image, with the backend serving the compiled frontend.
+* Replace SQLite with Postgres and run the application and database together with Docker Compose.
+* Add integration tests that verify the frontend build, backend, and Postgres connection.
+* Use Playwright to test the complete collaborative workflow across separate browser sessions.
+* Deploy the containerized application to AWS with CloudFormation, or adapt the workflow to another container platform.
+* Create a GitHub Actions pipeline that runs frontend and backend tests, builds the stack, and executes integration and end-to-end tests.
+* Use OpenID Connect to deploy with restricted AWS permissions and verify each release through a health check.
 
-Outcome: a deployed, containerized app that redeploys automatically when tests pass.
+After this module, you will have a public, containerized application backed by Postgres, with automated tests and a CI/CD pipeline that deploys changes only after the complete test suite passes.
 
-Article: [Deploy a Full-Stack App with AI Coding Assistants](https://aishippingblog.com/p/deploy-a-full-stack-app-with-ai-coding) — adds integration tests, containers, a switch from SQLite to Postgres, CI, and automated deployment.
+> Article: [Deploy a Full-Stack App with AI Coding Assistants](https://aishippingblog.com/p/deploy-a-full-stack-app-with-ai-coding)
 
 ### [Module 4: DevOps and Observability for AI-Built Apps](04-devops/)
 
-A deployed app is not an operable one. Build the loop that tells you when it breaks, responds to the failure, and audits both the code and the responder.
+A deployed application can still fail silently. Add release controls and observability so you can detect user-impacting problems, investigate them with evidence, and start an AI-assisted response.
 
 You will:
 
-- Instrument requests with OpenTelemetry into Prometheus, Loki, Tempo, and Grafana, and write one alert on sustained user impact.
-- Give a coding agent a bounded, read-only responder role, with rollback authorized outside the model, and run recurring security audits.
+* Separate development and production environments, deploying every change to development before manually promoting it to production.
+* Split the CI/CD process into build and deployment stages, store versioned images in a container registry, and promote the same tested image between environments.
+* Instrument the backend with OpenTelemetry, including the service name, environment, and deployed version.
+* Collect metrics, logs, and traces through an OpenTelemetry Collector using Prometheus, Loki, Tempo, and Grafana.
+* Define application-specific metrics and build a dashboard that can be filtered by environment and deployed version.
+* Create an actionable alert for sustained user impact, including the affected service, environment, version, owner, and dashboard.
+* Start a headless coding agent when an alert fires so it can investigate the failure, reproduce it, and create a minimal tested fix.
+* Introduce a reproducible bug to verify the complete path from failure and alert to automated investigation.
 
-Example tools: OpenTelemetry, Grafana, Semgrep, PR-Agent, Snyk Agent Scan.
+After this module, you will have separate development and production workflows, reproducible release artifacts, an observability stack, actionable alerts, and a proof-of-concept AI on-call responder.
 
-Outcome: an operations and security package that lets you reconstruct any incident from alert to recovery.
+> Article: [DevOps and Observability for an AI-Built App](https://aishippingblog.com/p/devops-and-observability-for-an-ai)
 
-Article: [DevOps and Observability for an AI-Built App](https://aishippingblog.com/p/devops-and-observability-for-an-ai) — wires up logs, metrics, and traces, alerts on user impact, and runs a proof-of-concept agent as on-call responder.
+### [Module 5: Coding Agent Building Blocks: Reusable Skills and Specialized Subagents](05-agent-capabilities/)
 
-### [Module 5: Coding Agent Capabilities: MCP, Skills, Plugins, and Custom Agents](05-agent-capabilities/)
-
-Learn how modern coding agents are extended, customized, and connected to external tools.
+Turn repeated workflows and project roles into reusable capabilities that coding agents can discover and apply when needed.
 
 You will:
 
-- Use MCP, reusable skills, hooks, and specialized subagents in your coding tool.
-- Explore plugin patterns, build a small agent extension pack for your app, and discuss permissions and security risks.
+* Understand the difference between skills, subagents, and ordinary project documentation.
+* Create discoverable skills with `SKILL.md`, frontmatter, supporting instructions, and scripts.
+* Decide whether a skill should be available globally or only inside one project.
+* Capture a completed workflow and your corrections as a reusable skill, then update it as the process improves.
+* Use focused subagents to reduce context rot and separate implementation from independent review.
+* Define reusable product manager, software engineer, and QA subagents with clear roles and boundaries.
+* Use the main coding session as an orchestrator that moves tasks through grooming, implementation, and QA.
+* Run independent tasks in parallel using isolated Git worktrees, controlled file ownership, and sequential merges.
 
-Outcome: project-specific agent capabilities that make AI tools more useful and safer in your workflow.
+After this module, you will have reusable skills, specialized subagent definitions, and an orchestration pattern for completing project work in isolated sequential or parallel workflows.
 
-Article: [Coding Agent Building Blocks: Reusable Skills and Specialized Subagents](https://aishippingblog.com/p/coding-agent-building-blocks-reusable) — covers reusable skills and specialized subagents, and combines them with git worktrees to run tasks in parallel under an orchestrator.
+> Article: [Coding Agent Building Blocks: Reusable Skills and Specialized Subagents](https://aishippingblog.com/p/coding-agent-building-blocks-reusable)
 
 > [!NOTE]
 > Module 5 has no graded homework. It is assessed through the [module deliverable](05-agent-capabilities/#module-deliverable-agent-extension-pack) instead.
@@ -191,15 +217,15 @@ The [final project](project/) applies the course workflow to an end-to-end appli
 
 You will:
 
-- Choose a problem and describe the expected system behavior.
-- Build a frontend.
-- Build a backend.
-- Define frontend/backend communication with an OpenAPI contract.
-- Add database or persistent storage.
-- Test the application.
-- Containerize the application.
-- Deploy it so others can try it.
-- Document how AI tools, prompts, workflows, agent instructions, MCP, or automation were used.
+- Choose a problem and describe the expected system behavior
+- Build a frontend
+- Build a backend
+- Define frontend/backend communication with an OpenAPI contract
+- Add database or persistent storage
+- Test the application
+- Containerize the application
+- Deploy it so others can try it
+- Document how AI tools, prompts, workflows, agent instructions, MCP, or automation were used
 
 For the live cohort certificate path, projects are evaluated through peer review. Learners must pass the final project and complete the required peer reviews.
 
