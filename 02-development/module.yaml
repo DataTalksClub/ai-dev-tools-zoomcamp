@@ -1,0 +1,7 @@
+schema_version: 1
+content_id: 31000000-0000-4000-8000-000000000002
+title: "Build and Ship an AI-Assisted Full-Stack App"
+units:
+  - content_id: 41000000-0000-4000-8000-000000000002
+    title: "Build and Ship an AI-Assisted Full-Stack App"
+    path: lesson.md

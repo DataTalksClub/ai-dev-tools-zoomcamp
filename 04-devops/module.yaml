@@ -1,0 +1,7 @@
+schema_version: 1
+content_id: 31000000-0000-4000-8000-000000000004
+title: "DevOps and Observability for AI-Built Apps"
+units:
+  - content_id: 41000000-0000-4000-8000-000000000004
+    title: "DevOps and Observability for AI-Built Apps"
+    path: lesson.md

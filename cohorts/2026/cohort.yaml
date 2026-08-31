@@ -1,0 +1,25 @@
+schema_version: 1
+content_id: 21000000-0000-4000-8000-000000000001
+course: ai-dev-tools-zoomcamp
+identifier: "2026"
+legacy_slug: ai-dev-tools-zoomcamp-2026
+year: 2026
+title: AI Dev Tools Zoomcamp 2026
+description: The 2026 live delivery of AI Dev Tools Zoomcamp.
+format: modules
+published: true
+start_date: 2026-08-31
+end_date: 2026-09-28
+flow:
+  - module:
+      source: 01-ai-native-workflow/module.yaml
+      homework: cohorts/2026/01-overview/homework.yaml
+  - module:
+      source: 02-development/module.yaml
+      homework: cohorts/2026/02-development/homework.yaml
+  - module:
+      source: 03-deployment/module.yaml
+      homework: cohorts/2026/03-deployment/homework.yaml
+  - module:
+      source: 04-devops/module.yaml
+      homework: cohorts/2026/04-devops/homework.yaml

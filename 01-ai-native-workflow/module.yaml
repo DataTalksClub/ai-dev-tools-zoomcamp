@@ -1,0 +1,7 @@
+schema_version: 1
+content_id: 31000000-0000-4000-8000-000000000001
+title: "AI-Native Developer Workflow"
+units:
+  - content_id: 41000000-0000-4000-8000-000000000001
+    title: "AI-Native Developer Workflow"
+    path: lesson.md

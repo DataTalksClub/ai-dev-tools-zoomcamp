@@ -1,0 +1,7 @@
+schema_version: 1
+content_id: 31000000-0000-4000-8000-000000000003
+title: "Test, Containerize, and Deploy an AI-Assisted App"
+units:
+  - content_id: 41000000-0000-4000-8000-000000000003
+    title: "Test, Containerize, and Deploy an AI-Assisted App"
+    path: lesson.md
