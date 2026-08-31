@@ -1,4 +1,7 @@
-# End-to-End Application Development
+# [DRAFT] End-to-End Application Development
+
+> [!NOTE]
+> This homework is a draft. The questions will very likely change.
 
 In this homework, we'll build an end-to-end application with AI.
 
@@ -139,7 +142,7 @@ Upload your video to LinkedIn, Twitter/X, or YouTube and share the link!
 
 ### Example post for LinkedIn:
 
-```
+---
 🚀 Week 2 of AI Dev Tools Zoomcamp by @DataTalksClub complete!
 
 Just built a real-time collaborative coding interview platform using AI assistants!
@@ -158,12 +161,12 @@ Demo video: <VIDEO_LINK>
 Following along with this amazing course - who else is building with AI?
 
 You can sign up here: https://github.com/DataTalksClub/ai-dev-tools-zoomcamp/
-```
+
+---
 
 ### Example post for Twitter/X:
 
-
-```
+---
 🤖 Built a collaborative coding platform with AI!
 
 🔗 Shareable links
@@ -175,4 +178,5 @@ My repo: <LINK>
 Demo: <VIDEO_LINK>
 
 Join me: https://github.com/DataTalksClub/ai-dev-tools-zoomcamp/
-```
+
+---
