@@ -78,8 +78,8 @@ You finish with a tested full-stack application that runs locally and follows a 
 
 * [Companion article](https://aishippingblog.com/p/build-and-ship-a-full-stack-app-with)
 * [Recording](https://www.youtube.com/watch?v=x9dq5nBpDg8)
-* [Module 2 materials](https://github.com/DataTalksClub/ai-dev-tools-zoomcamp/tree/main/02-end-to-end)
-* Homework: [Instructions](https://github.com/DataTalksClub/ai-dev-tools-zoomcamp/blob/main/cohorts/2026/02-end-to-end/homework.md) · [Submit](https://courses.datatalks.club/ai-dev-tools-2026/homework/hw2) — due 2026-09-14
+* [Module 2 materials](https://github.com/DataTalksClub/ai-dev-tools-zoomcamp/tree/main/02-development)
+* Homework: [Instructions](https://github.com/DataTalksClub/ai-dev-tools-zoomcamp/blob/main/cohorts/2026/02-development/homework.md) · [Submit](https://courses.datatalks.club/ai-dev-tools-2026/homework/hw2) — due 2026-09-14
 
 ## Module 3: Test, Containerize, and Deploy
 

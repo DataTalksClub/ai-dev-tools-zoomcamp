@@ -128,9 +128,7 @@ In this module, you'll:
 
 Outcome: specify, delegate, and independently verify AI-assisted work.
 
-Article: [AI-Native Development: Specifications, Loop and Graph Engineering](https://aishippingblog.com/p/ai-native-development-specifications) — turns a vague idea into a specification, gives an agent durable context, and works it through PM, engineer, and QA roles.
-
-### [Module 2: Build and Ship an AI-Assisted Full-Stack App](02-end-to-end/)
+### [Module 2: Build and Ship an AI-Assisted Full-Stack App](02-development/)
 
 Use AI tools to build an end-to-end application while keeping the workflow explicit.
 

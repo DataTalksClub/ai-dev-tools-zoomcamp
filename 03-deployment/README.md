@@ -1,8 +1,5 @@
 # Module 3 — Test, Containerize, and Deploy an AI-Assisted App
 
-> [!NOTE]
-> This 2026 module page is currently a draft. You can use it to see what we are preparing, but the final videos, exercises, homework, and requirements may change before the cohort starts.
-
 ## Overview
 
 Module 2 ends with an application that runs on your machine. This module takes it the rest of the way: proven by tests that exercise the real stack, packaged in containers, checked automatically on every pull request, and deployed so other people can use it.
@@ -30,148 +27,14 @@ AWS, and automates delivery with GitHub Actions.
 
 [Read the article: Deploy a Full-Stack App with AI Coding Assistants](https://aishippingblog.com/p/deploy-a-full-stack-app-with-ai-coding)
 
-## Lessons
+You will:
 
-### Lesson 3.1 — Integration Tests
-
-Goal: test the app the way it is deployed, not the way it is unit-tested.
-
-Module 2 covered unit tests for individual endpoints against local SQLite. Integration tests cover the seams:
-
-```text
-API request through to a real database
-migrations applied to an empty database
-auth flow end to end
-frontend calling the backend
-error and failure paths
-```
-
-Topics:
-
-- test database setup and teardown
-- fixtures and seed data
-- transactional vs. recreated test databases
-- testing against the OpenAPI contract
-- what belongs in a unit test and what needs integration
-- keeping the suite fast enough to run on every push
-
-Teaching point: ask the agent for the tests, then break the code on purpose. A test suite that stays green when you delete a validation rule is not testing anything.
-
-Deliverables:
-
-```text
-tests/integration/
-docs/testing.md
-```
-
-### Lesson 3.2 — Containerization
-
-Goal: package the app so it runs the same way everywhere.
-
-Deliverables:
-
-```text
-Dockerfile
-docker-compose.yml
-.dockerignore
-.env.example
-```
-
-Topics:
-
-- multi-stage builds: build the frontend with Node, serve the static files from the backend image
-- base image choice and image size
-- build-time vs. runtime configuration
-- secrets and environment variables that must not be baked into the image
-- swapping SQLite for Postgres as a Compose service
-- database migrations
-- running the integration tests against the containerized stack
-
-Module 2 kept the app database-agnostic behind an ORM and an environment variable. This is where that pays off: the same code runs on SQLite locally and Postgres in a container.
-
-Teaching point: AI tools produce plausible `Dockerfile`s quickly. Check what the generated image actually contains, which user it runs as, and whether the frontend build really produced the files the backend expects to serve.
-
-### Lesson 3.3 — Setting Up CI
-
-Goal: make the checks run automatically on every change, before deployment enters the picture.
-
-Required checks:
-
-```text
-linting and formatting
-backend unit tests
-frontend tests
-integration tests
-container build
-```
-
-Topics:
-
-- workflow triggers on push and pull request
-- service containers for the test database
-- caching dependencies
-- required status checks and branch protection
-- reading a failing pipeline log and feeding it back to the agent
-
-Deliverables:
-
-```text
-.github/workflows/ci.yml
-```
-
-Teaching point: CI is where the review checklist becomes automatic. Anything you keep asking an agent to remember belongs here instead.
-
-### Lesson 3.4 — Deployment
-
-Goal: get the app running somewhere other people can reach.
-
-Suggested platforms:
-
-- Render
-- Fly.io
-- Railway
-- Cloud Run
-
-Topics:
-
-- managed database provisioning
-- environment variables and secret storage
-- running migrations on deploy
-- health checks
-- logs and rollback
-- the difference between a deploy that succeeded and an app that works
-
-Deliverables:
-
-```text
-deployment configuration for your platform
-docs/deployment.md
-a public URL
-```
-
-Keep the default deployment path simple and reproducible. Someone should be able to follow your README and get the same result.
-
-### Lesson 3.5 — CI/CD
-
-Goal: connect the pipeline to the deployment so merging is what ships.
-
-Topics:
-
-- deploy on merge to the main branch
-- gating deployment behind the test job
-- staging vs. production environments
-- migrations in an automated deploy
-- smoke test after deploy
-- how to roll back
-
-Deliverables:
-
-```text
-.github/workflows/deploy.yml
-docs/release-process.md
-```
-
-Teaching point: CI/CD ships a bad release as efficiently as a good one. The pipeline is only as trustworthy as the checks in front of it, which is why the tests came first.
+- Write integration tests that hit a real database, cover migrations, auth, and the frontend-to-backend flow, and are fast enough to run on every push
+- Containerize the app with a multi-stage Dockerfile and Docker Compose, swapping SQLite for Postgres
+- Set up GitHub Actions CI to run linting, unit tests, integration tests, and the container build on every pull request
+- Deploy the app to a public URL on a platform like Render, Fly.io, Railway, or Cloud Run, with a managed database and migrations running on deploy
+- Wire up CI/CD so merging to main is gated on the tests and automatically builds, migrates, and redeploys
+- Add staging vs. production environments, a post-deploy smoke test, and a documented rollback path
 
 ## Module Deliverables
 
