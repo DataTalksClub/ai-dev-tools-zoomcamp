@@ -195,6 +195,7 @@ The app should be deployed at a public URL, rebuilt and redeployed automatically
 Related material from the previous cohort:
 
 - [2025 archived CI/CD and DevOps module](../cohorts/2025/05-cicd-devops/)
+- [2026 homework](https://github.com/DataTalksClub/ai-dev-tools-zoomcamp/blob/main/cohorts/2026/03-deployment/homework.md) — questions coming
 
 ## Community Notes
 

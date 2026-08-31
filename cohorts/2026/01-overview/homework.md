@@ -119,7 +119,7 @@ You can copy-paste the homework description into the AI system of your choice. B
 
 ## Submission
 
-Submit your homework here: https://courses.datatalks.club/ai-dev-tools-2025/homework/hw1
+Submit your homework here: https://courses.datatalks.club/ai-dev-tools-2026/homework/hw1
 
 
 ## Learning in Public
@@ -176,4 +176,3 @@ Zero Django knowledge → working app in one session!
 Join me: https://github.com/DataTalksClub/ai-dev-tools-zoomcamp/
 
 ---
-

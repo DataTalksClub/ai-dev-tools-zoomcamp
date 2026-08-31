@@ -1,7 +1,7 @@
 # Module 5 — Coding Agent Capabilities: MCP, Skills, Plugins, and Custom Agents
 
 > [!NOTE]
-> This 2026 module page is currently a draft. You can use it to see what we are preparing, but the final videos, exercises, homework, and requirements may change before the cohort starts.
+> This 2026 module page is currently a draft. You can use it to see what we are preparing, but the final videos, exercises, and requirements may change before the cohort starts.
 
 ## Overview
 
@@ -335,4 +335,3 @@ The previous MCP-focused version of this module is archived here:
 
 - [2025 archived Module 3](../cohorts/2025/03-mcp/)
 - [MCP client configuration notes](clients.md)
-- [2026 homework](../cohorts/2026/05-agent-capabilities/homework.md)

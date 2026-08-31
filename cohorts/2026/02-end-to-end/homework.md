@@ -111,7 +111,7 @@ You can copy-paste the homework description into the AI system of your choice. B
 
 ## Submission
 
-Submit your homework here: https://courses.datatalks.club/ai-dev-tools-2025/homework/hw2
+Submit your homework here: https://courses.datatalks.club/ai-dev-tools-2026/homework/hw2
 
 
 ## Learning in Public

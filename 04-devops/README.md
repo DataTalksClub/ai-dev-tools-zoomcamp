@@ -416,6 +416,7 @@ The operating principle: the model may reason; the system must observe, authoriz
 Related material from the previous cohort:
 
 - [2025 archived CI/CD and DevOps module](../cohorts/2025/05-cicd-devops/)
+- [2026 homework](https://github.com/DataTalksClub/ai-dev-tools-zoomcamp/blob/main/cohorts/2026/04-devops/homework.md) — questions coming
 
 ## Community Notes
 

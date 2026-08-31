@@ -6,8 +6,7 @@
 
 Homework:
 
-* [Module 1: AI-Native Developer Workflow](01-overview/homework.md)
-* [Module 2: Build and Ship an AI-Assisted Full-Stack App](02-end-to-end/homework.md)
-* Module 3: Test, Containerize, and Deploy an AI-Assisted App — coming
-* Module 4: DevOps and Observability for AI-Built Apps — coming
-* [Module 5: Coding Agent Capabilities](05-agent-capabilities/homework.md)
+* [Module 1: AI-Native Developer Workflow](https://github.com/DataTalksClub/ai-dev-tools-zoomcamp/blob/main/cohorts/2026/01-overview/homework.md) — due 2026-09-07
+* [Module 2: Build and Ship an AI-Assisted Full-Stack App](https://github.com/DataTalksClub/ai-dev-tools-zoomcamp/blob/main/cohorts/2026/02-end-to-end/homework.md) — due 2026-09-14
+* [Module 3: Test, Containerize, and Deploy an AI-Assisted App](https://github.com/DataTalksClub/ai-dev-tools-zoomcamp/blob/main/cohorts/2026/03-deployment/homework.md) — due 2026-09-21; questions coming
+* [Module 4: DevOps and Observability for AI-Built Apps](https://github.com/DataTalksClub/ai-dev-tools-zoomcamp/blob/main/cohorts/2026/04-devops/homework.md) — due 2026-09-28; questions coming

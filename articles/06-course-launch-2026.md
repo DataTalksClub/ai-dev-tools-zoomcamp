@@ -1,6 +1,9 @@
-# AI Dev Tools Zoomcamp 2026: From Idea to Production with AI Coding Agents
+# AI Dev Tools Zoomcamp 2026 Starts Today
 
-The 2026 cohort of [AI Dev Tools Zoomcamp](https://github.com/DataTalksClub/ai-dev-tools-zoomcamp) starts on August 31. The course is free, and registration is open.
+From Idea to Production with AI Coding Agents
+
+
+The 2026 cohort of [AI Dev Tools Zoomcamp](https://github.com/DataTalksClub/ai-dev-tools-zoomcamp) starts today (August 31). The course is free, and registration is open for the next few weeks.
 
 In this course, we use AI coding tools across the full software-development lifecycle.
 
@@ -12,9 +15,10 @@ In this course, we use AI coding tools across the full software-development life
 
 In this course we give you a tool-agnostic way to work with any coding agent and increate your productivity as a developer.
 
-<p align="center">
-  <img src="images/06-course-platform.png" alt="The AI Dev Tools Zoomcamp registration page shows that registration is open and the 2026 cohort starts on August 31">
-</p>
+<figure>
+  <img src="images/06-course-platform.png" alt="The AI Dev Tools Zoomcamp course page shows 4,304 registered participants, open registration, and an August 31, 2026 start date">
+  <figcaption>Registration is open for the 2026 cohort, which starts on August 31</figcaption>
+</figure>
 
 
 ## Start here
@@ -29,22 +33,26 @@ Use these links to join the course and find the materials:
 - [Join the Telegram channel](https://t.me/aidevtoolszoomcamp) for announcements and deadline updates.
 - [Save the YouTube playlist](https://www.youtube.com/playlist?list=PL3MmuxUbc_hLuyafXPyhTdbF4s_uNhc43)
 
-<p align="center">
-  <img src="images/06-course-repository.png" alt="The AI Dev Tools Zoomcamp GitHub repository shows the five 2026 module folders and links for course participants">
-</p>
+<figure>
+  <img src="images/06-course-repository.png" alt="The AI Dev Tools Zoomcamp GitHub repository shows folders for the five course modules and a description of the course">
+  <figcaption>The repository is the source for module materials, homework, recordings, and project requirements</figcaption>
+</figure>
 
 
 ## Course curriculum
 
-Across five modules, you take one application from a rough idea to a deployed system supported by coding agents:
+In this course, we use AI coding tools across the full software-development lifecycle.
 
-```text
-specify → build → ship → operate → extend
-```
+- Part 1: [AI-Native Development: Specifications, Loop and Graph Engineering](https://aishippingblog.com/p/ai-native-development-specifications)
+- Part 2: [Build and Ship a Full-Stack App with AI Coding Assistants](https://aishippingblog.com/p/build-and-ship-a-full-stack-app-with)
+- Part 3: [Deploy a Full-Stack App with AI Coding Assistants](https://aishippingblog.com/p/deploy-a-full-stack-app-with-ai-coding)
+- Part 4: [DevOps and Observability for an AI-Built App](https://aishippingblog.com/p/devops-and-observability-for-an-ai)
+- Part 5: Coding Agent Building Blocks: Reusable Skills and Specialized Subagents
 
-<p align="center">
-  <img src="images/06-course-docs.png" alt="The course documentation lists the five modules from AI-native development through coding agent capabilities">
-</p>
+<figure>
+  <img src="images/06-course-docs.png" alt="The curriculum page lists five modules covering AI-native workflow, full-stack development, deployment, DevOps and observability, and coding agent capabilities">
+  <figcaption>The five modules take one application from specification through deployment, operations, and agent extensions</figcaption>
+</figure>
 
 ## Module 1: AI-Native Developer Workflow
 
@@ -54,7 +62,10 @@ You turn a product idea into a specification and a backlog of small tasks. You c
 
 By the end of the module, you have a repeatable way to direct an agent and verify its work independently.
 
-[Module 1 materials](https://github.com/DataTalksClub/ai-dev-tools-zoomcamp/tree/main/01-ai-native-workflow) · [Recording](https://www.youtube.com/watch?v=VUJxJGpaDEs) · [Companion article](https://aishippingblog.com/p/ai-native-development-specifications)
+* [Companion article](https://aishippingblog.com/p/ai-native-development-specifications)
+* [Recording](https://www.youtube.com/watch?v=VUJxJGpaDEs)
+* [Module 1 materials](https://github.com/DataTalksClub/ai-dev-tools-zoomcamp/tree/main/01-ai-native-workflow)
+* Homework: [Instructions](https://github.com/DataTalksClub/ai-dev-tools-zoomcamp/blob/main/cohorts/2026/01-overview/homework.md) · [Submit](https://courses.datatalks.club/ai-dev-tools-2026/homework/hw1) — due 2026-09-07
 
 ## Module 2: Build and Ship an AI-Assisted Full-Stack App
 
@@ -64,7 +75,10 @@ We use AI tools to produce the first version of each part, but we don't accept g
 
 You finish with a tested full-stack application that runs locally and follows a documented OpenAPI specification.
 
-[Module 2 materials](https://github.com/DataTalksClub/ai-dev-tools-zoomcamp/tree/main/02-end-to-end) · [Recording](https://www.youtube.com/watch?v=x9dq5nBpDg8) · [Companion article](https://aishippingblog.com/p/build-and-ship-a-full-stack-app-with)
+* [Companion article](https://aishippingblog.com/p/build-and-ship-a-full-stack-app-with)
+* [Recording](https://www.youtube.com/watch?v=x9dq5nBpDg8)
+* [Module 2 materials](https://github.com/DataTalksClub/ai-dev-tools-zoomcamp/tree/main/02-end-to-end)
+* Homework: [Instructions](https://github.com/DataTalksClub/ai-dev-tools-zoomcamp/blob/main/cohorts/2026/02-end-to-end/homework.md) · [Submit](https://courses.datatalks.club/ai-dev-tools-2026/homework/hw2) — due 2026-09-14
 
 ## Module 3: Test, Containerize, and Deploy
 
@@ -74,7 +88,10 @@ Then you deploy the application to a public URL and connect deployment to the CI
 
 You finish with a containerized application that other people can use and a documented way to test, deploy, and roll it back.
 
-[Module 3 materials](https://github.com/DataTalksClub/ai-dev-tools-zoomcamp/tree/main/03-deployment) · [Recording](https://www.youtube.com/watch?v=gxt5ZDVnBMM) · [Companion article](https://aishippingblog.com/p/deploy-a-full-stack-app-with-ai-coding)
+* [Companion article](https://aishippingblog.com/p/deploy-a-full-stack-app-with-ai-coding)
+* [Recording](https://www.youtube.com/watch?v=gxt5ZDVnBMM)
+* [Module 3 materials](https://github.com/DataTalksClub/ai-dev-tools-zoomcamp/tree/main/03-deployment)
+* Homework: [Instructions](https://github.com/DataTalksClub/ai-dev-tools-zoomcamp/blob/main/cohorts/2026/03-deployment/homework.md) · [Submit](https://courses.datatalks.club/ai-dev-tools-2026/homework/hw3) — due 2026-09-21
 
 ## Module 4: DevOps and Observability for AI-Built Apps
 
@@ -84,7 +101,10 @@ You instrument an important request with OpenTelemetry and connect metrics, logs
 
 You also run recurring security audits and record enough information to reconstruct an incident from the first alert to recovery.
 
-[Module 4 materials](https://github.com/DataTalksClub/ai-dev-tools-zoomcamp/tree/main/04-devops) · [Recording](https://www.youtube.com/watch?v=YkxLo_FRoQw) · [Companion article](https://aishippingblog.com/p/devops-and-observability-for-an-ai)
+* [Companion article](https://aishippingblog.com/p/devops-and-observability-for-an-ai)
+* [Recording](https://www.youtube.com/watch?v=YkxLo_FRoQw)
+* [Module 4 materials](https://github.com/DataTalksClub/ai-dev-tools-zoomcamp/tree/main/04-devops)
+* Homework: [Instructions](https://github.com/DataTalksClub/ai-dev-tools-zoomcamp/blob/main/cohorts/2026/04-devops/homework.md) · [Submit](https://courses.datatalks.club/ai-dev-tools-2026/homework/hw4) — due 2026-09-28
 
 ## Module 5: Coding Agent Capabilities
 
@@ -94,7 +114,9 @@ You work with project instructions, MCP, and reusable skills. You also explore h
 
 You finish by packaging reusable instructions and a repeatable way to review changes in your application. You also include a specialist agent, an MCP tool or server, guardrails, and documented permissions.
 
-[Module 5 materials](https://github.com/DataTalksClub/ai-dev-tools-zoomcamp/tree/main/05-agent-capabilities) · [Recording](https://www.youtube.com/watch?v=t8OrAjNO2Zs)
+* [Companion article](https://github.com/DataTalksClub/ai-dev-tools-zoomcamp/blob/main/articles/05-code-agents-building-blocks.md)
+* [Recording](https://www.youtube.com/watch?v=t8OrAjNO2Zs)
+* [Module 5 materials](https://github.com/DataTalksClub/ai-dev-tools-zoomcamp/tree/main/05-agent-capabilities)
 
 ## Cohort format
 
@@ -130,6 +152,9 @@ Your project should include:
 You also document how you used AI. Show how you described tasks and gave the agent context. Explain how you reviewed generated code, tested the result, and handled permissions. In the later modules, you add operations, security, and agent-extension work around the application.
 
 Homework isn't required for the certificate. To earn the certificate, you need to submit a passing final project during the live cohort and complete the required peer reviews on time. Check the [course platform](https://courses.datatalks.club/ai-dev-tools-2026/) for the exact project and review deadlines. Read the [certification documentation](https://datatalks.club/docs/courses/zoomcamp-logistics/certification/) for the general certificate workflow.
+
+- Project 1: submit by 2026-10-19 and complete peer reviews by 2026-10-26.
+- Project 2: submit by 2026-11-09 and complete peer reviews by 2026-11-16.
 
 ## Course links
 
