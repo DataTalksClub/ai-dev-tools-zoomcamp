@@ -44,10 +44,10 @@
     },
     {
       "id": "workers_more",
-      "eyebrow": "ISOLATED WORKTREES",
-      "title": "Agents 3–5",
-      "subtitle": "Three more tracks",
-      "icon": "robot",
+      "eyebrow": "ISOLATED WORKTREE",
+      "title": "Issue C agent",
+      "subtitle": "Worktree issue-c",
+      "icon": "number-3",
       "color": "blue",
       "x": 350,
       "y": 430

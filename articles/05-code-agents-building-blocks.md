@@ -128,6 +128,11 @@ And that will absolutely work. The agent will read the file and follow the steps
 
 However, with skills I don't need to say which file to use. The coding agent loads the list of skills into its context at startup. When I need to release a library, it can see that there's a skill for that, so it goes ahead and uses it.
 
+<figure>
+  <img src="images/05-skill-invocation.png" alt="A coding agent can discover a skill from the user's request or load the same skill when the user invokes it explicitly">
+  <figcaption>The agent can discover the right skill from the request, while an explicit command remains available when you want direct control</figcaption>
+</figure>
+
 A skill is a markdown document, but in order to make it discoverable, we need to follow a convention:
 
 - It must have a frontmatter section with a name and description
@@ -218,10 +223,6 @@ Most coding assistants allow you to start one session within another. We call th
   <figcaption>Subagents let one coding agent prompt another agent inside its own session</figcaption>
 </figure>
 
-<figure>
-  <img src="images/05-subagent-general.jpg" alt="A coding assistant shows a main session with a backgrounded general-purpose subagent grooming issue 69">
-  <figcaption>The main session can keep working while a subagent handles a focused task in the background</figcaption>
-</figure>
 
 ### Session Context
 
@@ -263,9 +264,10 @@ But instead, I can also launch it as a subagent:
 Launch a subagent to implement #101. Follow the process.
 ```
 
+
 <figure>
-  <img src="images/05-subagent-pm.jpg" alt="A coding assistant starts a PM agent to groom issue 69 in the background">
-  <figcaption>A subagent can take on a specialized role, such as product-management work</figcaption>
+  <img src="images/05-subagent-general.jpg" alt="A coding assistant shows a main session with a backgrounded general-purpose subagent grooming issue 69">
+  <figcaption>The main session can keep working while a subagent handles a focused task in the background</figcaption>
 </figure>
 
 It will create a new agent with an empty context (plus AGENTS.md) and automatically prompt it with something like this:
@@ -323,6 +325,13 @@ Launch software engineer for #101
 
 And it will start the software engineer agent.
 
+
+<figure>
+  <img src="images/05-subagent-pm.jpg" alt="A coding assistant starts a PM agent to groom issue 69 in the background">
+  <figcaption>A subagent can take on a specialized role, such as product-management work</figcaption>
+</figure>
+
+
 Note that for some coding agents like Claude, you'll have to restart the session to discover the agent you just defined.
 
 ### Orchestration Session
@@ -338,6 +347,11 @@ If we have a process specified in `process.md`:
 - If it outputs `FAIL`, SWE needs to reimplement it until QA accepts it.
 
 This way, we create a graph.
+
+<figure>
+  <img src="images/01-agent-workflow.png" alt="The PM grooms an issue, the engineer implements it, and QA either completes the task or sends a failed check back to the engineer">
+  <figcaption>The workflow from Part 1 is a graph: PM hands the issue to engineering, QA closes passing work, and failures loop back for reimplementation</figcaption>
+</figure>
 
 This sequence needs to be enforced by something. Typically, we use the main coding session for that.
 

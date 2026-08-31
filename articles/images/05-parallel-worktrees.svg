@@ -20,6 +20,9 @@
     <symbol id="icon-number-2" viewBox="0 0 24 24">
         <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M9.4 9.6a2.6 2.6 0 1 1 5.2.4c0 2-5.2 3.6-5.2 6h5.4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
       </symbol>
+    <symbol id="icon-number-3" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M9.5 9a2.5 2.5 0 1 1 2.7 3h-.7.7a2.6 2.6 0 1 1-2.8 3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </symbol>
     <symbol id="icon-pull-request" viewBox="0 0 24 24">
         <circle cx="6" cy="5" r="2.5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="6" cy="19" r="2.5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="18" cy="19" r="2.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M6 7.5v9M15 5h1a2 2 0 0 1 2 2v9.5M13 2l3 3-3 3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
       </symbol>
@@ -38,10 +41,10 @@
       .node rect { stroke-width: 2; }
       .node-boundary rect { stroke-width: 2; stroke-dasharray: 8 8; }
       .boundary-title { font-size: 16px; font-weight: 750; text-anchor: start; }
-      .node-title { font-size: 20px; font-weight: 750; text-anchor: middle; }
+      .node-title { font-weight: 750; text-anchor: middle; }
       .node-title.icon-copy { text-anchor: start; }
-      .node-subtitle { font-size: 16px; font-weight: 500; fill: #475569; text-anchor: middle; }
-      .eyebrow { font-size: 13px; font-weight: 750; letter-spacing: 1px; fill: #475569; text-anchor: middle; }
+      .node-subtitle { font-weight: 500; fill: #475569; text-anchor: middle; }
+      .eyebrow { font-weight: 750; letter-spacing: 1px; fill: #475569; text-anchor: middle; }
       .mention-icon { font-size: 27px; font-weight: 750; text-anchor: middle; }
       .standalone-mention { font-size: 52px; font-weight: 750; text-anchor: middle; }
       .icon-node-title { font-size: 16px; font-weight: 750; text-anchor: middle; }
@@ -87,10 +90,10 @@
   </g>
   <g class="node node-blue" transform="translate(350 430)" filter="url(#shadow)">
     <rect width="220" height="100" rx="18" fill="#eff6ff" stroke="#2563eb"/>
-    <text class="eyebrow" x="110" y="20" font-size="13">ISOLATED WORKTREES</text>
-    <use href="#icon-robot" x="29.91" y="30" width="34" height="34" color="#2563eb"/>
-    <text class="node-title icon-copy" x="73.8" y="53.48" font-size="18">Agents 3–5</text>
-    <text class="node-subtitle" x="110" y="85" font-size="16">Three more tracks</text>
+    <text class="eyebrow" x="110" y="20" font-size="13">ISOLATED WORKTREE</text>
+    <use href="#icon-number-3" x="18.43" y="30" width="34" height="34" color="#2563eb"/>
+    <text class="node-title icon-copy" x="63" y="53.48" font-size="18">Issue C agent</text>
+    <text class="node-subtitle" x="110" y="85" font-size="16">Worktree issue-c</text>
   </g>
   <g class="node node-amber" transform="translate(720 160)" filter="url(#shadow)">
     <rect width="220" height="100" rx="18" fill="#fff7ed" stroke="#c2410c"/>
