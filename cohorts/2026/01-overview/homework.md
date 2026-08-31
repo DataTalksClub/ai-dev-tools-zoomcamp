@@ -1,130 +1,112 @@
-# Introduction to AI-Assisted Development 
+# Introduction to AI-Assisted Development
 
-In this homework, we'll build an application with AI.
+In this homework, we'll build an application with AI — but instead of us handing you a finished spec, you'll turn a vague idea into one yourself, then implement it in Django.
 
-You can use any tool you want: ChatGPT, Claude, GitHub Copilot, Codex, Cursor, Antigravity, etc.
+You can use any coding agent you want: Claude Code, Codex CLI, Gemini CLI, Cursor, Aider, GitHub Copilot, etc. Pick **one** and stick with it for the whole homework — with chat-based tools you'd need to copy code back and forth, so we recommend an agent that can edit files and run commands directly in your project.
 
-With chat-based applications you will need to copy code back-and-forth, so we recommend that you use an AI assistant in your IDE with agent mode.
+You will only need Python to get started (we also recommend that you use `uv`). You don't need to know Python or Django for doing this homework.
 
-We will build a TODO application in Django.
+## Project Idea
 
-The app should be able to do the following:
+We will work on a project with a very vague idea:
 
-- Create, edit and delete TODOs 
-- Assign due dates
-- Mark TODOs as resolved
+> A tool for managing shared household chores
 
-You will only need Python to get started (we also recommend that you use `uv`).
+We don't specify anything else, and most of you will finish with different projects.
 
-You don't need to know Python or Django for doing this homework.
+In this homework, we want to turn this vague description into a clear specification.
 
 
-## Question 1: Install Django
+## Question 1: Select your coding agent
 
-We want to install Django. Ask AI to help you with that.
-
-What's the command you used for that?
-
-There could be multiple ways to do it. Put the one that AI suggested in the homework form.
+You can use any coding agent you want. Which one did you choose? 
 
 
-## Question 2: Project and App
+## Question 2: Turn the idea into a spec
 
-Now we need to create a project and an app for that.
+Open a chat assistant and brainstorm with a prompt like:
 
-Follow the instructions from AI to do it. At some point, you will need to include the app you created in the project.
+```text
+I want to build a tool for managing shared household chores.
 
-What's the file you need to edit for that?
+Help me set the scope for this project precisely. I want to brainstorm with you
+and understand how the tool should work. Give me options.
 
-- `settings.py`
-- `manage.py`
-- `urls.py`
-- `wsgi.py`
+Ask me one question at a time and keep your output short.
+```
 
+Answer its questions, then ask it to save everything to a markdown file. 
 
-## Question 3: Django Models
+What are the 2-4 features your spec settled on?
 
-Let's now proceed to creating models - the mapping from python objects to a relational database. 
+## GitHub Repository
 
-For the TODO app, which models do we need? Implement them.
+Create an empty GitHub repository, clone it locally. Create two files there:
 
-What's the next step you need to take?
+- `.gitignore`
+- `README.md`
+- `_docs/plan.md` with the plan
 
-- Run the application
-- Add the models to the admin panel
-- Run migrations
-- Create a makefile
+Commit and push.
 
+## Question 3: Django project
 
-## Question 4. TODO Logic
+For this project we'll use Django. It doesn't really matter which technology you chose. But to make it consistent we picked up Django.
 
-Let's now ask AI to implement the logic for the TODO app. Where do we put it? 
+Ask your agent to install Django and create a project and an app for it.
 
-- `views.py`
-- `urls.py`
-- `admin.py`
-- `tests.py`
+Questions?
 
 
-## Question 5. Templates
+## Question 4: Backlog
 
-Next step is creating the templates. You will need at least two: the base one and the home one. Let's call them `base.html` and `home.html`.
+Then give your agent the `plan.md` and ask it to propose a small backlog of tasks for building this in Django. Write the result to `backlog.md`.
 
-Where do you need to register the directory with the templates? 
 
-- `INSTALLED_APPS` in project's `settings.py`
-- `TEMPLATES['DIRS']` in project's `settings.py`
-- `TEMPLATES['APP_DIRS']` in project's `settings.py`
-- In the app's `urls.py`
+## Question 5: First verstion
 
-## Question 6. Tests
+Implement the first few tasks. Just open your agent and say:
 
-Now let's ask AI to cover our functionality with tests.
+```
+Implement task #1 from backlog.md
+```
+
+Run the server. Which command do you need to use for that?
+
+- `uv run python manage.py runserver`
+
+
+
+## Question 6: Tests
+
+Ask AI to implement the views and templates for your app's main features (you'll need at least a base template and a home template), then ask it to cover the functionality with tests.
 
 - Ask it which scenarios we should cover
 - Make sure they make sense
-- Let it implement it and run them 
+- Let it implement them and run them
 
-Probably it will require a few iterations to make sure that tests pass and evertyhing is working. 
+Probably it will require a few iterations to make sure that tests pass and everything is working.
 
-What's the command you use for running tests in the terminal? 
+What's the command you use for running tests in the terminal?
 
 - `pytest`
 - `python manage.py test`
 - `python -m django run_tests`
 - `django-admin test`
 
-## Running the app
 
-Now the application is developed and tested. Run it:
-
-```bash
-uv run python manage.py runserver
-```
-
-Since we asked AI to test everything, it should just work. If it doesn't, iterate with AI until it works. 
-
-
-## Homework URL
-
-Commit your code to GitHub. You can create a repository for this course. Within the repository, create a folder, e.g. "01-todo", where you put the code.
-
-Use the link to this folder in the homework submission form. 
-
-
-## Tip
-
-You can copy-paste the homework description into the AI system of your choice. But make sure you understand (and follow) all the steps in the response.
 
 
 ## Submission
 
 Submit your homework here: https://courses.datatalks.club/ai-dev-tools-2026/homework/hw1
 
+Use the link to repository you created in the homework submission form.
+
 
 ## Learning in Public
 
-We encourage everyone to share what they learned. This is called "learning in public". 
+We encourage everyone to share what they learned. This is called "learning in public". Read more about why it matters here: https://aishippingblog.com/p/benefits-of-learning-in-public
 
 Learning in public is one of the most effective ways to accelerate your growth. Here's why:
 
@@ -138,13 +120,14 @@ Don't worry about being perfect. Everyone starts somewhere, and people love foll
 
 ### Example post for LinkedIn:
 
---- 
+---
 🚀 Week 1 of AI Dev Tools Zoomcamp by @DataTalksClub complete!
 
-Just built a Django TODO application using AI assistants - without knowing Django beforehand!
+Turned a one-line idea into a spec, then built a Django app for managing shared household chores using an AI coding agent!
 
 Today I learned how to:
 
+- ✅ Turn a vague idea into a written spec
 - ✅ Set up Django projects and apps
 - ✅ Create database models and migrations
 - ✅ Implement views and templates
@@ -152,7 +135,7 @@ Today I learned how to:
 
 Here's my repo: <LINK>
 
-Following along with this amazing course - who else is exploring AI development tools? 
+Following along with this amazing course - who else is exploring AI development tools?
 
 You can sign up here: https://github.com/DataTalksClub/ai-dev-tools-zoomcamp/
 
@@ -164,7 +147,8 @@ You can sign up here: https://github.com/DataTalksClub/ai-dev-tools-zoomcamp/
 
 🤖 Built a Django app with AI in @Al_Grigor's AI Dev Tools Zoomcamp!
 
-- ✨ TODO app from scratch
+- 📝 Spec first, code second
+- ✨ Household chores app from scratch
 - 📝 Models & migrations
 - 🎨 Views and templates
 - ✅ Tests
