@@ -51,19 +51,28 @@ Commit and push.
 
 ## Question 3: Django project
 
-For this project we'll use Django. It doesn't really matter which technology you chose. But to make it consistent we picked up Django.
+For this project we'll use Django. 
 
-Ask your agent to install Django and create a project and an app for it.
+Ask your agent to install Django and create a project and an app for it. At some point, you will need to include the app you created in the project.
 
-Questions?
+What's the file you need to edit for that?
+
+- `settings.py`
+- `manage.py`
+- `urls.py`
+- `wsgi.py`
+
+For this and next questions you can ask your coding assistant to select the correct option.
 
 
 ## Question 4: Backlog
 
 Then give your agent the `plan.md` and ask it to propose a small backlog of tasks for building this in Django. Write the result to `backlog.md`.
 
+What's task 1 in the backlog your agent came up with?
 
-## Question 5: First verstion
+
+## Question 5: First version
 
 Implement the first few tasks. Just open your agent and say:
 
@@ -71,21 +80,23 @@ Implement the first few tasks. Just open your agent and say:
 Implement task #1 from backlog.md
 ```
 
-Run the server. Which command do you need to use for that?
+Run the server. Which command do you use to start the Django development server?
 
 - `uv run python manage.py runserver`
+- `uv run django-admin startserver`
+- `python manage.py start`
+- `uv run python app.py runserver`
 
 
 
 ## Question 6: Tests
 
-Ask AI to implement the views and templates for your app's main features (you'll need at least a base template and a home template), then ask it to cover the functionality with tests.
+After implementing a few items from the backlog, let's make sure the code is covered with tests. 
 
+- Tell the agent we want to cover the code with tests
 - Ask it which scenarios we should cover
 - Make sure they make sense
 - Let it implement them and run them
-
-Probably it will require a few iterations to make sure that tests pass and everything is working.
 
 What's the command you use for running tests in the terminal?
 
@@ -95,14 +106,11 @@ What's the command you use for running tests in the terminal?
 - `django-admin test`
 
 
-
-
 ## Submission
 
 Submit your homework here: https://courses.datatalks.club/ai-dev-tools-2026/homework/hw1
 
 Use the link to repository you created in the homework submission form.
-
 
 ## Learning in Public
 
@@ -123,15 +131,15 @@ Don't worry about being perfect. Everyone starts somewhere, and people love foll
 ---
 🚀 Week 1 of AI Dev Tools Zoomcamp by @DataTalksClub complete!
 
-Turned a one-line idea into a spec, then built a Django app for managing shared household chores using an AI coding agent!
+Turned a vague one-line idea into a spec, broke it into a backlog, and let an AI coding agent build a Django app for managing shared household chores!
 
 Today I learned how to:
 
 - ✅ Turn a vague idea into a written spec
-- ✅ Set up Django projects and apps
-- ✅ Create database models and migrations
-- ✅ Implement views and templates
-- ✅ Write comprehensive tests with AI help
+- ✅ Break a spec into a backlog of tasks
+- ✅ Set up a Django project and app with AI
+- ✅ Implement backlog tasks one at a time with a coding agent
+- ✅ Cover the app with tests
 
 Here's my repo: <LINK>
 
@@ -148,9 +156,8 @@ You can sign up here: https://github.com/DataTalksClub/ai-dev-tools-zoomcamp/
 🤖 Built a Django app with AI in @Al_Grigor's AI Dev Tools Zoomcamp!
 
 - 📝 Spec first, code second
+- 🗂️ Backlog-driven implementation
 - ✨ Household chores app from scratch
-- 📝 Models & migrations
-- 🎨 Views and templates
 - ✅ Tests
 
 My repo: <LINK>
