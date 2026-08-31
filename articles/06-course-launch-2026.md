@@ -2,6 +2,7 @@
 
 From Idea to Production with AI Coding Agents
 
+[Join the AI Dev Tools Zoomcamp 2026 Course Launch](https://luma.com/tsiusx8s) on Monday, August 31, from 5:00 PM to 6:00 PM GMT+2.
 
 The 2026 cohort of [AI Dev Tools Zoomcamp](https://github.com/DataTalksClub/ai-dev-tools-zoomcamp) starts today (August 31). The course is free, and registration is open for the next few weeks.
 
@@ -31,7 +32,6 @@ Use these links to join the course and find the materials:
 - [Read the course documentation](https://datatalks.club/docs/courses/ai-dev-tools-zoomcamp/) for prerequisites, setup, logistics, and detailed guidance.
 - [Join the DataTalks.Club Slack](https://datatalks.club/slack.html) for talking to your peer course participants and join the `#course-ai-dev-tools-zoomcamp` channel.
 - [Join the Telegram channel](https://t.me/aidevtoolszoomcamp) for announcements and deadline updates.
-- [Save the YouTube playlist](https://www.youtube.com/playlist?list=PL3MmuxUbc_hLuyafXPyhTdbF4s_uNhc43)
 
 <figure>
   <img src="images/06-course-repository.png" alt="The AI Dev Tools Zoomcamp GitHub repository shows folders for the five course modules and a description of the course">
@@ -47,7 +47,7 @@ In this course, we use AI coding tools across the full software-development life
 - Part 2: [Build and Ship a Full-Stack App with AI Coding Assistants](https://aishippingblog.com/p/build-and-ship-a-full-stack-app-with)
 - Part 3: [Deploy a Full-Stack App with AI Coding Assistants](https://aishippingblog.com/p/deploy-a-full-stack-app-with-ai-coding)
 - Part 4: [DevOps and Observability for an AI-Built App](https://aishippingblog.com/p/devops-and-observability-for-an-ai)
-- Part 5: Coding Agent Building Blocks: Reusable Skills and Specialized Subagents
+- Part 5: [Coding Agent Building Blocks: Reusable Skills and Specialized Subagents](https://aishippingblog.com/p/coding-agent-building-blocks-reusable)
 
 <figure>
   <img src="images/06-course-docs.png" alt="The curriculum page lists five modules covering AI-native workflow, full-stack development, deployment, DevOps and observability, and coding agent capabilities">
@@ -134,7 +134,28 @@ Homework is optional for the certificate, but I recommend doing it. It gives you
 
 You can follow all the materials without joining the live cohort. If you study at your own pace, you can watch the same recordings, complete the homework for practice, and build a portfolio project. We offer graded submissions, peer review, and certificates during the live cohort.
 
-Read the [Zoomcamp logistics documentation](https://datatalks.club/docs/courses/zoomcamp-logistics/) for the detailed homework and project rules. It also explains deadlines, peer review, and certificates.
+For more information, read the guides to [course work](https://datatalks.club/docs/courses/zoomcamp-logistics/course-work/), [homework](https://datatalks.club/docs/courses/zoomcamp-logistics/homework/), and [joining a cohort after it starts](https://datatalks.club/docs/courses/zoomcamp-logistics/joining-mid-cohort/).
+
+## Leaderboard
+
+The leaderboard is optional: it doesn't affect certification. It gives you a way to track your progress alongside the cohort and recognizes contributions beyond homework. You can earn points for submitting homework on time, learning in public, contributing to the FAQ, completing projects, and reviewing peer projects.
+
+The screenshot below shows the [AI Dev Tools Zoomcamp 2025 leaderboard](https://courses.datatalks.club/ai-dev-tools-2025/leaderboard). Your leaderboard profile is anonymous by default, but you can make your name, bio, and links public from your enrollment profile.
+
+<figure>
+  <img src="images/06-leaderboard-2025.png" alt="The 2025 AI Dev Tools Zoomcamp leaderboard lists participant names, positions, and scores">
+  <figcaption>Last year's leaderboard recognized steady course progress and community contributions</figcaption>
+</figure>
+
+For more information, read the [leaderboard documentation](https://datatalks.club/docs/courses/zoomcamp-logistics/leaderboard/) for the point categories, timing, and profile options.
+
+## Learn in public
+
+As you work through the course, share what you build and learn. A short post about a useful idea, a problem you solved, or a screenshot of your project reinforces the material and creates a public record of your progress. It can also bring feedback, new connections, and opportunities.
+
+After publishing a post, submit its link through the course platform with your homework, project, or peer review. Each accepted link earns a leaderboard point.
+
+For more information, read the [learning-in-public guide](https://datatalks.club/docs/courses/zoomcamp-logistics/learning-in-public/) for the submission process, post ideas, and examples.
 
 ## Final project and certificate
 
@@ -151,10 +172,19 @@ Your project should include:
 
 You also document how you used AI. Show how you described tasks and gave the agent context. Explain how you reviewed generated code, tested the result, and handled permissions. In the later modules, you add operations, security, and agent-extension work around the application.
 
-Homework isn't required for the certificate. To earn the certificate, you need to submit a passing final project during the live cohort and complete the required peer reviews on time. Check the [course platform](https://courses.datatalks.club/ai-dev-tools-2026/) for the exact project and review deadlines. Read the [certification documentation](https://datatalks.club/docs/courses/zoomcamp-logistics/certification/) for the general certificate workflow.
+Homework isn't required for the certificate. To earn the certificate, you need to submit a passing final project during the live cohort and complete the required peer reviews on time. Check the [course platform](https://courses.datatalks.club/ai-dev-tools-2026/) for the exact project and review deadlines.
 
-- Project 1: submit by 2026-10-19 and complete peer reviews by 2026-10-26.
-- Project 2: submit by 2026-11-09 and complete peer reviews by 2026-11-16.
+- [Project 1](https://courses.datatalks.club/ai-dev-tools-2026/project/project1): submit by 2026-10-19 and complete peer reviews by 2026-10-26.
+- [Project 2](https://courses.datatalks.club/ai-dev-tools-2026/project/project2): submit by 2026-11-09 and complete peer reviews by 2026-11-16.
+
+For more information, read the [course-specific project requirements](https://datatalks.club/docs/courses/ai-dev-tools-zoomcamp/project/), the [peer-review guide](https://datatalks.club/docs/courses/zoomcamp-logistics/peer-review/), and the [certification guide](https://datatalks.club/docs/courses/zoomcamp-logistics/certification/).
+
+For an example, open the [Rick Astley certificate from the 2025 course](https://certificate.datatalks.club/ai-dev-tools/2025/fe629854d45c559e9c10b3b8458ea392fdeb68a9.pdf) as a PDF.
+
+<figure>
+  <img src="images/06-certificate-2025.png" alt="A 2025 AI Dev Tools Zoomcamp statement of accomplishment awarded to Rick Astley">
+  <figcaption>Participants who complete a passing project and the required peer reviews earn a certificate</figcaption>
+</figure>
 
 ## Course links
 

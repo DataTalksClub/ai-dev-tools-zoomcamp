@@ -6,7 +6,7 @@ Follow the same sequence for every screenshot:
 
 1. Introduce the subject in the article.
 2. Capture the rendered page without browser chrome.
-3. Crop the image to the evidence the reader needs.
+3. Crop the image to the evidence the reader needs, keeping a comfortable margin around it.
 4. Save it under `articles/images/` with the article-number prefix.
 5. Insert a `<figure>` immediately after the text it supports.
 6. Add descriptive alt text and a separate takeaway in `<figcaption>`.
@@ -48,6 +48,8 @@ Choose the crop based on the statement the figure supports:
 Choose a wide viewport for article screenshots. A width between 1400 and 1600 pixels gives text and side-by-side panels enough room. Crop the result to roughly 1200 to 1600 pixels wide so it stays readable when the article scales it down.
 
 The final crop should prove or clarify the preceding text. It shouldn't introduce a subject that the article hasn't mentioned yet.
+
+Leave roughly 20 to 40 pixels of internal space around the relevant content. If the content is inside a card or table, keep whitespace outside its full border instead of placing the border directly against the image edge. End a table crop after a complete row and its bottom rule. Don't cut through the next row.
 
 ## Capture with Chromium and crop with ImageMagick
 
@@ -136,11 +138,13 @@ with sync_playwright() as playwright:
         "element.parentElement.nextElementSibling.getBoundingClientRect().bottom"
     )
 
+    padding = 32
+
     clip = {
-        "x": main["x"],
-        "y": main["y"],
-        "width": main["width"],
-        "height": module_5_bottom - main["y"] + 10,
+        "x": main["x"] - padding,
+        "y": main["y"] - padding,
+        "width": main["width"] + 2 * padding,
+        "height": module_5_bottom - main["y"] + 2 * padding,
     }
 
     page.screenshot(
@@ -166,6 +170,8 @@ Open the PNG at its original resolution and check each item:
 - the text has finished loading
 - no menus, cookie banners, or browser controls cover the content
 - no heading or panel edge is clipped
+- cards and tables have whitespace outside every visible border
+- tables end after a complete row rather than halfway through one
 - blank forms and unrelated navigation are removed
 - the crop has enough context to make sense
 - the image remains readable at the article's display width
