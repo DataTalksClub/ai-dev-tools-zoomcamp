@@ -72,6 +72,9 @@ A skill is a structured set of instructions for a repeatable procedure.
 
 If you need to follow a specific sequence of actions for completing a task, you can document the steps in a skill. Then later you can ask the agent to use this skill to perform a task. It will read the file and follow the steps from there.
 
+
+### My Skills
+
 I use skills a lot.
 
 For example, one of my skills is for releasing a new vesion of a Python package. I maintain a lot of Python libraries that I need to regularly update and publish. I describe how I do it in [My PyPI Release Pipeline for Python Libraries](https://aishippingblog.com/p/my-pypi-release-pipeline-for-python).
@@ -104,7 +107,7 @@ name: release
 description: Release a new version of the current project
 ---
 
-# Release
+Release
 
 1. Inspect the project and determine its package registry.
 2. Run the tests and other required checks.
@@ -139,7 +142,7 @@ If you want to better understand how skills work, the best way is to build a sma
 [Build a Coding Agent with Tools, Skills and PydanticAI](https://aishippinglabs.com/workshops/coding-agent-v2) I show you how. We first learn about agents and function calls, and then see how to implement a special function for loading skills.
 
 
-## Global Skills
+### Global Skills
 
 There are some skills that all your projects need. But some are only needed for local work. 
 
@@ -162,7 +165,6 @@ To create global skills, you need to put them in
 
 I use multiple assistants, so I want all of them to use the same skills. For that, I maintain one canonical copy of the skills in my
 [`agents` repository](https://github.com/alexeygrigorev/.agents), and then create symlinks from there to `~/.codex/skills`, `~/.claude/skills` and other places. 
-
 
 
 ### Project-Specific Skills
@@ -189,7 +191,7 @@ I solve this problem by creating a symlink from `.claude/skills/` to `.agents/sk
 I hope Anthropic starts listenining to their users and adopts the `.agents` convention too, so I can finally delete all these symlinks.
 
 
-### Creating skills
+### Creating Skills
 
 You don't need to create these skills manually. Coding assistants know the format, so you can ask them to create these skills.
 
@@ -209,19 +211,45 @@ Improving an existing skill works in the same way. I trigger a skill, and if I s
 
 ## Building Block 2: Subagents
 
-A coding agent has a finite context window. In one session, it
-plans, implements, and reviews a task. As that context fills, the agent can lose some important details. This is called "context rot".
+Most coding assistants allow you to start a session within a session. We usually call it "subagents" to make it clear that they are created inside your main coding session.
 
-That's why I often start each new task in a new session. This is also what I recommended in [From Idea to Production](https://aishippingblog.com/p/from-idea-to-production): start a new session for each of the 28 prompts.
+<figure>
+  <img src="images/05-i-heard-you-like-prompts.jpg" alt="A meme reads, 'Yo dawg I heard you like agents, so I put an agent inside your agents, so you can prompt while you prompt'">
+  <figcaption>Subagents let one coding agent prompt another agent inside its own session</figcaption>
+</figure>
 
-Also, the actions that the agent has taken so far influence its future actions. If an agent implemented a feature, we don't want to ask the same agent to test it. Its implementation history can lead it to accept its own assumptions instead of checking the result independently against the specification.
+<figure>
+  <img src="images/05-subagent-general.jpg" alt="A coding assistant shows a main session with a backgrounded general-purpose subagent grooming issue 69">
+  <figcaption>The main session can keep working while a subagent handles a focused task in the background</figcaption>
+</figure>
 
-In Article 1, I described the process:
+### Session Context
 
-- PM grooms an issue.
-- SWE implements it.
-- QA tests it and outputs `PASS` if everything is fine or `FAIL` if the task isn't done.
-- If the result is `FAIL`, SWE needs to fix it.
+The context for a session is all the information the agent has about the current task and all the actions it has taken. 
+
+In includes:
+
+- AGENTS.md file
+- Skills and tools definitions
+- All the files it read 
+- All the code it read and wrote 
+- All the text you sent it and all the text it output 
+
+That's a lot of information. As you go thought the session, and the session is getting longer, the agent starts "forgetting" things from the beginning. This is called "context rot".
+
+That's why I start a new focused session for each task. In the article [From Idea to Production in 28 Prompts](https://aishippingblog.com/p/from-idea-to-production) I show the steps you need to take your idea to production, and recommend to start a new session for each of the steps.
+
+Also, the current context will influence the future actions of the agent. If the agent implemented a feature, you shouldn't ask to test it in the same window. The implementation history will bias the agent and it can skip some checks. Instead, it's better to start a fresh session, and ask the agent there to check the work. 
+
+### Agentic Team
+
+This is what we did in Part 1 of the course, [AI-Native Development: Specifications, Loop and Graph Engineering](https://aishippingblog.com/p/ai-native-development-specifications). We defined multiple roles for our agentic team:
+
+- Product manager (PM) - turns raw intake into specifications
+- Software engineer (SWE) - based on the specifications implements the task
+- QA engineer (QA) - validates that the task is implemeted correctly
+
+Each of these agents live in a separate session: the context from SWE never gets into the QA session, so the QA engineer can independently test the system. 
 
 If I have an issue #101 that's already groomed and I want to implement it, I can start a new session and say:
 
@@ -229,71 +257,122 @@ If I have an issue #101 that's already groomed and I want to implement it, I can
 You're a software engineer agent. Your role is described in `_docs/team/swe.md`. Work on issue #101.
 ```
 
-But instead, I can have one main coding session that I'll treat as the orchestrator and ask it to launch the agent:
+But instead, I can also to launch it as a subagent:
 
 ```text
 Launch a subagent to implement #101. Follow the process.
 ```
 
-It will create a new agent with an empty context and automatically prompt it. Some coding assistants also let you peek inside subagent sessions. With others, you only know that they are doing something, but you don't know exactly what.
+<figure>
+  <img src="images/05-subagent-pm.jpg" alt="A coding assistant starts a PM agent to groom issue 69 in the background">
+  <figcaption>A subagent can take on a specialized role, such as product-management work</figcaption>
+</figure>
 
-Instead of launching only general-purpose agents, I can define reusable roles.
-A simplified implementer definition looks like this:
+It will create a new agent with empty context (plus AGENTS.md) and automatically prompt it with something like that:
+
+```
+You're a software engineer. Your role is defined in `_docs/team/swe.md`.
+Your task is to work on issue #101. Follow the process in `_docs/process.md
+```
+
+In some coding assistants you will also be able to look inside the subagent sessions. In others, you will only know that the subagent is doing something, but you won't know what exactly. 
+
+
+### Defining Subagents
+
+The coding assistant can read the agent definition from a markdown document (like `_docs/team/swe.md`) and launch a subagent. 
+
+Just like with skills, you can also create a reusable and discoverable subaegnt definition. 
+
+For example, for the software engineer, the definition could be:
 
 ```markdown
 ---
-name: implementer
+name: software-engieer
 description: Use this agent to execute a well-scoped coding assignment.
-model: implementation-model
 ---
 
 Implement the assigned task, add or update tests, run the project checks, and
 report the files changed and any remaining risks. Do not expand the scope.
 ```
 
-Agent definitions can also select a model and restrict tools. I often use a
-stronger reasoning model to audit a codebase or produce a plan, save that plan
-in the repository, and hand it to a faster implementation agent. The model names
-will change; the useful pattern is to separate analysis from execution.
+Or even 
 
-I usually specify in my `process.md` document that the orchestrator should always run subagents, so my request could be:
+```markdown
+---
+name: software-engieer
+description: Use this agent to execute a well-scoped coding assignment.
+---
+
+Read your role definition from _docs/team/swe.md
+```
+
+
+You put these definitions in:
+
+- `.agents/agents/<NAME>.md` or 
+- `.claude/agents/<NAME>.md` for Claude
+
+You can also define subagents globally, but I never needed it. My subagents are always project-specific. 
+
+Now you can ask:
+
+```
+Launch software engineer for #101
+```
+
+And it will start the software engineer agent
+
+Note that for some coding agents like Claude you will have to restart a session to be able to discover the agent you just defined. 
+
+### Orchestration Session
+
+When you start using subagents, your main session becomes the orchestrator.
+
+If have a process that we specify in `process.md`:
+
+- PM grooms the issue 
+- SWE implements it 
+- QA checks it.
+- If the issue passed the check, QA outputs `PASS`, otherwise `FAIL`
+- If `FAIL`, SWE needs to reimplement it, until QA accepts it
+
+This way we create a graph. 
+
+This sequence needs to be enforced by something. Typically, we use the main coding session for that. 
+
+If we descibe the process in our `process.md` document, and link it in `AGENTS.md`, then we can ask:
 
 ```text
 Implement #101.
 ``` 
 
-It will automatically run #101 through the PM -> SWE -> QA sequence, and each step will run in its own fresh context.
+It will automatically run #101 through the PM -> SWE -> QA sequence, each step will run in its own fresh context, and the orchestrator will make sure that on `FAIL` the task goes to SWE who will fix the problems.
 
-Skills and subagents can be composed. For example, a `check-design` skill can
-define the repeatable mechanics:
+## Parallel Execution
 
-1. Start the application.
-2. Open it in a browser at desktop and mobile sizes.
-3. Capture screenshots.
-4. Launch the designer subagent with the screenshots and the project's design
-   system.
-5. Save actionable findings for an implementer.
-
-The skill preserves the sequence, the designer definition preserves the role,
-and the fresh subagent context keeps the review independent.
-
-
-## Parallel Subagents with Git Worktrees
-
-In the first article, we run this sequentially. For one task, we can't do it in any other way: we have to keep the sequence from PM to SWE and from SWE to QA.
+In the first article, I only showed how to run this flow sequentially. And we can't have it in any other way: we always have to follow the PM -> SWE -> QA sequence.
 
 But we can take care of multiple independent issues in parallel.
 
-For that, we need two concepts:
+Our main agent is already the orchestrator, so it can run multiple subagents  in parallel. But we need to make sure that the agents aren't stepping on each other's toes.
 
-- Git worktrees
-- The main session is the orchestrator
+For that we use git worktrees:
 
-We need worktrees so agents can edit, test, and commit without
-overwriting each other's changes.
+- For each new task create a new git worktree
+- The agents work independently in these worktrees 
+- You go though the entire PM -> SWE -> QA cycle in that worktree 
+- When the cycle is ove rand the task is done, the orchestrator merges it back into main (alternatively you can have a conflict resolver agent)
+- The worktree is deleted 
 
-The main session orchestrates everything: it keeps track of the status of each task, schedules the agents, and creates and merges worktrees. It also prevents logical conflicts. It can notice when two issues need to update the same files, so it's better not to run them in parallel because merging the changes will be difficult.
+The orhcestrator's role here becomes more than just launching subagents in order.
 
+It also needs to:
+
+- keep track and status of each task
+- schedule the agents
+- create and merge worktrees 
+- prevent logical conflicts by picking tasks that don't need to work on the same files 
 
 
 <figure>
@@ -314,59 +393,7 @@ You are the orchestrator. Your job is to:
 - Send completed work to a fresh reviewer.
 - Return review findings to the correct implementer.
 - Merge approved work into the main branch one issue at a time.
-- Coordinate the work; do not implement the issues yourself.
+- Coordinate the work. Never implement the issues yourself.
 ```
 
-I use this approach for most of my projects.
-
-
-## Analysis and Implementation Models
-
-I use skills and subagents to structure the work, and I choose models with the
-same split in mind.
-
-I pick models by role:
-
-- For analysis, I use Fable or Sol. They read a spec, look at the current
-  code, and produce a concrete plan before implementation starts.
-- For implementation, I use Sonnet or Luna Max. Once the plan is clear, they
-  write the code, run the checks, and fix what breaks.
-
-These model names may change, but I keep the same split: analysis first,
-implementation second. I can repeat both passes with skills. I run analysis
-and verification passes in subagents so they don't inherit the implementer's
-assumptions.
-
-
-## Practical Takeaways
-
-Keep these rules in mind when you structure your agent setup:
-
-- Start with skills: identify repeated flows and encode them as Markdown
-  playbooks
-- Add subagents when context is a problem: if tasks are too large for a single
-  agent session, break them into roles
-- Keep skills simple: one flow per skill. If it branches, split it
-- Give each subagent a fresh context window so details from another role don't
-  interfere
-- Build incrementally: start with one skill and one subagent. Add more as you
-  discover what your flow needs
-- Always verify: even the best models take shortcuts. I encode the "right way"
-  in skills, and reviewer subagents catch what the implementer missed
-
-## Resources
-
-I use these resources for the course, workshop, and shared skills:
-
-- [AI Dev Tools Zoomcamp](https://github.com/DataTalksClub/ai-dev-tools-zoomcamp) (free course)
-- [Workshop 5: Coding Agent Capabilities](https://www.youtube.com/watch?v=t8OrAjNO2Zs)
-- [Build a Coding Agent with Tools, Skills and PydanticAI](https://aishippinglabs.com/workshops/coding-agent-v2)
-- [My agent configuration](https://github.com/alexeygrigorev/.agents) (shared skills for Claude Code, Codex, and OpenCode)
-
-## Related Substack Articles
-
-Read these for more detail on the examples:
-
-- [How to Set Up Your Coding Agent](https://aishippingblog.com/p/how-to-set-up-your-coding-agent-a)
-- [My Experiments with Claude Code](https://aishippingblog.com/p/my-experiments-with-agents-code)
-- [AI-Native Development: Specifications, Loop and Graph Engineering](https://aishippingblog.com/p/ai-native-development-specifications)
+This is the approach I use for the majority of my projects.
