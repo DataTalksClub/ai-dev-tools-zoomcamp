@@ -119,94 +119,63 @@ Self-paced steps:
 
 ### [Module 1: AI-Native Developer Workflow](01-ai-native-workflow/)
 
-Learn how to turn a vague product idea into specified, implemented, and independently verified software with coding agents. You define the requirements, make the key decisions, and review the results.
+Learn how to turn a vague product idea into specified, implemented, and independently verified software with coding agents.
 
 In this module, you'll:
 
-* Refine a vague idea into a product specification and choose a technology stack you can review.
-* Break the specification into a backlog of focused tasks with clear goals, acceptance criteria, constraints, and boundaries.
-* Give coding agents durable context through `AGENTS.md` and supporting project documents.
-* Define product manager, software engineer, and QA roles that separate task grooming, implementation, and independent verification.
-* Use loop engineering to continue work until a checkable condition is met.
-* Use graph engineering to orchestrate specialized agents across the backlog and return failed tasks to implementation.
+- Turn a vague idea into a spec and a backlog of focused tasks.
+- Give coding agents durable context through `AGENTS.md`.
+- Use PM/engineer/QA roles with loop and graph engineering to implement and verify the backlog.
 
-After this module, you can design and run an AI-native development workflow that takes a product from an initial idea through implementation and independent QA while keeping human decisions and review central.
-
-> Article: [AI-Native Development: Specifications, Loop and Graph Engineering](https://aishippingblog.com/p/ai-native-development-specifications)
+Outcome: design and run an AI-native development workflow that takes a product from idea to implementation and independent QA.
 
 ### [Module 2: Build and Ship an AI-Assisted Full-Stack App](02-development/)
 
-Build a full-stack application with AI coding assistants, replacing mocked components one at a time and verifying that the system works after each stage.
+Build a full-stack application with AI coding assistants, replacing mocked components one at a time.
 
 You will:
 
-* Turn an application idea into a product specification with user stories, acceptance criteria, non-goals, and technical constraints.
-* Build and validate an interactive frontend prototype with backend calls centralized in a mocked service layer.
-* Define the expected backend behavior through an OpenAPI contract shared by the frontend and backend.
-* Implement a modular FastAPI backend from the contract, initially using an in-memory store.
-* Connect the frontend and backend, add authentication and real-time collaboration with WebSockets, and test the complete application flow.
-* Replace temporary storage with SQLite and SQLAlchemy while keeping the database configuration portable.
-* Add tests and reproducible commands for running the application locally.
+- Turn an idea into a spec, then build a frontend prototype and an OpenAPI contract.
+- Implement a FastAPI backend from the contract, then connect it to the frontend with auth and real-time collaboration.
+- Replace temporary storage with SQLite and add tests.
 
-After this module, you will have a working local full-stack application with a connected frontend and backend, real-time updates, persistent data, tests, and a clear API contract. In Module 3, you will containerize, test, and deploy it.
-
-> Article: [Build and Ship a Full-Stack App with AI Coding Assistants](https://aishippingblog.com/p/build-and-ship-a-full-stack-app-with)
+Outcome: a working full-stack app with real-time updates, persistent data, tests, and a clear API contract.
 
 ### [Module 3: Test, Containerize, and Deploy an AI-Assisted App](03-deployment/)
 
-Take the application from your local machine to a public deployment, with automated tests and delivery checks that verify the complete system.
+Take the application from your machine to a public deployment, with tests and delivery checks that verify the whole system.
 
 You will:
 
-* Package the frontend and backend in a multi-stage Docker image, with the backend serving the compiled frontend.
-* Replace SQLite with Postgres and run the application and database together with Docker Compose.
-* Add integration tests that verify the frontend build, backend, and Postgres connection.
-* Use Playwright to test the complete collaborative workflow across separate browser sessions.
-* Deploy the containerized application to AWS with CloudFormation, or adapt the workflow to another container platform.
-* Create a GitHub Actions pipeline that runs frontend and backend tests, builds the stack, and executes integration and end-to-end tests.
-* Use OpenID Connect to deploy with restricted AWS permissions and verify each release through a health check.
+- Containerize the app and move from SQLite to Postgres with Docker Compose.
+- Add integration and end-to-end tests, including Playwright for the collaborative workflow.
+- Deploy to AWS and wire up a GitHub Actions CI/CD pipeline.
 
-After this module, you will have a public, containerized application backed by Postgres, with automated tests and a CI/CD pipeline that deploys changes only after the complete test suite passes.
-
-> Article: [Deploy a Full-Stack App with AI Coding Assistants](https://aishippingblog.com/p/deploy-a-full-stack-app-with-ai-coding)
+Outcome: a public, containerized app backed by Postgres, with automated tests and CI/CD that deploys only after tests pass.
 
 ### [Module 4: DevOps and Observability for AI-Built Apps](04-devops/)
 
-A deployed application can still fail silently. Add release controls and observability so you can detect user-impacting problems, investigate them with evidence, and start an AI-assisted response.
+A deployed app can still fail silently. Add release controls and observability so you can detect, investigate, and respond to problems.
 
 You will:
 
-* Separate development and production environments, deploying every change to development before manually promoting it to production.
-* Split the CI/CD process into build and deployment stages, store versioned images in a container registry, and promote the same tested image between environments.
-* Instrument the backend with OpenTelemetry, including the service name, environment, and deployed version.
-* Collect metrics, logs, and traces through an OpenTelemetry Collector using Prometheus, Loki, Tempo, and Grafana.
-* Define application-specific metrics and build a dashboard that can be filtered by environment and deployed version.
-* Create an actionable alert for sustained user impact, including the affected service, environment, version, owner, and dashboard.
-* Start a headless coding agent when an alert fires so it can investigate the failure, reproduce it, and create a minimal tested fix.
-* Introduce a reproducible bug to verify the complete path from failure and alert to automated investigation.
+- Separate development and production environments with a promoted, versioned release pipeline.
+- Instrument the app with OpenTelemetry into Prometheus, Loki, Tempo, and Grafana, and set up an actionable alert.
+- Give a coding agent a bounded, read-only responder role to investigate incidents.
 
-After this module, you will have separate development and production workflows, reproducible release artifacts, an observability stack, actionable alerts, and a proof-of-concept AI on-call responder.
-
-> Article: [DevOps and Observability for an AI-Built App](https://aishippingblog.com/p/devops-and-observability-for-an-ai)
+Outcome: separate dev/prod workflows, an observability stack, actionable alerts, and a proof-of-concept AI on-call responder.
 
 ### [Module 5: Coding Agent Building Blocks: Reusable Skills and Specialized Subagents](05-agent-capabilities/)
 
-Turn repeated workflows and project roles into reusable capabilities that coding agents can discover and apply when needed.
+Turn repeated workflows and project roles into reusable capabilities that coding agents can discover and apply.
 
 You will:
 
-* Understand the difference between skills, subagents, and ordinary project documentation.
-* Create discoverable skills with `SKILL.md`, frontmatter, supporting instructions, and scripts.
-* Decide whether a skill should be available globally or only inside one project.
-* Capture a completed workflow and your corrections as a reusable skill, then update it as the process improves.
-* Use focused subagents to reduce context rot and separate implementation from independent review.
-* Define reusable product manager, software engineer, and QA subagents with clear roles and boundaries.
-* Use the main coding session as an orchestrator that moves tasks through grooming, implementation, and QA.
-* Run independent tasks in parallel using isolated Git worktrees, controlled file ownership, and sequential merges.
+- Create discoverable skills with `SKILL.md` and decide whether they should be global or project-specific.
+- Define focused subagents, including PM/engineer/QA roles, to separate implementation from independent review.
+- Orchestrate tasks in parallel using isolated Git worktrees.
 
-After this module, you will have reusable skills, specialized subagent definitions, and an orchestration pattern for completing project work in isolated sequential or parallel workflows.
-
-> Article: [Coding Agent Building Blocks: Reusable Skills and Specialized Subagents](https://aishippingblog.com/p/coding-agent-building-blocks-reusable)
+Outcome: reusable skills, subagent definitions, and an orchestration pattern for sequential or parallel project work.
 
 > [!NOTE]
 > Module 5 has no graded homework. It is assessed through the [module deliverable](05-agent-capabilities/#module-deliverable-agent-extension-pack) instead.
