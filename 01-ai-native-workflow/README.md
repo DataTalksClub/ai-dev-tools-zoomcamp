@@ -38,7 +38,7 @@ We build the weekly-feedback idea twice to show why we need a specification:
 Complete the module with this project:
 
 - [2026 homework](../cohorts/2026/01-overview/homework.md) - Build a
-  Django TODO app with the AI tool of your choice. You don't need to know
+  Django app with the AI tool of your choice. You don't need to know
   Django.
 
 ## Previous cohort materials
