@@ -1,4 +1,7 @@
-# Module 4 — DevOps and Observability for AI-Built Apps
+---
+video_url: https://www.youtube.com/watch?v=YkxLo_FRoQw
+---
+# DevOps and Observability for AI-Built Apps
 
 Module 3 ends with an app that deploys automatically when tests pass. That gets it online. It does not tell you whether it still works.
 
@@ -32,9 +35,7 @@ You will:
 - Run recurring security audits that combine a deterministic scanner (Semgrep), model review, and human validation
 - Treat the responder itself as attack surface: inventory its capabilities, credentials, and provenance (Snyk Agent Scan)
 
-Prerequisite: the deployed app from [Module 3](../03-deployment/).
-
-[Recording: DevOps and Observability for AI-Built Apps](https://www.youtube.com/watch?v=YkxLo_FRoQw)
+Prerequisite: the deployed app from [Module 3](../03-deployment/lesson.md).
 
 Module summary: The companion article makes the deployed app more production-ready by
 separating dev and prod, collecting logs, metrics, and traces, and alerting on
@@ -117,12 +118,15 @@ Given one incident ID, the report should let a reader reconstruct:
 
 The operating principle: the model may reason; the system must observe, authorize, verify, and remember.
 
+## Homework
+
+- [Homework](homework.md) — questions coming
+
 ## Previous Cohort Materials
 
 Related material from the previous cohort:
 
 - [2025 archived CI/CD and DevOps module](https://github.com/DataTalksClub/ai-dev-tools-zoomcamp/tree/main/cohorts/2025/05-cicd-devops)
-- [2026 homework](https://github.com/DataTalksClub/ai-dev-tools-zoomcamp/blob/main/cohorts/2026/04-devops/homework.md) — questions coming
 
 ## Community Notes
 

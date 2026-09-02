@@ -1,4 +1,7 @@
-# Module 1 — AI-Native Developer Workflow
+---
+video_url: https://www.youtube.com/watch?v=VUJxJGpaDEs
+---
+# AI-Native Developer Workflow
 
 Tools change every month, but we keep working in much the same way. In this module, we take a
 vague product idea through specification and context. Then we implement it and
@@ -11,8 +14,6 @@ You learn:
 - The product manager, software engineer, and QA roles
 - Loop engineering
 - Graph engineering
-
-[Recording: AI-Native Developer Workflow](https://www.youtube.com/watch?v=VUJxJGpaDEs)
 
 Module summary: The companion article shows how to turn a vague idea into a useful specification,
 give an agent durable context, break the work into a backlog, and use separate
@@ -38,7 +39,7 @@ We build the weekly-feedback idea twice to show why we need a specification:
 Complete the module with this project:
 
 - [2026 homework](homework.md) - Build a
-  Django TODO app with the AI tool of your choice. You don't need to know
+  Django app with the AI tool of your choice. You don't need to know
   Django.
 
 ## Previous cohort materials

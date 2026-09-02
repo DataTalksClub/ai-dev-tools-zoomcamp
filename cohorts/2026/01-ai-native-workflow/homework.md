@@ -1,4 +1,4 @@
-# Introduction to AI-Assisted Development
+# Homework 1: AI-Native Developer Workflow
 
 In this homework, we'll build an application with AI — but instead of us handing you a finished spec, you'll turn a vague idea into one yourself, then implement it in Django.
 

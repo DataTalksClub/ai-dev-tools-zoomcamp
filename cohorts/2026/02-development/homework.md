@@ -1,4 +1,4 @@
-# [DRAFT] End-to-End Application Development
+# Homework 2: Build and Ship an AI-Assisted Full-Stack App
 
 > [!NOTE]
 > This homework is a draft. The questions will very likely change.

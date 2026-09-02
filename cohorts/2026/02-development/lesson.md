@@ -1,4 +1,7 @@
-# Module 2 — Build and Ship an AI-Assisted Full-Stack App
+---
+video_url: https://www.youtube.com/watch?v=x9dq5nBpDg8
+---
+# Build and Ship an AI-Assisted Full-Stack App
 
 ## Overview
 
@@ -13,7 +16,7 @@ In this module, you build a working end-to-end application with AI assistance. T
 
 The goal is not to let an AI tool build everything unchecked. The goal is to practice a controlled workflow where AI helps you move faster and you verify each step.
 
-The module ends with an app that runs on your machine: a frontend and a backend that talk to each other over a defined contract, with data persisted in SQLite. Everything needed to put it in front of other people — integration tests, containers, CI, deployment, and CI/CD — is [Module 3](../03-deployment/).
+The module ends with an app that runs on your machine: a frontend and a backend that talk to each other over a defined contract, with data persisted in SQLite. Everything needed to put it in front of other people — integration tests, containers, CI, deployment, and CI/CD — is [Module 3](../03-deployment/lesson.md).
 
 You will:
 
@@ -27,8 +30,6 @@ You will:
 Reference app:
 
 - https://github.com/alexeygrigorev/interview-canvas-share
-
-[Recording: Build and Ship an AI-Assisted Full-Stack App](https://www.youtube.com/watch?v=x9dq5nBpDg8)
 
 Module summary: The companion article builds a collaborative system-design interview app from
 scratch. It moves from a frontend prototype with mocked calls to an OpenAPI
@@ -53,12 +54,15 @@ docs/ai-usage-report.md
 
 The app should run locally from the README, persist data in SQLite, and pass its own tests.
 
+## Homework
+
+- [Homework](homework.md)
+
 ## Previous Cohort Materials
 
 The previous version of this module is archived here:
 
 - [2025 archived Module 2](https://github.com/DataTalksClub/ai-dev-tools-zoomcamp/tree/main/cohorts/2025/02-end-to-end)
-- [2026 homework](homework.md)
 
 ## Community Notes
 

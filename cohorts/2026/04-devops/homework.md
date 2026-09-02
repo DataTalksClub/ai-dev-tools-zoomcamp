@@ -1,4 +1,4 @@
-# [DRAFT] Module 4 Homework: DevOps and Observability for AI-Built Apps
+# Homework 4: DevOps and Observability for AI-Built Apps
 
 > [!NOTE]
 > The homework questions are being prepared and will very likely change. This page reserves the homework location for the 2026 cohort.

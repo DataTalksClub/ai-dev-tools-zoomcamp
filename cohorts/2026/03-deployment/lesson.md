@@ -1,4 +1,7 @@
-# Module 3 — Test, Containerize, and Deploy an AI-Assisted App
+---
+video_url: https://www.youtube.com/watch?v=gxt5ZDVnBMM
+---
+# Test, Containerize, and Deploy an AI-Assisted App
 
 ## Overview
 
@@ -17,8 +20,6 @@ continuous delivery
 Each step is something AI tools are good at drafting and bad at owning. A generated `Dockerfile` that builds is not the same as one that builds the right thing, and a green pipeline that skips the tests is worse than no pipeline. The workflow stays the same as in earlier modules: let the agent produce the first version, then read it, run it, and break it on purpose to see whether it actually catches anything.
 
 Continue with the app you built in Module 2.
-
-[Recording: Test, Containerize, and Deploy an AI-Assisted App](https://www.youtube.com/watch?v=gxt5ZDVnBMM)
 
 Module summary: The companion article takes the local application to a public deployment. It
 adds integration and end-to-end tests, packages the frontend and backend in a
@@ -53,12 +54,15 @@ docs/release-process.md
 
 The app should be deployed at a public URL, rebuilt and redeployed automatically when you merge to the main branch, and reproducible locally from the README.
 
+## Homework
+
+- [Homework](homework.md) — questions coming
+
 ## Previous Cohort Materials
 
 Related material from the previous cohort:
 
 - [2025 archived CI/CD and DevOps module](https://github.com/DataTalksClub/ai-dev-tools-zoomcamp/tree/main/cohorts/2025/05-cicd-devops)
-- [2026 homework](https://github.com/DataTalksClub/ai-dev-tools-zoomcamp/blob/main/cohorts/2026/03-deployment/homework.md) — questions coming
 
 ## Community Notes
 
