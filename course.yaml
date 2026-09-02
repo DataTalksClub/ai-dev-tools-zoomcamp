@@ -2,7 +2,7 @@ schema_version: 1
 content_id: 10000000-0000-4000-8000-000000000002
 slug: ai-dev-tools-zoomcamp
 title: AI Dev Tools Zoomcamp
-description_path: README.md
+description_path: SITE.md
 outcome: Build disciplined software workflows with AI assistants, agents, testing, and automation.
 repository_url: https://github.com/DataTalksClub/ai-dev-tools-zoomcamp
 docs_url: https://datatalks.club/docs/courses/ai-dev-tools-zoomcamp/
