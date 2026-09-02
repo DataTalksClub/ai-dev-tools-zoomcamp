@@ -1,0 +1,50 @@
+schema_version: 1
+sources:
+  - id: previous-launch-video
+    title: AI Dev Tools Zoomcamp 2025 launch and Q&A
+    type: video
+    locator: https://www.youtube.com/watch?v=58pn873XO04
+    captured: 2026-08-31
+    published:
+    authority: primary
+    summary: Primary evidence for the original course framing and the cohort logistics that the author says remain substantially unchanged.
+    page: wiki/sources/previous-launch-video.md
+    raw: /home/alexey/.cache/youtube_transcripts/58pn873XO04.txt
+    relevance: 0.92
+    status: selected
+  - id: current-course-repository
+    title: AI Dev Tools Zoomcamp current repository and 2026 materials
+    type: repository
+    locator: https://github.com/DataTalksClub/ai-dev-tools-zoomcamp
+    captured: 2026-08-31
+    published:
+    authority: primary
+    summary: Canonical source for the current five-module curriculum, final project direction, cohort links, and start date.
+    page: wiki/sources/current-course-repository.md
+    raw: /home/alexey/git/ai-dev-tools-zoomcamp
+    relevance: 1.00
+    status: selected
+  - id: zoomcamp-docs
+    title: AI Dev Tools Zoomcamp and shared Zoomcamp logistics documentation
+    type: documentation
+    locator: https://datatalks.club/docs/courses/ai-dev-tools-zoomcamp/
+    captured: 2026-08-31
+    published:
+    authority: primary
+    summary: Stable reference for registration, platform accounts, homework, deadlines, project, peer review, certificates, and communication channels; its course-specific curriculum page is currently stale.
+    page: wiki/sources/zoomcamp-docs.md
+    raw: /home/alexey/git/datatalks.club-docs/courses
+    relevance: 0.96
+    status: selected
+  - id: live-registration-page
+    title: AI Dev Tools Zoomcamp 2026 registration page
+    type: webpage
+    locator: https://courses.datatalks.club/register/ai-dev-tools/
+    captured: 2026-08-31
+    published:
+    authority: primary
+    summary: Live confirmation that registration is open and the 2026 cohort starts on August 31, 2026.
+    page: wiki/sources/live-registration-page.md
+    raw:
+    relevance: 0.88
+    status: selected

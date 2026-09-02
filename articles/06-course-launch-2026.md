@@ -120,6 +120,29 @@ You finish by packaging reusable instructions and a repeatable way to review cha
 * [Module 5 materials](https://github.com/DataTalksClub/ai-dev-tools-zoomcamp/tree/main/05-agent-capabilities)
 * No homework
 
+## Office hours 
+
+As a part of the course, we will also have office hours. During these office hours you can ask questions about the course (and beyond).
+
+There will be 4 sessions:
+
+- Tue, Sep 08, 2026
+- Tue, Sep 15, 2026
+- Tue, Sep 22, 2026
+- Tue, Sep 29, 2026
+
+We will meet at 18:30 Berlin time. 
+
+Join here: https://aishippinglabs.com/events/series/4/ai-dev-tools-office-hours
+
+Joining office hours requires a paid membership on AI Shipping Labs.
+
+This course is completely free and there are no sponsors for this course, so I'm I'm not earning anyting by running this course. If you want to support me, and also get more out of it, join AI Shippings Labs.
+
+You will also get a personalized onboarding: we will dicsuss your current situation, your goals, and build a development plan for you. 
+
+
+
 ## Cohort format
 
 The lectures are pre-recorded, so you don't need to attend a class at a particular time. In a live cohort, we move through the course together with shared deadlines, graded homework, and community support. You can also join the leaderboard, review peer projects, and work toward a certificate.

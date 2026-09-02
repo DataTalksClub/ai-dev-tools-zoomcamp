@@ -1,0 +1,11 @@
+schema_version: 1
+id: 2026-course-launch-article
+title: "AI Dev Tools Zoomcamp 2026 launch article"
+mode: writing
+status: rendered
+created: 2026-08-31
+seed_sha256: 56a866e1e017cbad6a573062a1049c8369d850864d00048871f12614ef2ebf36
+source_roots:
+  - "/home/alexey/git/ai-dev-tools-zoomcamp"
+  - "/home/alexey/git/datatalks.club-docs"
+target_repo: ""
