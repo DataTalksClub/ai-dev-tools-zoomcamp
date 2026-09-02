@@ -12,14 +12,14 @@ start_date: 2026-08-31
 end_date: 2026-09-28
 flow:
   - module:
-      source: 01-ai-native-workflow/module.yaml
-      homework: cohorts/2026/01-overview/homework.yaml
+      source: cohorts/2026/01-ai-native-workflow/module.yaml
+      homework: cohorts/2026/01-ai-native-workflow/homework.yaml
   - module:
-      source: 02-development/module.yaml
+      source: cohorts/2026/02-development/module.yaml
       homework: cohorts/2026/02-development/homework.yaml
   - module:
-      source: 03-deployment/module.yaml
+      source: cohorts/2026/03-deployment/module.yaml
       homework: cohorts/2026/03-deployment/homework.yaml
   - module:
-      source: 04-devops/module.yaml
+      source: cohorts/2026/04-devops/module.yaml
       homework: cohorts/2026/04-devops/homework.yaml

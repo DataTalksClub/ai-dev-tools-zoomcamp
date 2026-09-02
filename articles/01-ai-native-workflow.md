@@ -61,7 +61,7 @@ it'll fill the gaps.
 
 When I asked Claude Code to implement this project, the only prompt I gave was
 "a tool for weekly feedback for projects". It came up with
-[`weekly-feedback`](https://github.com/DataTalksClub/ai-dev-tools-zoomcamp/tree/main/01-ai-native-workflow/weekly-feedback),
+[`weekly-feedback`](https://github.com/DataTalksClub/ai-dev-tools-zoomcamp/tree/main/cohorts/2026/01-ai-native-workflow/weekly-feedback),
 a command-line tool for tracking weekly project status. It records wins,
 issues, blockers, and next steps. It also created documentation and covered the
 app with 62 tests, which all pass.

@@ -57,8 +57,8 @@ The app should run locally from the README, persist data in SQLite, and pass its
 
 The previous version of this module is archived here:
 
-- [2025 archived Module 2](../cohorts/2025/02-end-to-end/)
-- [2026 homework](../cohorts/2026/02-development/homework.md)
+- [2025 archived Module 2](https://github.com/DataTalksClub/ai-dev-tools-zoomcamp/tree/main/cohorts/2025/02-end-to-end)
+- [2026 homework](homework.md)
 
 ## Community Notes
 

@@ -3,7 +3,7 @@
 </p>
 
 > [!NOTE]
-> This folder contains the archived 2025 course materials (the earlier six-module outline). The live course lives in the project root, and the current cohort's homework is in [cohorts/2026](../2026/).
+> This folder contains the archived 2025 course materials (the earlier six-module outline). The live course lives in the current cohort folder, and the current cohort's homework is in [cohorts/2026](../2026/).
 
 <h1 align="center">
     AI Dev Tools Zoomcamp 2025: Write Better Code Faster

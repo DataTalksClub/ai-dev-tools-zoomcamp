@@ -46,7 +46,7 @@ on top.
 
 [Read the article: DevOps and Observability for an AI-Built App](https://aishippingblog.com/p/devops-and-observability-for-an-ai)
 
-This module is where [Module 5](../05-agent-capabilities/) starts. Every capability you add to a coding agent there belongs in the kind of capability table you build for the responder here.
+This module is where [Module 5](https://github.com/DataTalksClub/ai-dev-tools-zoomcamp/tree/main/05-agent-capabilities) starts. Every capability you add to a coding agent there belongs in the kind of capability table you build for the responder here.
 
 ## Where the Other Tools Fit
 
@@ -121,7 +121,7 @@ The operating principle: the model may reason; the system must observe, authoriz
 
 Related material from the previous cohort:
 
-- [2025 archived CI/CD and DevOps module](../cohorts/2025/05-cicd-devops/)
+- [2025 archived CI/CD and DevOps module](https://github.com/DataTalksClub/ai-dev-tools-zoomcamp/tree/main/cohorts/2025/05-cicd-devops)
 - [2026 homework](https://github.com/DataTalksClub/ai-dev-tools-zoomcamp/blob/main/cohorts/2026/04-devops/homework.md) — questions coming
 
 ## Community Notes

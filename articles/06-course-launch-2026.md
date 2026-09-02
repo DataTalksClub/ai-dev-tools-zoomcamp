@@ -65,8 +65,8 @@ By the end of the module, you have a repeatable way to direct an agent and verif
 
 * [Companion article](https://aishippingblog.com/p/ai-native-development-specifications)
 * [Recording](https://www.youtube.com/watch?v=VUJxJGpaDEs)
-* [Module 1 materials](https://github.com/DataTalksClub/ai-dev-tools-zoomcamp/tree/main/01-ai-native-workflow)
-* Homework: [Instructions](https://github.com/DataTalksClub/ai-dev-tools-zoomcamp/blob/main/cohorts/2026/01-overview/homework.md) · [Submit](https://courses.datatalks.club/ai-dev-tools-2026/homework/hw1) — due 2026-09-07
+* [Module 1 materials](https://github.com/DataTalksClub/ai-dev-tools-zoomcamp/tree/main/cohorts/2026/01-ai-native-workflow)
+* Homework: [Instructions](https://github.com/DataTalksClub/ai-dev-tools-zoomcamp/blob/main/cohorts/2026/01-ai-native-workflow/homework.md) · [Submit](https://courses.datatalks.club/ai-dev-tools-2026/homework/hw1) — due 2026-09-07
 
 ## Module 2: Build and Ship an AI-Assisted Full-Stack App
 
@@ -78,7 +78,7 @@ You finish with a tested full-stack application that runs locally and follows a 
 
 * [Companion article](https://aishippingblog.com/p/build-and-ship-a-full-stack-app-with)
 * [Recording](https://www.youtube.com/watch?v=x9dq5nBpDg8)
-* [Module 2 materials](https://github.com/DataTalksClub/ai-dev-tools-zoomcamp/tree/main/02-development)
+* [Module 2 materials](https://github.com/DataTalksClub/ai-dev-tools-zoomcamp/tree/main/cohorts/2026/02-development)
 * Homework: [Instructions](https://github.com/DataTalksClub/ai-dev-tools-zoomcamp/blob/main/cohorts/2026/02-development/homework.md) · [Submit](https://courses.datatalks.club/ai-dev-tools-2026/homework/hw2) — due 2026-09-14
 
 ## Module 3: Test, Containerize, and Deploy
@@ -91,7 +91,7 @@ You finish with a containerized application that other people can use and a docu
 
 * [Companion article](https://aishippingblog.com/p/deploy-a-full-stack-app-with-ai-coding)
 * [Recording](https://www.youtube.com/watch?v=gxt5ZDVnBMM)
-* [Module 3 materials](https://github.com/DataTalksClub/ai-dev-tools-zoomcamp/tree/main/03-deployment)
+* [Module 3 materials](https://github.com/DataTalksClub/ai-dev-tools-zoomcamp/tree/main/cohorts/2026/03-deployment)
 * Homework: [Instructions](https://github.com/DataTalksClub/ai-dev-tools-zoomcamp/blob/main/cohorts/2026/03-deployment/homework.md) · [Submit](https://courses.datatalks.club/ai-dev-tools-2026/homework/hw3) — due 2026-09-21
 
 ## Module 4: DevOps and Observability for AI-Built Apps
@@ -104,7 +104,7 @@ You also run recurring security audits and record enough information to reconstr
 
 * [Companion article](https://aishippingblog.com/p/devops-and-observability-for-an-ai)
 * [Recording](https://www.youtube.com/watch?v=YkxLo_FRoQw)
-* [Module 4 materials](https://github.com/DataTalksClub/ai-dev-tools-zoomcamp/tree/main/04-devops)
+* [Module 4 materials](https://github.com/DataTalksClub/ai-dev-tools-zoomcamp/tree/main/cohorts/2026/04-devops)
 * Homework: [Instructions](https://github.com/DataTalksClub/ai-dev-tools-zoomcamp/blob/main/cohorts/2026/04-devops/homework.md) · [Submit](https://courses.datatalks.club/ai-dev-tools-2026/homework/hw4) — due 2026-09-28
 
 ## Module 5: Coding Agent Capabilities
@@ -233,6 +233,6 @@ You don't need to remember every link, but it helps to know where to go for each
 
 ## Start the course
 
-Open the [course platform](https://courses.datatalks.club/ai-dev-tools-2026/), star the [course repository](https://github.com/DataTalksClub/ai-dev-tools-zoomcamp), and join [Slack](https://datatalks.club/slack.html) and [Telegram](https://t.me/aidevtoolszoomcamp). Then begin with [Module 1](https://github.com/DataTalksClub/ai-dev-tools-zoomcamp/tree/main/01-ai-native-workflow).
+Open the [course platform](https://courses.datatalks.club/ai-dev-tools-2026/), star the [course repository](https://github.com/DataTalksClub/ai-dev-tools-zoomcamp), and join [Slack](https://datatalks.club/slack.html) and [Telegram](https://t.me/aidevtoolszoomcamp). Then begin with [Module 1](https://github.com/DataTalksClub/ai-dev-tools-zoomcamp/tree/main/cohorts/2026/01-ai-native-workflow).
 
 You can still join after August 31. Check the platform for the deadlines that remain, and start working through the materials.

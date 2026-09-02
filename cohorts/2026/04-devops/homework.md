@@ -5,4 +5,4 @@
 
 Submit your answers through the [course platform](https://courses.datatalks.club/ai-dev-tools-2026/homework/hw4) by 2026-09-28.
 
-In the meantime, follow the [Module 4 materials](https://github.com/DataTalksClub/ai-dev-tools-zoomcamp/tree/main/04-devops) for course content.
+In the meantime, follow the [Module 4 materials](lesson.md) for course content.

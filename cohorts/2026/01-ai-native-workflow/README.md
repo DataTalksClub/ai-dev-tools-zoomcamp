@@ -37,7 +37,7 @@ We build the weekly-feedback idea twice to show why we need a specification:
 
 Complete the module with this project:
 
-- [2026 homework](../cohorts/2026/01-overview/homework.md) - Build a
+- [2026 homework](homework.md) - Build a
   Django app with the AI tool of your choice. You don't need to know
   Django.
 
@@ -47,7 +47,7 @@ In 2025, we gave a fuller tour of the tool landscape.
 Those tools have changed, but we can still use the categories to understand
 what each kind of tool does.
 
-- [2025 archived Module 1](../cohorts/2025/01-overview/)
+- [2025 archived Module 1](https://github.com/DataTalksClub/ai-dev-tools-zoomcamp/tree/main/cohorts/2025/01-overview)
 
 ## Community notes
 

@@ -117,7 +117,7 @@ Self-paced steps:
 
 ## Syllabus
 
-### [Module 1: AI-Native Developer Workflow](01-ai-native-workflow/)
+### [Module 1: AI-Native Developer Workflow](cohorts/2026/01-ai-native-workflow/lesson.md)
 
 Learn how to turn a vague product idea into specified, implemented, and independently verified software with coding agents.
 
@@ -129,7 +129,7 @@ In this module, you'll:
 
 Outcome: design and run an AI-native development workflow that takes a product from idea to implementation and independent QA.
 
-### [Module 2: Build and Ship an AI-Assisted Full-Stack App](02-development/)
+### [Module 2: Build and Ship an AI-Assisted Full-Stack App](cohorts/2026/02-development/lesson.md)
 
 Build a full-stack application with AI coding assistants, replacing mocked components one at a time.
 
@@ -141,7 +141,7 @@ You will:
 
 Outcome: a working full-stack app with real-time updates, persistent data, tests, and a clear API contract.
 
-### [Module 3: Test, Containerize, and Deploy an AI-Assisted App](03-deployment/)
+### [Module 3: Test, Containerize, and Deploy an AI-Assisted App](cohorts/2026/03-deployment/lesson.md)
 
 Take the application from your machine to a public deployment, with tests and delivery checks that verify the whole system.
 
@@ -153,7 +153,7 @@ You will:
 
 Outcome: a public, containerized app backed by Postgres, with automated tests and CI/CD that deploys only after tests pass.
 
-### [Module 4: DevOps and Observability for AI-Built Apps](04-devops/)
+### [Module 4: DevOps and Observability for AI-Built Apps](cohorts/2026/04-devops/lesson.md)
 
 A deployed app can still fail silently. Add release controls and observability so you can detect, investigate, and respond to problems.
 

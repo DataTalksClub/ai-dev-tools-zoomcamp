@@ -67,7 +67,7 @@ They form the backbone of many assistants and scaffolders.
 
 ## Homework
 
-- [2026 Homework](../../2026/01-overview/homework.md)
+- [2026 Homework](../../2026/01-ai-native-workflow/homework.md)
 
 
 ## Community notes
