@@ -1,6 +1,3 @@
----
-video_url: https://www.youtube.com/watch?v=VUJxJGpaDEs
----
 # AI-Native Developer Workflow
 
 Tools change every month, but we keep working in much the same way. In this module, we take a
@@ -14,6 +11,8 @@ You learn:
 - The product manager, software engineer, and QA roles
 - Loop engineering
 - Graph engineering
+
+[Recording: AI-Native Developer Workflow](https://www.youtube.com/watch?v=VUJxJGpaDEs)
 
 Module summary: The companion article shows how to turn a vague idea into a useful specification,
 give an agent durable context, break the work into a backlog, and use separate

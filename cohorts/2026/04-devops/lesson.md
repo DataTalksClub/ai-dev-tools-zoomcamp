@@ -1,6 +1,3 @@
----
-video_url: https://www.youtube.com/watch?v=YkxLo_FRoQw
----
 # DevOps and Observability for AI-Built Apps
 
 Module 3 ends with an app that deploys automatically when tests pass. That gets it online. It does not tell you whether it still works.
@@ -36,6 +33,8 @@ You will:
 - Treat the responder itself as attack surface: inventory its capabilities, credentials, and provenance (Snyk Agent Scan)
 
 Prerequisite: the deployed app from [Module 3](../03-deployment/lesson.md).
+
+[Recording: DevOps and Observability for AI-Built Apps](https://www.youtube.com/watch?v=YkxLo_FRoQw)
 
 Module summary: The companion article makes the deployed app more production-ready by
 separating dev and prod, collecting logs, metrics, and traces, and alerting on
