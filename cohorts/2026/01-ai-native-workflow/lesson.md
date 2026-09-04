@@ -35,7 +35,7 @@ We build the weekly-feedback idea twice to show why we need a specification:
 
 ## Homework
 
-Complete the module with this project:
+Complete the module with this homework:
 
 - [2026 homework](homework.md) - Build a
   Django app with the AI tool of your choice. You don't need to know
