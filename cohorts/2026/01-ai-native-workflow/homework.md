@@ -128,42 +128,40 @@ Don't worry about being perfect. Everyone starts somewhere, and people love foll
 
 ### Example post for LinkedIn:
 
----
+```
 🚀 Week 1 of AI Dev Tools Zoomcamp by @DataTalksClub complete!
 
 Turned a vague one-line idea into a spec, broke it into a backlog, and let an AI coding agent build a Django app for managing shared household chores!
 
 Today I learned how to:
 
-- ✅ Turn a vague idea into a written spec
-- ✅ Break a spec into a backlog of tasks
-- ✅ Set up a Django project and app with AI
-- ✅ Implement backlog tasks one at a time with a coding agent
-- ✅ Cover the app with tests
+✅ Turn a vague idea into a written spec
+✅ Break a spec into a backlog of tasks
+✅ Set up a Django project and app with AI
+✅ Implement backlog tasks one at a time with a coding agent
+✅ Cover the app with tests
 
 Here's my repo: <LINK>
 
 Following along with this amazing course - who else is exploring AI development tools?
 
 You can sign up here: https://github.com/DataTalksClub/ai-dev-tools-zoomcamp/
-
----
+```
 
 ### Example post for Twitter/X:
 
----
 
+```
 🤖 Built a Django app with AI in @Al_Grigor's AI Dev Tools Zoomcamp!
 
-- 📝 Spec first, code second
-- 🗂️ Backlog-driven implementation
-- ✨ Household chores app from scratch
-- ✅ Tests
+📝 Spec first, code second
+🗂️ Backlog-driven implementation
+✨ Household chores app from scratch
+✅ Tests
 
 My repo: <LINK>
 
 Zero Django knowledge → working app in one session!
 
 Join me: https://github.com/DataTalksClub/ai-dev-tools-zoomcamp/
-
----
+```
