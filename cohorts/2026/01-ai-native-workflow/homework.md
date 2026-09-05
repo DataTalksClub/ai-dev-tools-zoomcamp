@@ -101,7 +101,7 @@ After implementing a few items from the backlog, let's make sure the code is cov
 What's the command you use for running tests in the terminal?
 
 - `pytest`
-- `python manage.py test`
+- `uv run python manage.py test`
 - `python -m django run_tests`
 - `django-admin test`
 
