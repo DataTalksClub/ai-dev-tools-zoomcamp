@@ -76,7 +76,6 @@ Use a mock database, we will replace it with a real one later.
 Write tests for the endpoints first, then implement them.
 ```
 
-
 Which command do you use to start the backend?
 
 ## Question 5: Connect frontend and backend
@@ -158,8 +157,8 @@ You can sign up here: https://github.com/DataTalksClub/ai-dev-tools-zoomcamp/
 🤖 Built a full-stack app with AI!
 
 📝 Spec first, code second
-🎨 Frontend prototype with mocked backend
-📜 OpenAPI contract → FastAPI backend
+🎨 Frontend prototype
+📜 FastAPI backend
 💾 SQLite
 ✅ Tests
 
