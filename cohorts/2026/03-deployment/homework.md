@@ -1,4 +1,4 @@
-# Homework 3: Test, Containerize, and Deploy an AI-Assisted App
+# Homework 3: Test, Containerize, and Deploy an AI-Assisted App [DRAFT]
 
 In this homework, we take the app you built in Homework 2 the rest of the way: proven by tests that exercise the real stack, packaged in containers, checked automatically on every pull request, and deployed so other people can use it.
 

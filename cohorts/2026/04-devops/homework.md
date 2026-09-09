@@ -1,4 +1,4 @@
-# Homework 4: DevOps and Observability for AI-Built Apps
+# Homework 4: DevOps and Observability for AI-Built Apps [DRAFT]
 
 Homework 3 got your app deployed. This homework makes sure you know whether it still works.
 
