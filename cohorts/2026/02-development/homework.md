@@ -55,7 +55,7 @@ Make the UI interactive so I can use the main features from the spec.
 
 Iterate until you like the results.
 
-?
+Which command do you use to start the frontend?
 
 
 ## Question 4: Backend
@@ -81,7 +81,7 @@ The backend now works (presumably) so let's connect frontent to it. Ask the codi
 
 You can verify that the connection works manually, but you can also ask your agent to use the browser to check it for you. 
 
-?
+Which URL does the frontend use to talk to the backend?
 
 ## Question 6: Database
 
