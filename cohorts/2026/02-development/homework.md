@@ -1,115 +1,98 @@
 # Homework 2: Build and Ship an AI-Assisted Full-Stack App
 
-> [!NOTE]
-> This homework is a draft. The questions will very likely change.
+In this homework, we'll build an end-to-end application with AI: a frontend, a backend, and a database.
 
-In this homework, we'll build an end-to-end application with AI.
+You will need Python with `uv` for the backend and Node.js for the frontend. You don't need to know any of these technologies for doing this homework.
 
-You can use any tool you want: ChatGPT, Claude, GitHub Copilot, Codex, Cursor, Antigravity, etc.
+If some questions are not clear, or you're not sure which answer to select, ask your AI assistant to help.
 
-With chat-based applications you will need to copy code back-and-forth, so we recommend that you use an AI assistant in your IDE with agent mode.
+## Pick your project
 
-We will implement a platform for online coding interviews.
+You can choose one of the four project ideas. Pick the one you like most. The workflow is the same for all of them.
 
-The app should be able to do the following:
-
-- Create a link and share it with candidates
-- Allow everyone who connects to edit code in the code panel
-- Show real-time updates to all connected users
-- Support syntax highlighting for multiple languages
-- Execute code safely in the browser
-
-You can choose any technologies you want. For example:
-
-- Frontend: React + Vite
-- Backend: Express.js
-
-We recommend using JavaScript for frontend, because with other technologies, some of the homework requirements may be difficult to implement.
-
-But you can experiment with alternatives, such as Streamlit.
-
-You don't need to know these technologies for doing this homework.
+- Expense splitter
+- Restaurant waitlist manager
+- Mini Kanban board
+- Sports-league scoreboard
 
 
-## Question 1: Initial Implementation
+## Question 1: Spec first
 
-Ask AI to implement both frontend and backend - in one prompt.
+Like in homework 1, we start with a spec. 
 
-Note: you can also follow the same path as in the videos and make it in 3 steps:
+Open a chat assistant and ask it to help you come up with the specification.
 
-1. Frontend
-2. OpenAPI specs
-3. Backend
+Answer its questions, then ask it to save everything to a markdown file.
 
-What's the initial prompt you gave to AI to start the implementation?
-
-Copy and paste it in the homework form.
+Also ask it to help you come up with the name for this application. 
+What's the name you chose?
 
 
-## Question 2: Integration Tests
+## Question 2: GitHub Repository
 
-Maybe at this point your application will already function. Maybe not. But it's always a good idea to cover it with tests.
+Create a new GitHub repository (or a folder in the repository you used for Homework 1), clone it locally. Put the spec there:
 
-We usually do it even before trying to run the application because it helps to resurface all the problems with implementation.
+- `_docs/specs.md` with the spec
+- `.gitignore`
+- `README.md`
+- `AGENTS.md`
 
-Ask AI to write integration tests that check that the interaction between client and server works.
-
-Also it's a good idea to ask it to start creating a `README.md` file with all the commands for running and testing your application.
-
-What's the terminal command you use for executing tests?
-
+Commit and push. What's the sha1 hash for this commit?
 
 
-## Question 3: Running Both Client and Server
+## Question 3: Frontend prototype
 
-Now let's make it possible to run both client and server at the same time. Use `concurrently` for that.
+Build a frontend prototype with a mocked backend. To make it simpler, use your coding agent directly, not Lovable (but you can experiment with it too). 
 
-What's the command you have in `package.json` for `npm dev` for running both?
+```text
+Implement the frontend for the app described in _docs/specs.md. Put it in frontent/.
 
+Don't implement the backend yet. Centralize all the backend calls
+in one place and mock them for now.
 
-## Question 4: Syntax Highlighting
+Make the UI interactive so I can use the main features from the spec.
+```
 
-Let's now add support for syntax highlighting for JavaScript and Python.
+Iterate until you like the results.
 
-Which library did AI use for it?
-
-
-
-## Question 5: Code Execution
-
-Now let's add code execution.
-
-For security reasons, we don't want to execute code directly on the server. Instead, let's use WASM to execute the code only in the browser.
-
-Which library did AI use for compiling Python to WASM?
+?
 
 
-## Question 6: Containerization
+## Question 4: Backend
 
-Now let's containerize our application. Ask AI to help you create a Dockerfile for the application. Put both backend and frontend in one container.
+Now let's create the backend. You can first ask your coding assistant to analyze the frontend code and create the specs, and then based on specs create the backend. Or you can create backend directly. 
 
-What's the base image you used for your Dockerfile?
+Like in the lessons, we'll first create the backend with a mock database, make sure it integrates well with the frontend, and then replace it with a real database.
 
+Your prompt may look like this:
 
-## Question 7: Deployment
-
-Now let's deploy it. Choose a service to deploy your application.
-
-Which service did you use for deployment?
-
-
-## Homework URL
-
-Commit your code to GitHub. You can create a repository for this course. Within the repository, create a folder, e.g. "02-coding-interview", where you put the code.
-
-Use the link to this folder in the homework submission form.
-
-Don't forget to commit your code at every step. You can create an `AGENTS.md` file with the instructions for AI to help you with git commands.
+```text
+Based on openapi.yaml, create a FastAPI backend. Use uv for package management.
+Use a mock database, we will replace it with a real one later.
+Write tests for the endpoints first, then implement them.
+```
 
 
-## Tip
+Which command do you use to start the backend?
 
-You can copy-paste the homework description into the AI system of your choice. But make sure you understand (and follow) all the steps in the response.
+## Question 5: Connect frontend and backend
+
+The backend now works (presumably) so let's connect frontent to it. Ask the coding assistant to do it.
+
+You can verify that the connection works manually, but you can also ask your agent to use the browser to check it for you. 
+
+?
+
+## Question 6: Database
+
+Now the backend and frontend work fine, you can swap the mock store for a real database.
+
+Keep the app database-agnostic and use SQLAlchemy for that.
+
+Make sure test still pass and add more tests if needed. Ask your agent for recommendations.
+
+Which command do you use for running tests?
+
 
 
 ## Submission
@@ -117,9 +100,10 @@ You can copy-paste the homework description into the AI system of your choice. B
 Submit your homework here: https://courses.datatalks.club/ai-dev-tools-2026/homework/hw2
 
 
+
 ## Learning in Public
 
-We encourage everyone to share what they learned. 
+We encourage everyone to share what they learned. This is called "learning in public". Read more about why it matters [here](https://aishippingblog.com/p/benefits-of-learning-in-public).
 
 Don't worry about being perfect. Everyone starts somewhere, and people love following genuine learning journeys!
 
@@ -128,32 +112,33 @@ Don't worry about being perfect. Everyone starts somewhere, and people love foll
 Consider recording a short demo video of your application in action! This makes your post much more engaging and helps others see what you've built.
 
 You can use:
+
 - Screen recording tools like OBS Studio, QuickTime, or Windows Game Bar
 - Loom for quick and shareable recording
-- Snapping Tool on Windowns
-  
+- Snipping Tool on Windows
+
 Keep it short (30-90 seconds) and show:
-- Creating a coding session link
-- Multiple users editing code simultaneously
-- Real-time updates across browsers
-- Code execution in action
+
+- The main user flow of your project, e.g. adding an expense and seeing who owes whom
+- The same data from two browsers, e.g. a change made in one showing up in the other
+- Data still being there after a refresh
 
 Upload your video to LinkedIn, Twitter/X, or YouTube and share the link!
 
 ### Example post for LinkedIn:
 
----
+```
 🚀 Week 2 of AI Dev Tools Zoomcamp by @DataTalksClub complete!
 
-Just built a real-time collaborative coding interview platform using AI assistants!
+Built a full-stack app with AI — spec first, then a frontend prototype, an OpenAPI contract, and a FastAPI backend, all with an AI coding agent!
 
 Today I learned how to:
 
-- ✅ Build full-stack applications with AI (frontend + backend)
-- ✅ Implement real-time collaboration with WebSockets
-- ✅ Add syntax highlighting for multiple languages
-- ✅ Execute code safely in the browser with WASM
-- ✅ Containerize and deploy the application
+✅ Turn a product spec into a working app
+✅ Use an OpenAPI contract as the source of truth between frontend and backend
+✅ Implement a backend without knowing the framework
+✅ Swap a mock database for SQLite
+✅ Cover the app with tests
 
 Here's my repo: <LINK>
 Demo video: <VIDEO_LINK>
@@ -161,22 +146,23 @@ Demo video: <VIDEO_LINK>
 Following along with this amazing course - who else is building with AI?
 
 You can sign up here: https://github.com/DataTalksClub/ai-dev-tools-zoomcamp/
+```
 
----
+### Example post for X:
 
-### Example post for Twitter/X:
+```
+🤖 Built a full-stack app with AI!
 
----
-🤖 Built a collaborative coding platform with AI!
-
-🔗 Shareable links
-⚡ Real-time collaboration
-🎨 Syntax highlighting
-🚀 Browser code execution
+📝 Spec first, code second
+🎨 Frontend prototype with mocked backend
+📜 OpenAPI contract → FastAPI backend
+💾 SQLite
+✅ Tests
 
 My repo: <LINK>
 Demo: <VIDEO_LINK>
 
-Join me: https://github.com/DataTalksClub/ai-dev-tools-zoomcamp/
+Zero full-stack knowledge → working app in one week!
 
----
+Join me: https://github.com/DataTalksClub/ai-dev-tools-zoomcamp/
+```
