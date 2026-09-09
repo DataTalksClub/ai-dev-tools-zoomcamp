@@ -2,7 +2,7 @@
 
 In this homework, we'll build an application with AI — but instead of us handing you a finished spec, you'll turn a vague idea into one yourself, then implement it in Django.
 
-You can use any coding agent you want: Claude Code, Codex CLI, Gemini CLI, Cursor, Aider, GitHub Copilot, etc. Pick **one** and stick with it for the whole homework — with chat-based tools you'd need to copy code back and forth, so we recommend an agent that can edit files and run commands directly in your homework repository.
+You can use any coding agent you want: Claude Code, Codex CLI, Gemini CLI, Cursor, Aider, GitHub Copilot, etc. Pick one and stick with it for the whole homework — with chat-based tools you'd need to copy code back and forth, so we recommend an agent that can edit files and run commands directly in your homework repository.
 
 You will only need Python to get started (we also recommend that you use `uv`). You don't need to know Python or Django for doing this homework.
 
