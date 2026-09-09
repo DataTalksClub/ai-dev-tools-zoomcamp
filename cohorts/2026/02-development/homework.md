@@ -6,7 +6,7 @@ You will need Python with `uv` for the backend and Node.js for the frontend. You
 
 If some questions are not clear, or you're not sure which answer to select, ask your AI assistant to help.
 
-## Pick your project
+## Question 1: Pick your project
 
 You can choose one of the four project ideas:
 
@@ -20,7 +20,7 @@ Pick the one you like most. The workflow is the same for all of them.
 Which project did you choose for this homework?
 
 
-## Question 1: Spec first
+## Question 2: Spec first
 
 Like in homework 1, we start with a spec. 
 
@@ -32,7 +32,7 @@ Also ask it to help you come up with the name for this application.
 What's the name you chose?
 
 
-## Question 2: GitHub Repository
+## Question 3: GitHub Repository
 
 Create a new GitHub repository (or a folder in the repository you used for Homework 1), clone it locally. Put the spec there:
 
@@ -44,7 +44,7 @@ Create a new GitHub repository (or a folder in the repository you used for Homew
 Commit and push. What's the sha1 hash for this commit?
 
 
-## Question 3: Frontend prototype
+## Question 4: Frontend prototype
 
 Build a frontend prototype with a mocked backend. To make it simpler, use your coding agent directly, not Lovable (but you can experiment with it too). 
 
@@ -62,7 +62,7 @@ Iterate until you like the results.
 Which command do you use to start the frontend?
 
 
-## Question 4: Backend
+## Question 5: Backend
 
 Now let's create the backend. You can first ask your coding assistant to analyze the frontend code and create the specs, and then based on specs create the backend. Or you can create backend directly. 
 
@@ -78,7 +78,7 @@ Write tests for the endpoints first, then implement them.
 
 Which command do you use to start the backend?
 
-## Question 5: Connect frontend and backend
+## Question 6: Connect frontend and backend
 
 The backend now works (presumably) so let's connect frontent to it. Ask the coding assistant to do it.
 
@@ -86,7 +86,7 @@ You can verify that the connection works manually, but you can also ask your age
 
 Which URL does the frontend use to talk to the backend?
 
-## Question 6: Database
+## Question 7: Database
 
 Now the backend and frontend work fine, you can swap the mock store for a real database.
 
