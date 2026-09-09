@@ -119,7 +119,7 @@ The operating principle: the model may reason; the system must observe, authoriz
 
 ## Homework
 
-- [Homework](homework.md) — questions coming
+- [Homework](homework.md)
 
 ## Previous Cohort Materials
 
