@@ -1,5 +1,5 @@
 schema_version: 1
-content_id: 51000000-0000-4000-8000-000000000004
+content_id: ai-dev-tools-zoomcamp/2026/04-devops/hw04
 slug: hw04
 title: "Homework 4: DevOps and Observability for AI-Built Apps"
 instructions_path: homework.md
@@ -12,7 +12,7 @@ form:
   faq_contribution: true
   learning_in_public_cap: 7
 questions:
-  - content_id: 61000000-0000-4000-8000-000000000004
+  - content_id: ai-dev-tools-zoomcamp/2026/04-devops/hw04/reflection
     id: reflection
     type: free_form_long
     answer_type: any

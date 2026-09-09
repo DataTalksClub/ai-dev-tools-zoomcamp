@@ -1,5 +1,5 @@
 schema_version: 1
-content_id: 51000000-0000-4000-8000-000000000001
+content_id: ai-dev-tools-zoomcamp/2026/01-ai-native-workflow/hw01
 slug: hw01
 title: "Homework 1: AI-Native Developer Workflow"
 instructions_path: homework.md
@@ -12,7 +12,7 @@ form:
   faq_contribution: true
   learning_in_public_cap: 7
 questions:
-  - content_id: 61000000-0000-4000-8000-000000000001
+  - content_id: ai-dev-tools-zoomcamp/2026/01-ai-native-workflow/hw01/reflection
     id: reflection
     type: free_form_long
     answer_type: any
