@@ -137,9 +137,9 @@ Join here: https://aishippinglabs.com/events/series/4/ai-dev-tools-office-hours
 
 Joining office hours requires a paid membership on AI Shipping Labs.
 
-This course is completely free and there are no sponsors for this course, so I'm I'm not earning anyting by running this course. If you want to support me, and also get more out of it, join AI Shippings Labs.
+This course is completely free and there are no sponsors for this course, so I'm not earning anything by running this course. If you want to support me, and also get more out of it, join AI Shipping Labs.
 
-You will also get a personalized onboarding: we will dicsuss your current situation, your goals, and build a development plan for you. 
+You will also get a personalized onboarding: we will discuss your current situation, your goals, and build a development plan for you.
 
 
 
