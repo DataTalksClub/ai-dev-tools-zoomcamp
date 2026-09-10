@@ -1,9 +1,9 @@
-schema_version: 1
-content_id: ai-dev-tools-zoomcamp/2026/04-devops/hw04
+schema_version: 2
+content_id: 0ddd0711-eadb-4a6a-b6cc-871ae5f0ed70
 slug: hw04
 title: "Homework 4: DevOps and Observability for AI-Built Apps [DRAFT]"
 instructions_path: homework.md
-due_at: 2026-09-28T21:59:00Z
+due_at: "2026-09-28T21:59:00Z"
 initial_state: open
 form:
   homework_url: true
@@ -12,9 +12,9 @@ form:
   faq_contribution: true
   learning_in_public_cap: 7
 questions:
-  - content_id: ai-dev-tools-zoomcamp/2026/04-devops/hw04/reflection
+  - content_id: 384c9af0-1e2c-46b1-a789-da522165b493
     id: reflection
     type: free_form_long
     answer_type: any
-    prompt: Describe one practical idea you took from this module.
+    prompt: "Describe one practical idea you took from this module."
     points: 0

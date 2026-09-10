@@ -1,9 +1,9 @@
-schema_version: 1
-content_id: ai-dev-tools-zoomcamp/2026/01-ai-native-workflow/hw01
+schema_version: 2
+content_id: ed253e83-a5aa-45ed-b97b-637d3caca977
 slug: hw01
 title: "Homework 1: AI-Native Developer Workflow"
 instructions_path: homework.md
-due_at: 2026-09-07T21:59:00Z
+due_at: "2026-09-07T21:59:00Z"
 initial_state: open
 form:
   homework_url: true
@@ -12,9 +12,9 @@ form:
   faq_contribution: true
   learning_in_public_cap: 7
 questions:
-  - content_id: ai-dev-tools-zoomcamp/2026/01-ai-native-workflow/hw01/reflection
+  - content_id: 3c2cd78a-9a50-4485-9c78-0c49e07d7bd6
     id: reflection
     type: free_form_long
     answer_type: any
-    prompt: Describe one practical idea you took from this module.
+    prompt: "Describe one practical idea you took from this module."
     points: 0
