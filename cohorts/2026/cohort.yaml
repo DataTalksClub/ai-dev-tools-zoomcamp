@@ -1,25 +1,18 @@
-schema_version: 1
-content_id: ai-dev-tools-zoomcamp/2026
-course: ai-dev-tools-zoomcamp
+schema_version: 2
+content_id: 75ae0ce2-b0e5-4177-8144-5529d307f457
 identifier: "2026"
-legacy_slug: ai-dev-tools-zoomcamp-2026
-year: 2026
-title: AI Dev Tools Zoomcamp 2026
-description: The 2026 live delivery of AI Dev Tools Zoomcamp.
-format: modules
+course: ai-dev-tools-zoomcamp
+delivery: live
 published: true
-start_date: 2026-08-31
-end_date: 2026-09-28
-flow:
-  - module:
-      source: cohorts/2026/01-ai-native-workflow/module.yaml
-      homework: cohorts/2026/01-ai-native-workflow/homework.yaml
-  - module:
-      source: cohorts/2026/02-development/module.yaml
-      homework: cohorts/2026/02-development/homework.yaml
-  - module:
-      source: cohorts/2026/03-deployment/module.yaml
-      homework: cohorts/2026/03-deployment/homework.yaml
-  - module:
-      source: cohorts/2026/04-devops/module.yaml
-      homework: cohorts/2026/04-devops/homework.yaml
+start_date: "2026-08-31"
+end_date: "2026-09-28"
+curriculum: current
+homework:
+  - module: 01-ai-native-workflow
+    source: cohorts/2026/homework/01-ai-native-workflow/homework.yaml
+  - module: 02-development
+    source: cohorts/2026/homework/02-development/homework.yaml
+  - module: 03-deployment
+    source: cohorts/2026/homework/03-deployment/homework.yaml
+  - module: 04-devops
+    source: cohorts/2026/homework/04-devops/homework.yaml
