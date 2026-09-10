@@ -32,15 +32,6 @@ We build the weekly-feedback idea twice to show why we need a specification:
   retrospective app produced after we specified the product and worked through
   a groomed GitHub backlog.
 
-
-## Homework
-
-Complete the module with this homework:
-
-- [2026 homework](homework.md) - Build a
-  Django app with the AI tool of your choice. You don't need to know
-  Django.
-
 ## Previous cohort materials
 
 In 2025, we gave a fuller tour of the tool landscape.

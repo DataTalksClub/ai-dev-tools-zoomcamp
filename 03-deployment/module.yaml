@@ -1,7 +1,7 @@
-schema_version: 1
-content_id: ai-dev-tools-zoomcamp/2026/03-deployment
+schema_version: 2
+content_id: 2c392f22-6fb2-49af-b9d8-48f954e27ef8
 title: "Test, Containerize, and Deploy an AI-Assisted App"
 units:
-  - content_id: ai-dev-tools-zoomcamp/2026/03-deployment/lesson
+  - content_id: f3111d28-fc0b-4d28-9b87-b28492cadc2e
     title: "Test, Containerize, and Deploy an AI-Assisted App"
     path: lesson.md

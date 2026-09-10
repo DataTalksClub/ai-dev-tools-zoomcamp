@@ -1,7 +1,7 @@
-schema_version: 1
-content_id: ai-dev-tools-zoomcamp/2026/04-devops
+schema_version: 2
+content_id: 5691e90a-5ade-4e04-958e-440bf3292054
 title: "DevOps and Observability for AI-Built Apps"
 units:
-  - content_id: ai-dev-tools-zoomcamp/2026/04-devops/lesson
+  - content_id: 0f169c8a-908c-4352-9390-1947564dc070
     title: "DevOps and Observability for AI-Built Apps"
     path: lesson.md

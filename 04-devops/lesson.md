@@ -117,10 +117,6 @@ Given one incident ID, the report should let a reader reconstruct:
 
 The operating principle: the model may reason; the system must observe, authorize, verify, and remember.
 
-## Homework
-
-- [Homework](homework.md)
-
 ## Previous Cohort Materials
 
 Related material from the previous cohort:

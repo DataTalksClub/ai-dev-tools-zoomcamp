@@ -53,10 +53,6 @@ docs/release-process.md
 
 The app should be deployed at a public URL, rebuilt and redeployed automatically when you merge to the main branch, and reproducible locally from the README.
 
-## Homework
-
-- [Homework](homework.md)
-
 ## Previous Cohort Materials
 
 Related material from the previous cohort:

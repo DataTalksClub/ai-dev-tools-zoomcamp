@@ -53,10 +53,6 @@ docs/ai-usage-report.md
 
 The app should run locally from the README, persist data in SQLite, and pass its own tests.
 
-## Homework
-
-- [Homework](homework.md)
-
 ## Previous Cohort Materials
 
 The previous version of this module is archived here:

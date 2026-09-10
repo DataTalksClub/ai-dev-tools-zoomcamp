@@ -1,7 +1,7 @@
-schema_version: 1
-content_id: ai-dev-tools-zoomcamp/2026/02-development
+schema_version: 2
+content_id: e3da0b17-1250-4cb8-b483-c1a535c15926
 title: "Build and Ship an AI-Assisted Full-Stack App"
 units:
-  - content_id: ai-dev-tools-zoomcamp/2026/02-development/lesson
+  - content_id: 72b4e38b-9a30-426b-9217-7932cf5cc27e
     title: "Build and Ship an AI-Assisted Full-Stack App"
     path: lesson.md
