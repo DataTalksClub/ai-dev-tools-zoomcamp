@@ -1,3 +1,6 @@
+---
+next_url: ../02-development/01-build-and-ship-an-ai-assisted-full-stack-app.md
+---
 # AI-Native Developer Workflow
 
 Tools change every month, but we keep working in much the same way. In this module, we take a

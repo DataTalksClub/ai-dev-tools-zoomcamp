@@ -1,3 +1,7 @@
+---
+prev_url: ../01-ai-native-workflow/01-ai-native-developer-workflow.md
+next_url: ../03-deployment/01-test-containerize-and-deploy-an-ai-assisted-app.md
+---
 # Build and Ship an AI-Assisted Full-Stack App
 
 ## Overview
@@ -13,7 +17,7 @@ In this module, you build a working end-to-end application with AI assistance. T
 
 The goal is not to let an AI tool build everything unchecked. The goal is to practice a controlled workflow where AI helps you move faster and you verify each step.
 
-The module ends with an app that runs on your machine: a frontend and a backend that talk to each other over a defined contract, with data persisted in SQLite. Everything needed to put it in front of other people — integration tests, containers, CI, deployment, and CI/CD — is [Module 3](../03-deployment/lesson.md).
+The module ends with an app that runs on your machine: a frontend and a backend that talk to each other over a defined contract, with data persisted in SQLite. Everything needed to put it in front of other people — integration tests, containers, CI, deployment, and CI/CD — is [Module 3](../03-deployment/01-test-containerize-and-deploy-an-ai-assisted-app.md).
 
 You will:
 

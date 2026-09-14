@@ -18,7 +18,7 @@ root: `course.yaml:current_cohort` names it, and it must match the one
 ├── 01-ai-native-workflow/        # the directory name IS the module slug
 │   ├── module.yaml                 # module identity and unit list
 │   ├── README.md                   # GitHub-facing module index, not published
-│   └── lesson.md                   # the module's unit — the stem IS the unit slug
+│   └── 01-ai-native-developer-workflow.md  # the module's unit — the stem IS the unit slug
 ├── ...
 └── cohorts/
     ├── README.md                  # this file

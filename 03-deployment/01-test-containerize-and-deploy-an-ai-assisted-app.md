@@ -1,3 +1,7 @@
+---
+prev_url: ../02-development/01-build-and-ship-an-ai-assisted-full-stack-app.md
+next_url: ../04-devops/01-devops-and-observability-for-ai-built-apps.md
+---
 # Test, Containerize, and Deploy an AI-Assisted App
 
 ## Overview

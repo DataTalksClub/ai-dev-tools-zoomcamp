@@ -1,3 +1,6 @@
+---
+prev_url: ../03-deployment/01-test-containerize-and-deploy-an-ai-assisted-app.md
+---
 # DevOps and Observability for AI-Built Apps
 
 Module 3 ends with an app that deploys automatically when tests pass. That gets it online. It does not tell you whether it still works.
@@ -32,7 +35,7 @@ You will:
 - Run recurring security audits that combine a deterministic scanner (Semgrep), model review, and human validation
 - Treat the responder itself as attack surface: inventory its capabilities, credentials, and provenance (Snyk Agent Scan)
 
-Prerequisite: the deployed app from [Module 3](../03-deployment/lesson.md).
+Prerequisite: the deployed app from [Module 3](../03-deployment/01-test-containerize-and-deploy-an-ai-assisted-app.md).
 
 [Recording: DevOps and Observability for AI-Built Apps](https://www.youtube.com/watch?v=YkxLo_FRoQw)
 
