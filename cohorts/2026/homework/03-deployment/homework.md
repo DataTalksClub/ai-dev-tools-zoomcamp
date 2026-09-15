@@ -13,7 +13,7 @@ You don't need a cloud account, LLM API key, or external message broker. Everyth
 
 ## Question 1: Understand the project
 
-Fork the Agent Relay starter repository from [here](TODO).
+Fork the Agent Relay starter repository from [here](https://github.com/alexeygrigorev/agent-relay).
 
 Ask your agent to run the project. Try to understand it and experiment with it.
 
@@ -26,7 +26,7 @@ Which description matches the project's architecture?
 
 ## Question 2: Register agents and test the task flow
 
-Ask your coding agent to read [SPEC.md](agent-relay/SPEC.md) and try its first acceptance scenario with your local Agent Relay:
+Ask your coding agent to read `SPEC.md` (in the starter repo root) and try its first acceptance scenario with your local Agent Relay:
 
 Register two agents and have them exchange a task and its result.
 
@@ -43,6 +43,8 @@ Which task status does the sender see after the recipient submits its result?
 
 Ask your coding agent to create a Dockerfile for Agent Relay. Build the image as `agent-relay:local` and run it with the API port published to your machine.
 
+Tip: run uvicorn with `--host 0.0.0.0` inside the container, otherwise `-p` looks broken (uvicorn defaults to `127.0.0.1`).
+
 Open the dashboard and repeat the task flow from Question 2 against the containerized API.
 
 Which Docker option publishes a container's port to your machine?
@@ -55,6 +57,10 @@ Which Docker option publishes a container's port to your machine?
 ## Question 4: Docker Compose and PostgreSQL
 
 Ask your coding agent to replace SQLite with PostgreSQL and create a `compose.yaml` that runs Agent Relay and PostgreSQL together. Name the database service `postgres`.
+
+The storage seam is `immediate_transaction()` in `database.py` (currently `BEGIN IMMEDIATE` for SQLite). On PostgreSQL, replace it with row locking such as `FOR UPDATE SKIP LOCKED` as described in `SPEC.md` — the HTTP protocol and task lifecycle stay unchanged.
+
+Stop your local dev server from Question 1 first, otherwise `docker compose up` will fail with `port already allocated` on port 8000.
 
 Start the stack:
 
@@ -123,12 +129,11 @@ Deployed the Agent Relay messaging system to Kubernetes with kind.
 
 Today I learned how to:
 
-✅ Test a browser → API → database → worker flow
-✅ Build one Docker image for an API and worker
-✅ Deploy an API, workers, and PostgreSQL to Kubernetes
-✅ Scale workers and observe messages distributed across pods
-✅ Kill a worker and verify lease-based redelivery
-✅ Run CI locally with act
+✅ Register agents and test the task flow with an integration test
+✅ Build a Docker image and run it with a published port
+✅ Run API + PostgreSQL together with Docker Compose
+✅ Deploy to Kubernetes with kind and verify via port-forward
+✅ Run CI locally with act, deploy v2 only when tests pass
 
 Here's my repo: <LINK>
 
@@ -144,12 +149,11 @@ You can adapt this example for your own post:
 ```text
 🚀 Deployed an agent messaging system to Kubernetes!
 
-✅ Playwright E2E tests
-🐳 One image for API + worker
-☸️ kind + kubectl + PostgreSQL
-📈 Three worker replicas
-💥 Worker failure and message redelivery
-⚙️ CI with act
+✅ API integration test
+🐳 Docker image + published port
+🐘 Compose + PostgreSQL
+☸️ kind + kubectl deploy
+⚙️ CI with act, ship v2 on green
 
 My repo: <LINK>
 
