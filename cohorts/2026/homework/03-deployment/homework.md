@@ -110,7 +110,7 @@ Submit your homework on the [course platform](https://courses.datatalks.club/ai-
 
 ## Learning in Public
 
-Share what you learned as part of [learning in public](https://aishippingblog.com/p/benefits-of-learning-in-public).
+Share what you learned as part of [learning in public](https://datatalks.club/blog/benefits-of-learning-in-public.html).
 
 Learning in public helps you explain technical work, get feedback, and keep a record of what you built. Share only the repository and screenshots or logs that don't contain secrets.
 

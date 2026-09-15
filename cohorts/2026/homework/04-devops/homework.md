@@ -134,7 +134,7 @@ Don't forget to commit your code at every step.
 
 ## Learning in Public
 
-We encourage everyone to share what they learned. This is called "learning in public". Read more about why it matters here: https://aishippingblog.com/p/benefits-of-learning-in-public
+We encourage everyone to share what they learned. This is called "learning in public". Read more about why it matters here: https://datatalks.club/blog/benefits-of-learning-in-public.html
 
 Learning in public is one of the most effective ways to accelerate your growth. Here's why:
 
