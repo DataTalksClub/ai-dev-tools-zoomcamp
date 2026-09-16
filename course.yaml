@@ -14,6 +14,8 @@ description: |
 
   Each module has video lectures and a homework assignment, and the course finishes with a project of your own, built end to end with AI tools.
 outcome: Build disciplined software workflows with AI assistants, agents, testing, and automation.
+starting_point: You can build software manually and want to make AI assistants part of a reliable development workflow.
+prerequisites: You can write basic code, use Git, and work in the command line. You don't need prior experience with coding agents.
 urls:
   repository: https://github.com/DataTalksClub/ai-dev-tools-zoomcamp
   docs: https://datatalks.club/docs/courses/ai-dev-tools-zoomcamp/
