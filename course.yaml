@@ -16,6 +16,13 @@ description: |
 outcome: Build disciplined software workflows with AI assistants, agents, testing, and automation.
 starting_point: You can build software manually and want to make AI assistants part of a reliable development workflow.
 prerequisites: You can write basic code, use Git, and work in the command line. You don't need prior experience with coding agents.
+progression:
+  - heading: I write software without a reliable AI workflow
+    description: I can build applications, but I want AI assistants to help without giving up control of the result.
+  - heading: I learn to direct and verify AI agents
+    description: I practice prompting, tool use, agent development, testing, deployment, and workflow automation.
+  - heading: I ship an application built with AI tools
+    description: I use a disciplined AI-assisted workflow to take my own software project from idea to deployment.
 urls:
   repository: https://github.com/DataTalksClub/ai-dev-tools-zoomcamp
   docs: https://datatalks.club/docs/courses/ai-dev-tools-zoomcamp/
