@@ -1,4 +1,5 @@
 ---
+video_url: https://www.youtube.com/watch?v=YkxLo_FRoQw
 prev_url: ../03-deployment/01-test-containerize-and-deploy-an-ai-assisted-app.md
 ---
 # DevOps and Observability for AI-Built Apps
@@ -19,7 +20,7 @@ change
 → audit the code and the response trail
 ```
 
-We also put an agent inside that loop as the first line of support. It collects the same evidence you would collect, compares it with recent changes, and proposes an action. What it does not get is general production credentials. A model supplies confidence; code outside the model enforces permission.
+We also put an agent inside that loop as the first line of support. An alert starts it automatically. It inspects a saved evidence packet and the code, then proposes an action. What it does not get is general production credentials. A model supplies confidence; code outside the model enforces permission.
 
 The concrete stack is OpenTelemetry into Prometheus, Loki, and Tempo, with Grafana on top, and a responder that runs Codex or Claude Code in headless mode. Those products are replaceable. The boundaries between evidence, reasoning, permission, and verification are the part worth learning.
 
@@ -28,16 +29,14 @@ You will:
 - Find what you can't answer about a broken deployment, and see why CPU graphs alone don't count as observability
 - Instrument one endpoint end to end with OpenTelemetry — metrics, traces, and structured logs — without leaking secrets
 - Wire a telemetry pipeline: an OpenTelemetry Collector feeding Prometheus, Loki, and Tempo, viewed together in Grafana
-- Write one alert that represents real user impact and carries enough context in its payload to act on
+- Write one alert that represents real user impact and triggers a local responder
 - Collect a bounded, repeatable evidence packet with read-only, allowlisted queries before any model gets involved
-- Run a headless coding agent (Codex or Claude Code) as a read-only first responder behind a vendor-neutral, structured-output adapter
-- Gate any automated action behind an allowlist and autonomy levels, so a model's confidence never substitutes for permission
+- Run a headless coding agent (Codex or Claude Code) from the alert, with read-only access to deployed systems and an isolated worktree for a proposed fix
+- Gate deployment behind allowlisted changes, a regression test, and passing CI; escalate when those checks fail
 - Run recurring security audits that combine a deterministic scanner (Semgrep), model review, and human validation
 - Treat the responder itself as attack surface: inventory its capabilities, credentials, and provenance (Snyk Agent Scan)
 
-Prerequisite: the deployed app from [Module 3](../03-deployment/01-test-containerize-and-deploy-an-ai-assisted-app.md).
-
-[Recording: DevOps and Observability for AI-Built Apps](https://www.youtube.com/watch?v=YkxLo_FRoQw)
+For the homework, use the standalone [Order Tracker starter](https://github.com/alexeygrigorev/order-tracker). You can also apply the exercise to the app you deployed in [Module 3](../03-deployment/01-test-containerize-and-deploy-an-ai-assisted-app.md).
 
 Module summary: The companion article makes the deployed app more production-ready by
 separating dev and prod, collecting logs, metrics, and traces, and alerting on
@@ -82,7 +81,7 @@ They are excluded because they would obscure the main loop, not because they are
 
 ## Module Deliverable: Operations and Security Report
 
-Apply the module to your own app:
+Apply the module to Order Tracker or your own app:
 
 ```text
 observability/
@@ -93,10 +92,11 @@ observability/
 
 incident-response/
   collect-evidence.sh
+  test-incident.sh
   responder-task.md
   response.schema.json
   autonomy-policy.yaml
-  runbooks/rollback.sh
+  runbooks/deploy-fix.sh
   runbooks/verify-recovery.sh
   incidents/
 

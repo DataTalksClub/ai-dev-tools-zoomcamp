@@ -1,148 +1,96 @@
-# Homework 4: DevOps and Observability for AI-Built Apps [DRAFT]
+# Homework 4: DevOps and Observability for AI-Built Apps
 
-Homework 3 got your app deployed. This homework makes sure you know whether it still works.
+In this homework, you'll investigate a failure in [Order Tracker](https://github.com/alexeygrigorev/order-tracker), a small app for creating orders and checking their status. The starter has a web page, API, tests, and a local CI/CD workflow.
 
-If an important endpoint starts returning `500`, you need to know that users are affected, find the failed requests, connect them to the deployment that caused them, and decide what to do. CI/CD ships a bad release as efficiently as a good one.
+Fork the starter on GitHub, then clone your fork. You'll add observability and an incident responder that reacts to an alert without you starting it manually. It should deploy a verified fix when policy permits, or save an escalation packet. Ask your coding agent to help with the implementation, but check each result yourself.
 
-This homework builds the loop that closes that gap:
+You need Docker with Compose, Python with `uv`, and `act` for the local deployment workflow. The starter's README explains how to run it. No cloud deployment account or Kubernetes cluster is required.
 
-```text
-change
-→ observe user impact
-→ alert with context
-→ investigate from evidence
-→ authorize a bounded response or escalate
-→ verify recovery
-→ audit the code and the response trail
-```
+## Question 1: Run the starter
 
-We also put an agent inside that loop as the first line of support. It collects the same evidence you would collect, compares it with recent changes, and proposes an action. What it does not get is general production credentials. A model supplies confidence; code outside the model enforces permission.
+Start Order Tracker and open its web page. Create an order and check its status. Run the tests, then use the included `act` workflow to build and deploy a release locally. Check `/version` to confirm which commit is running.
 
-Keep using the coding agent from the previous homework — this week also in headless mode. You will need Docker for the telemetry stack.
+Where does the starter store its orders when Docker Compose recreates the app container?
 
-Prerequisite: the deployed app from Homework 3.
+- In a Docker volume
+- In the browser
+- In the container's temporary files
+- In the GitHub Actions log
 
-## Homework Idea
+For this and the next questions, you can ask your coding assistant to help select the correct option.
 
-Break your own app on purpose, then run the full loop: instrument it, catch the breakage with an alert, let a headless agent investigate from evidence, authorize or escalate a bounded response, and verify the recovery.
+## Question 2: Instrument the app
 
-The deliverable is an operations and security report: given one incident ID, a reader should be able to reconstruct the deployed version, the user impact, the evidence, the model's proposal, the policy decision, and the recovery.
+Ask your agent to instrument the order lookup endpoint with OpenTelemetry. Record request counts and errors, create traces, and write structured logs with a request or trace ID. Keep customer details and credentials out of telemetry.
 
-## Question 1: Instrumentation
+Add an OpenTelemetry Collector that sends metrics to Prometheus, logs to Loki, and traces to Tempo. Use Docker Compose to run these tools alongside Order Tracker. Check that a status lookup produces all three signals.
 
-First, find what you can't answer about a broken deployment — CPU graphs alone don't count as observability. Ask your agent to instrument the backend with OpenTelemetry: metrics, traces, and structured logs, without leaking secrets.
-
-Which three signals does observability rest on in this module?
+Which three signals are you collecting?
 
 - Metrics, logs, and traces
 - Tests, builds, and deploys
 - CPU, RAM, and disk
 - Requests, responses, and cookies
 
-For this and next questions you can ask your coding assistant to select the correct option.
+## Question 3: Create a dashboard and alert
 
-## Question 2: The telemetry pipeline
+Create a Grafana dashboard for order lookups, failed requests, logs, and traces. Save its configuration in your repository. Add one alert for failed order lookups that includes the affected endpoint and a link to the dashboard. Configure a webhook contact point so the alert can start a local responder.
 
-Wire up the pipeline: an OpenTelemetry Collector feeding Prometheus, Loki, and Tempo, viewed together in Grafana.
-
-Which project provides the vendor-neutral instrumentation standard we use?
-
-- OpenTelemetry
-- OpenAPI
-- OAuth
-- OpenSSL
-
-## Question 3: Dashboards
-
-Which tool do we use to view metrics, logs, and traces together?
-
-- Grafana
-- pgAdmin
-- Excel
-- VS Code
-
-## Question 4: Alerts
-
-Now write one alert that represents real user impact — not high CPU — and carries enough context in its payload to act on.
-
-A good alert represents:
+Open the dashboard and check a successful order lookup. What should the alert represent?
 
 - Real user impact, with context to start investigating
 - Any CPU usage above 80%
 - Every log line the app produces
 - Each new deployment
 
-## Question 5: Evidence first
+## Question 4: Find the failing request and collect evidence
 
-Before any model gets involved, collect a bounded, repeatable evidence packet: recent deploys, error rates, affected endpoints, logs — with read-only, allowlisted queries only.
+Check the status of the sample orders on the deployed app. One request fails even though the existing tests and health check pass. Confirm that your dashboard shows the error and your alert fires.
 
-How does the responder collect evidence?
+Add a small webhook receiver under `incident-response/`. When it receives an alert, it should assign an incident ID and automatically save an evidence packet: the deployed commit, error rate, affected endpoint, and relevant logs or traces. Limit collection to read-only queries and a short time window. Make repeated alerts for the same incident reuse the packet rather than starting duplicate responders.
+
+How should the responder collect evidence?
 
 - With read-only, allowlisted queries
 - With full production admin credentials
 - By trial and error on the production database
 - It doesn't — the model decides what to look at
 
-## Question 6: The agent responder
+## Question 5: Automate the response
 
-Now run a headless coding agent (Codex or Claude Code) as a read-only first responder. Give it the evidence packet and a structured task:
+Have the webhook receiver launch Codex or Claude Code in headless mode with the saved evidence. Ask it for the likely cause, supporting evidence, and one proposed action in a structured response. Let it prepare a fix in an isolated worktree, without giving it credentials for the running app or observability stack.
 
-```text
-Here is the evidence packet for incident <ID>.
-Compare it with recent changes, find the most likely
-root cause, and propose one action.
-You have read-only access. Respond in the JSON schema.
-```
+Implement a policy runner outside the model. Permit an automatic deployment only when the change stays within allowlisted files and commands and includes a regression test for the failing request. Commit the permitted change, then run the local workflow so tests must pass before deployment. Check that the request works and the alert clears. If any check fails, leave the running version alone and save an escalation packet with the evidence, proposal, and reason for stopping.
 
-What authorizes the action the responder proposes?
+What authorizes an action proposed by the responder?
 
 - The autonomy policy and allowlists — code outside the model
 - The model's confidence score
 - The severity field of the alert
 - Nothing — the responder acts on its own
 
-## Question 7: Security audit
+## Question 6: Test the full loop and audit it
 
-Finally, audit the code and the responder itself: run a deterministic scanner, add model review, and validate the findings yourself. Also inventory the responder's capabilities and credentials.
+Create `incident-response/test-incident.sh` to test the loop from the original failing version. It should generate enough failed requests to fire the alert, wait for one incident record and one responder run, then check for either a verified deployment or an escalation packet. Run it without starting the agent or applying a fix manually. Also test one proposal that the policy rejects and confirm that it does not deploy.
 
-Which deterministic scanner do we pair with model review in the security audit?
+Run Semgrep on your repository and review its findings with your agent. Validate the findings yourself. List the responder's tools, credentials, and allowed actions, and remove access it doesn't need.
+
+Write `docs/operations-and-security-report.md` for one incident ID. Include the deployed version, user impact, alert, evidence, model and configuration, proposed action, policy decision, command run or escalation, recovery checks, and any related security finding. Link to the supporting files in your repository.
+
+Which deterministic scanner did you pair with model review?
 
 - Semgrep
 - Pytest
 - Playwright
 - Terraform
 
-## Question 8: Incident report
-
-Put it all together in `docs/operations-and-security-report.md`. Given one incident ID, the report should let a reader reconstruct:
-
-- the deployed version and the user impact
-- the alert and the evidence inspected
-- the model and configuration used, and the action proposed
-- the policy decision and the command actually executed
-- the recovery verification, or the escalation packet
-
-Describe one incident you ran through this loop: what was the user impact, what did the responder propose, and what did you authorize?
-
 ## Submission
 
-Submit your homework here: https://courses.datatalks.club/ai-dev-tools-2026/homework/hw4
-
-Use the link to your repository in the homework submission form — it should contain the report with the observability, incident-response, and security-audit folders from the module deliverables.
-
-Don't forget to commit your code at every step.
+Submit your homework on the [course platform](https://courses.datatalks.club/ai-dev-tools-2026/homework/hw4). Use the link to your repository. Commit and push the report, dashboard and alert configuration, incident evidence, responder policy, and security audit.
 
 ## Learning in Public
 
-We encourage everyone to share what they learned. This is called "learning in public". Read more about why it matters here: https://aishippingblog.com/p/benefits-of-learning-in-public
-
-Learning in public is one of the most effective ways to accelerate your growth. Here's why:
-
-1. Accountability: Sharing your progress creates commitment and motivation to continue
-2. Feedback: The community can provide valuable suggestions and corrections
-3. Networking: You'll connect with like-minded people and potential collaborators
-4. Documentation: Your posts become a learning journal you can reference later
-5. Opportunities: Employers and clients often discover talent through public learning
+We encourage everyone to share what they learned. This is called "learning in public". Read more about why it matters here: https://datatalks.club/blog/benefits-of-learning-in-public.html
 
 Don't worry about being perfect. Everyone starts somewhere, and people love following genuine learning journeys!
 
@@ -151,15 +99,15 @@ Don't worry about being perfect. Everyone starts somewhere, and people love foll
 ```
 🚀 Week 4 of AI Dev Tools Zoomcamp by @DataTalksClub complete!
 
-My app now tells me when it's broken — and an AI agent helps me fix it!
+I investigated a failed Order Tracker release and recovered the app.
 
 Today I learned how to:
 
 ✅ Instrument an app with OpenTelemetry: metrics, logs, traces
-✅ Build a telemetry pipeline with Grafana
+✅ View the signals together in Grafana
 ✅ Alert on real user impact, not CPU graphs
-✅ Run a headless coding agent as a read-only first responder
-✅ Gate automated actions behind allowlists and autonomy levels
+✅ Trigger a headless coding agent from an alert
+✅ Deploy a checked fix or escalate automatically
 
 Here's my repo: <LINK>
 
@@ -171,12 +119,12 @@ You can sign up here: https://github.com/DataTalksClub/ai-dev-tools-zoomcamp/
 ### Example post for Twitter/X:
 
 ```
-🤖 Made my app observable and gave an AI agent on-call duties!
+🤖 Made Order Tracker observable and tested an incident response loop!
 
 📈 Metrics, logs, traces
 🔔 Alerts on real user impact
 🕵️ Agent investigates, policy authorizes
-✅ Human verifies the recovery
+✅ Fix and verify, or escalate
 
 My repo: <LINK>
 
