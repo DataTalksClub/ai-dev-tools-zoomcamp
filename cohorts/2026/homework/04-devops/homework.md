@@ -12,10 +12,15 @@ Start Order Tracker:
 
 ```bash
 docker compose up --build -d --wait
+```
+
+Now check it:
+
+```bash
 curl http://localhost:8000/healthz
 ```
 
-If you changed the host port, use that port in the `curl` command. What does the health check return?
+What does the health check return?
 
 - `{"status":"ok"}`
 - `{"status":"error"}`
@@ -26,16 +31,26 @@ For this and the next questions, you can ask your coding assistant to help selec
 
 ## Question 2: Instrument one endpoint
 
-Ask your agent to instrument the order lookup endpoint with OpenTelemetry. Record request counts by status code and endpoint, create a trace for each lookup, and write structured logs with a trace ID. Keep customer details and credentials out of telemetry.
+The health check can pass even when an order lookup fails. If that happens, you need to know how often lookups fail and what happened during a failed request. A request counter shows the size of the problem; a trace shows the path of one request; and a log records what happened at a particular step. A shared trace ID lets you connect the log to that request.
 
-For now, use a console exporter to inspect the signals from one order lookup. You will connect the monitoring tools in the next question.
+Give your coding agent this prompt:
 
-Which three signals did you add?
+> Instrument `GET /api/orders/{id}` with OpenTelemetry. Count requests by route and HTTP status code, create a trace for each lookup, and write a structured log for each lookup that includes its status code and trace ID. Export the signals to the console so I can inspect them with `docker compose logs app`. Use the route pattern `/api/orders/{id}` as the metric label; do not put order IDs, customer details, or credentials in telemetry. Update the tests and tell me how to run and inspect the result.
 
-- Metrics, logs, and traces
-- Tests, builds, and deploys
-- CPU, RAM, and disk
-- Requests, responses, and cookies
+After the agent's changes, rebuild the app with `docker compose up --build -d --wait`. Then run this lookup:
+
+```bash
+curl -i http://localhost:8000/api/orders/standard-1001
+```
+
+Use `docker compose logs app` to find the exported request metric. We will connect the monitoring tools in the next question.
+
+Which HTTP status code does the metric record for this lookup?
+
+- 200
+- 301
+- 404
+- 500
 
 ## Question 3: Build the telemetry pipeline
 
