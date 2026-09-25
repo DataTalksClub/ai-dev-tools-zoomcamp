@@ -31,7 +31,7 @@ For this and the next questions, you can ask your coding assistant to help selec
 
 ## Question 2: Instrument one endpoint
 
-The health check can pass even when an order lookup fails. Metrics show how often requests fail; logs and traces help you investigate why.
+Imagine a customer says they cannot open an order. You check `/healthz`, and it still returns `ok`. You need a way to see when order lookups fail and what happened during a failed request.
 
 Ask your agent to add OpenTelemetry metrics, logs, and traces for order lookups. The request metric should include the route and HTTP status code. For now, export the signals to the console so you can inspect them with `docker compose logs app`.
 
