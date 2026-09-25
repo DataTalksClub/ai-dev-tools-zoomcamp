@@ -32,7 +32,7 @@ You will:
 - Write one alert that represents real user impact and triggers a local responder
 - Collect a bounded, repeatable evidence packet with read-only, allowlisted queries before any model gets involved
 - Run a headless coding agent (Codex or Claude Code) from the alert, with read-only access to deployed systems and an isolated worktree for a proposed fix
-- Gate deployment behind allowlisted changes, a regression test, and passing CI; escalate when those checks fail
+- Gate deployment behind allowlisted changes and passing tests, then use Docker Compose; escalate when those checks fail
 - Run recurring security audits that combine a deterministic scanner (Semgrep), model review, and human validation
 - Treat the responder itself as attack surface: inventory its capabilities, credentials, and provenance (Snyk Agent Scan)
 
@@ -96,7 +96,6 @@ incident-response/
   responder-task.md
   response.schema.json
   autonomy-policy.yaml
-  runbooks/deploy-fix.sh
   runbooks/verify-recovery.sh
   incidents/
 
