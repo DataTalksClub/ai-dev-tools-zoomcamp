@@ -31,17 +31,20 @@ For this and the next questions, you can ask your coding assistant to help selec
 
 ## Question 2: Instrument one endpoint
 
-Imagine a customer says they cannot open an order. You check `/healthz`, and it still returns `ok`. You need a way to see when order lookups fail and what happened during a failed request.
+Imagine a customer says they cannot open an order. You check the website and everything looks okay. We need a better way to undestand what's happening in the system. For that we use metrics, logs and traces.
 
-Ask your agent to add OpenTelemetry metrics, logs, and traces for order lookups. The request metric should include the route and HTTP status code. For now, export the signals to the console so you can inspect them with `docker compose logs app`.
+Ask your agent to add OpenTelemetry metrics, logs, and traces for order lookups. The request metric should include the route and HTTP status code.
+For now, export the signals to the console so you can inspect them with `docker compose logs app`.
 
-After the agent's changes, rebuild the app with `docker compose up --build -d --wait`. Then run this lookup:
+After the agent's changes, rebuild the app with `docker compose up --build -d --wait`.
+
+Then lookup the order `standard-1001`:
 
 ```bash
 curl -i http://localhost:8000/api/orders/standard-1001
 ```
 
-Find the request metric in the app logs. We will connect the monitoring tools in the next question.
+Find the request metric in the app logs.
 
 Which HTTP status code does the metric record for this lookup?
 
@@ -52,11 +55,17 @@ Which HTTP status code does the metric record for this lookup?
 
 ## Question 3: Build the telemetry pipeline
 
-Run an OpenTelemetry Collector with Docker Compose. Send metrics to Prometheus, logs to Loki, and traces to Tempo. Add Grafana to view the signals together.
+In Question 2, you found telemetry in the app's console output. As more requests arrive, you need a way to search logs, inspect traces, and see error counts over time in one place.
 
-Create a Grafana dashboard for request volume and errors, with links to relevant logs and traces. Save its configuration in your repository. Check the status of the sample orders and locate one lookup's metric, log entry, and trace.
+Ask your agent to add an OpenTelemetry Collector, Prometheus, Loki, Tempo, and Grafana to Docker Compose. Send the app's metrics, logs, and traces through the Collector, and create a Grafana dashboard for request counts and errors. Save the configuration in your repository.
 
-Which value connects a failed log entry to its request trace?
+Rebuild the stack with `docker compose up --build -d --wait`, then run:
+
+```bash
+curl -i http://localhost:8000/api/orders/missing
+```
+
+In Grafana, find this `404` request in the metrics, then find its log entry and trace. Which field in the log lets you locate the trace for the same request?
 
 - Trace ID
 - Container name
