@@ -6,87 +6,87 @@ Fork the starter on GitHub, then clone your fork. You'll add observability and a
 
 You need Docker with Compose, Python with `uv`, and `act` for the local deployment workflow. The starter's README explains how to run it. No cloud deployment account or Kubernetes cluster is required.
 
-## Question 1: Run the starter
+## Question 1: Find the failing request
 
-Start Order Tracker and open its web page. Create an order and check its status. Run the tests, then use the included `act` workflow to build and deploy a release locally. Check `/version` to confirm which commit is running.
+Run the starter's tests and deploy it locally with the included `act` workflow. Open the web page and check the status of each sample order. Use your browser's Network tab or the API to inspect the request that fails. The tests and `/healthz` still pass.
 
-Where does the starter store its orders when Docker Compose recreates the app container?
+What HTTP status does the failing order lookup return?
 
-- In a Docker volume
-- In the browser
-- In the container's temporary files
-- In the GitHub Actions log
+- `200`
+- `404`
+- `422`
+- `500`
 
 For this and the next questions, you can ask your coding assistant to help select the correct option.
 
-## Question 2: Instrument the app
+## Question 2: Connect metrics, logs, and traces
 
-Ask your agent to instrument the order lookup endpoint with OpenTelemetry. Record request counts and errors, create traces, and write structured logs with a request or trace ID. Keep customer details and credentials out of telemetry.
+Ask your agent to instrument the order lookup endpoint with OpenTelemetry. Record request counts by status, create traces, and write structured logs with a trace ID. Keep customer details and credentials out of telemetry.
 
-Add an OpenTelemetry Collector that sends metrics to Prometheus, logs to Loki, and traces to Tempo. Use Docker Compose to run these tools alongside Order Tracker. Check that a status lookup produces all three signals.
+Add an OpenTelemetry Collector that sends metrics to Prometheus, logs to Loki, and traces to Tempo. Run these tools with Docker Compose and view them in Grafana. Make a successful and a failing lookup, then find both in the telemetry.
 
-Which three signals are you collecting?
+Which value lets you connect a failed log entry to its request trace?
 
-- Metrics, logs, and traces
-- Tests, builds, and deploys
-- CPU, RAM, and disk
-- Requests, responses, and cookies
+- Trace ID
+- Container name
+- Order status
+- HTTP method
 
-## Question 3: Create a dashboard and alert
+## Question 3: Trigger an alert
 
-Create a Grafana dashboard for order lookups, failed requests, logs, and traces. Save its configuration in your repository. Add one alert for failed order lookups that includes the affected endpoint and a link to the dashboard. Configure a webhook contact point so the alert can start a local responder.
+Create a Grafana dashboard for order lookups and failed requests, with links to relevant logs and traces. Save the dashboard in your repository. Add an alert for order lookup `5xx` responses with the affected endpoint and dashboard link in its payload. Configure a webhook contact point that sends the firing alert to a local responder.
 
-Open the dashboard and check a successful order lookup. What should the alert represent?
+Generate enough failed lookups to fire the alert. What should start the responder?
 
-- Real user impact, with context to start investigating
-- Any CPU usage above 80%
-- Every log line the app produces
-- Each new deployment
+- The firing alert's webhook
+- Every incoming order request
+- A successful CI build
+- Opening the Grafana dashboard
 
-## Question 4: Find the failing request and collect evidence
+## Question 4: Collect evidence before calling the model
 
-Check the status of the sample orders on the deployed app. One request fails even though the existing tests and health check pass. Confirm that your dashboard shows the error and your alert fires.
+Add a webhook receiver under `incident-response/`. When it receives an alert, it should assign an incident ID and collect a bounded evidence packet before launching the model. Include the deployed commit from `/version`, the error count and affected endpoint, and relevant logs or traces from a short time window. Use only read-only, allowlisted queries.
 
-Add a small webhook receiver under `incident-response/`. When it receives an alert, it should assign an incident ID and automatically save an evidence packet: the deployed commit, error rate, affected endpoint, and relevant logs or traces. Limit collection to read-only queries and a short time window. Make repeated alerts for the same incident reuse the packet rather than starting duplicate responders.
+Send the same alert twice. Confirm that it produces one incident record and starts only one investigation.
 
-How should the responder collect evidence?
+Which evidence identifies the exact code running when the alert fired?
 
-- With read-only, allowlisted queries
-- With full production admin credentials
-- By trial and error on the production database
-- It doesn't — the model decides what to look at
+- The commit reported by `/version`
+- The time the container started
+- The number of orders in SQLite
+- The name of the Grafana dashboard
 
-## Question 5: Automate the response
+## Question 5: Fix or escalate automatically
 
-Have the webhook receiver launch Codex or Claude Code in headless mode with the saved evidence. Ask it for the likely cause, supporting evidence, and one proposed action in a structured response. Let it prepare a fix in an isolated worktree, without giving it credentials for the running app or observability stack.
+Have the webhook receiver launch Codex or Claude Code in headless mode with the saved evidence. Define `incident-response/response.schema.json` for a structured response with the likely cause, supporting evidence, and one proposed action. Let the agent prepare a fix in an isolated worktree, without credentials for the running app or observability stack.
 
-Implement a policy runner outside the model. Permit an automatic deployment only when the change stays within allowlisted files and commands and includes a regression test for the failing request. Commit the permitted change, then run the local workflow so tests must pass before deployment. Check that the request works and the alert clears. If any check fails, leave the running version alone and save an escalation packet with the evidence, proposal, and reason for stopping.
+Define `incident-response/autonomy-policy.yaml` and enforce it with code outside the model. The runner may commit and deploy a fix only when the changed files and commands are allowlisted, a regression test covers the failing request, and the local CI workflow passes. After deployment, verify that the request works and the alert clears. Otherwise, keep the running version and save an escalation packet with the reason.
 
-What authorizes an action proposed by the responder?
+Which result permits automatic deployment?
 
-- The autonomy policy and allowlists — code outside the model
-- The model's confidence score
-- The severity field of the alert
-- Nothing — the responder acts on its own
+- The policy checks and tests pass
+- The model reports high confidence
+- The alert has high severity
+- The agent proposes any code change
 
-## Question 6: Test the full loop and audit it
+## Question 6: Verify the full loop
 
-Create `incident-response/test-incident.sh` to test the loop from the original failing version. It should generate enough failed requests to fire the alert, wait for one incident record and one responder run, then check for either a verified deployment or an escalation packet. Run it without starting the agent or applying a fix manually. Also test one proposal that the policy rejects and confirm that it does not deploy.
+Create `incident-response/test-incident.sh` to test the loop from the original failing version. It should generate enough failed requests to fire the alert, wait for one incident record and one responder run, then check for either a verified deployment or an escalation packet. Run it without starting the agent or applying a fix manually.
 
-Run Semgrep on your repository and review its findings with your agent. Validate the findings yourself. List the responder's tools, credentials, and allowed actions, and remove access it doesn't need.
+Also feed the policy runner a proposal that changes a disallowed file. Confirm that it does not deploy. Run Semgrep, validate its findings yourself, and list the responder's tools, credentials, and allowed actions in `security-audit/capability-table.md`.
 
 Write `docs/operations-and-security-report.md` for one incident ID. Include the deployed version, user impact, alert, evidence, model and configuration, proposed action, policy decision, command run or escalation, recovery checks, and any related security finding. Link to the supporting files in your repository.
 
-Which deterministic scanner did you pair with model review?
+What should happen when the policy rejects a proposal?
 
-- Semgrep
-- Pytest
-- Playwright
-- Terraform
+- Keep the running version and save an escalation packet
+- Deploy the proposal and report the policy failure
+- Delete the running container
+- Ask the model to approve its own proposal
 
 ## Submission
 
-Submit your homework on the [course platform](https://courses.datatalks.club/ai-dev-tools-2026/homework/hw4). Use the link to your repository. Commit and push the report, dashboard and alert configuration, incident evidence, responder policy, and security audit.
+Submit your homework on the [course platform](https://courses.datatalks.club/ai-dev-tools-2026/homework/hw4). Use the link to your repository. Commit and push the report, dashboard and alert configuration, incident evidence, responder policy, end-to-end test, and security audit.
 
 ## Learning in Public
 
