@@ -116,19 +116,19 @@ How many agent runs does the script report for the two copies of the same alert?
 
 ## Question 6: Watch the agent fix the incident
 
-Now connect the live alert to the responder and watch the full recovery path.
+Imagine a customer trying to open order `express-1002`. Something goes wrong with this lookup, even though `/healthz` still reports that the app is healthy.
 
-Ask your agent to create `incident-response/test-incident.sh`. It should check the sample orders to find a failing lookup, generate enough failures to fire the alert, and wait for one incident record, one evidence packet, and one agent run. Start the responder, then configure Grafana to send firing alerts to it through a webhook. Run:
+Start the responder and connect the Grafana alert to it through a webhook. Ask your coding assistant to make the responder run the tests before it deploys an agent's fix with Docker Compose. If the tests fail, it should leave the running app in place and record why it could not deploy.
+
+Record the current image ID with `docker compose images -q app`. Then make the same request the customer made:
 
 ```bash
-bash incident-response/test-incident.sh
+curl -i http://localhost:8000/api/orders/express-1002
 ```
 
-Watch the agent investigate and prepare a fix. Do not start the agent or apply the fix manually.
+Repeat the request until the alert fires. Watch Grafana send the alert, the responder collect evidence, and the coding agent start automatically. Do not start the agent or fix the code yourself.
 
-If policy permits the fix, watch the tests pass and Docker Compose deploy it. Repeat the failing request, confirm it works, record the new image ID, and wait for the alert to clear. If policy rejects the proposal, confirm that the running version stays in place and an escalation packet explains why. Also test the rejection path with a proposal that changes a disallowed file.
-
-Which observation confirms that an approved fix recovered the app?
+After the responder deploys the fix, run the same `curl` command and `docker compose images -q app` again. Check the response and the alert state in Grafana. What shows that the customer's problem is fixed?
 
 - The failing request succeeds, a new image is deployed, and the alert clears
 - The model reports high confidence
@@ -137,9 +137,7 @@ Which observation confirms that an approved fix recovered the app?
 
 ## Submission
 
-Write `docs/operations-and-security-report.md` for one incident ID. Include the original and deployed image IDs, user impact, alert, evidence, model and configuration, proposed action, policy decision, command run or escalation, recovery checks, and any related security finding. Link to the supporting files in your repository.
-
-Submit your homework on the [course platform](https://courses.datatalks.club/ai-dev-tools-2026/homework/hw4). Use the link to your repository. Commit and push the report, dashboard and alert configuration, incident evidence, responder policy, end-to-end test, and security audit.
+Submit your homework on the [course platform](https://courses.datatalks.club/ai-dev-tools-2026/homework/hw4). Use the link to your repository. Commit and push your telemetry and alert configuration, responder, wake-up test, incident evidence, and agent's fix.
 
 ## Learning in Public
 
