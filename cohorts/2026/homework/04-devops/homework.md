@@ -55,7 +55,7 @@ Which HTTP status code does the metric record for this lookup?
 
 ## Question 3: Build the telemetry pipeline
 
-In Question 2, you found telemetry in the app's console output. As more requests arrive, you need a way to search logs, inspect traces, and see error counts over time in one place.
+In Question 2, you needed to see the telemetry in app's standard output. But that's not how we usually do it - we want to save them somewhere. You need a way to search logs, inspect traces, and see error counts over time in one place.
 
 Ask your agent to add an OpenTelemetry Collector, Prometheus, Loki, Tempo, and Grafana to Docker Compose. Send the app's metrics, logs, and traces through the Collector, and create a Grafana dashboard for request counts and errors. Save the configuration in your repository.
 
@@ -65,12 +65,12 @@ Rebuild the stack with `docker compose up --build -d --wait`, then run:
 curl -i http://localhost:8000/api/orders/missing
 ```
 
-In Grafana, find this `404` request in the metrics, then find its log entry and trace. Which field in the log lets you locate the trace for the same request?
+In Grafana, find the request metric for this lookup. Check that its log and trace also appear. Which HTTP status code does the metric show?
 
-- Trace ID
-- Container name
-- Order status
-- HTTP method
+- 404
+- 200
+- 301
+- 500
 
 ## Question 4: Configure the alert
 
