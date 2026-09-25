@@ -97,19 +97,17 @@ When an alert fires, the on-call engineer needs to look into it and solve it. If
 
 In our case, we'll have an agent that's doing exactly that.
 
-Ask your coding assistant to build a service in `incident-response/` that receives alerts from Grafana. When an alert arrives, it should save the running app's image ID, the number of errors, the affected endpoint, and useful logs or traces. It should collect this information with approved, read-only queries. If Grafana sends the same alert twice, investigate it only once.
+Ask your coding assistant to build a service in `incident-response/` that receives alerts from Grafana. When an alert arrives, it should save the running app's image ID, the number of errors, the affected endpoint, and useful logs or traces.
 
-Then have the service start Codex or Claude Code automatically to review the evidence and propose a fix in a separate copy of the repository. Do not give the coding agent credentials for the running app or monitoring tools. Define the format for its findings and proposed fix in `incident-response/response.schema.json`.
+The service should start the coding assistant automatically in the headless mode to review the problem and propose a fix in a worktree.
 
-Ask your agent to define `incident-response/autonomy-policy.yaml` and enforce it outside the model. Commit and deploy with `docker compose up --build -d --wait` only after allowlist checks, a regression test, and the full test suite pass. Otherwise, save an escalation packet and leave the running version alone. Run Semgrep, validate its findings, and record the responder's tools and credentials in `security-audit/capability-table.md`.
-
-Ask your agent to add `incident-response/test-responder.sh` that sends the same sample alert twice with a fake coding agent. Run it:
+Before triggering the real failure, check that an alert wakes the agent. Ask your coding assistant to add `incident-response/test-wakeup.sh`. It should start the responder, send the same sample alert twice, wait for the coding agent to start, and report how many agent runs started. This test should not deploy a fix.
 
 ```bash
-bash incident-response/test-responder.sh
+bash incident-response/test-wakeup.sh
 ```
 
-How many investigations does the responder start for the duplicate alerts?
+How many agent runs does the script report for the two copies of the same alert?
 
 - 1
 - 0
