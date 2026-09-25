@@ -74,9 +74,9 @@ In Grafana, find the request metric for this lookup. Check that its log and trac
 
 ## Question 4: Configure the alert
 
-The dashboard helps when you are watching it. An alert should notify the responder when order lookups start returning server errors.
+The dashboard shows errors when you open it, but it does not notify anyone on its own. An alert watches the `5xx` metric and changes state when server errors occur. Later, Grafana will send an HTTP request called a webhook to the responder so it can start investigating automatically.
 
-Ask your agent to add a Grafana alert for order lookup `5xx` responses. Include the endpoint, time window, and dashboard link in the alert, and handle periods with no `5xx` responses. Prepare a webhook contact point, but keep delivery disabled until Question 6.
+Ask your agent to add a Grafana alert for `5xx` responses. Include the endpoint, time window, and dashboard link in the alert, and handle periods with no `5xx` responses. For now, check the alert's state in Grafana. You will connect it to the responder in Question 6.
 
 Run the lookup from Question 3 again:
 
@@ -116,7 +116,7 @@ How many investigations does the responder start for the duplicate alerts?
 
 Now connect the live alert to the responder and watch the full recovery path.
 
-Ask your agent to create `incident-response/test-incident.sh`. It should check the sample orders to find a failing lookup, generate enough failures to fire the alert, and wait for one incident record, one evidence packet, and one agent run. Enable webhook delivery, then run:
+Ask your agent to create `incident-response/test-incident.sh`. It should check the sample orders to find a failing lookup, generate enough failures to fire the alert, and wait for one incident record, one evidence packet, and one agent run. Start the responder, then configure Grafana to send firing alerts to it through a webhook. Run:
 
 ```bash
 bash incident-response/test-incident.sh
