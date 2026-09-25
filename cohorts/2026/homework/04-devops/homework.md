@@ -31,11 +31,9 @@ For this and the next questions, you can ask your coding assistant to help selec
 
 ## Question 2: Instrument one endpoint
 
-The health check can pass even when an order lookup fails. If that happens, you need to know how often lookups fail and what happened during a failed request. A request counter shows the size of the problem; a trace shows the path of one request; and a log records what happened at a particular step. A shared trace ID lets you connect the log to that request.
+The health check can pass even when an order lookup fails. Metrics show how often requests fail; logs and traces help you investigate why.
 
-Give your coding agent this prompt:
-
-> Instrument `GET /api/orders/{id}` with OpenTelemetry. Count requests by route and HTTP status code, create a trace for each lookup, and write a structured log for each lookup that includes its status code and trace ID. Export the signals to the console so I can inspect them with `docker compose logs app`. Use the route pattern `/api/orders/{id}` as the metric label; do not put order IDs, customer details, or credentials in telemetry. Update the tests and tell me how to run and inspect the result.
+Ask your agent to add OpenTelemetry metrics, logs, and traces for order lookups. The request metric should include the route and HTTP status code. For now, export the signals to the console so you can inspect them with `docker compose logs app`.
 
 After the agent's changes, rebuild the app with `docker compose up --build -d --wait`. Then run this lookup:
 
@@ -43,7 +41,7 @@ After the agent's changes, rebuild the app with `docker compose up --build -d --
 curl -i http://localhost:8000/api/orders/standard-1001
 ```
 
-Use `docker compose logs app` to find the exported request metric. We will connect the monitoring tools in the next question.
+Find the request metric in the app logs. We will connect the monitoring tools in the next question.
 
 Which HTTP status code does the metric record for this lookup?
 
