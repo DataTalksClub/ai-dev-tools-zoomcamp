@@ -62,7 +62,7 @@ Ask your agent to add an OpenTelemetry Collector, Prometheus, Loki, Tempo, and G
 Rebuild the stack with `docker compose up --build -d --wait`, then run:
 
 ```bash
-curl -i http://localhost:8000/api/orders/missing
+curl -i http://localhost:8000/api/orders/standard-1002
 ```
 
 In Grafana, find the request metric for this lookup. Check that its log and trace also appear. Which HTTP status code does the metric show?
@@ -74,35 +74,55 @@ In Grafana, find the request metric for this lookup. Check that its log and trac
 
 ## Question 4: Configure the alert
 
-Add an alert for order lookup `5xx` responses. Include the affected endpoint, time window, and dashboard link in its payload. Check the alert query against a failing lookup.
+The dashboard helps when you are watching it. An alert should notify the responder when order lookups start returning server errors.
 
-Prepare a webhook contact point for the responder you will build next. Keep webhook delivery disabled until Question 6, when the responder is ready and you can observe the full sequence.
+Ask your agent to add a Grafana alert for order lookup `5xx` responses. Include the endpoint, time window, and dashboard link in the alert, and handle periods with no `5xx` responses. Prepare a webhook contact point, but keep delivery disabled until Question 6.
 
-What should wake the responder?
+Run the lookup from Question 3 again:
 
-- The firing alert's webhook
-- Every incoming order request
-- A successful Docker Compose build
-- Opening the Grafana dashboard
+```bash
+curl -i http://localhost:8000/api/orders/standard-1002
+```
+
+Wait for the alert to evaluate. What state does Grafana show?
+
+- Normal
+- Firing
+- Pending
+- No data
 
 ## Question 5: Build the automatic responder
 
-Add a webhook receiver under `incident-response/`. For each new incident, it should first save a bounded evidence packet: the running container's image ID, the error count and affected endpoint, and relevant logs or traces. Use only read-only, allowlisted queries. Repeated alerts for the same incident should start one investigation.
+An alert can tell you something is wrong, but it cannot investigate or safely deploy a fix on its own. The responder will collect evidence, ask a coding agent to investigate, and use a policy to decide what happens next.
 
-Have the receiver launch Codex or Claude Code in headless mode with that packet. Define `incident-response/response.schema.json` for the likely cause, supporting evidence, and one proposed action. Let the agent prepare a fix in an isolated worktree, without credentials for the running app or observability stack.
+Ask your agent to build a webhook receiver under `incident-response/`. For each new incident, it should save a bounded evidence packet with the running image ID, error count, endpoint, and relevant logs or traces, using read-only, allowlisted queries. Duplicate alerts should start only one investigation. Have it launch Codex or Claude Code in headless mode with the packet and prepare a fix in an isolated worktree, without credentials for the running app or observability stack. Define `incident-response/response.schema.json` for its findings and proposed action.
 
-Define `incident-response/autonomy-policy.yaml` and enforce it with code outside the model. A change may be committed and deployed with `docker compose up --build -d --wait` only if its files and commands are allowlisted and a regression test and the full test suite pass. Otherwise, save an escalation packet and leave the running version alone. Run Semgrep, validate its findings, and record the responder's tools and credentials in `security-audit/capability-table.md`.
+Ask your agent to define `incident-response/autonomy-policy.yaml` and enforce it outside the model. Commit and deploy with `docker compose up --build -d --wait` only after allowlist checks, a regression test, and the full test suite pass. Otherwise, save an escalation packet and leave the running version alone. Run Semgrep, validate its findings, and record the responder's tools and credentials in `security-audit/capability-table.md`.
 
-What authorizes an automatic deployment?
+Ask your agent to add `incident-response/test-responder.sh` that sends the same sample alert twice with a fake coding agent. Run it:
 
-- The policy checks and tests pass
-- The model reports high confidence
-- The alert has high severity
-- The agent proposes any code change
+```bash
+bash incident-response/test-responder.sh
+```
+
+How many investigations does the responder start for the duplicate alerts?
+
+- 1
+- 0
+- 2
+- 3
 
 ## Question 6: Watch the agent fix the incident
 
-Create `incident-response/test-incident.sh` to check the status of the sample orders and find a failing request. Enable webhook delivery, then use the script to generate enough failures to fire the alert. Have it wait for one incident record, one evidence packet, and one agent run. Watch the agent investigate and prepare a fix. Do not start the agent or apply the fix manually.
+Now connect the live alert to the responder and watch the full recovery path.
+
+Ask your agent to create `incident-response/test-incident.sh`. It should check the sample orders to find a failing lookup, generate enough failures to fire the alert, and wait for one incident record, one evidence packet, and one agent run. Enable webhook delivery, then run:
+
+```bash
+bash incident-response/test-incident.sh
+```
+
+Watch the agent investigate and prepare a fix. Do not start the agent or apply the fix manually.
 
 If policy permits the fix, watch the tests pass and Docker Compose deploy it. Repeat the failing request, confirm it works, record the new image ID, and wait for the alert to clear. If policy rejects the proposal, confirm that the running version stays in place and an escalation packet explains why. Also test the rejection path with a proposal that changes a disallowed file.
 
