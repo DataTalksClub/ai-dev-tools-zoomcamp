@@ -2,9 +2,9 @@
 
 In this homework, you'll investigate a failure in [Order Tracker](https://github.com/alexeygrigorev/order-tracker), a small app for creating orders and checking their status. The starter has a web page, API, tests, and a Docker Compose setup.
 
-Fork the starter on GitHub, then clone your fork. You'll add observability and an incident responder that reacts to an alert without you starting it manually. It should deploy a verified fix when policy permits, or save an escalation packet. Ask your coding agent to help with the implementation, but check each result yourself.
+Fork the starter on GitHub, then clone your fork. You'll add observability and an incident responder that reacts to an alert. Ask your coding agent to help with the implementation, but check each result yourself.
 
-You need Docker with Compose and Python with `uv` for the tests. The starter's README explains how to run it. No cloud deployment account or Kubernetes cluster is required.
+You need Docker with Compose and Python with `uv` for the tests. The starter's README explains how to run it.
 
 ## Question 1: Run the app
 
@@ -55,7 +55,7 @@ Which HTTP status code does the metric record for this lookup?
 
 ## Question 3: Build the telemetry pipeline
 
-In Question 2, you needed to see the telemetry in app's standard output. But that's not how we usually do it - we want to save them somewhere. You need a way to search logs, inspect traces, and see error counts over time in one place.
+In Question 2, we looked at the logs to see the telemetry. Let's now save it into a proper telemetry storage.
 
 Ask your agent to add an OpenTelemetry Collector, Prometheus, Loki, Tempo, and Grafana to Docker Compose. Send the app's metrics, logs, and traces through the Collector, and create a Grafana dashboard for request counts and errors. Save the configuration in your repository.
 
@@ -101,18 +101,10 @@ Ask your coding assistant to build a service in `incident-response/` that receiv
 
 The service should start the coding assistant automatically in the headless mode to review the problem and propose a fix in a worktree.
 
-Before triggering the real failure, check that an alert wakes the agent. Ask your coding assistant to add `incident-response/test-wakeup.sh`. It should start the responder, send the same sample alert twice, wait for the coding agent to start, and report how many agent runs started. This test should not deploy a fix.
+Start the responder and send it one test alert. Ask your coding assistant for the command if needed. Check the responder's logs. Did the coding agent start?
 
-```bash
-bash incident-response/test-wakeup.sh
-```
-
-How many agent runs does the script report for the two copies of the same alert?
-
-- 1
-- 0
-- 2
-- 3
+- Yes
+- No
 
 ## Question 6: Watch the agent fix the incident
 
@@ -137,7 +129,7 @@ After the responder deploys the fix, run the same `curl` command and `docker com
 
 ## Submission
 
-Submit your homework on the [course platform](https://courses.datatalks.club/ai-dev-tools-2026/homework/hw4). Use the link to your repository. Commit and push your telemetry and alert configuration, responder, wake-up test, incident evidence, and agent's fix.
+Submit your homework on the [course platform](https://courses.datatalks.club/ai-dev-tools-2026/homework/hw4). Use the link to your repository. Commit and push your telemetry and alert configuration, responder, incident evidence, and agent's fix.
 
 ## Learning in Public
 
