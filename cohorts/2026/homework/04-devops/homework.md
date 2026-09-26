@@ -99,12 +99,14 @@ In our case, we'll have an agent that's doing exactly that.
 
 Ask your coding assistant to build a service in `incident-response/` that receives alerts from Grafana. When an alert arrives, it should save the running app's image ID, the number of errors, the affected endpoint, and useful logs or traces.
 
-The service should start the coding assistant automatically in the headless mode to review the problem and propose a fix in a worktree.
+The service should start the coding assistant automatically in headless mode to review the problem and propose a fix in a worktree. Save the agent's response with the evidence.
 
-Start the responder and send it one test alert. Ask your coding assistant for the command if needed. Check the responder's logs. Did the coding agent start?
+Start the responder and send one sample alert directly to it. Ask your coding assistant for the `curl` command. Check what the responder saved. What do you find?
 
-- Yes
-- No
+- Evidence and a response from the coding agent
+- Only an HTTP response from the webhook
+- A new app image but no agent response
+- Only a Grafana dashboard link
 
 ## Question 6: Watch the agent fix the incident
 
