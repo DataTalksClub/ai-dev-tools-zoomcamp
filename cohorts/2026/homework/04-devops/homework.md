@@ -101,12 +101,9 @@ Ask your coding assistant to build a service in `incident-response/` that receiv
 
 The service should start the coding assistant automatically in headless mode to review the problem and propose a fix in a worktree. Save the agent's response with the evidence.
 
-Start the responder and send one sample alert directly to it. Ask your coding assistant for the `curl` command. Check what the responder saved. What do you find?
+Start the responder and send one sample alert directly to it. Ask your coding assistant for the `curl` command. Wait for the agent to finish, then read its saved response.
 
-- Evidence and a response from the coding agent
-- Only an HTTP response from the webhook
-- A new app image but no agent response
-- Only a Grafana dashboard link
+What did the agent conclude? Include the paths to the saved evidence and response.
 
 ## Question 6: Watch the agent fix the incident
 
