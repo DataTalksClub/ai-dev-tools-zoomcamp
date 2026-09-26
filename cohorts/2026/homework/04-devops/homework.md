@@ -97,33 +97,27 @@ When an alert fires, the on-call engineer needs to look into it and solve it. If
 
 In our case, we'll have an agent that's doing exactly that.
 
-Ask your coding assistant to build a service in `incident-response/` that receives alerts from Grafana at `POST /alerts` on port `8001`. When an alert arrives, it should save the running app's image ID, the number of errors, the affected endpoint, and useful logs or traces.
+Ask your coding assistant to build a service in `incident-response/` that receives alerts from Grafana at `POST /alerts` on port `8001`. When an alert arrives, it should save the information needed to understand the problem, such as the affected endpoint, logs, and traces.
 
-The service should start the coding assistant automatically in headless mode to review the problem. The agent should explain what the evidence shows and either propose a fix in a worktree or say why no code change is justified. Save its response with the evidence.
+On alert, the service should start the coding assistant automatically in headless mode to review the problem. The agent should explain what it found and either propose a fix in a worktree or say why no code change is needed.
 
-Start the responder, but do not connect Grafana to it yet. Run the failing order lookup so the agent has a real problem to investigate:
-
-```bash
-curl -i http://localhost:8000/api/orders/express-1002
-```
-
-Now send an alert about that failure directly to the responder:
+When it's done, start the responder. We want to test it. Send an alert to the responder:
 
 ```bash
 curl -X POST http://localhost:8001/alerts \
   -H 'Content-Type: application/json' \
-  -d '{"alerts":[{"status":"firing","labels":{"alertname":"ManualOrderLookup500","endpoint":"/api/orders/{id}","status_code":"500"}}]}'
+  -d '{"alerts":[{"status":"firing","labels":{"alertname":"ResponderTest","test":"true"},"annotations":{"summary":"Test notification; no incident to fix"}}]}'
 ```
 
-Wait for the agent to finish, then read its saved response. This test does not deploy a fix.
+Wait for the agent to finish, then read its saved response. It should recognize that this is a test alert, report that there is nothing to fix, and leave the app unchanged.
 
-What did the agent identify as the cause, and what fix did it propose? Include the paths to the saved evidence and response.
+What did the agent report? Include the path to its saved response.
 
 ## Question 6: Watch the agent fix the incident
 
 Now test the complete flow with a real Grafana alert. Imagine a customer trying to open order `express-1002`. Something goes wrong with this lookup, even though `/healthz` still reports that the app is healthy.
 
-Wait for the Grafana alert to return to Normal after Question 5. Connect it to the responder through a webhook. Ask your coding assistant to make the responder run the tests before it deploys an agent's fix with Docker Compose. If the tests fail, it should leave the running app in place and record why it could not deploy.
+Connect the Grafana alert to the responder through a webhook. Ask your coding assistant to make the responder run the tests before it deploys an agent's fix with Docker Compose. If the tests fail, it should leave the running app in place and record why it could not deploy.
 
 Record the current image ID with `docker compose images -q app`. Then make the same request the customer made:
 
