@@ -1,148 +1,149 @@
-# Homework 4: DevOps and Observability for AI-Built Apps [DRAFT]
+# Homework 4: DevOps and Observability for AI-Built Apps
 
-Homework 3 got your app deployed. This homework makes sure you know whether it still works.
+In this homework, you'll investigate a failure in [Order Tracker](https://github.com/alexeygrigorev/order-tracker), a small app for creating orders and checking their status. The starter has a web page, API, tests, and a Docker Compose setup.
 
-If an important endpoint starts returning `500`, you need to know that users are affected, find the failed requests, connect them to the deployment that caused them, and decide what to do. CI/CD ships a bad release as efficiently as a good one.
+Fork the starter on GitHub, then clone your fork. You'll add observability and an incident responder that reacts to an alert. Ask your coding agent to help with the implementation, but check each result yourself.
 
-This homework builds the loop that closes that gap:
+You need Docker with Compose and Python with `uv` for the tests. The starter's README explains how to run it.
 
-```text
-change
-→ observe user impact
-→ alert with context
-→ investigate from evidence
-→ authorize a bounded response or escalate
-→ verify recovery
-→ audit the code and the response trail
+## Question 1: Run the app
+
+Start Order Tracker:
+
+```bash
+docker compose up --build -d --wait
 ```
 
-We also put an agent inside that loop as the first line of support. It collects the same evidence you would collect, compares it with recent changes, and proposes an action. What it does not get is general production credentials. A model supplies confidence; code outside the model enforces permission.
+Now check it:
 
-Keep using the coding agent from the previous homework — this week also in headless mode. You will need Docker for the telemetry stack.
-
-Prerequisite: the deployed app from Homework 3.
-
-## Homework Idea
-
-Break your own app on purpose, then run the full loop: instrument it, catch the breakage with an alert, let a headless agent investigate from evidence, authorize or escalate a bounded response, and verify the recovery.
-
-The deliverable is an operations and security report: given one incident ID, a reader should be able to reconstruct the deployed version, the user impact, the evidence, the model's proposal, the policy decision, and the recovery.
-
-## Question 1: Instrumentation
-
-First, find what you can't answer about a broken deployment — CPU graphs alone don't count as observability. Ask your agent to instrument the backend with OpenTelemetry: metrics, traces, and structured logs, without leaking secrets.
-
-Which three signals does observability rest on in this module?
-
-- Metrics, logs, and traces
-- Tests, builds, and deploys
-- CPU, RAM, and disk
-- Requests, responses, and cookies
-
-For this and next questions you can ask your coding assistant to select the correct option.
-
-## Question 2: The telemetry pipeline
-
-Wire up the pipeline: an OpenTelemetry Collector feeding Prometheus, Loki, and Tempo, viewed together in Grafana.
-
-Which project provides the vendor-neutral instrumentation standard we use?
-
-- OpenTelemetry
-- OpenAPI
-- OAuth
-- OpenSSL
-
-## Question 3: Dashboards
-
-Which tool do we use to view metrics, logs, and traces together?
-
-- Grafana
-- pgAdmin
-- Excel
-- VS Code
-
-## Question 4: Alerts
-
-Now write one alert that represents real user impact — not high CPU — and carries enough context in its payload to act on.
-
-A good alert represents:
-
-- Real user impact, with context to start investigating
-- Any CPU usage above 80%
-- Every log line the app produces
-- Each new deployment
-
-## Question 5: Evidence first
-
-Before any model gets involved, collect a bounded, repeatable evidence packet: recent deploys, error rates, affected endpoints, logs — with read-only, allowlisted queries only.
-
-How does the responder collect evidence?
-
-- With read-only, allowlisted queries
-- With full production admin credentials
-- By trial and error on the production database
-- It doesn't — the model decides what to look at
-
-## Question 6: The agent responder
-
-Now run a headless coding agent (Codex or Claude Code) as a read-only first responder. Give it the evidence packet and a structured task:
-
-```text
-Here is the evidence packet for incident <ID>.
-Compare it with recent changes, find the most likely
-root cause, and propose one action.
-You have read-only access. Respond in the JSON schema.
+```bash
+curl http://localhost:8000/healthz
 ```
 
-What authorizes the action the responder proposes?
+What does the health check return?
 
-- The autonomy policy and allowlists — code outside the model
-- The model's confidence score
-- The severity field of the alert
-- Nothing — the responder acts on its own
+- `{"status":"ok"}`
+- `{"status":"error"}`
+- `{"orders":3}`
+- `pong`
 
-## Question 7: Security audit
+For this and the next questions, you can ask your coding assistant to help select the correct option.
 
-Finally, audit the code and the responder itself: run a deterministic scanner, add model review, and validate the findings yourself. Also inventory the responder's capabilities and credentials.
+## Question 2: Instrument one endpoint
 
-Which deterministic scanner do we pair with model review in the security audit?
+Imagine a customer says they cannot open an order. You check the website and everything looks okay. We need a better way to undestand what's happening in the system. For that we use metrics, logs and traces.
 
-- Semgrep
-- Pytest
-- Playwright
-- Terraform
+Ask your agent to add OpenTelemetry metrics, logs, and traces for order lookups. The request metric should include the route and HTTP status code.
+For now, export the signals to the console so you can inspect them with `docker compose logs app`.
 
-## Question 8: Incident report
+After the agent's changes, rebuild the app with `docker compose up --build -d --wait`.
 
-Put it all together in `docs/operations-and-security-report.md`. Given one incident ID, the report should let a reader reconstruct:
+Then lookup the order `standard-1001`:
 
-- the deployed version and the user impact
-- the alert and the evidence inspected
-- the model and configuration used, and the action proposed
-- the policy decision and the command actually executed
-- the recovery verification, or the escalation packet
+```bash
+curl -i http://localhost:8000/api/orders/standard-1001
+```
 
-Describe one incident you ran through this loop: what was the user impact, what did the responder propose, and what did you authorize?
+Find the request metric in the app logs.
+
+Which HTTP status code does the metric record for this lookup?
+
+- 200
+- 301
+- 404
+- 500
+
+## Question 3: Build the telemetry pipeline
+
+In Question 2, we looked at the logs to see the telemetry. Let's now save it into a proper telemetry storage.
+
+Ask your agent to add an OpenTelemetry Collector, Prometheus, Loki, Tempo, and Grafana to Docker Compose. Send the app's metrics, logs, and traces through the Collector, and create a Grafana dashboard for request counts and errors. Save the configuration in your repository.
+
+Rebuild the stack with `docker compose up --build -d --wait`, then run:
+
+```bash
+curl -i http://localhost:8000/api/orders/standard-1002
+```
+
+In Grafana, find the request metric for this lookup. Check that its log and trace also appear. Which HTTP status code does the metric show?
+
+- 404
+- 200
+- 301
+- 500
+
+## Question 4: Configure the alert
+
+The dashboard shows errors when you open it, but it does not notify anyone on its own. An alert watches the `5xx` metric and changes state when server errors occur. Later, Grafana will send an HTTP request called a webhook to the responder so it can start investigating automatically.
+
+Ask your agent to add a Grafana alert for `5xx` responses. Include the endpoint, time window, and dashboard link in the alert, and handle periods with no `5xx` responses. For now, check the alert's state in Grafana. You will connect it to the responder in Question 6.
+
+Run the lookup from Question 3 again:
+
+```bash
+curl -i http://localhost:8000/api/orders/standard-1002
+```
+
+Wait for the alert to evaluate. What state does Grafana show?
+
+- Normal
+- Firing
+- Pending
+- No data
+
+## Question 5: Build the automatic responder
+
+When an alert fires, the on-call engineer needs to look into it and solve it. If they cannot do it, they escalate it to developers.
+
+In our case, we'll have an agent that's doing exactly that.
+
+Ask your coding assistant to build a service in `incident-response/` that receives alerts from Grafana at `POST /alerts` on port `8001`. When an alert arrives, it should save the information needed to understand the problem, such as the affected endpoint, logs, and traces.
+
+On alert, the service should start the coding assistant automatically in headless mode.
+
+When it's done, start the responder. We want to test it. Send an alert to the responder:
+
+```bash
+curl -X POST http://localhost:8001/alerts \
+  -H 'Content-Type: application/json' \
+  -d '{"alerts":[{"status":"firing","labels":{"alertname":"ResponderTest","test":"true"},"annotations":{"summary":"Test notification; no incident to fix"}}]}'
+```
+
+Wait for the agent to finish, then read its response.
+
+What did the agent respond? Include the last line from its answer.
+
+## Question 6: Watch the agent fix the incident
+
+Now test the complete flow with a real Grafana alert.
+
+Connect the Grafana alert to the responder through a webhook.
+
+Let's make this request:
+
+```bash
+curl -i http://localhost:8000/api/orders/express-1002
+```
+
+This request is problematic and should cause the alert to fire. If it doesn't repeat it multiple times. Then watch Grafana send the webhook to `/alerts`, and the responder start automatically.
+
+Wait for the agent to fix the problem, restart the app and verify that the same request doesn't cause the problem to appear.
+
+What was the problem?
+
+- The express delivery date calculation tried to use a day that does not exist in that month.
+- The order timestamp could not be parsed because it had no time zone.
+- The app rejected the order's `preparing` status.
+- The lookup searched the wrong database column for express orders.
+
 
 ## Submission
 
-Submit your homework here: https://courses.datatalks.club/ai-dev-tools-2026/homework/hw4
-
-Use the link to your repository in the homework submission form — it should contain the report with the observability, incident-response, and security-audit folders from the module deliverables.
-
-Don't forget to commit your code at every step.
+Submit your homework on the [course platform](https://courses.datatalks.club/ai-dev-tools-2026/homework/hw4). Use the link to your repository. Commit and push your telemetry and alert configuration, responder, incident evidence, and agent's fix.
 
 ## Learning in Public
 
 We encourage everyone to share what they learned. This is called "learning in public". Read more about why it matters here: https://datatalks.club/blog/benefits-of-learning-in-public.html
-
-Learning in public is one of the most effective ways to accelerate your growth. Here's why:
-
-1. Accountability: Sharing your progress creates commitment and motivation to continue
-2. Feedback: The community can provide valuable suggestions and corrections
-3. Networking: You'll connect with like-minded people and potential collaborators
-4. Documentation: Your posts become a learning journal you can reference later
-5. Opportunities: Employers and clients often discover talent through public learning
 
 Don't worry about being perfect. Everyone starts somewhere, and people love following genuine learning journeys!
 
@@ -151,15 +152,15 @@ Don't worry about being perfect. Everyone starts somewhere, and people love foll
 ```
 🚀 Week 4 of AI Dev Tools Zoomcamp by @DataTalksClub complete!
 
-My app now tells me when it's broken — and an AI agent helps me fix it!
+I investigated a failed Order Tracker release and recovered the app.
 
 Today I learned how to:
 
 ✅ Instrument an app with OpenTelemetry: metrics, logs, traces
-✅ Build a telemetry pipeline with Grafana
+✅ View the signals together in Grafana
 ✅ Alert on real user impact, not CPU graphs
-✅ Run a headless coding agent as a read-only first responder
-✅ Gate automated actions behind allowlists and autonomy levels
+✅ Trigger a headless coding agent from an alert
+✅ Deploy a checked fix or escalate automatically
 
 Here's my repo: <LINK>
 
@@ -171,12 +172,12 @@ You can sign up here: https://github.com/DataTalksClub/ai-dev-tools-zoomcamp/
 ### Example post for Twitter/X:
 
 ```
-🤖 Made my app observable and gave an AI agent on-call duties!
+🤖 Made Order Tracker observable and tested an incident response loop!
 
 📈 Metrics, logs, traces
 🔔 Alerts on real user impact
 🕵️ Agent investigates, policy authorizes
-✅ Human verifies the recovery
+✅ Fix and verify, or escalate
 
 My repo: <LINK>
 

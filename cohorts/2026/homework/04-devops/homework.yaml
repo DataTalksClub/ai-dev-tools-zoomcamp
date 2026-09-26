@@ -1,9 +1,9 @@
 schema_version: 2
 content_id: 0ddd0711-eadb-4a6a-b6cc-871ae5f0ed70
 slug: hw04
-title: "Homework 4: DevOps and Observability for AI-Built Apps [DRAFT]"
+title: "Homework 4: DevOps and Observability for AI-Built Apps"
 instructions_path: homework.md
-due_at: "2026-09-28T21:59:00Z"
+due_at: "2026-10-05T23:00:00Z"
 initial_state: open
 form:
   homework_url: true
