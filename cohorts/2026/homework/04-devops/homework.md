@@ -99,7 +99,7 @@ In our case, we'll have an agent that's doing exactly that.
 
 Ask your coding assistant to build a service in `incident-response/` that receives alerts from Grafana at `POST /alerts` on port `8001`. When an alert arrives, it should save the information needed to understand the problem, such as the affected endpoint, logs, and traces.
 
-On alert, the service should start the coding assistant automatically in headless mode to review the problem. The agent should explain what it found and either propose a fix in a worktree or say why no code change is needed.
+On alert, the service should start the coding assistant automatically in headless mode to review the problem. The agent should explain what it found and either propose a fix in a worktree or say why no code change is needed. Save its response.
 
 When it's done, start the responder. We want to test it. Send an alert to the responder:
 
