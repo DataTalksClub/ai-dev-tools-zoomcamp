@@ -101,23 +101,29 @@ Ask your coding assistant to build a service in `incident-response/` that receiv
 
 The service should start the coding assistant automatically in headless mode to review the problem. The agent should explain what the evidence shows and either propose a fix in a worktree or say why no code change is justified. Save its response with the evidence.
 
-Start the responder. Send a test alert about the `404` order lookups you saw in Question 3 directly to its endpoint:
+Start the responder, but do not connect Grafana to it yet. Run the failing order lookup so the agent has a real problem to investigate:
+
+```bash
+curl -i http://localhost:8000/api/orders/express-1002
+```
+
+Now send an alert about that failure directly to the responder:
 
 ```bash
 curl -X POST http://localhost:8001/alerts \
   -H 'Content-Type: application/json' \
-  -d '{"alerts":[{"status":"firing","labels":{"alertname":"OrderLookup404","endpoint":"/api/orders/{id}","status_code":"404"}}]}'
+  -d '{"alerts":[{"status":"firing","labels":{"alertname":"ManualOrderLookup500","endpoint":"/api/orders/{id}","status_code":"500"}}]}'
 ```
 
 Wait for the agent to finish, then read its saved response. This test does not deploy a fix.
 
-What action did the agent recommend for the `404` alert, and what evidence did it cite? Include the paths to the saved evidence and response.
+What did the agent identify as the cause, and what fix did it propose? Include the paths to the saved evidence and response.
 
 ## Question 6: Watch the agent fix the incident
 
 Now test the complete flow with a real Grafana alert. Imagine a customer trying to open order `express-1002`. Something goes wrong with this lookup, even though `/healthz` still reports that the app is healthy.
 
-Start the responder and connect the Grafana alert to it through a webhook. Ask your coding assistant to make the responder run the tests before it deploys an agent's fix with Docker Compose. If the tests fail, it should leave the running app in place and record why it could not deploy.
+Wait for the Grafana alert to return to Normal after Question 5. Connect it to the responder through a webhook. Ask your coding assistant to make the responder run the tests before it deploys an agent's fix with Docker Compose. If the tests fail, it should leave the running app in place and record why it could not deploy.
 
 Record the current image ID with `docker compose images -q app`. Then make the same request the customer made:
 
