@@ -99,7 +99,7 @@ In our case, we'll have an agent that's doing exactly that.
 
 Ask your coding assistant to build a service in `incident-response/` that receives alerts from Grafana at `POST /alerts` on port `8001`. When an alert arrives, it should save the running app's image ID, the number of errors, the affected endpoint, and useful logs or traces.
 
-The service should start the coding assistant automatically in headless mode to review the problem and propose a fix in a worktree. Save the agent's response with the evidence.
+The service should start the coding assistant automatically in headless mode to review the problem. The agent should explain what the evidence shows and either propose a fix in a worktree or say why no code change is justified. Save its response with the evidence.
 
 Start the responder. Send a test alert about the `404` order lookups you saw in Question 3 directly to its endpoint:
 
@@ -111,7 +111,7 @@ curl -X POST http://localhost:8001/alerts \
 
 Wait for the agent to finish, then read its saved response. This test does not deploy a fix.
 
-What did the agent conclude? Include the paths to the saved evidence and response.
+What action did the agent recommend for the `404` alert, and what evidence did it cite? Include the paths to the saved evidence and response.
 
 ## Question 6: Watch the agent fix the incident
 
