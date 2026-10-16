@@ -106,7 +106,7 @@ Submit your homework here: https://courses.datatalks.club/ai-dev-tools-2026/home
 
 ## Learning in Public
 
-We encourage everyone to share what they learned. This is called "learning in public". Read more about why it matters [here](https://aishippingblog.com/p/benefits-of-learning-in-public).
+We encourage everyone to share what they learned. This is called "learning in public". Read more about why it matters [here](https://datatalks.club/blog/benefits-of-learning-in-public.html).
 
 Don't worry about being perfect. Everyone starts somewhere, and people love following genuine learning journeys!
 

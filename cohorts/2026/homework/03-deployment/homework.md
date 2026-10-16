@@ -1,8 +1,8 @@
 # Homework 3: Containerize and Deploy
 
-In this homework, you'll deploy a project prepared by the course team instead of the application you built in Homework 2.
+In this homework, you'll deploy Agent Relay. It's is a small messaging system for software agents.
 
-Agent Relay is a small messaging system for software agents. An agent sends a task to another agent, a worker claims the task, and the worker acknowledges the result. The database stores the messages and their delivery attempts. A small dashboard lets you watch the message lifecycle.
+An agent sends a task to another agent, a worker claims the task, and the worker acknowledges the result. The database stores the messages and their delivery attempts. A small dashboard lets you watch the message lifecycle.
 
 You'll use your coding agent to test and containerize Agent Relay. Then you'll deploy it to a local Kubernetes cluster with [kind](https://kind.sigs.k8s.io/) (Kubernetes in Docker).
 
@@ -58,10 +58,6 @@ Which Docker option publishes a container's port to your machine?
 
 Ask your coding agent to replace SQLite with PostgreSQL and create a `compose.yaml` that runs Agent Relay and PostgreSQL together. Name the database service `postgres`.
 
-The storage seam is `immediate_transaction()` in `database.py` (currently `BEGIN IMMEDIATE` for SQLite). On PostgreSQL, replace it with row locking such as `FOR UPDATE SKIP LOCKED` as described in `SPEC.md` — the HTTP protocol and task lifecycle stay unchanged.
-
-Stop your local dev server from Question 1 first, otherwise `docker compose up` will fail with `port already allocated` on port 8000.
-
 Start the stack:
 
 ```bash
@@ -114,7 +110,7 @@ Submit your homework on the [course platform](https://courses.datatalks.club/ai-
 
 ## Learning in Public
 
-Share what you learned as part of [learning in public](https://aishippingblog.com/p/benefits-of-learning-in-public).
+Share what you learned as part of [learning in public](https://datatalks.club/blog/benefits-of-learning-in-public.html).
 
 Learning in public helps you explain technical work, get feedback, and keep a record of what you built. Share only the repository and screenshots or logs that don't contain secrets.
 
