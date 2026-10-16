@@ -35,11 +35,9 @@ Reviewing is also the part people remember afterwards. For each project you work
 
 ## Criteria
 
-There are 12 criteria worth 24 points. You need 18 points to pass.
+There are 12 criteria worth 24 points. You need 10 points to pass.
 
 You do not have to score full marks on every criterion.
-
-Each criterion scores up to 2 points, except Alerting (up to 1) and CI/CD (up to 3).
 
 
 ### Problem Description
