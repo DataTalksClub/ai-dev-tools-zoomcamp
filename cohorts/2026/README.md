@@ -10,3 +10,7 @@ Homework:
 * [Module 2: Build and Ship an AI-Assisted Full-Stack App](https://github.com/DataTalksClub/ai-dev-tools-zoomcamp/blob/main/cohorts/2026/homework/02-development/homework.md) — due 2026-09-14
 * [Module 3: Test, Containerize, and Deploy an AI-Assisted App [DRAFT]](https://github.com/DataTalksClub/ai-dev-tools-zoomcamp/blob/main/cohorts/2026/homework/03-deployment/homework.md) — due 2026-09-21
 * [Module 4: DevOps and Observability for AI-Built Apps](https://github.com/DataTalksClub/ai-dev-tools-zoomcamp/blob/main/cohorts/2026/homework/04-devops/homework.md) — due 2026-09-28
+
+Project:
+
+* [Final project: one application, taken from spec to production](https://github.com/DataTalksClub/ai-dev-tools-zoomcamp/blob/main/project/README.md) — month 2, two attempts

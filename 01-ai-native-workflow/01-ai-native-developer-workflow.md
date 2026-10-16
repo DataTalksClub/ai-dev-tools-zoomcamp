@@ -1,4 +1,5 @@
 ---
+video_url: https://www.youtube.com/watch?v=VUJxJGpaDEs
 next_url: ../02-development/01-build-and-ship-an-ai-assisted-full-stack-app.md
 ---
 # AI-Native Developer Workflow
@@ -14,8 +15,6 @@ You learn:
 - The product manager, software engineer, and QA roles
 - Loop engineering
 - Graph engineering
-
-[Recording: AI-Native Developer Workflow](https://www.youtube.com/watch?v=VUJxJGpaDEs)
 
 Module summary: The companion article shows how to turn a vague idea into a useful specification,
 give an agent durable context, break the work into a backlog, and use separate

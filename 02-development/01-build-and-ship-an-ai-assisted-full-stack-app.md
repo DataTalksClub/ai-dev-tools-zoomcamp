@@ -1,4 +1,5 @@
 ---
+video_url: https://www.youtube.com/watch?v=x9dq5nBpDg8
 prev_url: ../01-ai-native-workflow/01-ai-native-developer-workflow.md
 next_url: ../03-deployment/01-test-containerize-and-deploy-an-ai-assisted-app.md
 ---
@@ -31,8 +32,6 @@ You will:
 Reference app:
 
 - https://github.com/alexeygrigorev/interview-canvas-share
-
-[Recording: Build and Ship an AI-Assisted Full-Stack App](https://www.youtube.com/watch?v=x9dq5nBpDg8)
 
 Module summary: The companion article builds a collaborative system-design interview app from
 scratch. It moves from a frontend prototype with mocked calls to an OpenAPI
