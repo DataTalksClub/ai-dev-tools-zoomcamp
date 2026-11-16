@@ -67,3 +67,7 @@ The previous version of this module is archived here:
 Did you take notes? You can share them here.
 
 - Add a link to your notes above this line
+
+<!-- nav:start -->
+[← Previous: AI-Native Developer Workflow](../01-ai-native-workflow/01-ai-native-developer-workflow.md) · [Next: Test, Containerize, and Deploy an AI-Assisted App →](../03-deployment/01-test-containerize-and-deploy-an-ai-assisted-app.md)
+<!-- nav:end -->

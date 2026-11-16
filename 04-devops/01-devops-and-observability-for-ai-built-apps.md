@@ -130,3 +130,7 @@ Related material from the previous cohort:
 Did you take notes? You can share them here.
 
 - Add a link to your notes above this line
+
+<!-- nav:start -->
+[← Previous: Test, Containerize, and Deploy an AI-Assisted App](../03-deployment/01-test-containerize-and-deploy-an-ai-assisted-app.md)
+<!-- nav:end -->

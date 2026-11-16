@@ -45,3 +45,7 @@ what each kind of tool does.
 ## Community notes
 
 Add links to your notes above this line.
+
+<!-- nav:start -->
+[Next: Build and Ship an AI-Assisted Full-Stack App →](../02-development/01-build-and-ship-an-ai-assisted-full-stack-app.md)
+<!-- nav:end -->

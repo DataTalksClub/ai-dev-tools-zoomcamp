@@ -67,3 +67,7 @@ Related material from the previous cohort:
 Did you take notes? You can share them here.
 
 - Add a link to your notes above this line
+
+<!-- nav:start -->
+[← Previous: Build and Ship an AI-Assisted Full-Stack App](../02-development/01-build-and-ship-an-ai-assisted-full-stack-app.md) · [Next: DevOps and Observability for AI-Built Apps →](../04-devops/01-devops-and-observability-for-ai-built-apps.md)
+<!-- nav:end -->
