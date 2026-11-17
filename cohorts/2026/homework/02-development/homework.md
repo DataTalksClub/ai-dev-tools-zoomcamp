@@ -49,7 +49,7 @@ Commit and push. What's the sha1 hash for this commit?
 Build a frontend prototype with a mocked backend. To make it simpler, use your coding agent directly, not Lovable (but you can experiment with it too). 
 
 ```text
-Implement the frontend for the app described in _docs/specs.md. Put it in frontent/.
+Implement the frontend for the app described in _docs/specs.md. Put it in frontend/.
 
 Don't implement the backend yet. Centralize all the backend calls
 in one place and mock them for now.
@@ -80,7 +80,7 @@ Which command do you use to start the backend?
 
 ## Question 6: Connect frontend and backend
 
-The backend now works (presumably) so let's connect frontent to it. Ask the coding assistant to do it.
+The backend now works (presumably) so let's connect frontend to it. Ask the coding assistant to do it.
 
 You can verify that the connection works manually, but you can also ask your agent to use the browser to check it for you. 
 
