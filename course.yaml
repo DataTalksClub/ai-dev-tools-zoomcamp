@@ -10,9 +10,9 @@ cohorts:
     content: cohorts/2025
     legacy: true
 description: |
-  AI Dev Tools Zoomcamp is a completely free, hands-on course on using modern AI tools to write better code, faster. Across six modules you work with chat applications and coding assistants, build an end-to-end application, give assistants tools through the Model-Context Protocol, build your own coding agent, apply AI to testing and CI/CD, and automate everyday workflows with low-code tools.
+  AI Dev Tools Zoomcamp is a free, hands-on course on disciplined AI-assisted software development. Across four modules you turn a product idea into a spec and a backlog that coding agents implement and verify, build a full-stack application with AI assistants, test, containerize, and deploy it with CI/CD, and add release controls, observability, and an AI on-call responder.
 
-  Each module has video lectures and a homework assignment, and the course finishes with a project of your own, built end to end with AI tools.
+  Each module has a video lecture and a homework assignment, and the course finishes with a project of your own, built end to end with AI tools.
 outcome: Build disciplined software workflows with AI assistants, agents, testing, and automation.
 starting_point: You can build software manually and want to make AI assistants part of a reliable development workflow.
 prerequisites: You can write basic code, use Git, and work in the command line. You don't need prior experience with coding agents.
@@ -20,7 +20,7 @@ progression:
   - heading: I write software without a reliable AI workflow
     description: I can build applications, but I want AI assistants to help without giving up control of the result.
   - heading: I learn to direct and verify AI agents
-    description: I practice prompting, tool use, agent development, testing, deployment, and workflow automation.
+    description: I practice specifying work for coding agents, reviewing what they build, and testing, deploying, and monitoring the result.
   - heading: I ship an application built with AI tools
     description: I use a disciplined AI-assisted workflow to take my own software project from idea to deployment.
 urls:
