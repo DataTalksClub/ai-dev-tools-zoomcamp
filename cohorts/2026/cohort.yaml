@@ -5,7 +5,7 @@ course: ai-dev-tools-zoomcamp
 delivery: live
 published: true
 start_date: "2026-08-31"
-end_date: "2026-09-28"
+end_date: "2026-11-24"
 curriculum: current
 homework:
   - module: 01-ai-native-workflow
