@@ -1,5 +1,6 @@
 ---
 video_url: https://www.youtube.com/watch?v=x9dq5nBpDg8
+video_duration_seconds: 6519
 prev_url: ../01-ai-native-workflow/01-ai-native-developer-workflow.md
 next_url: ../03-deployment/01-test-containerize-and-deploy-an-ai-assisted-app.md
 ---

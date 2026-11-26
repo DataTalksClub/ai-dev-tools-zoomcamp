@@ -1,5 +1,6 @@
 ---
 video_url: https://www.youtube.com/watch?v=YkxLo_FRoQw
+video_duration_seconds: 8053
 prev_url: ../03-deployment/01-test-containerize-and-deploy-an-ai-assisted-app.md
 ---
 # DevOps and Observability for AI-Built Apps

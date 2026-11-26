@@ -1,5 +1,6 @@
 ---
 video_url: https://www.youtube.com/watch?v=VUJxJGpaDEs
+video_duration_seconds: 6872
 next_url: ../02-development/01-build-and-ship-an-ai-assisted-full-stack-app.md
 ---
 # AI-Native Developer Workflow
