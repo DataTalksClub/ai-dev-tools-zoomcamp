@@ -1,9 +1,9 @@
 schema_version: 2
 content_id: c8b9bccf-d282-408a-8c44-a224866810b7
-slug: hw03
+slug: hw3
 title: "Homework 3: Test, Containerize, and Deploy with Kubernetes (kind)"
 instructions_path: homework.md
-due_at: "2026-09-21T21:59:00Z"
+due_at: "2026-09-24T23:00:00Z"
 initial_state: open
 form:
   homework_url: true
