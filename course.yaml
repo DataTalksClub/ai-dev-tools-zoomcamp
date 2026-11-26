@@ -29,3 +29,8 @@ urls:
   faq: https://datatalks.club/faq/ai-dev-tools-zoomcamp.html
 hashtag: aidevtoolszoomcamp
 published: true
+instructors:
+  - name: Alexey Grigorev
+    url: https://linkedin.com/in/agrigorev
+  - name: Bhavani Ravi
+    url: https://www.linkedin.com/in/bhavanicodes
